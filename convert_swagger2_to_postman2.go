@@ -1,7 +1,6 @@
 package swagger2postman
 
 import (
-	//"fmt"
 	"regexp"
 	"strings"
 
@@ -139,10 +138,8 @@ func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerUrl 
 		}
 	}
 
-	//fmt.Println(rawPostmanUrl)
-	rx3 := regexp.MustCompile(`([^\{])\{([^\/\{\}]+)\}([^\}]|$)`)
+	rx3 := regexp.MustCompile(`(^|[^\{])\{([^\/\{\}]+)\}([^\}]|$)`)
 	rawPostmanUrl = rx3.ReplaceAllString(rawPostmanUrl, "$1:$2$3")
-	//fmt.Println(rawPostmanUrl)
 
 	postmanUrl := postman2.NewURL(rawPostmanUrl)
 
@@ -166,8 +163,5 @@ func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerUrl 
 		}
 	}
 
-	//fmt.Println(rawPostmanUrl)
-	//fmt.Println("\n\n")
-	//panic("A")
 	return postmanUrl
 }
