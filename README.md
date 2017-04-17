@@ -6,13 +6,11 @@ Swagger2Postman in Go
 # Features
 
 * Can build on a base Postman 2.0 spec that contains information not readily stored in Swagger Spec to support Postman features such as scripts.
-* Can take override parameters such as a Postman environment parameter for the URL hostname, e.g. https://{{api.example.com}}/rest
+* Can take override parameters such as a Postman environment parameter for the URL hostname, e.g. https://{{MY_HOSTNAME}}/rest
 
 # Example Usage
 
 There is an example conversion available, `bin/convert.go` which creates a Postman 2.0 spec for the [RingCentral REST API](https://developers.ringcentral.com) using a base Postman 2.0 spec and the RingCentral basic Swagger 2.0 spec.
-
-Currently a different spec is needed for the RingCentral Production and Sandbox environments due to the different hostnames used.
 
 The RingCentral spec uses the following environment variables. The following is the Postman bulk edit format:
 
