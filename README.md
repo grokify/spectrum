@@ -1,7 +1,7 @@
 Swagger2Postman in Go
 =====================
 
-`swagger2postman` creates Postman 2.0 specs from a Swagger 2.0 spec.
+`swagger2postman` creates a Postman 2.0 Collection spec from a Swagger (OAI) 2.0 spec.
 
 # Features
 
