@@ -164,13 +164,12 @@ func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerUrl 
 	URLParts := []string{}
 
 	// Set URL path parts
-	if len(strings.TrimSpace(swag.Host)) > 0 {
-		if len(strings.TrimSpace(cfg.PostmanURLHostname)) > 0 {
-			URLParts = append(URLParts, strings.TrimSpace(cfg.PostmanURLHostname))
-		} else {
-			URLParts = append(URLParts, strings.TrimSpace(swag.Host))
-		}
+	if len(strings.TrimSpace(cfg.PostmanURLHostname)) > 0 {
+		URLParts = append(URLParts, strings.TrimSpace(cfg.PostmanURLHostname))
+	} else if len(strings.TrimSpace(swag.Host)) > 0 {
+		URLParts = append(URLParts, strings.TrimSpace(swag.Host))
 	}
+
 	if len(strings.TrimSpace(swag.BasePath)) > 0 {
 		URLParts = append(URLParts, strings.TrimSpace(swag.BasePath))
 	}
