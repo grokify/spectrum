@@ -35,7 +35,8 @@ func main() {
 
 	cfg := swagger2postman.Configuration{
 		PostmanURLHostname: "{{RC_SERVER_HOSTNAME}}",
-		PostmanHeaders: []postman2.Header{postman2.Header{Key: "Authorization",
+		PostmanHeaders: []postman2.Header{postman2.Header{
+			Key:   "Authorization",
 			Value: "Bearer {{myAccessToken}}"}}}
 
 	swag, err := getSwagger2Spec(swagSpecFilepath)
