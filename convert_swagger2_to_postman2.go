@@ -1,6 +1,7 @@
 package swagger2postman
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 
@@ -9,7 +10,8 @@ import (
 )
 
 type Configuration struct {
-	PostmanURLHostname string
+	PostmanURLHostname string            `json:"postmanURLHostname,omitempty"`
+	PostmanHeaders     []postman2.Header `json:"postmanHeaders,omitempty"`
 }
 
 type Converter struct {
@@ -29,11 +31,39 @@ func Convert(swag swagger2.Specification) postman2.Collection {
 		if url != "/v1.0/account/{accountId}/extension" {
 			continue
 		}
+		fmt.Println(url)
 
 		if len(path.Get.Tags) > 0 {
 			if len(strings.TrimSpace(path.Get.Tags[0])) > 0 {
 				pmItem := Swagger2PathToPostman2ApiItem(cfg, swag, url, "GET", path.Get)
 				pmFolderName := strings.TrimSpace(path.Get.Tags[0])
+				pmFolder := pman.GetOrNewFolder(pmFolderName)
+				pmFolder.Item = append(pmFolder.Item, pmItem)
+				pman.SetFolder(pmFolder)
+			}
+		}
+		if len(path.Post.Tags) > 0 {
+			if len(strings.TrimSpace(path.Post.Tags[0])) > 0 {
+				pmItem := Swagger2PathToPostman2ApiItem(cfg, swag, url, "POST", path.Post)
+				pmFolderName := strings.TrimSpace(path.Post.Tags[0])
+				pmFolder := pman.GetOrNewFolder(pmFolderName)
+				pmFolder.Item = append(pmFolder.Item, pmItem)
+				pman.SetFolder(pmFolder)
+			}
+		}
+		if len(path.Put.Tags) > 0 {
+			if len(strings.TrimSpace(path.Put.Tags[0])) > 0 {
+				pmItem := Swagger2PathToPostman2ApiItem(cfg, swag, url, "PUT", path.Put)
+				pmFolderName := strings.TrimSpace(path.Put.Tags[0])
+				pmFolder := pman.GetOrNewFolder(pmFolderName)
+				pmFolder.Item = append(pmFolder.Item, pmItem)
+				pman.SetFolder(pmFolder)
+			}
+		}
+		if len(path.Delete.Tags) > 0 {
+			if len(strings.TrimSpace(path.Delete.Tags[0])) > 0 {
+				pmItem := Swagger2PathToPostman2ApiItem(cfg, swag, url, "DELETE", path.Delete)
+				pmFolderName := strings.TrimSpace(path.Delete.Tags[0])
 				pmFolder := pman.GetOrNewFolder(pmFolderName)
 				pmFolder.Item = append(pmFolder.Item, pmItem)
 				pman.SetFolder(pmFolder)
@@ -58,6 +88,33 @@ func Merge(cfg Configuration, pman postman2.Collection, swag swagger2.Specificat
 			if len(strings.TrimSpace(path.Get.Tags[0])) > 0 {
 				pmItem := Swagger2PathToPostman2ApiItem(cfg, swag, url, "GET", path.Get)
 				pmFolderName := strings.TrimSpace(path.Get.Tags[0])
+				pmFolder := pman.GetOrNewFolder(pmFolderName)
+				pmFolder.Item = append(pmFolder.Item, pmItem)
+				pman.SetFolder(pmFolder)
+			}
+		}
+		if len(path.Post.Tags) > 0 {
+			if len(strings.TrimSpace(path.Post.Tags[0])) > 0 {
+				pmItem := Swagger2PathToPostman2ApiItem(cfg, swag, url, "POST", path.Post)
+				pmFolderName := strings.TrimSpace(path.Post.Tags[0])
+				pmFolder := pman.GetOrNewFolder(pmFolderName)
+				pmFolder.Item = append(pmFolder.Item, pmItem)
+				pman.SetFolder(pmFolder)
+			}
+		}
+		if len(path.Put.Tags) > 0 {
+			if len(strings.TrimSpace(path.Put.Tags[0])) > 0 {
+				pmItem := Swagger2PathToPostman2ApiItem(cfg, swag, url, "PUT", path.Put)
+				pmFolderName := strings.TrimSpace(path.Put.Tags[0])
+				pmFolder := pman.GetOrNewFolder(pmFolderName)
+				pmFolder.Item = append(pmFolder.Item, pmItem)
+				pman.SetFolder(pmFolder)
+			}
+		}
+		if len(path.Delete.Tags) > 0 {
+			if len(strings.TrimSpace(path.Delete.Tags[0])) > 0 {
+				pmItem := Swagger2PathToPostman2ApiItem(cfg, swag, url, "DELETE", path.Delete)
+				pmFolderName := strings.TrimSpace(path.Delete.Tags[0])
 				pmFolder := pman.GetOrNewFolder(pmFolderName)
 				pmFolder.Item = append(pmFolder.Item, pmItem)
 				pman.SetFolder(pmFolder)
@@ -94,9 +151,9 @@ func Swagger2PathToPostman2ApiItem(cfg Configuration, swag swagger2.Specificatio
 				Value: strings.TrimSpace(endpoint.Consumes[0])})
 		}
 	}
-	headers = append(headers, postman2.Header{
-		Key:   "Authorization",
-		Value: "Bearer {{myAccessToken}}"})
+	for _, header := range cfg.PostmanHeaders {
+		headers = append(headers, header)
+	}
 
 	item.Request.Header = headers
 

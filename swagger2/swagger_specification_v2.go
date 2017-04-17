@@ -26,7 +26,10 @@ type Info struct {
 }
 
 type Path struct {
-	Get Endpoint `json:"get,omitempty"`
+	Get    Endpoint `json:"get,omitempty"`
+	Post   Endpoint `json:"post,omitempty"`
+	Put    Endpoint `json:"put,omitempty"`
+	Delete Endpoint `json:"delete,omitempty"`
 }
 
 type Endpoint struct {

@@ -5,8 +5,9 @@ Swagger2Postman in Go
 
 # Features
 
-* Can build on a base Postman 2.0 spec that contains information not readily stored in Swagger Spec to support Postman features such as scripts.
-* Can take override parameters such as a Postman environment parameter for the URL hostname, e.g. https://{{MY_HOSTNAME}}/rest
+* Build on a base Postman 2.0 spec that contains information not readily stored in Swagger Spec to support Postman features such as scripts.
+* Supports override parameters such as a Postman environment parameter for the URL hostname, e.g. https://{{MY_HOSTNAME}}/rest
+* Supports additional headers, e.g. authorization headers using enviroment variables, e.g. `Authorization: Bearer {{myAccessToken}}`
 
 # Example Usage
 

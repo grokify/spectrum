@@ -34,8 +34,14 @@ func main() {
 	pmanSpecFilepath := "ringcentral.postman2.basic.json"
 
 	cfg := swagger2postman.Configuration{
-		PostmanURLHostname: "{{RC_SERVER_HOSTNAME}}"}
-
+		PostmanURLHostname: "{{RC_SERVER_HOSTNAME}}",
+		PostmanHeaders: []postman2.Header{postman2.Header{Key: "Authorization",
+			Value: "Bearer {{myAccessToken}}"}}}
+	/*
+		headers = append(headers, postman2.Header{
+			Key:   "Authorization",
+			Value: "Bearer {{myAccessToken}}"})
+	*/
 	swag, err := getSwagger2Spec(swagSpecFilepath)
 	if err != nil {
 		panic(err)
