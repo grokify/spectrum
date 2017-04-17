@@ -15,9 +15,9 @@ Swagger2Postman in Go
 
 # Example Usage
 
-There is an example conversion available, `examples/ringcentral/convert.go` which creates a Postman 2.0 spec for the [RingCentral REST API](https://developers.ringcentral.com) using a base Postman 2.0 spec and the RingCentral basic Swagger 2.0 spec.
+There is an example conversion available, [`examples/ringcentral/convert.go`](https://github.com/grokify/swagger2postman-go/blob/master/examples/ringcentral/convert.go) which creates a Postman 2.0 spec for the [RingCentral REST API](https://developers.ringcentral.com) using a base Postman 2.0 spec and the RingCentral basic Swagger 2.0 spec.
 
-The RingCentral Postman 2.0 spec is here: [ringcentral.postman2.basic.json](https://github.com/grokify/swagger2postman-go/blob/master/examples/ringcentral/ringcentral.postman2.basic.json)
+The RingCentral Postman 2.0 spec is here: [`ringcentral.postman2.basic.json`](https://github.com/grokify/swagger2postman-go/blob/master/examples/ringcentral/ringcentral.postman2.basic.json)
 
 The RingCentral spec uses the following environment variables. The following is the Postman bulk edit format:
 
