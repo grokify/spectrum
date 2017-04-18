@@ -12,6 +12,7 @@ Swagger2Postman in Go
 # Notes
 
 * Postman 4.10.7 does not natively support JSON requests so request bodies need to be entered using the raw body editor. A future task is to add Swagger request examples as default Postman request bodies.
+* Postman 2.0 spec doesn't have a canonical schema. The `request.url` property can be populated by a URL string or a URL object. Swagger2Postman uses the URL object since it is more flexible. The function `simple.NewCanonicalCollectionFromBytes(bytes)` can be used to read either a simple or object based spec into a canonical object spec.
 
 # Example Usage
 

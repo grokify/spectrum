@@ -7,6 +7,7 @@ import (
 
 	"github.com/grokify/swagger2postman-go"
 	"github.com/grokify/swagger2postman-go/postman2"
+	"github.com/grokify/swagger2postman-go/postman2/simple"
 	"github.com/grokify/swagger2postman-go/swagger2"
 
 	"github.com/grokify/gotilla/fmt/fmtutil"
@@ -25,6 +26,7 @@ func getPostman2BaseSpec(filepath string) (postman2.Collection, error) {
 	if err != nil {
 		return postman2.Collection{}, err
 	}
+	return simple.NewCanonicalCollectionFromBytes(bytes)
 	return postman2.NewCollectionFromBytes(bytes)
 }
 

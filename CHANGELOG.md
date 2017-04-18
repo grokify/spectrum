@@ -6,3 +6,4 @@ CHANGELOG
   - Add ability to use base Postman 2.0 spec
   - Add ability to override API URL hostname
   - Add ability to add additional headers
+  - Add support for reloading base Postman spec with simple Request.URL
