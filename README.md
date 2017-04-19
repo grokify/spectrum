@@ -21,10 +21,15 @@ Swagger2Postman in Go
 # Usage
 
 ```go
+import(
+	"github.com/grokify/swagger2postman-go"
+	"github.com/grokify/swagger2postman-go/postman2"
+)
+
 // Instantiate a converter with default configuration
 conv := swagger2postman.NewConverter(swagger2postman.Configuration{})
 
-// Instantiate a converter with overrides
+// Instantiate a converter with overrides (using Postman environment variables)
 cfg := swagger2postman.Configuration{
 	PostmanURLHostname: "{{RC_SERVER_HOSTNAME}}",
 	PostmanHeaders: []postman2.Header{postman2.Header{
