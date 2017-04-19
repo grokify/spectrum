@@ -2,6 +2,7 @@ package swagger2
 
 import (
 	"encoding/json"
+	"io/ioutil"
 )
 
 type Specification struct {
@@ -16,6 +17,14 @@ func NewSpecificationFromBytes(data []byte) (Specification, error) {
 	spec := Specification{}
 	err := json.Unmarshal(data, &spec)
 	return spec, err
+}
+
+func ReadSwagger2Spec(filepath string) (Specification, error) {
+	bytes, err := ioutil.ReadFile(filepath)
+	if err != nil {
+		return Specification{}, err
+	}
+	return NewSpecificationFromBytes(bytes)
 }
 
 type Info struct {

@@ -1,11 +1,14 @@
 package swagger2postman
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"regexp"
 	"strings"
 
 	"github.com/grokify/swagger2postman-go/postman2"
+	"github.com/grokify/swagger2postman-go/postman2/simple"
 	"github.com/grokify/swagger2postman-go/swagger2"
 )
 
@@ -15,7 +18,32 @@ type Configuration struct {
 }
 
 type Converter struct {
-	Swagger swagger2.Specification
+	Configuration Configuration
+	Swagger       swagger2.Specification
+}
+
+func NewConverter(cfg Configuration) Converter {
+	return Converter{Configuration: cfg}
+}
+
+func (conv *Converter) MergeConvert(swaggerFilepath string, pmanBaseFilepath string, pmanSpecFilepath string) error {
+	swag, err := swagger2.ReadSwagger2Spec(swaggerFilepath)
+	if err != nil {
+		return err
+	}
+
+	pman, err := simple.ReadCanonicalCollection(pmanBaseFilepath)
+	if err != nil {
+		return err
+	}
+
+	pm := Merge(conv.Configuration, pman, swag)
+
+	bytes, err := json.MarshalIndent(pm, "", "  ")
+	if err != nil {
+		return err
+	}
+	return ioutil.WriteFile(pmanSpecFilepath, bytes, 0644)
 }
 
 func Convert(swag swagger2.Specification) postman2.Collection {

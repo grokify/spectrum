@@ -2,6 +2,7 @@ package simple
 
 import (
 	"encoding/json"
+	"io/ioutil"
 
 	"github.com/grokify/swagger2postman-go/postman2"
 )
@@ -24,9 +25,19 @@ func NewCanonicalCollectionFromBytes(data []byte) (postman2.Collection, error) {
 	}
 	sPman, err2 := NewCollectionFromBytes(data)
 	if err2 == nil {
-		return sPman.ToCanonical(), nil
+		cPman = sPman.ToCanonical()
+		cPman.InflateRawURLs()
+		return cPman, nil
 	}
 	return postman2.Collection{}, err2
+}
+
+func ReadCanonicalCollection(filepath string) (postman2.Collection, error) {
+	bytes, err := ioutil.ReadFile(filepath)
+	if err != nil {
+		return postman2.Collection{}, err
+	}
+	return NewCanonicalCollectionFromBytes(bytes)
 }
 
 func (col *Collection) ToCanonical() postman2.Collection {
