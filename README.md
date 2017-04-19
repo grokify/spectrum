@@ -18,6 +18,27 @@ Swagger2Postman in Go
 * Postman 4.10.7 does not natively support JSON requests so request bodies need to be entered using the raw body editor. A future task is to add Swagger request examples as default Postman request bodies.
 * Postman 2.0 spec doesn't have a canonical schema. The `request.url` property can be populated by a URL string or a URL object. Swagger2Postman uses the URL object since it is more flexible. The function `simple.NewCanonicalCollectionFromBytes(bytes)` can be used to read either a simple or object based spec into a canonical object spec.
 
+# Usage
+
+```go
+// Instantiate a converter with default configuration
+conv := swagger2postman.NewConverter(swagger2postman.Configuration{})
+
+// Instantiate a converter with overrides
+cfg := swagger2postman.Configuration{
+	PostmanURLHostname: "{{RC_SERVER_HOSTNAME}}",
+	PostmanHeaders: []postman2.Header{postman2.Header{
+		Key:   "Authorization",
+		Value: "Bearer {{my_access_token}}"}}}
+conv = swagger2postman.NewConverter(cfg)
+
+// Convert a Swagger spec
+err1 := conv.Convert(swagSpecFilepath, pmanSpecFilepath)
+
+// Convert a Swagger spec with a default Postman spec
+err2 := conv.MergeConvert(swagSpecFilepath, pmanBaseFilepath, pmanSpecFilepath)
+```
+
 # Example Usage
 
 There is an example conversion available, [`examples/ringcentral/convert.go`](https://github.com/grokify/swagger2postman-go/blob/master/examples/ringcentral/convert.go) which creates a Postman 2.0 spec for the [RingCentral REST API](https://developers.ringcentral.com) using a base Postman 2.0 spec and the RingCentral basic Swagger 2.0 spec.
