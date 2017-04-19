@@ -16,10 +16,18 @@ func main() {
 		PostmanURLHostname: "{{RC_SERVER_HOSTNAME}}",
 		PostmanHeaders: []postman2.Header{postman2.Header{
 			Key:   "Authorization",
-			Value: "Bearer {{myAccessToken}}"}}}
+			Value: "Bearer {{my_access_token}}"}}}
 
 	conv := swagger2postman.NewConverter(cfg)
-	err := conv.MergeConvert(swagSpecFilepath, pmanBaseFilepath, pmanSpecFilepath)
+
+	merge := true
+	var err error
+
+	if merge {
+		err = conv.MergeConvert(swagSpecFilepath, pmanBaseFilepath, pmanSpecFilepath)
+	} else {
+		err = conv.Convert(swagSpecFilepath, pmanSpecFilepath)
+	}
 
 	if err != nil {
 		panic(err)

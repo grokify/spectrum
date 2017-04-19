@@ -34,9 +34,9 @@ The RingCentral spec uses the following environment variables. The following is 
 RC_SERVER_HOSTNAME:platform.devtest.ringcentral.com
 RC_APP_KEY:myAppKey
 RC_APP_SECRET:myAppSecret
-RC_USER_USERNAME:myMainCompanyPhoneNumber
-RC_USER_EXTENSION:myExtension
-RC_USER_PASSWORD:myPassword
+RC_USERNAME:myMainCompanyPhoneNumber
+RC_EXTENSION:myExtension
+RC_PASSWORD:myPassword
 ```
 
 For multiple apps or users, simply create a different Postman environment for each.

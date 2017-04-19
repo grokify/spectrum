@@ -2,7 +2,6 @@ package swagger2postman
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"regexp"
 	"strings"
@@ -46,65 +45,33 @@ func (conv *Converter) MergeConvert(swaggerFilepath string, pmanBaseFilepath str
 	return ioutil.WriteFile(pmanSpecFilepath, bytes, 0644)
 }
 
-func Convert(swag swagger2.Specification) postman2.Collection {
-	cfg := Configuration{}
-
-	pman := postman2.Collection{
-		Info: postman2.CollectionInfo{
-			Name:        swag.Info.Title,
-			Description: swag.Info.Description,
-			Schema:      "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"}}
-
-	for url, path := range swag.Paths {
-		if url != "/v1.0/account/{accountId}/extension" {
-			continue
-		}
-		fmt.Println(url)
-
-		if len(path.Get.Tags) > 0 {
-			if len(strings.TrimSpace(path.Get.Tags[0])) > 0 {
-				pmItem := Swagger2PathToPostman2ApiItem(cfg, swag, url, "GET", path.Get)
-				pmFolderName := strings.TrimSpace(path.Get.Tags[0])
-				pmFolder := pman.GetOrNewFolder(pmFolderName)
-				pmFolder.Item = append(pmFolder.Item, pmItem)
-				pman.SetFolder(pmFolder)
-			}
-		}
-		if len(path.Post.Tags) > 0 {
-			if len(strings.TrimSpace(path.Post.Tags[0])) > 0 {
-				pmItem := Swagger2PathToPostman2ApiItem(cfg, swag, url, "POST", path.Post)
-				pmFolderName := strings.TrimSpace(path.Post.Tags[0])
-				pmFolder := pman.GetOrNewFolder(pmFolderName)
-				pmFolder.Item = append(pmFolder.Item, pmItem)
-				pman.SetFolder(pmFolder)
-			}
-		}
-		if len(path.Put.Tags) > 0 {
-			if len(strings.TrimSpace(path.Put.Tags[0])) > 0 {
-				pmItem := Swagger2PathToPostman2ApiItem(cfg, swag, url, "PUT", path.Put)
-				pmFolderName := strings.TrimSpace(path.Put.Tags[0])
-				pmFolder := pman.GetOrNewFolder(pmFolderName)
-				pmFolder.Item = append(pmFolder.Item, pmItem)
-				pman.SetFolder(pmFolder)
-			}
-		}
-		if len(path.Delete.Tags) > 0 {
-			if len(strings.TrimSpace(path.Delete.Tags[0])) > 0 {
-				pmItem := Swagger2PathToPostman2ApiItem(cfg, swag, url, "DELETE", path.Delete)
-				pmFolderName := strings.TrimSpace(path.Delete.Tags[0])
-				pmFolder := pman.GetOrNewFolder(pmFolderName)
-				pmFolder.Item = append(pmFolder.Item, pmItem)
-				pman.SetFolder(pmFolder)
-			}
-		}
+func (conv *Converter) Convert(swaggerFilepath string, pmanSpecFilepath string) error {
+	swag, err := swagger2.ReadSwagger2Spec(swaggerFilepath)
+	if err != nil {
+		return err
 	}
+	pm := Convert(conv.Configuration, swag)
 
-	return pman
+	bytes, err := json.MarshalIndent(pm, "", "  ")
+	if err != nil {
+		return err
+	}
+	return ioutil.WriteFile(pmanSpecFilepath, bytes, 0644)
+}
+
+func Convert(cfg Configuration, swag swagger2.Specification) postman2.Collection {
+	return Merge(cfg, postman2.Collection{}, swag)
 }
 
 func Merge(cfg Configuration, pman postman2.Collection, swag swagger2.Specification) postman2.Collection {
 	if len(pman.Info.Name) == 0 {
-		pman.Info.Name = swag.Info.Title
+		pman.Info.Name = strings.TrimSpace(swag.Info.Title)
+	}
+	if len(pman.Info.Description) == 0 {
+		pman.Info.Description = strings.TrimSpace(swag.Info.Description)
+	}
+	if len(pman.Info.Schema) == 0 {
+		pman.Info.Schema = "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	}
 
 	for url, path := range swag.Paths {

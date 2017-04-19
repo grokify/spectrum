@@ -21,15 +21,15 @@ func NewCollectionFromBytes(data []byte) (Collection, error) {
 func NewCanonicalCollectionFromBytes(data []byte) (postman2.Collection, error) {
 	cPman, err := postman2.NewCollectionFromBytes(data)
 	if err == nil {
-		return cPman, err
-	}
-	sPman, err2 := NewCollectionFromBytes(data)
-	if err2 == nil {
-		cPman = sPman.ToCanonical()
 		cPman.InflateRawURLs()
 		return cPman, nil
 	}
-	return postman2.Collection{}, err2
+	sPman, err := NewCollectionFromBytes(data)
+	if err != nil {
+		return cPman, err
+	}
+	cPman = sPman.ToCanonical()
+	return cPman, nil
 }
 
 func ReadCanonicalCollection(filepath string) (postman2.Collection, error) {
