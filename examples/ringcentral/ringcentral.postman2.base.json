@@ -32,7 +32,9 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"// Populate the following using a Postman environment",
+									"// Populate the Postman environment with:",
+									"// RC_SERVER_HOSTNAME, RC_APP_KEY, RC_APP_SECRET,",
+									"// RC_USERNAME, RC_EXTENSION, RC_PASSWORD",
 									"var appKey = environment[\"RC_APP_KEY\"];",
 									"var appSecret = environment[\"RC_APP_SECRET\"];",
 									"var apiKey = encodeBasicAuthHeader(appKey, appSecret);",
@@ -42,8 +44,7 @@
 									"function encodeBasicAuthHeader(appKey, appSecret) {",
 									"    var apiKey = appKey + ':' + appSecret;",
 									"    return btoa(apiKey);",
-									"}",
-									""
+									"}"
 								]
 							}
 						}

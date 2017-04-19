@@ -32,22 +32,19 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"// Populate the following using a Postman environment",
+									"// Populate the Postman environment with:",
+									"// RC_SERVER_HOSTNAME, RC_APP_KEY, RC_APP_SECRET,",
+									"// RC_USERNAME, RC_EXTENSION, RC_PASSWORD",
 									"var appKey = environment[\"RC_APP_KEY\"];",
 									"var appSecret = environment[\"RC_APP_SECRET\"];",
+									"var apiKey = encodeBasicAuthHeader(appKey, appSecret);",
 									"",
-									"postman.setEnvironmentVariable(\"basicAuthHeaderValue\", encodeBasicAuthHeader());",
+									"postman.setEnvironmentVariable(\"basic_auth_header\", \"Basic \".concat(apiKey));",
 									"",
-									"function encodeBasicAuthHeader() {",
+									"function encodeBasicAuthHeader(appKey, appSecret) {",
 									"    var apiKey = appKey + ':' + appSecret;",
 									"    return btoa(apiKey);",
-									"}",
-									"",
-									"postman.setEnvironmentVariable(\"rcUsername\", \"{{RC_USER_USERNAME}}\");",
-									"",
-									"postman.setEnvironmentVariable(\"rcPassword\", \"{{RC_USER_PASSWORD}}\");",
-									"",
-									"postman.setEnvironmentVariable(\"rcExtension\", \"{{RC_USER_EXTENSION}}\");"
+									"}"
 								]
 							}
 						}
@@ -58,7 +55,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic {{basicAuthHeaderValue}}",
+								"value": "{{basic_auth_header}}",
 								"description": ""
 							},
 							{
@@ -83,19 +80,19 @@
 								},
 								{
 									"key": "username",
-									"value": "{{rcUsername}}",
+									"value": "{{RC_USERNAME}}",
 									"type": "text",
 									"enabled": true
 								},
 								{
 									"key": "password",
-									"value": "{{rcPassword}}",
+									"value": "{{RC_PASSWORD}}",
 									"type": "text",
 									"enabled": true
 								},
 								{
 									"key": "extension",
-									"value": "{{rcExtension}}",
+									"value": "{{RC_EXTENSION}}",
 									"type": "text",
 									"enabled": true
 								}
