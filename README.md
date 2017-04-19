@@ -1,6 +1,10 @@
 Swagger2Postman in Go
 =====================
 
+[![Go Report Card][goreport-svg]][goreport-link]
+[![Docs][docs-godoc-svg]][docs-godoc-link]
+[![License][license-svg]][license-link]
+
 `swagger2postman` creates a Postman 2.0 Collection spec from a Swagger (OAI) 2.0 spec.
 
 # Features
@@ -38,3 +42,10 @@ RC_USER_PASSWORD:myPassword
 For multiple apps or users, simply create a different Postman environment for each.
 
 To set your environment variables, use the Settings Gear icon and then click "Manage Environments"
+
+ [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/swagger2postman-go
+ [goreport-link]: https://goreportcard.com/report/github.com/grokify/swagger2postman-go
+ [docs-godoc-svg]: https://img.shields.io/badge/docs-godoc-blue.svg
+ [docs-godoc-link]: https://godoc.org/github.com/grokify/swagger2postman-go
+ [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
+ [license-link]: https://github.com/grokify/swagger2postman-go/blob/master/LICENSE.md
