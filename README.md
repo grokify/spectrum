@@ -1,11 +1,11 @@
-Swagger2Postman in Go
-=====================
+Swaggman - Swagger to Postman Converter
+=======================================
 
 [![Go Report Card][goreport-svg]][goreport-link]
 [![Docs][docs-godoc-svg]][docs-godoc-link]
 [![License][license-svg]][license-link]
 
-`swagger2postman` creates a Postman 2.0 Collection spec from a Swagger (OAI) 2.0 spec.
+`swaggman` is an API specification converter that creates a Postman 2.0 Collection spec from a Swagger (OAI) 2.0 spec.
 
 # Features
 
@@ -16,26 +16,26 @@ Swagger2Postman in Go
 # Notes
 
 * Postman 4.10.7 does not natively support JSON requests so request bodies need to be entered using the raw body editor. A future task is to add Swagger request examples as default Postman request bodies.
-* Postman 2.0 spec supports polymorphism and doesn't have a canonical schema. For example, the `request.url` property can be populated by a URL string or a URL object. Swagger2Postman uses the URL object since it is more flexible. The function `simple.NewCanonicalCollectionFromBytes(bytes)` can be used to read either a simple or object based spec into a canonical object spec.
+* Postman 2.0 spec supports polymorphism and doesn't have a canonical schema. For example, the `request.url` property can be populated by a URL string or a URL object. Swaggman uses the URL object since it is more flexible. The function `simple.NewCanonicalCollectionFromBytes(bytes)` can be used to read either a simple or object based spec into a canonical object spec.
 
 # Usage
 
 ```go
 import(
-	"github.com/grokify/swagger2postman-go"
-	"github.com/grokify/swagger2postman-go/postman2"
+	"github.com/grokify/swaggman"
+	"github.com/grokify/swaggman/postman2"
 )
 
 // Instantiate a converter with default configuration
-conv := swagger2postman.NewConverter(swagger2postman.Configuration{})
+conv := swaggman.NewConverter(swaggman.Configuration{})
 
 // Instantiate a converter with overrides (using Postman environment variables)
-cfg := swagger2postman.Configuration{
+cfg := swaggman.Configuration{
 	PostmanURLHostname: "{{RC_SERVER_HOSTNAME}}",
 	PostmanHeaders: []postman2.Header{postman2.Header{
 		Key:   "Authorization",
 		Value: "Bearer {{my_access_token}}"}}}
-conv = swagger2postman.NewConverter(cfg)
+conv = swaggman.NewConverter(cfg)
 
 // Convert a Swagger spec
 err1 := conv.Convert(swagSpecFilepath, pmanSpecFilepath)
@@ -46,13 +46,13 @@ err2 := conv.MergeConvert(swagSpecFilepath, pmanBaseFilepath, pmanSpecFilepath)
 
 ## Example Usage
 
-There is an example conversion available, [`examples/ringcentral/convert.go`](https://github.com/grokify/swagger2postman-go/blob/master/examples/ringcentral/convert.go) which creates a Postman 2.0 spec for the [RingCentral REST API](https://developers.ringcentral.com) using a base Postman 2.0 spec and the RingCentral basic Swagger 2.0 spec.
+There is an example conversion available, [`examples/ringcentral/convert.go`](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/convert.go) which creates a Postman 2.0 spec for the [RingCentral REST API](https://developers.ringcentral.com) using a base Postman 2.0 spec and the RingCentral basic Swagger 2.0 spec.
 
 Example files include:
 
-* [RingCentral Swagger 2.0 spec](https://github.com/grokify/swagger2postman-go/blob/master/examples/ringcentral/ringcentral.swagger2.basic.json)
-* [RingCentral Postman 2.0 base](https://github.com/grokify/swagger2postman-go/blob/master/examples/ringcentral/ringcentral.postman2.base.json)
-* [RingCentral Postman 2.0 spec](https://github.com/grokify/swagger2postman-go/blob/master/examples/ringcentral/ringcentral.postman2.basic.json) - Import this into Postman
+* [RingCentral Swagger 2.0 spec](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/ringcentral.swagger2.basic.json)
+* [RingCentral Postman 2.0 base](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/ringcentral.postman2.base.json)
+* [RingCentral Postman 2.0 spec](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/ringcentral.postman2.basic.json) - Import this into Postman
 
 The RingCentral spec uses the following environment variables. The following is the Postman bulk edit format:
 
@@ -69,9 +69,9 @@ For multiple apps or users, simply create a different Postman environment for ea
 
 To set your environment variables, use the Settings Gear icon and then click "Manage Environments"
 
- [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/swagger2postman-go
- [goreport-link]: https://goreportcard.com/report/github.com/grokify/swagger2postman-go
+ [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/swaggman
+ [goreport-link]: https://goreportcard.com/report/github.com/grokify/swaggman
  [docs-godoc-svg]: https://img.shields.io/badge/docs-godoc-blue.svg
- [docs-godoc-link]: https://godoc.org/github.com/grokify/swagger2postman-go
+ [docs-godoc-link]: https://godoc.org/github.com/grokify/swaggman
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-link]: https://github.com/grokify/swagger2postman-go/blob/master/LICENSE.md
+ [license-link]: https://github.com/grokify/swaggman/blob/master/LICENSE.md

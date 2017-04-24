@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/grokify/swagger2postman-go"
-	"github.com/grokify/swagger2postman-go/postman2"
+	"github.com/grokify/swaggman"
+	"github.com/grokify/swaggman/postman2"
 )
 
 func main() {
@@ -12,13 +12,13 @@ func main() {
 	pmanBaseFilepath := "ringcentral.postman2.base.json"
 	pmanSpecFilepath := "ringcentral.postman2.basic.json"
 
-	cfg := swagger2postman.Configuration{
+	cfg := swaggman.Configuration{
 		PostmanURLHostname: "{{RC_SERVER_HOSTNAME}}",
 		PostmanHeaders: []postman2.Header{postman2.Header{
 			Key:   "Authorization",
 			Value: "Bearer {{my_access_token}}"}}}
 
-	conv := swagger2postman.NewConverter(cfg)
+	conv := swaggman.NewConverter(cfg)
 
 	merge := true
 	var err error

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 
-	"github.com/grokify/swagger2postman-go/postman2"
+	"github.com/grokify/swaggman/postman2"
 )
 
 type Collection struct {

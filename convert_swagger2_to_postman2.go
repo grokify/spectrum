@@ -1,4 +1,4 @@
-package swagger2postman
+package swaggman
 
 import (
 	"encoding/json"
@@ -6,9 +6,9 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/grokify/swagger2postman-go/postman2"
-	"github.com/grokify/swagger2postman-go/postman2/simple"
-	"github.com/grokify/swagger2postman-go/swagger2"
+	"github.com/grokify/swaggman/postman2"
+	"github.com/grokify/swaggman/postman2/simple"
+	"github.com/grokify/swaggman/swagger2"
 )
 
 type Configuration struct {

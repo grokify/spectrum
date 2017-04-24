@@ -1,5 +1,7 @@
 CHANGELOG
 ---------
+- **0.0.2** - 2017-04-24
+  - Rename to 'swaggman' from 'postman2swagger'
 - **0.0.1** - 2017-04-17
   - Initial commit
   - Add base Swagger 2.0 to Postman 2.0 conversion
