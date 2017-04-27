@@ -201,12 +201,16 @@ func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerUrl 
 		rs4 := rx4.FindAllStringSubmatch(part, -1)
 		if len(rs4) > 0 {
 			baseVariable := rs4[0][2]
-			defaultValue := ""
+			//defaultValue := ""
+			var defaultValue interface{}
 			for _, parameter := range endpoint.Parameters {
 				if parameter.Name == baseVariable {
-					if len(strings.TrimSpace(parameter.Default)) > 0 {
-						defaultValue = strings.TrimSpace(parameter.Default)
-					}
+					defaultValue = parameter.Default
+					/*
+						if len(strings.TrimSpace(parameter.Default)) > 0 {
+							defaultValue = strings.TrimSpace(parameter.Default)
+						}
+					*/
 					break
 				}
 			}

@@ -1,5 +1,7 @@
 CHANGELOG
 ---------
+- **0.0.3** - 2017-04-26
+  - Update default value type from `string` to `interface{}`
 - **0.0.2** - 2017-04-24
   - Rename to 'swaggman' from 'postman2swagger'
 - **0.0.1** - 2017-04-17

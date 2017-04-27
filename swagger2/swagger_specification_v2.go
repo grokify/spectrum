@@ -52,10 +52,10 @@ type Endpoint struct {
 }
 
 type Parameter struct {
-	Name        string `json:"name,omitempty"`
-	Type        string `json:"type,omitempty"`
-	In          string `json:"in,omitempty"`
-	Description string `json:"description,omitempty"`
-	Required    bool   `json:"required,omitempty"`
-	Default     string `json:"default,omitempty"`
+	Name        string      `json:"name,omitempty"`
+	Type        string      `json:"type,omitempty"`
+	In          string      `json:"in,omitempty"`
+	Description string      `json:"description,omitempty"`
+	Required    bool        `json:"required,omitempty"`
+	Default     interface{} `json:"default,omitempty"`
 }

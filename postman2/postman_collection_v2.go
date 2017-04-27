@@ -99,8 +99,8 @@ type URL struct {
 }
 
 type URLVariable struct {
-	Value string `json:"value,omitempty"`
-	Id    string `json:"id,omitempty"`
+	Value interface{} `json:"value,omitempty"`
+	Id    string      `json:"id,omitempty"`
 }
 
 func NewURL(rawURL string) URL {
@@ -125,7 +125,7 @@ func NewURL(rawURL string) URL {
 	return url
 }
 
-func (url *URL) AddVariable(key string, value string) {
+func (url *URL) AddVariable(key string, value interface{}) {
 	variable := URLVariable{Id: key, Value: value}
 	url.Variable = append(url.Variable, variable)
 }
