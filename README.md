@@ -29,14 +29,13 @@ These are all used in the included example discussed below.
 ```go
 import(
 	"github.com/grokify/swaggman"
-	"github.com/grokify/swaggman/postman2"
 )
 
 // Instantiate a converter with default configuration
 conv := swaggman.NewConverter(swaggman.Configuration{})
 
 // Convert a Swagger spec
-err1 := conv.Convert(swagSpecFilepath, pmanSpecFilepath)
+err := conv.Convert(swagSpecFilepath, pmanSpecFilepath)
 ```
 
 ## Usage with Features
@@ -56,7 +55,7 @@ cfg := swaggman.Configuration{
 conv = swaggman.NewConverter(cfg)
 
 // Convert a Swagger spec with a default Postman spec
-err2 := conv.MergeConvert(swagSpecFilepath, pmanBaseFilepath, pmanSpecFilepath)
+err := conv.MergeConvert(swagSpecFilepath, pmanBaseFilepath, pmanSpecFilepath)
 ```
 
 ## Example Usage
