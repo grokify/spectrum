@@ -9,11 +9,13 @@ Swaggman - Swagger to Postman Converter
 
 # Features
 
-* Supports Postman scripts by accepting an optional base Postman 2.0 spec that contains information not readily stored in Swagger Spec.
+* Supports Postman scripts by accepting an optional base Postman 2.0 spec that contains information not readily stored in Swagger Spec to support functions such as OAuth Password Grant.
 * Supports override URL hostname parameter to support a Postman environment variable for the URL hostname, e.g. `https://{{MY_HOSTNAME}}/restapi`
 * Supports additional headers, e.g. authorization headers using enviroment variables, e.g. `Authorization: Bearer {{myAccessToken}}`
 
-[More discussion is available on Medium](https://medium.com/ringcentral-developers/using-postman-with-swagger-and-the-ringcentral-api-523712f792a0).
+These are all used in the included example discussed below.
+
+[Additional discussion is available on Medium](https://medium.com/ringcentral-developers/using-postman-with-swagger-and-the-ringcentral-api-523712f792a0).
 
 # Notes
 
