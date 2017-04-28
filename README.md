@@ -24,6 +24,8 @@ These are all used in the included example discussed below.
 
 # Usage
 
+## Simple Usage
+
 ```go
 import(
 	"github.com/grokify/swaggman"
@@ -33,6 +35,18 @@ import(
 // Instantiate a converter with default configuration
 conv := swaggman.NewConverter(swaggman.Configuration{})
 
+// Convert a Swagger spec
+err1 := conv.Convert(swagSpecFilepath, pmanSpecFilepath)
+```
+
+## Usage with Features
+
+```go
+import(
+	"github.com/grokify/swaggman"
+	"github.com/grokify/swaggman/postman2"
+)
+
 // Instantiate a converter with overrides (using Postman environment variables)
 cfg := swaggman.Configuration{
 	PostmanURLHostname: "{{RC_SERVER_HOSTNAME}}",
@@ -40,9 +54,6 @@ cfg := swaggman.Configuration{
 		Key:   "Authorization",
 		Value: "Bearer {{my_access_token}}"}}}
 conv = swaggman.NewConverter(cfg)
-
-// Convert a Swagger spec
-err1 := conv.Convert(swagSpecFilepath, pmanSpecFilepath)
 
 // Convert a Swagger spec with a default Postman spec
 err2 := conv.MergeConvert(swagSpecFilepath, pmanBaseFilepath, pmanSpecFilepath)
