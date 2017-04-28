@@ -9,9 +9,11 @@ Swaggman - Swagger to Postman Converter
 
 # Features
 
-* Build on a base Postman 2.0 spec that contains information not readily stored in Swagger Spec to support Postman features such as scripts.
-* Supports override parameters such as a Postman environment parameter for the URL hostname, e.g. https://{{MY_HOSTNAME}}/rest
+* Supports Postman scripts by accepting an optional base Postman 2.0 spec that contains information not readily stored in Swagger Spec.
+* Supports override URL hostname parameter to support a Postman environment variable for the URL hostname, e.g. `https://{{MY_HOSTNAME}}/restapi`
 * Supports additional headers, e.g. authorization headers using enviroment variables, e.g. `Authorization: Bearer {{myAccessToken}}`
+
+[More discussion is available on Medium](https://medium.com/ringcentral-developers/using-postman-with-swagger-and-the-ringcentral-api-523712f792a0).
 
 # Notes
 
@@ -46,7 +48,9 @@ err2 := conv.MergeConvert(swagSpecFilepath, pmanBaseFilepath, pmanSpecFilepath)
 
 ## Example Usage
 
-There is an example conversion available, [`examples/ringcentral/convert.go`](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/convert.go) which creates a Postman 2.0 spec for the [RingCentral REST API](https://developers.ringcentral.com) using a base Postman 2.0 spec and the RingCentral basic Swagger 2.0 spec.
+An example conversion is included, [`examples/ringcentral/convert.go`](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/convert.go) which creates a Postman 2.0 spec for the [RingCentral REST API](https://developers.ringcentral.com) using a base Postman 2.0 spec and the RingCentral basic Swagger 2.0 spec.
+
+[A video of importing the resulting Postman collection is available on YouTube](https://youtu.be/5kE4UPXJ-5Q).
 
 Example files include:
 
