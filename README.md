@@ -58,7 +58,7 @@ conv = swaggman.NewConverter(cfg)
 err := conv.MergeConvert(swagSpecFilepath, pmanBaseFilepath, pmanSpecFilepath)
 ```
 
-## Example Usage
+## Example
 
 An example conversion is included, [`examples/ringcentral/convert.go`](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/convert.go) which creates a Postman 2.0 spec for the [RingCentral REST API](https://developers.ringcentral.com) using a base Postman 2.0 spec and the RingCentral basic Swagger 2.0 spec.
 
