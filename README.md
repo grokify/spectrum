@@ -35,7 +35,7 @@ import(
 conv := swaggman.NewConverter(swaggman.Configuration{})
 
 // Convert a Swagger spec
-err := conv.Convert(swagSpecFilepath, pmanSpecFilepath)
+err := conv.Convert("path/to/swagger.json", "path/to/pman.out.json")
 ```
 
 ## Usage with Features
@@ -55,7 +55,7 @@ cfg := swaggman.Configuration{
 conv = swaggman.NewConverter(cfg)
 
 // Convert a Swagger spec with a default Postman spec
-err := conv.MergeConvert(swagSpecFilepath, pmanBaseFilepath, pmanSpecFilepath)
+err := conv.MergeConvert("path/to/swagger.json", "path/to/pman.base.json", "path/to/pman.out.json")
 ```
 
 ## Example
