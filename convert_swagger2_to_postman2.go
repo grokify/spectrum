@@ -87,7 +87,7 @@ func Merge(cfg Configuration, pman postman2.Collection, swag swagger2.Specificat
 	}
 
 	urls := []string{}
-	for url, _ := range swag.Paths {
+	for url := range swag.Paths {
 		urls = append(urls, url)
 	}
 	sort.Strings(urls)

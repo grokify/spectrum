@@ -14,7 +14,7 @@ func main() {
 
 	cfg := swaggman.Configuration{
 		PostmanURLHostname: "{{RC_SERVER_HOSTNAME}}",
-		PostmanHeaders: []postman2.Header{postman2.Header{
+		PostmanHeaders: []postman2.Header{{
 			Key:   "Authorization",
 			Value: "Bearer {{my_access_token}}"}}}
 
