@@ -146,9 +146,7 @@ func Swagger2PathToPostman2ApiItem(cfg Configuration, swag swagger2.Specificatio
 				Value: strings.TrimSpace(endpoint.Consumes[0])})
 		}
 	}
-	for _, header := range cfg.PostmanHeaders {
-		headers = append(headers, header)
-	}
+	headers = append(headers, cfg.PostmanHeaders...)
 
 	item.Request.Header = headers
 
