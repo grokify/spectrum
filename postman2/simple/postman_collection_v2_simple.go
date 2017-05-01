@@ -53,28 +53,28 @@ func (col *Collection) ToCanonical() postman2.Collection {
 type FolderItem struct {
 	Name        string    `json:"name,omitempty"`
 	Description string    `json:"description,omitempty"`
-	Item        []ApiItem `json:"item,omitempty"`
+	Item        []APIItem `json:"item,omitempty"`
 }
 
 func (folder *FolderItem) ToCanonical() postman2.FolderItem {
 	cFolderItem := postman2.FolderItem{
 		Name:        folder.Name,
 		Description: folder.Description,
-		Item:        []postman2.ApiItem{}}
+		Item:        []postman2.APIItem{}}
 	for _, apiItem := range folder.Item {
 		cFolderItem.Item = append(cFolderItem.Item, apiItem.ToCanonical())
 	}
 	return cFolderItem
 }
 
-type ApiItem struct {
+type APIItem struct {
 	Name    string           `json:"name,omitempty"`
 	Event   []postman2.Event `json:"event,omitempty"`
 	Request Request          `json:"request,omitempty"`
 }
 
-func (apiItem *ApiItem) ToCanonical() postman2.ApiItem {
-	return postman2.ApiItem{
+func (apiItem *APIItem) ToCanonical() postman2.APIItem {
+	return postman2.APIItem{
 		Name:    apiItem.Name,
 		Event:   apiItem.Event,
 		Request: apiItem.Request.ToCanonical()}
