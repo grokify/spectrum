@@ -112,8 +112,1589 @@
       ]
     },
     {
+      "name": "API Versions",
+      "item": [
+        {
+          "name": "Get API Versions",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                ""
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Version Info",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/:apiVersion",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                ":apiVersion"
+              ],
+              "variable": [
+                {
+                  "id": "apiVersion"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Account",
+      "item": [
+        {
+          "name": "Get Account Info",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Account Business Address",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/business-address",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "business-address"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Account Phone Numbers",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/phone-number",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "phone-number"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Phone Number(s) by ID",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/phone-number/:phoneNumberId",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "phone-number",
+                ":phoneNumberId"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "id": "phoneNumberId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Extension",
+      "item": [
+        {
+          "name": "Get Extension List",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Extension Info",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Extension Phone Number List",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/phone-number",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "phone-number"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Extension Profile Image",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/profile-image",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "profile-image"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Create Extension Profile Image",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/profile-image",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "profile-image"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Update Extension Profile Image",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/profile-image",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "profile-image"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Extension Profile Image",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/profile-image/:scaleSize",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "profile-image",
+                ":scaleSize"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                },
+                {
+                  "id": "scaleSize"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Call Log",
+      "item": [
+        {
+          "name": "Get Extension Active Calls",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/active-calls",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "active-calls"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Extension Call Log Records by Filter",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/call-log",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "call-log"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Extension Call Log Record(s) by ID",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/call-log/:callRecordId",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "call-log",
+                ":callRecordId"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                },
+                {
+                  "id": "callRecordId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Call Recording",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/recording/:recordingId",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "recording",
+                ":recordingId"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "id": "recordingId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Call Recording Data",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/recording/:recordingId/content",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "recording",
+                ":recordingId",
+                "content"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "id": "recordingId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Answering Rules",
+      "item": [
+        {
+          "name": "Get Answering Rules List",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/answering-rule",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "answering-rule"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Create Custom Answering Rule",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/answering-rule",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "answering-rule"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Answering Rule by ID",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/answering-rule/:ruleId",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "answering-rule",
+                ":ruleId"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                },
+                {
+                  "id": "ruleId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Update Custom Answering Rule by ID",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/answering-rule/:ruleId",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "answering-rule",
+                ":ruleId"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                },
+                {
+                  "id": "ruleId"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Delete Answering Rule by ID",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/answering-rule/:ruleId",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "answering-rule",
+                ":ruleId"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                },
+                {
+                  "id": "ruleId"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get User Business Hours",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/business-hours",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "business-hours"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Update User Business Hours",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/business-hours",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "business-hours"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Create Custom Greeting",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/greeting",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "greeting"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Custom Greeting by ID",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/greeting/:greetingId",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "greeting",
+                ":greetingId"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                },
+                {
+                  "id": "greetingId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Authorization Profile",
+      "item": [
+        {
+          "name": "Get User Permissions",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/authz-profile",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "authz-profile"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Check User Permissions",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/authz-profile/check",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "authz-profile",
+                "check"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
       "name": "Messages",
       "item": [
+        {
+          "name": "Create Pager Message",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/company-pager",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "company-pager"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Create Fax Message",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/fax",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "fax"
+              ],
+              "variable": [
+                {
+                  "id": "accountId"
+                },
+                {
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/mixed; boundary=Boundary_1_14413901_1361871080888"
+              },
+              {
+                "key": "Accept",
+                "value": "multipart/mixed; boundary=Boundary_1_14413901_1361871080888"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Message List",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/message-store",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "message-store"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Delete Conversation(s) by ID",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/message-store",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "message-store"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
         {
           "name": "Get Message(s) by ID",
           "request": {
@@ -271,52 +1852,6 @@
           }
         },
         {
-          "name": "Create Fax Message",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/fax",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "fax"
-              ],
-              "variable": [
-                {
-                  "id": "accountId"
-                },
-                {
-                  "id": "extensionId"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "multipart/mixed; boundary=Boundary_1_14413901_1361871080888"
-              },
-              {
-                "key": "Accept",
-                "value": "multipart/mixed; boundary=Boundary_1_14413901_1361871080888"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
           "name": "Get Message Attachment",
           "request": {
             "url": {
@@ -356,150 +1891,6 @@
               ]
             },
             "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Create Pager Message",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/company-pager",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "company-pager"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Message List",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/message-store",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "message-store"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Delete Conversation(s) by ID",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/message-store",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "message-store"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
-              ]
-            },
-            "method": "DELETE",
             "header": [
               {
                 "key": "Content-Type",
@@ -773,13 +2164,13 @@
       ]
     },
     {
-      "name": "Answering Rules",
+      "name": "Presence",
       "item": [
         {
-          "name": "Get Answering Rule by ID",
+          "name": "Get Extension(s) Presence Status by ID",
           "request": {
             "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/answering-rule/:ruleId",
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/presence",
               "protocol": "https",
               "auth": null,
               "host": [
@@ -792,8 +2183,109 @@
                 ":accountId",
                 "extension",
                 ":extensionId",
-                "answering-rule",
-                ":ruleId"
+                "presence"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "RingOut",
+      "item": [
+        {
+          "name": "Make RingOut Call",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/ringout",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "ringout"
+              ],
+              "variable": [
+                {
+                  "value": "~",
+                  "id": "accountId"
+                },
+                {
+                  "value": "~",
+                  "id": "extensionId"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Status of RingOut Call",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/ringout/:ringoutId",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "account",
+                ":accountId",
+                "extension",
+                ":extensionId",
+                "ringout",
+                ":ringoutId"
               ],
               "variable": [
                 {
@@ -805,7 +2297,7 @@
                   "id": "extensionId"
                 },
                 {
-                  "id": "ruleId"
+                  "id": "ringoutId"
                 }
               ]
             },
@@ -828,10 +2320,10 @@
           }
         },
         {
-          "name": "Update Custom Answering Rule by ID",
+          "name": "Cancel RingOut Call",
           "request": {
             "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/answering-rule/:ruleId",
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/ringout/:ringoutId",
               "protocol": "https",
               "auth": null,
               "host": [
@@ -844,8 +2336,8 @@
                 ":accountId",
                 "extension",
                 ":extensionId",
-                "answering-rule",
-                ":ruleId"
+                "ringout",
+                ":ringoutId"
               ],
               "variable": [
                 {
@@ -857,59 +2349,7 @@
                   "id": "extensionId"
                 },
                 {
-                  "id": "ruleId"
-                }
-              ]
-            },
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Delete Answering Rule by ID",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/answering-rule/:ruleId",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "answering-rule",
-                ":ruleId"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                },
-                {
-                  "id": "ruleId"
+                  "id": "ringoutId"
                 }
               ]
             },
@@ -930,12 +2370,17 @@
             ],
             "body": {}
           }
-        },
+        }
+      ]
+    },
+    {
+      "name": "Client Application",
+      "item": [
         {
-          "name": "Get User Business Hours",
+          "name": "Create SIP Registration",
           "request": {
             "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/business-hours",
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/client-info/sip-provision",
               "protocol": "https",
               "auth": null,
               "host": [
@@ -944,165 +2389,8 @@
               "path": [
                 "restapi",
                 "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "business-hours"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Update User Business Hours",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/business-hours",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "business-hours"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
-              ]
-            },
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Answering Rules List",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/answering-rule",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "answering-rule"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Create Custom Answering Rule",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/answering-rule",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "answering-rule"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
+                "client-info",
+                "sip-provision"
               ]
             },
             "method": "POST",
@@ -1122,12 +2410,17 @@
             ],
             "body": {}
           }
-        },
+        }
+      ]
+    },
+    {
+      "name": "Dictionary",
+      "item": [
         {
-          "name": "Get Custom Greeting by ID",
+          "name": "Get Country List",
           "request": {
             "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/greeting/:greetingId",
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/country",
               "protocol": "https",
               "auth": null,
               "host": [
@@ -1136,24 +2429,48 @@
               "path": [
                 "restapi",
                 "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "greeting",
-                ":greetingId"
+                "dictionary",
+                "country"
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Country by ID",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/country/:countryId",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "dictionary",
+                "country",
+                ":countryId"
               ],
               "variable": [
                 {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                },
-                {
-                  "id": "greetingId"
+                  "id": "countryId"
                 }
               ]
             },
@@ -1176,10 +2493,10 @@
           }
         },
         {
-          "name": "Create Custom Greeting",
+          "name": "Get Fax Cover Page List",
           "request": {
             "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/greeting",
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/fax-cover-page",
               "protocol": "https",
               "auth": null,
               "host": [
@@ -1188,24 +2505,46 @@
               "path": [
                 "restapi",
                 "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
+                "dictionary",
+                "fax-cover-page"
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Greeting List",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/greeting",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "dictionary",
                 "greeting"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
               ]
             },
-            "method": "POST",
+            "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
@@ -1222,17 +2561,12 @@
             ],
             "body": {}
           }
-        }
-      ]
-    },
-    {
-      "name": "Authorization Profile",
-      "item": [
+        },
         {
-          "name": "Check User Permissions",
+          "name": "Get Language List",
           "request": {
             "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/authz-profile/check",
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/language",
               "protocol": "https",
               "auth": null,
               "host": [
@@ -1241,21 +2575,48 @@
               "path": [
                 "restapi",
                 "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "authz-profile",
-                "check"
+                "dictionary",
+                "language"
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get Language by ID",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/language/:languageId",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "dictionary",
+                "language",
+                ":languageId"
               ],
               "variable": [
                 {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
+                  "id": "languageId"
                 }
               ]
             },
@@ -1278,10 +2639,10 @@
           }
         },
         {
-          "name": "Get User Permissions",
+          "name": "Get Location List",
           "request": {
             "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/authz-profile",
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/location",
               "protocol": "https",
               "auth": null,
               "host": [
@@ -1290,21 +2651,8 @@
               "path": [
                 "restapi",
                 "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "authz-profile"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
+                "dictionary",
+                "location"
               ]
             },
             "method": "GET",
@@ -1324,17 +2672,12 @@
             ],
             "body": {}
           }
-        }
-      ]
-    },
-    {
-      "name": "Account",
-      "item": [
+        },
         {
-          "name": "Get Account Business Address",
+          "name": "Get State List",
           "request": {
             "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/business-address",
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/state",
               "protocol": "https",
               "auth": null,
               "host": [
@@ -1343,14 +2686,48 @@
               "path": [
                 "restapi",
                 "v1.0",
-                "account",
-                ":accountId",
-                "business-address"
+                "dictionary",
+                "state"
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get State by ID",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/state/:stateId",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "dictionary",
+                "state",
+                ":stateId"
               ],
               "variable": [
                 {
-                  "value": "~",
-                  "id": "accountId"
+                  "id": "stateId"
                 }
               ]
             },
@@ -1373,10 +2750,10 @@
           }
         },
         {
-          "name": "Get Phone Number(s) by ID",
+          "name": "Get Timezone List",
           "request": {
             "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/phone-number/:phoneNumberId",
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/timezone",
               "protocol": "https",
               "auth": null,
               "host": [
@@ -1385,19 +2762,8 @@
               "path": [
                 "restapi",
                 "v1.0",
-                "account",
-                ":accountId",
-                "phone-number",
-                ":phoneNumberId"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "id": "phoneNumberId"
-                }
+                "dictionary",
+                "timezone"
               ]
             },
             "method": "GET",
@@ -1419,10 +2785,10 @@
           }
         },
         {
-          "name": "Get Account Phone Numbers",
+          "name": "Get Timezone by ID",
           "request": {
             "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/phone-number",
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/timezone/:timezoneId",
               "protocol": "https",
               "auth": null,
               "host": [
@@ -1431,55 +2797,13 @@
               "path": [
                 "restapi",
                 "v1.0",
-                "account",
-                ":accountId",
-                "phone-number"
+                "dictionary",
+                "timezone",
+                ":timezoneId"
               ],
               "variable": [
                 {
-                  "value": "~",
-                  "id": "accountId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Account Info",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
+                  "id": "timezoneId"
                 }
               ]
             },
@@ -1506,6 +2830,47 @@
     {
       "name": "Glip API",
       "item": [
+        {
+          "name": "Get Company by ID",
+          "request": {
+            "url": {
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/glip/companies/:companyId",
+              "protocol": "https",
+              "auth": null,
+              "host": [
+                "{{RC_SERVER_HOSTNAME}}"
+              ],
+              "path": [
+                "restapi",
+                "v1.0",
+                "glip",
+                "companies",
+                ":companyId"
+              ],
+              "variable": [
+                {
+                  "id": "companyId"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{my_access_token}}"
+              }
+            ],
+            "body": {}
+          }
+        },
         {
           "name": "Get Group List",
           "request": {
@@ -1559,47 +2924,6 @@
               ]
             },
             "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Company by ID",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/glip/companies/:companyId",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "glip",
-                "companies",
-                ":companyId"
-              ],
-              "variable": [
-                {
-                  "id": "companyId"
-                }
-              ]
-            },
-            "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
@@ -1814,13 +3138,13 @@
       ]
     },
     {
-      "name": "Dictionary",
+      "name": "Phone Number Parser",
       "item": [
         {
-          "name": "Get Language by ID",
+          "name": "Parse Phone Number",
           "request": {
             "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/language/:languageId",
+              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/number-parser/parse",
               "protocol": "https",
               "auth": null,
               "host": [
@@ -1829,1242 +3153,11 @@
               "path": [
                 "restapi",
                 "v1.0",
-                "dictionary",
-                "language",
-                ":languageId"
-              ],
-              "variable": [
-                {
-                  "id": "languageId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Greeting List",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/greeting",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "dictionary",
-                "greeting"
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Language List",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/language",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "dictionary",
-                "language"
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Location List",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/location",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "dictionary",
-                "location"
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get State List",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/state",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "dictionary",
-                "state"
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Timezone List",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/timezone",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "dictionary",
-                "timezone"
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Country by ID",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/country/:countryId",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "dictionary",
-                "country",
-                ":countryId"
-              ],
-              "variable": [
-                {
-                  "id": "countryId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Fax Cover Page List",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/fax-cover-page",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "dictionary",
-                "fax-cover-page"
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Timezone by ID",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/timezone/:timezoneId",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "dictionary",
-                "timezone",
-                ":timezoneId"
-              ],
-              "variable": [
-                {
-                  "id": "timezoneId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Country List",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/country",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "dictionary",
-                "country"
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get State by ID",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/dictionary/state/:stateId",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "dictionary",
-                "state",
-                ":stateId"
-              ],
-              "variable": [
-                {
-                  "id": "stateId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        }
-      ]
-    },
-    {
-      "name": "Extension",
-      "item": [
-        {
-          "name": "Get Extension Profile Image",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/profile-image",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "profile-image"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Create Extension Profile Image",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/profile-image",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "profile-image"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
+                "number-parser",
+                "parse"
               ]
             },
             "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Update Extension Profile Image",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/profile-image",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "profile-image"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
-              ]
-            },
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Extension Profile Image",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/profile-image/:scaleSize",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "profile-image",
-                ":scaleSize"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                },
-                {
-                  "id": "scaleSize"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Extension List",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Extension Info",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Extension Phone Number List",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/phone-number",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "phone-number"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        }
-      ]
-    },
-    {
-      "name": "Call Log",
-      "item": [
-        {
-          "name": "Get Call Recording",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/recording/:recordingId",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "recording",
-                ":recordingId"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "id": "recordingId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Call Recording Data",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/recording/:recordingId/content",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "recording",
-                ":recordingId",
-                "content"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "id": "recordingId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Extension Active Calls",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/active-calls",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "active-calls"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Extension Call Log Records by Filter",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/call-log",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "call-log"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Extension Call Log Record(s) by ID",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/call-log/:callRecordId",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "call-log",
-                ":callRecordId"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                },
-                {
-                  "id": "callRecordId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        }
-      ]
-    },
-    {
-      "name": "API Versions",
-      "item": [
-        {
-          "name": "Get API Versions",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                ""
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Version Info",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/:apiVersion",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                ":apiVersion"
-              ],
-              "variable": [
-                {
-                  "id": "apiVersion"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        }
-      ]
-    },
-    {
-      "name": "Client Application",
-      "item": [
-        {
-          "name": "Create SIP Registration",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/client-info/sip-provision",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "client-info",
-                "sip-provision"
-              ]
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        }
-      ]
-    },
-    {
-      "name": "RingOut",
-      "item": [
-        {
-          "name": "Make RingOut Call",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/ringout",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "ringout"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Get Status of RingOut Call",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/ringout/:ringoutId",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "ringout",
-                ":ringoutId"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                },
-                {
-                  "id": "ringoutId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        },
-        {
-          "name": "Cancel RingOut Call",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/ringout/:ringoutId",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "ringout",
-                ":ringoutId"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                },
-                {
-                  "id": "ringoutId"
-                }
-              ]
-            },
-            "method": "DELETE",
             "header": [
               {
                 "key": "Content-Type",
@@ -3296,99 +3389,6 @@
                 {
                   "id": "subscriptionId"
                 }
-              ]
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        }
-      ]
-    },
-    {
-      "name": "Presence",
-      "item": [
-        {
-          "name": "Get Extension(s) Presence Status by ID",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/account/:accountId/extension/:extensionId/presence",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "account",
-                ":accountId",
-                "extension",
-                ":extensionId",
-                "presence"
-              ],
-              "variable": [
-                {
-                  "value": "~",
-                  "id": "accountId"
-                },
-                {
-                  "value": "~",
-                  "id": "extensionId"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{my_access_token}}"
-              }
-            ],
-            "body": {}
-          }
-        }
-      ]
-    },
-    {
-      "name": "Phone Number Parser",
-      "item": [
-        {
-          "name": "Parse Phone Number",
-          "request": {
-            "url": {
-              "raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/v1.0/number-parser/parse",
-              "protocol": "https",
-              "auth": null,
-              "host": [
-                "{{RC_SERVER_HOSTNAME}}"
-              ],
-              "path": [
-                "restapi",
-                "v1.0",
-                "number-parser",
-                "parse"
               ]
             },
             "method": "POST",

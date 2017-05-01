@@ -6,25 +6,33 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/grokify/gotilla/type/maputil"
 	"github.com/grokify/swaggman/postman2"
 	"github.com/grokify/swaggman/postman2/simple"
 	"github.com/grokify/swaggman/swagger2"
 )
 
+// Configuration is a Swaggman configuration that holds information on how
+// to create the Postman 2.0 collection including overriding Swagger 2.0
+// spec values.
 type Configuration struct {
 	PostmanURLHostname string            `json:"postmanURLHostname,omitempty"`
 	PostmanHeaders     []postman2.Header `json:"postmanHeaders,omitempty"`
 }
 
+// Converter is the struct that manages the conversion.
 type Converter struct {
 	Configuration Configuration
 	Swagger       swagger2.Specification
 }
 
+// NewConverter instantiates a new converter.
 func NewConverter(cfg Configuration) Converter {
 	return Converter{Configuration: cfg}
 }
 
+// MergeConvert builds a Postman 2.0 spec using a base Postman 2.0 collection
+// and a Swagger 2.0 spec.
 func (conv *Converter) MergeConvert(swaggerFilepath string, pmanBaseFilepath string, pmanSpecFilepath string) error {
 	swag, err := swagger2.ReadSwagger2Spec(swaggerFilepath)
 	if err != nil {
@@ -45,6 +53,7 @@ func (conv *Converter) MergeConvert(swaggerFilepath string, pmanBaseFilepath str
 	return ioutil.WriteFile(pmanSpecFilepath, bytes, 0644)
 }
 
+// Convert builds a Postman 2.0 spec using a Swagger 2.0 spec.
 func (conv *Converter) Convert(swaggerFilepath string, pmanSpecFilepath string) error {
 	swag, err := swagger2.ReadSwagger2Spec(swaggerFilepath)
 	if err != nil {
@@ -59,10 +68,13 @@ func (conv *Converter) Convert(swaggerFilepath string, pmanSpecFilepath string) 
 	return ioutil.WriteFile(pmanSpecFilepath, bytes, 0644)
 }
 
+// Convert creates a Postman 2.0 collection from a configuration and Swagger 2.0 spec
 func Convert(cfg Configuration, swag swagger2.Specification) postman2.Collection {
 	return Merge(cfg, postman2.Collection{}, swag)
 }
 
+// Merge creates a Postman 2.0 collection from a configuration, base Postman
+// 2.0 collection and Swagger 2.0 spec
 func Merge(cfg Configuration, pman postman2.Collection, swag swagger2.Specification) postman2.Collection {
 	if len(pman.Info.Name) == 0 {
 		pman.Info.Name = strings.TrimSpace(swag.Info.Title)
@@ -74,53 +86,44 @@ func Merge(cfg Configuration, pman postman2.Collection, swag swagger2.Specificat
 		pman.Info.Schema = "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	}
 
-	for url, path := range swag.Paths {
-		if url != "/v1.0/account/{accountId}/extension" {
-			//continue
-		}
+	for _, url := range maputil.StringKeysSorted(swag.Paths) {
+		path := swag.Paths[url]
 
-		if len(path.Get.Tags) > 0 {
-			if len(strings.TrimSpace(path.Get.Tags[0])) > 0 {
-				pmItem := Swagger2PathToPostman2ApiItem(cfg, swag, url, "GET", path.Get)
-				pmFolderName := strings.TrimSpace(path.Get.Tags[0])
-				pmFolder := pman.GetOrNewFolder(pmFolderName)
-				pmFolder.Item = append(pmFolder.Item, pmItem)
-				pman.SetFolder(pmFolder)
-			}
+		if len(path.Get.Tags) > 0 && len(strings.TrimSpace(path.Get.Tags[0])) > 0 {
+			pman = postmanAddItemToFolder(pman,
+				Swagger2PathToPostman2APIItem(cfg, swag, url, "GET", path.Get),
+				strings.TrimSpace(path.Get.Tags[0]))
 		}
-		if len(path.Post.Tags) > 0 {
-			if len(strings.TrimSpace(path.Post.Tags[0])) > 0 {
-				pmItem := Swagger2PathToPostman2ApiItem(cfg, swag, url, "POST", path.Post)
-				pmFolderName := strings.TrimSpace(path.Post.Tags[0])
-				pmFolder := pman.GetOrNewFolder(pmFolderName)
-				pmFolder.Item = append(pmFolder.Item, pmItem)
-				pman.SetFolder(pmFolder)
-			}
+		if len(path.Post.Tags) > 0 && len(strings.TrimSpace(path.Post.Tags[0])) > 0 {
+			pman = postmanAddItemToFolder(pman,
+				Swagger2PathToPostman2APIItem(cfg, swag, url, "POST", path.Post),
+				strings.TrimSpace(path.Post.Tags[0]))
 		}
-		if len(path.Put.Tags) > 0 {
-			if len(strings.TrimSpace(path.Put.Tags[0])) > 0 {
-				pmItem := Swagger2PathToPostman2ApiItem(cfg, swag, url, "PUT", path.Put)
-				pmFolderName := strings.TrimSpace(path.Put.Tags[0])
-				pmFolder := pman.GetOrNewFolder(pmFolderName)
-				pmFolder.Item = append(pmFolder.Item, pmItem)
-				pman.SetFolder(pmFolder)
-			}
+		if len(path.Put.Tags) > 0 && len(strings.TrimSpace(path.Put.Tags[0])) > 0 {
+			pman = postmanAddItemToFolder(pman,
+				Swagger2PathToPostman2APIItem(cfg, swag, url, "PUT", path.Put),
+				strings.TrimSpace(path.Put.Tags[0]))
 		}
-		if len(path.Delete.Tags) > 0 {
-			if len(strings.TrimSpace(path.Delete.Tags[0])) > 0 {
-				pmItem := Swagger2PathToPostman2ApiItem(cfg, swag, url, "DELETE", path.Delete)
-				pmFolderName := strings.TrimSpace(path.Delete.Tags[0])
-				pmFolder := pman.GetOrNewFolder(pmFolderName)
-				pmFolder.Item = append(pmFolder.Item, pmItem)
-				pman.SetFolder(pmFolder)
-			}
+		if len(path.Delete.Tags) > 0 && len(strings.TrimSpace(path.Delete.Tags[0])) > 0 {
+			pman = postmanAddItemToFolder(pman,
+				Swagger2PathToPostman2APIItem(cfg, swag, url, "DELETE", path.Delete),
+				strings.TrimSpace(path.Delete.Tags[0]))
 		}
 	}
 
 	return pman
 }
 
-func Swagger2PathToPostman2ApiItem(cfg Configuration, swag swagger2.Specification, url string, method string, endpoint swagger2.Endpoint) postman2.APIItem {
+func postmanAddItemToFolder(pman postman2.Collection, pmItem postman2.APIItem, pmFolderName string) postman2.Collection {
+	pmFolder := pman.GetOrNewFolder(pmFolderName)
+	pmFolder.Item = append(pmFolder.Item, pmItem)
+	pman.SetFolder(pmFolder)
+	return pman
+}
+
+// Swagger2PathToPostman2APIItem converts a Swagger 2.0 path to a
+// Postman 2.0 API item
+func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specification, url string, method string, endpoint swagger2.Endpoint) postman2.APIItem {
 	item := postman2.APIItem{}
 
 	item.Name = endpoint.Summary
@@ -153,6 +156,7 @@ func Swagger2PathToPostman2ApiItem(cfg Configuration, swag swagger2.Specificatio
 	return item
 }
 
+// BuildPostmanURL creates a Postman 2.0 spec URL from a Swagger URL
 func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerURL string, endpoint swagger2.Endpoint) postman2.URL {
 	URLParts := []string{}
 
