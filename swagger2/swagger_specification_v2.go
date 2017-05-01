@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 )
 
+// Specification represents a Swagger 2.0 specification.
 type Specification struct {
 	Host     string          `json:"host,omitempty"`
 	Info     Info            `json:"info,omitempty"`
@@ -13,12 +14,14 @@ type Specification struct {
 	Paths    map[string]Path `json:"paths,omitempty"`
 }
 
+// NewSpecificationFromBytes returns a Swagger Specification from a byte array.
 func NewSpecificationFromBytes(data []byte) (Specification, error) {
 	spec := Specification{}
 	err := json.Unmarshal(data, &spec)
 	return spec, err
 }
 
+// ReadSwagger2Spec returns a Swagger Specification from a filepath.
 func ReadSwagger2Spec(filepath string) (Specification, error) {
 	bytes, err := ioutil.ReadFile(filepath)
 	if err != nil {
@@ -27,6 +30,7 @@ func ReadSwagger2Spec(filepath string) (Specification, error) {
 	return NewSpecificationFromBytes(bytes)
 }
 
+// Info represents a Swagger 2.0 spec info object.
 type Info struct {
 	Description    string `json:"description,omitempty"`
 	Version        string `json:"version,omitempty"`
@@ -34,6 +38,7 @@ type Info struct {
 	TermsOfService string `json:"termsOfService,omitempty"`
 }
 
+// Path represents a Swagger 2.0 spec path object.
 type Path struct {
 	Get    Endpoint `json:"get,omitempty"`
 	Post   Endpoint `json:"post,omitempty"`
@@ -41,6 +46,7 @@ type Path struct {
 	Delete Endpoint `json:"delete,omitempty"`
 }
 
+// Endpoint represents a Swagger 2.0 spec endpoint object.
 type Endpoint struct {
 	Tags        []string    `json:"tags,omitempty"`
 	Summary     string      `json:"summary,omitempty"`
@@ -51,6 +57,7 @@ type Endpoint struct {
 	Parameters  []Parameter `json:"parameters"`
 }
 
+// Parameter represents a Swagger 2.0 spec parameter object.
 type Parameter struct {
 	Name        string      `json:"name,omitempty"`
 	Type        string      `json:"type,omitempty"`
