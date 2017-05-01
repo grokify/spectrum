@@ -54,7 +54,7 @@ func (col *Collection) InflateRawURLs() {
 
 type CollectionInfo struct {
 	Name        string `json:"name,omitempty"`
-	PostmanId   string `json:"_postman_id,omitempty"`
+	PostmanID   string `json:"_postman_id,omitempty"`
 	Description string `json:"description,omitempty"`
 	Schema      string `json:"schema,omitempty"`
 }
@@ -62,10 +62,10 @@ type CollectionInfo struct {
 type FolderItem struct {
 	Name        string    `json:"name,omitempty"`
 	Description string    `json:"description,omitempty"`
-	Item        []ApiItem `json:"item,omitempty"`
+	Item        []APIItem `json:"item,omitempty"`
 }
 
-type ApiItem struct {
+type APIItem struct {
 	Name    string  `json:"name,omitempty"`
 	Event   []Event `json:"event,omitempty"`
 	Request Request `json:"request,omitempty"`
@@ -100,7 +100,7 @@ type URL struct {
 
 type URLVariable struct {
 	Value interface{} `json:"value,omitempty"`
-	Id    string      `json:"id,omitempty"`
+	ID    string      `json:"id,omitempty"`
 }
 
 func NewURL(rawURL string) URL {
@@ -126,7 +126,7 @@ func NewURL(rawURL string) URL {
 }
 
 func (url *URL) AddVariable(key string, value interface{}) {
-	variable := URLVariable{Id: key, Value: value}
+	variable := URLVariable{ID: key, Value: value}
 	url.Variable = append(url.Variable, variable)
 }
 
