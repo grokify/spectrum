@@ -134,8 +134,7 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 
 	item.Name = endpoint.Summary
 
-	item.Request = postman2.Request{
-		Method: strings.ToUpper(method)}
+	item.Request = postman2.Request{Method: strings.ToUpper(method)}
 
 	item.Request.URL = BuildPostmanURL(cfg, swag, url, endpoint)
 
@@ -209,16 +208,10 @@ func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerURL 
 		rs4 := rx4.FindAllStringSubmatch(part, -1)
 		if len(rs4) > 0 {
 			baseVariable := rs4[0][2]
-			//defaultValue := ""
 			var defaultValue interface{}
 			for _, parameter := range endpoint.Parameters {
 				if parameter.Name == baseVariable {
 					defaultValue = parameter.Default
-					/*
-						if len(strings.TrimSpace(parameter.Default)) > 0 {
-							defaultValue = strings.TrimSpace(parameter.Default)
-						}
-					*/
 					break
 				}
 			}
