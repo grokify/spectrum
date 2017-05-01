@@ -44,7 +44,7 @@ type Path struct {
 type Endpoint struct {
 	Tags        []string    `json:"tags,omitempty"`
 	Summary     string      `json:"summary,omitempty"`
-	OperationId string      `json:"operationId,omitempmty"`
+	OperationID string      `json:"operationId,omitempmty"`
 	Description string      `json:"description,omitempty"`
 	Consumes    []string    `json:"consumes,omitempty"`
 	Produces    []string    `json:"produces,omitempty"`
