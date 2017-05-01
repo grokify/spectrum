@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"regexp"
+	"sort"
 	"strings"
 
-	"github.com/grokify/gotilla/type/maputil"
 	"github.com/grokify/swaggman/postman2"
 	"github.com/grokify/swaggman/postman2/simple"
 	"github.com/grokify/swaggman/swagger2"
@@ -86,7 +86,13 @@ func Merge(cfg Configuration, pman postman2.Collection, swag swagger2.Specificat
 		pman.Info.Schema = "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	}
 
-	for _, url := range maputil.StringKeysSorted(swag.Paths) {
+	urls := []string{}
+	for url, _ := range swag.Paths {
+		urls = append(urls, url)
+	}
+	sort.Strings(urls)
+
+	for _, url := range urls {
 		path := swag.Paths[url]
 
 		if len(path.Get.Tags) > 0 && len(strings.TrimSpace(path.Get.Tags[0])) > 0 {
