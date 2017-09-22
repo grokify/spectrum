@@ -151,7 +151,7 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 		if len(strings.TrimSpace(endpoint.Produces[0])) > 0 {
 			headers = append(headers, postman2.Header{
 				Key:   "Accept",
-				Value: strings.TrimSpace(endpoint.Consumes[0])})
+				Value: strings.TrimSpace(endpoint.Produces[0])})
 		}
 	}
 	headers = append(headers, cfg.PostmanHeaders...)
