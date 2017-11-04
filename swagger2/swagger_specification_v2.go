@@ -7,11 +7,12 @@ import (
 
 // Specification represents a Swagger 2.0 specification.
 type Specification struct {
-	Host     string          `json:"host,omitempty"`
-	Info     Info            `json:"info,omitempty"`
-	BasePath string          `json:"basePath,omitempty"`
-	Schemes  []string        `json:"schemes,omitempty"`
-	Paths    map[string]Path `json:"paths,omitempty"`
+	Host        string                `json:"host,omitempty"`
+	Info        Info                  `json:"info,omitempty"`
+	BasePath    string                `json:"basePath,omitempty"`
+	Schemes     []string              `json:"schemes,omitempty"`
+	Paths       map[string]Path       `json:"paths,omitempty"`
+	Definitions map[string]Definition `json:"definitions,omitempty"`
 }
 
 // NewSpecificationFromBytes returns a Swagger Specification from a byte array.
@@ -65,4 +66,27 @@ type Parameter struct {
 	Description string      `json:"description,omitempty"`
 	Required    bool        `json:"required,omitempty"`
 	Default     interface{} `json:"default,omitempty"`
+	Schema      Schema      `json:"schema,omitempty"`
+}
+
+type Schema struct {
+	Reference string `json:"$ref,omitempty"`
+}
+
+type Definition struct {
+	Type       string              `json:"type,omitempty"`
+	Properties map[string]Property `json:"properties,omitempty"`
+}
+
+type Property struct {
+	Description string `json:"description,omitempty"`
+	Format      string `json:"format,omitempty"`
+	Items       Items  `json:"items,omitempty"`
+	Reference   string `json:"$ref,omitempty"`
+	Type        string `json:"type,omitempty"`
+}
+
+type Items struct {
+	Type      string `json:"type,omitempty"`
+	Reference string `json:"$ref,omitempty"`
 }
