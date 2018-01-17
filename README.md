@@ -86,6 +86,11 @@ For multiple apps or users, simply create a different Postman environment for ea
 
 To set your environment variables, use the Settings Gear icon and then click "Manage Environments"
 
+# Articles and Links
+
+* Medium: [Using Postman, Swagger and the RingCentral API](https://medium.com/ringcentral-developers/using-postman-with-swagger-and-the-ringcentral-api-523712f792a0)
+* YouTube: [Getting Started with RingCentral APIs using Postman ](https://youtu.be/5kE4UPXJ-5Q)
+
  [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/swaggman
  [goreport-link]: https://goreportcard.com/report/github.com/grokify/swaggman
  [docs-godoc-svg]: https://img.shields.io/badge/docs-godoc-blue.svg

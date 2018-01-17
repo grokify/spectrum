@@ -2,7 +2,7 @@ CHANGELOG
 ---------
 - **0.0.4** - 2017-04-30
   - Add sorting of Swagger paths to return canonical Postman 2.0 collections 
-  - Refactor to simplify code
+  - Simplify and refactor code including `gofmt -s`
 - **0.0.3** - 2017-04-26
   - Update default value type from `string` to `interface{}`
 - **0.0.2** - 2017-04-24

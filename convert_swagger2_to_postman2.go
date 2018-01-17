@@ -87,7 +87,7 @@ func Merge(cfg Configuration, pman postman2.Collection, swag swagger2.Specificat
 	}
 
 	urls := []string{}
-	for url, _ := range swag.Paths {
+	for url := range swag.Paths {
 		urls = append(urls, url)
 	}
 	sort.Strings(urls)
@@ -134,8 +134,7 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 
 	item.Name = endpoint.Summary
 
-	item.Request = postman2.Request{
-		Method: strings.ToUpper(method)}
+	item.Request = postman2.Request{Method: strings.ToUpper(method)}
 
 	item.Request.URL = BuildPostmanURL(cfg, swag, url, endpoint)
 
@@ -152,7 +151,7 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 		if len(strings.TrimSpace(endpoint.Produces[0])) > 0 {
 			headers = append(headers, postman2.Header{
 				Key:   "Accept",
-				Value: strings.TrimSpace(endpoint.Consumes[0])})
+				Value: strings.TrimSpace(endpoint.Produces[0])})
 		}
 	}
 	headers = append(headers, cfg.PostmanHeaders...)
@@ -209,16 +208,10 @@ func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerURL 
 		rs4 := rx4.FindAllStringSubmatch(part, -1)
 		if len(rs4) > 0 {
 			baseVariable := rs4[0][2]
-			//defaultValue := ""
 			var defaultValue interface{}
 			for _, parameter := range endpoint.Parameters {
 				if parameter.Name == baseVariable {
 					defaultValue = parameter.Default
-					/*
-						if len(strings.TrimSpace(parameter.Default)) > 0 {
-							defaultValue = strings.TrimSpace(parameter.Default)
-						}
-					*/
 					break
 				}
 			}

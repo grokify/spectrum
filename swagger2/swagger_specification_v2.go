@@ -84,8 +84,16 @@ type Definition struct {
 }
 
 type Property struct {
-	Ref  string `json:"$ref,omitempty"`
+	Description string `json:"description,omitempty"`
+	Format      string `json:"format,omitempty"`
+	Items       Items  `json:"items,omitempty"`
+	Type        string `json:"type,omitempty"`
+	Ref         string `json:"$ref,omitempty"`
+}
+
+type Items struct {
 	Type string `json:"type,omitempty"`
+	Ref  string `json:"$ref,omitempty"`
 }
 
 type XAmazonApigatewayIntegration struct {
