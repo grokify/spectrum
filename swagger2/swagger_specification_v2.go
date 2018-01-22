@@ -3,6 +3,7 @@ package swagger2
 import (
 	"encoding/json"
 	"io/ioutil"
+	"strings"
 )
 
 // Specification represents a Swagger 2.0 specification.
@@ -44,10 +45,38 @@ type Info struct {
 // Path represents a Swagger 2.0 spec path object.
 type Path struct {
 	Get    *Endpoint `json:"get,omitempty"`
+	Patch  *Endpoint `json:"patch,omitempty"`
 	Post   *Endpoint `json:"post,omitempty"`
 	Put    *Endpoint `json:"put,omitempty"`
 	Delete *Endpoint `json:"delete,omitempty"`
 	Ref    string    `json:"$ref,omitempty"`
+}
+
+func (p *Path) HasMethodWithTag(method string) bool {
+	method = strings.TrimSpace(strings.ToLower(method))
+	switch method {
+	case "get":
+		if p.Get != nil && len(p.Get.Tags) > 0 && len(strings.TrimSpace(p.Get.Tags[0])) > 0 {
+			return true
+		}
+	case "patch":
+		if p.Patch != nil && len(p.Patch.Tags) > 0 && len(strings.TrimSpace(p.Patch.Tags[0])) > 0 {
+			return true
+		}
+	case "post":
+		if p.Post != nil && len(p.Post.Tags) > 0 && len(strings.TrimSpace(p.Post.Tags[0])) > 0 {
+			return true
+		}
+	case "put":
+		if p.Put != nil && len(p.Put.Tags) > 0 && len(strings.TrimSpace(p.Put.Tags[0])) > 0 {
+			return true
+		}
+	case "delete":
+		if p.Delete != nil && len(p.Delete.Tags) > 0 && len(strings.TrimSpace(p.Delete.Tags[0])) > 0 {
+			return true
+		}
+	}
+	return false
 }
 
 // Endpoint represents a Swagger 2.0 spec endpoint object.

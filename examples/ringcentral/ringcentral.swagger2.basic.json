@@ -100,7 +100,7 @@
           "API Versions"
         ],
         "summary": "Get Version Info",
-        "operationId": "",
+        "operationId": "getVersionInfo",
         "description": "<p style='font-style:italic;'>Since 1.0.0</p><p>Returns current API version info by apiVersion.</p><h4>API Group</h4><p>Light</p>",
         "consumes": [
           "application/json"

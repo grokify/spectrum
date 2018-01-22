@@ -3,6 +3,7 @@ package swaggman
 import (
 	"encoding/json"
 	"io/ioutil"
+	"net/http"
 	"regexp"
 	"sort"
 	"strings"
@@ -95,24 +96,29 @@ func Merge(cfg Configuration, pman postman2.Collection, swag swagger2.Specificat
 	for _, url := range urls {
 		path := swag.Paths[url]
 
-		if len(path.Get.Tags) > 0 && len(strings.TrimSpace(path.Get.Tags[0])) > 0 {
+		if path.HasMethodWithTag(http.MethodGet) {
 			pman = postmanAddItemToFolder(pman,
-				Swagger2PathToPostman2APIItem(cfg, swag, url, "GET", path.Get),
+				Swagger2PathToPostman2APIItem(cfg, swag, url, http.MethodGet, path.Get),
 				strings.TrimSpace(path.Get.Tags[0]))
 		}
-		if len(path.Post.Tags) > 0 && len(strings.TrimSpace(path.Post.Tags[0])) > 0 {
+		if path.HasMethodWithTag(http.MethodPatch) {
 			pman = postmanAddItemToFolder(pman,
-				Swagger2PathToPostman2APIItem(cfg, swag, url, "POST", path.Post),
+				Swagger2PathToPostman2APIItem(cfg, swag, url, http.MethodPatch, path.Post),
 				strings.TrimSpace(path.Post.Tags[0]))
 		}
-		if len(path.Put.Tags) > 0 && len(strings.TrimSpace(path.Put.Tags[0])) > 0 {
+		if path.HasMethodWithTag(http.MethodPost) {
 			pman = postmanAddItemToFolder(pman,
-				Swagger2PathToPostman2APIItem(cfg, swag, url, "PUT", path.Put),
+				Swagger2PathToPostman2APIItem(cfg, swag, url, http.MethodPost, path.Post),
+				strings.TrimSpace(path.Post.Tags[0]))
+		}
+		if path.HasMethodWithTag(http.MethodPut) {
+			pman = postmanAddItemToFolder(pman,
+				Swagger2PathToPostman2APIItem(cfg, swag, url, http.MethodPut, path.Put),
 				strings.TrimSpace(path.Put.Tags[0]))
 		}
-		if len(path.Delete.Tags) > 0 && len(strings.TrimSpace(path.Delete.Tags[0])) > 0 {
+		if path.HasMethodWithTag(http.MethodDelete) {
 			pman = postmanAddItemToFolder(pman,
-				Swagger2PathToPostman2APIItem(cfg, swag, url, "DELETE", path.Delete),
+				Swagger2PathToPostman2APIItem(cfg, swag, url, http.MethodDelete, path.Delete),
 				strings.TrimSpace(path.Delete.Tags[0]))
 		}
 	}
@@ -129,7 +135,7 @@ func postmanAddItemToFolder(pman postman2.Collection, pmItem postman2.APIItem, p
 
 // Swagger2PathToPostman2APIItem converts a Swagger 2.0 path to a
 // Postman 2.0 API item
-func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specification, url string, method string, endpoint swagger2.Endpoint) postman2.APIItem {
+func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specification, url string, method string, endpoint *swagger2.Endpoint) postman2.APIItem {
 	item := postman2.APIItem{}
 
 	item.Name = endpoint.Summary
@@ -162,7 +168,7 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 }
 
 // BuildPostmanURL creates a Postman 2.0 spec URL from a Swagger URL
-func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerURL string, endpoint swagger2.Endpoint) postman2.URL {
+func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerURL string, endpoint *swagger2.Endpoint) postman2.URL {
 	URLParts := []string{}
 
 	// Set URL path parts

@@ -41,6 +41,11 @@ err := conv.Convert("path/to/swagger.json", "path/to/pman.out.json")
 
 ## Usage with Features
 
+The following can be added which are especially useful to use with environment variables.
+
+* Custom Hostname
+* Custom Headers
+
 ```go
 import(
 	"github.com/grokify/swaggman"
@@ -50,9 +55,13 @@ import(
 // Instantiate a converter with overrides (using Postman environment variables)
 cfg := swaggman.Configuration{
 	PostmanURLHostname: "{{RC_SERVER_HOSTNAME}}",
-	PostmanHeaders: []postman2.Header{postman2.Header{
-		Key:   "Authorization",
-		Value: "Bearer {{my_access_token}}"}}}
+	PostmanHeaders: []postman2.Header{
+	    {
+		    Key:   "Authorization",
+		    Value: "Bearer {{my_access_token}}",
+		},
+    },
+}
 conv = swaggman.NewConverter(cfg)
 
 // Convert a Swagger spec with a default Postman spec
