@@ -56,11 +56,11 @@ import(
 cfg := swaggman.Configuration{
 	PostmanURLHostname: "{{RC_SERVER_HOSTNAME}}",
 	PostmanHeaders: []postman2.Header{
-	    {
-		    Key:   "Authorization",
-		    Value: "Bearer {{my_access_token}}",
+		{
+			Key:   "Authorization",
+			Value: "Bearer {{my_access_token}}",
 		},
-    },
+	},
 }
 conv = swaggman.NewConverter(cfg)
 
