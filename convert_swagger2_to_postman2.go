@@ -103,8 +103,8 @@ func Merge(cfg Configuration, pman postman2.Collection, swag swagger2.Specificat
 		}
 		if path.HasMethodWithTag(http.MethodPatch) {
 			pman = postmanAddItemToFolder(pman,
-				Swagger2PathToPostman2APIItem(cfg, swag, url, http.MethodPatch, path.Post),
-				strings.TrimSpace(path.Post.Tags[0]))
+				Swagger2PathToPostman2APIItem(cfg, swag, url, http.MethodPatch, path.Patch),
+				strings.TrimSpace(path.Patch.Tags[0]))
 		}
 		if path.HasMethodWithTag(http.MethodPost) {
 			pman = postmanAddItemToFolder(pman,
