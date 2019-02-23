@@ -69,10 +69,3 @@ func copyOrIgnoreEndpoint(method string, endpoint Endpoint, url string, path Pat
 	specNew.Paths[url] = pathNew
 	return specNew, nil
 }
-
-func IsEmptyString(s string) bool {
-	if len(strings.TrimSpace(s)) == 0 {
-		return true
-	}
-	return false
-}
