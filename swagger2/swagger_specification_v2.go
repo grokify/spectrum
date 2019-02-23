@@ -2,7 +2,9 @@ package swagger2
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
+	"net/http"
 	"strings"
 )
 
@@ -79,6 +81,24 @@ func (p *Path) HasMethodWithTag(method string) bool {
 	return false
 }
 
+func (p *Path) SetEndpoint(method string, endpoint Endpoint) error {
+	switch method {
+	case http.MethodGet:
+		p.Get = &endpoint
+	case http.MethodPost:
+		p.Post = &endpoint
+	case http.MethodPut:
+		p.Put = &endpoint
+	case http.MethodPatch:
+		p.Patch = &endpoint
+	case http.MethodDelete:
+		p.Delete = &endpoint
+	default:
+		return fmt.Errorf("Method [%v] not supported.", method)
+	}
+	return nil
+}
+
 // Endpoint represents a Swagger 2.0 spec endpoint object.
 type Endpoint struct {
 	Tags                         []string                     `json:"tags,omitempty"`
@@ -94,7 +114,7 @@ type Endpoint struct {
 
 type Response struct {
 	Description string            `json:"description,omitempty"`
-	Schema      Schema            `json:"schema,omitempty"`
+	Schema      *Schema           `json:"schema,omitempty"`
 	Headers     map[string]Header `json:"headers,omitempty"`
 }
 
@@ -115,7 +135,7 @@ type Definition struct {
 type Property struct {
 	Description string `json:"description,omitempty"`
 	Format      string `json:"format,omitempty"`
-	Items       Items  `json:"items,omitempty"`
+	Items       *Items `json:"items,omitempty"`
 	Type        string `json:"type,omitempty"`
 	Ref         string `json:"$ref,omitempty"`
 }
@@ -123,6 +143,13 @@ type Property struct {
 type Items struct {
 	Type string `json:"type,omitempty"`
 	Ref  string `json:"$ref,omitempty"`
+}
+
+func (items *Items) IsEmpty() bool {
+	if len(strings.TrimSpace(items.Type)) == 0 && len(strings.TrimSpace(items.Ref)) == 0 {
+		return true
+	}
+	return false
 }
 
 type XAmazonApigatewayIntegration struct {
