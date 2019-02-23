@@ -101,15 +101,15 @@ func (p *Path) SetEndpoint(method string, endpoint Endpoint) error {
 
 // Endpoint represents a Swagger 2.0 spec endpoint object.
 type Endpoint struct {
-	Tags                         []string                     `json:"tags,omitempty"`
-	Summary                      string                       `json:"summary,omitempty"`
-	OperationID                  string                       `json:"operationId,omitempty"`
-	Description                  string                       `json:"description,omitempty"`
-	Consumes                     []string                     `json:"consumes,omitempty"`
-	Produces                     []string                     `json:"produces,omitempty"`
-	Parameters                   []Parameter                  `json:"parameters,omitempty"`
-	Responses                    map[string]Response          `json:"responses,omitempty"`
-	XAmazonApigatewayIntegration XAmazonApigatewayIntegration `json:"x-amazon-apigateway-integration,omitempty"`
+	Tags                         []string                      `json:"tags,omitempty"`
+	Summary                      string                        `json:"summary,omitempty"`
+	OperationID                  string                        `json:"operationId,omitempty"`
+	Description                  string                        `json:"description,omitempty"`
+	Consumes                     []string                      `json:"consumes,omitempty"`
+	Produces                     []string                      `json:"produces,omitempty"`
+	Parameters                   []Parameter                   `json:"parameters,omitempty"`
+	Responses                    map[string]Response           `json:"responses,omitempty"`
+	XAmazonApigatewayIntegration *XAmazonApigatewayIntegration `json:"x-amazon-apigateway-integration,omitempty"`
 }
 
 type Response struct {
