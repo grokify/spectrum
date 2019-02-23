@@ -10,14 +10,14 @@ import (
 
 // Specification represents a Swagger 2.0 specification.
 type Specification struct {
-	Swagger                        string                         `json:"swagger,omitempty"`
-	Host                           string                         `json:"host,omitempty"`
-	Info                           *Info                          `json:"info,omitempty"`
-	BasePath                       string                         `json:"basePath,omitempty"`
-	Schemes                        []string                       `json:"schemes,omitempty"`
-	Paths                          map[string]Path                `json:"paths,omitempty"`
-	Definitions                    map[string]Definition          `json:"definitions,omitempty"`
-	XAmazonApigatewayDocumentation XAmazonApigatewayDocumentation `json:"x-amazon-apigateway-documentation,omitempty"`
+	Swagger                        string                          `json:"swagger,omitempty"`
+	Host                           string                          `json:"host,omitempty"`
+	Info                           *Info                           `json:"info,omitempty"`
+	BasePath                       string                          `json:"basePath,omitempty"`
+	Schemes                        []string                        `json:"schemes,omitempty"`
+	Paths                          map[string]Path                 `json:"paths,omitempty"`
+	Definitions                    map[string]Definition           `json:"definitions,omitempty"`
+	XAmazonApigatewayDocumentation *XAmazonApigatewayDocumentation `json:"x-amazon-apigateway-documentation,omitempty"`
 }
 
 // NewSpecificationFromBytes returns a Swagger Specification from a byte array.

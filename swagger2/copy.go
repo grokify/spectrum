@@ -43,15 +43,11 @@ func CopyEndpointsByTag(tag string, specOld, specNew Specification) (Specificati
 }
 
 func copyOrIgnoreEndpoint(method string, endpoint Endpoint, url string, path Path, wantTag string, specOld, specNew Specification) (Specification, error) {
-	/*if len(endpoint.OperationID) == 0 {
-		return specNew, nil
-	}*/
 	wantTag = strings.TrimSpace(wantTag)
 	if len(wantTag) != 0 {
 		match := false
 		for _, tryTag := range endpoint.Tags {
-			tryTag = strings.TrimSpace(tryTag)
-			if tryTag == wantTag {
+			if strings.TrimSpace(tryTag) == wantTag {
 				match = true
 			}
 		}
