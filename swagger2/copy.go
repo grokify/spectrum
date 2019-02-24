@@ -1,6 +1,7 @@
 package swagger2
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 )
@@ -68,4 +69,28 @@ func copyOrIgnoreEndpoint(method string, endpoint Endpoint, url string, path Pat
 	}
 	specNew.Paths[url] = pathNew
 	return specNew, nil
+}
+
+// EndpointCount returns a count of the endpoints for a specification.
+func EndpointCount(spec Specification) int {
+	endpoints := map[string]int{}
+	for url, path := range spec.Paths {
+		url = strings.TrimSpace(url)
+		if path.Get != nil && !path.Get.IsEmpty() {
+			endpoints[fmt.Sprintf("%s %s", http.MethodGet, url)] = 1
+		}
+		if path.Patch != nil && !path.Patch.IsEmpty() {
+			endpoints[fmt.Sprintf("%s %s", http.MethodPatch, url)] = 1
+		}
+		if path.Post != nil && !path.Post.IsEmpty() {
+			endpoints[fmt.Sprintf("%s %s", http.MethodPost, url)] = 1
+		}
+		if path.Put != nil && !path.Put.IsEmpty() {
+			endpoints[fmt.Sprintf("%s %s", http.MethodPut, url)] = 1
+		}
+		if path.Delete != nil && !path.Delete.IsEmpty() {
+			endpoints[fmt.Sprintf("%s %s", http.MethodDelete, url)] = 1
+		}
+	}
+	return len(endpoints)
 }

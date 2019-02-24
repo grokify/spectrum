@@ -55,25 +55,24 @@ type Path struct {
 }
 
 func (p *Path) HasMethodWithTag(method string) bool {
-	method = strings.TrimSpace(strings.ToLower(method))
-	switch method {
-	case "get":
+	switch strings.ToUpper(strings.TrimSpace(method)) {
+	case http.MethodGet:
 		if p.Get != nil && len(p.Get.Tags) > 0 && len(strings.TrimSpace(p.Get.Tags[0])) > 0 {
 			return true
 		}
-	case "patch":
+	case http.MethodPatch:
 		if p.Patch != nil && len(p.Patch.Tags) > 0 && len(strings.TrimSpace(p.Patch.Tags[0])) > 0 {
 			return true
 		}
-	case "post":
+	case http.MethodPost:
 		if p.Post != nil && len(p.Post.Tags) > 0 && len(strings.TrimSpace(p.Post.Tags[0])) > 0 {
 			return true
 		}
-	case "put":
+	case http.MethodPut:
 		if p.Put != nil && len(p.Put.Tags) > 0 && len(strings.TrimSpace(p.Put.Tags[0])) > 0 {
 			return true
 		}
-	case "delete":
+	case http.MethodDelete:
 		if p.Delete != nil && len(p.Delete.Tags) > 0 && len(strings.TrimSpace(p.Delete.Tags[0])) > 0 {
 			return true
 		}
@@ -82,7 +81,7 @@ func (p *Path) HasMethodWithTag(method string) bool {
 }
 
 func (p *Path) SetEndpoint(method string, endpoint Endpoint) error {
-	switch method {
+	switch strings.ToUpper(strings.TrimSpace(method)) {
 	case http.MethodGet:
 		p.Get = &endpoint
 	case http.MethodPost:
@@ -110,6 +109,20 @@ type Endpoint struct {
 	Parameters                   []Parameter                   `json:"parameters,omitempty"`
 	Responses                    map[string]Response           `json:"responses,omitempty"`
 	XAmazonApigatewayIntegration *XAmazonApigatewayIntegration `json:"x-amazon-apigateway-integration,omitempty"`
+}
+
+func (ep *Endpoint) IsEmpty() bool {
+	if len(ep.Tags) > 0 ||
+		len(ep.Summary) > 0 ||
+		len(ep.OperationID) > 0 ||
+		len(ep.Description) > 0 ||
+		len(ep.Consumes) > 0 ||
+		len(ep.Produces) > 0 ||
+		len(ep.Parameters) > 0 ||
+		len(ep.Responses) > 0 {
+		return false
+	}
+	return true
 }
 
 type Response struct {
