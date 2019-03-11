@@ -15,6 +15,7 @@ type Specification struct {
 	Info                           *Info                           `json:"info,omitempty"`
 	BasePath                       string                          `json:"basePath,omitempty"`
 	Schemes                        []string                        `json:"schemes,omitempty"`
+	Tags                           []Tag                           `json:"tags,omitempty"`
 	Paths                          map[string]Path                 `json:"paths,omitempty"`
 	Definitions                    map[string]Definition           `json:"definitions,omitempty"`
 	XAmazonApigatewayDocumentation *XAmazonApigatewayDocumentation `json:"x-amazon-apigateway-documentation,omitempty"`
@@ -42,6 +43,20 @@ type Info struct {
 	Version        string `json:"version,omitempty"`
 	Title          string `json:"title,omitempty"`
 	TermsOfService string `json:"termsOfService,omitempty"`
+}
+
+// Tag represents a Swagger 2.0 spec tag object.
+type Tag struct {
+	Name         string        `json:"name,omitempty"`
+	Description  string        `json:"description,omitempty"`
+	ExternalDocs *ExternalDocs `json:"externalDocs,omitempty"`
+}
+
+// ExternalDocs represents a Swagger 2.0 spec tag object. The
+// URL property is required.
+type ExternalDocs struct {
+	Description string `json:"description,omitempty"`
+	URL         string `json:"url,omitempty"`
 }
 
 // Path represents a Swagger 2.0 spec path object.
