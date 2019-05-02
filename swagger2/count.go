@@ -8,21 +8,23 @@ import (
 
 	"github.com/grokify/gocharts/data/histogram"
 	"github.com/grokify/gotilla/encoding/csvutil"
+	"github.com/grokify/gotilla/type/stringsutil"
 )
 
-func CountEndpointsByTag(spec Specification) histogram.HistogramSet {
+func CountEndpointsByTag(spec Specification, tags []string) histogram.HistogramSet {
+	tags = stringsutil.SliceTrimSpace(tags)
 	hist := histogram.NewHistogramSet()
 	for url, path := range spec.Paths {
-		hist = countEndpointByTag(hist, http.MethodGet, url, path.Get)
-		hist = countEndpointByTag(hist, http.MethodPatch, url, path.Patch)
-		hist = countEndpointByTag(hist, http.MethodPut, url, path.Put)
-		hist = countEndpointByTag(hist, http.MethodPost, url, path.Post)
-		hist = countEndpointByTag(hist, http.MethodDelete, url, path.Delete)
+		hist = countEndpointByTag(hist, tags, url, http.MethodGet, path.Get)
+		hist = countEndpointByTag(hist, tags, url, http.MethodPatch, path.Patch)
+		hist = countEndpointByTag(hist, tags, url, http.MethodPut, path.Put)
+		hist = countEndpointByTag(hist, tags, url, http.MethodPost, path.Post)
+		hist = countEndpointByTag(hist, tags, url, http.MethodDelete, path.Delete)
 	}
 	return hist
 }
 
-func countEndpointByTag(hist histogram.HistogramSet, method, url string, ep *Endpoint) histogram.HistogramSet {
+func countEndpointByTag(hist histogram.HistogramSet, tags []string, url string, method string, ep *Endpoint) histogram.HistogramSet {
 	if ep == nil {
 		return hist
 	}
@@ -31,6 +33,18 @@ func countEndpointByTag(hist histogram.HistogramSet, method, url string, ep *End
 	endpoint := method + " " + url
 	for _, tag := range ep.Tags {
 		tag = strings.TrimSpace(tag)
+		add := true
+		if len(tags) > 0 {
+			add = false
+			for _, try := range tags {
+				if tag == try {
+					add = true
+				}
+			}
+		}
+		if !add {
+			continue
+		}
 		if len(tag) > 0 {
 			hist.Add(tag, endpoint, 1)
 		}
