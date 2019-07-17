@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"path/filepath"
 	"regexp"
+	"strings"
 
 	"github.com/grokify/gotilla/io/ioutilmore"
 )
@@ -35,8 +36,23 @@ func MergeDirectory(dir string) (Specification, error) {
 }
 
 func Merge(specMaster, specExtra Specification) Specification {
+	specMaster = MergeTags(specMaster, specExtra)
 	specMaster = MergePaths(specMaster, specExtra)
 	return MergeDefinitions(specMaster, specExtra)
+}
+
+func MergeTags(specMaster, specExtra Specification) Specification {
+	tagsMap := map[string]int{}
+	for _, tag := range specMaster.Tags {
+		tagsMap[tag.Name] = 1
+	}
+	for _, tag := range specExtra.Tags {
+		tag.Name = strings.TrimSpace(tag.Name)
+		if _, ok := tagsMap[tag.Name]; !ok {
+			specMaster.Tags = append(specMaster.Tags, tag)
+		}
+	}
+	return specMaster
 }
 
 func MergePaths(specMaster, specExtra Specification) Specification {
