@@ -2,6 +2,7 @@ package swagger2
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -144,6 +145,7 @@ type Response struct {
 	Description string            `json:"description,omitempty"`
 	Schema      *Schema           `json:"schema,omitempty"`
 	Headers     map[string]Header `json:"headers,omitempty"`
+	Examples    map[string]string `json:"examples,omitempty"`
 }
 
 type Schema struct {
@@ -225,10 +227,33 @@ type XAmazonApigatewayDocumentationPartInfo struct {
 
 // Parameter represents a Swagger 2.0 spec parameter object.
 type Parameter struct {
-	Name        string      `json:"name,omitempty"`
-	Type        string      `json:"type,omitempty"`
-	In          string      `json:"in,omitempty"`
-	Description string      `json:"description,omitempty"`
-	Required    bool        `json:"required,omitempty"`
-	Default     interface{} `json:"default,omitempty"`
+	Name        string            `json:"name,omitempty"`
+	Type        string            `json:"type,omitempty"`
+	In          string            `json:"in,omitempty"`
+	Description string            `json:"description,omitempty"`
+	Schema      *Schema           `json:"schema,omitempty"`
+	Required    bool              `json:"required,omitempty"`
+	Default     interface{}       `json:"default,omitempty"`
+	XExamples   map[string]string `json:"x-examples,omitempty"`
+}
+
+func GetJsonBodyParameterExampleForKey(params []Parameter, exampleKey string) (string, error) {
+	exampleKey = strings.TrimSpace(exampleKey)
+	if len(exampleKey) == 0 {
+		return "", errors.New("exampleKey is empty")
+	}
+	for _, param := range params {
+		if strings.ToLower(strings.TrimSpace(param.In)) != "body" {
+			continue
+		}
+		if len(param.XExamples) == 0 {
+			return "", fmt.Errorf("No `x-examples` in param name [%s]", param.Name)
+		}
+		if example, ok := param.XExamples[exampleKey]; !ok {
+			return "", fmt.Errorf("no `x-examples` key [%s] in param name [%s]", exampleKey, param.Name)
+		} else {
+			return example, nil
+		}
+	}
+	return "", fmt.Errorf("No `in=body` param in [%d] count params]", len(params))
 }

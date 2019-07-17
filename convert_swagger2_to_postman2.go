@@ -146,11 +146,14 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 
 	headers := []postman2.Header{}
 
+	requestContentType := ""
+
 	if len(endpoint.Consumes) > 0 {
 		if len(strings.TrimSpace(endpoint.Consumes[0])) > 0 {
+			requestContentType = strings.TrimSpace(endpoint.Consumes[0])
 			headers = append(headers, postman2.Header{
 				Key:   "Content-Type",
-				Value: strings.TrimSpace(endpoint.Consumes[0])})
+				Value: requestContentType})
 		}
 	}
 	if len(endpoint.Produces) > 0 {
@@ -164,6 +167,20 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 
 	item.Request.Header = headers
 
+	jsonCT := "application/json"
+	indexAppJson := strings.Index(
+		strings.ToLower(requestContentType), jsonCT)
+	if indexAppJson > -1 {
+		jsonExample, err := swagger2.GetJsonBodyParameterExampleForKey(
+			endpoint.Parameters, jsonCT)
+		if err == nil {
+			jsonExample = strings.TrimSpace(jsonExample)
+			if len(jsonExample) >= 0 {
+				item.Request.Body.Mode = "raw"
+				item.Request.Body.Raw = jsonExample
+			}
+		}
+	}
 	return item
 }
 
