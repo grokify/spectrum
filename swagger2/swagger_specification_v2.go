@@ -227,14 +227,16 @@ type XAmazonApigatewayDocumentationPartInfo struct {
 
 // Parameter represents a Swagger 2.0 spec parameter object.
 type Parameter struct {
-	Name        string            `json:"name,omitempty"`
-	Type        string            `json:"type,omitempty"`
-	In          string            `json:"in,omitempty"`
-	Description string            `json:"description,omitempty"`
-	Schema      *Schema           `json:"schema,omitempty"`
-	Required    bool              `json:"required,omitempty"`
-	Default     interface{}       `json:"default,omitempty"`
-	XExamples   map[string]string `json:"x-examples,omitempty"`
+	Name             string            `json:"name,omitempty"`
+	Type             string            `json:"type,omitempty"`
+	In               string            `json:"in,omitempty"`
+	Description      string            `json:"description,omitempty"`
+	Schema           *Schema           `json:"schema,omitempty"`
+	Required         bool              `json:"required,omitempty"`
+	CollectionFormat string            `json:"collectionFormat,omitempty"`
+	Items            *Items            `json:"items,omitempty"`
+	Default          interface{}       `json:"default,omitempty"`
+	XExamples        map[string]string `json:"x-examples,omitempty"`
 }
 
 func GetJsonBodyParameterExampleForKey(params []Parameter, exampleKey string) (string, error) {
