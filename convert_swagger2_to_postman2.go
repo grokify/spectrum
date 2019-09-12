@@ -23,6 +23,8 @@ type Configuration struct {
 	PostmanHeaders             []postman2.Header `json:"postmanHeaders,omitempty"`
 	PostmanAuthType            string            `json:"postmanAuthType,omitempty"`
 	PostmanBearerTokenVariable string            `json:"postmanBearerTokenVariable,omitempty"`
+	PostmanSchemeVariable      string            `json:"postmanSchemeVariable,omitempty"`
+	PostmanHostnameVariable    string            `json:"postmanHostnameVariable,omitempty"`
 }
 
 // Converter is the struct that manages the conversion.
@@ -194,24 +196,9 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 
 	err := addParamsToItem(&item, endpoint.Parameters, swag.Definitions)
 	if err != nil {
-		// TODO
 		return item
 	}
 
-	jsonCT := "json"
-	indexAppJSON := strings.Index(
-		strings.ToLower(requestContentType), jsonCT)
-	if indexAppJSON > -1 {
-		jsonExample, err := swagger2.GetJsonBodyParameterExampleForKey(
-			endpoint.Parameters, requestContentType)
-		if err == nil {
-			jsonExample = strings.TrimSpace(jsonExample)
-			if len(jsonExample) >= 0 {
-				item.Request.Body.Mode = "raw"
-				item.Request.Body.Raw = jsonExample
-			}
-		}
-	}
 	return item
 }
 
@@ -219,17 +206,20 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerURL string, endpoint *swagger2.Endpoint) postman2.URL {
 	URLParts := []string{}
 
-	// Set URL path parts
-	if len(strings.TrimSpace(cfg.PostmanURLHostname)) > 0 {
-		URLParts = append(URLParts, strings.TrimSpace(cfg.PostmanURLHostname))
-	} else if len(strings.TrimSpace(swag.Host)) > 0 {
-		URLParts = append(URLParts, strings.TrimSpace(swag.Host))
+	var hostname string
+	if strings.TrimSpace(cfg.PostmanURLHostname) != "" {
+		hostname = strings.TrimSpace(cfg.PostmanURLHostname)
+	} else if strings.TrimSpace(swag.Host) != "" {
+		hostname = strings.TrimSpace(swag.Host)
 	}
 
-	if len(strings.TrimSpace(swag.BasePath)) > 0 {
+	// Set URL path parts
+	URLParts = append(URLParts, hostname)
+
+	if strings.TrimSpace(swag.BasePath) != "" {
 		URLParts = append(URLParts, strings.TrimSpace(swag.BasePath))
 	}
-	if len(strings.TrimSpace(swaggerURL)) > 0 {
+	if strings.TrimSpace(swaggerURL) != "" {
 		URLParts = append(URLParts, strings.TrimSpace(swaggerURL))
 	}
 
@@ -273,6 +263,13 @@ func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerURL 
 		}
 	}
 
+	if cfg.PostmanHostnameVariable != "" {
+		postmanURL.Host = []string{"{{" + cfg.PostmanHostnameVariable + "}}"}
+	}
+	if cfg.PostmanSchemeVariable != "" {
+		postmanURL.Protocol = "{{" + cfg.PostmanSchemeVariable + "}}"
+	}
+
 	return postmanURL
 }
 
@@ -282,7 +279,7 @@ func addParamsToItem(item *postman2.APIItem, params []swagger2.Parameter, defs m
 			defName := param.Schema.Ref[strings.LastIndex(param.Schema.Ref, "/")+1:]
 			err := addBodyExample(item, defName, defs)
 			if err != nil {
-				return fmt.Errorf("Failed to add body example for [%s].", item.Name)
+				return fmt.Errorf("failed to add body example for [%s]", item.Name)
 			}
 		} else if param.In == "query" {
 			addQueryParam(item, &param)
@@ -305,7 +302,7 @@ func addQueryParam(item *postman2.APIItem, param *swagger2.Parameter) {
 
 func addBodyExample(item *postman2.APIItem, defName string, defs map[string]swagger2.Definition) error {
 
-	body, err := swagger2.GetJsonBodyFromDefinition(defName, defs)
+	body, err := swagger2.GetJSONBodyFromDefinition(defName, defs)
 	if err != nil {
 		return err
 	}
