@@ -1,24 +1,28 @@
 package swaggman
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"regexp"
 	"sort"
 	"strings"
 
-	"github.com/grokify/swaggman/postman2"
-	"github.com/grokify/swaggman/postman2/simple"
-	"github.com/grokify/swaggman/swagger2"
+	"github.com/wellhive/swaggman/postman2"
+	"github.com/wellhive/swaggman/postman2/simple"
+	"github.com/wellhive/swaggman/swagger2"
 )
 
 // Configuration is a Swaggman configuration that holds information on how
 // to create the Postman 2.0 collection including overriding Swagger 2.0
 // spec values.
 type Configuration struct {
-	PostmanURLHostname string            `json:"postmanURLHostname,omitempty"`
-	PostmanHeaders     []postman2.Header `json:"postmanHeaders,omitempty"`
+	PostmanURLHostname         string            `json:"postmanURLHostname,omitempty"`
+	PostmanHeaders             []postman2.Header `json:"postmanHeaders,omitempty"`
+	PostmanAuthType            string            `json:"postmanAuthType,omitempty"`
+	PostmanBearerTokenVariable string            `json:"postmanBearerTokenVariable,omitempty"`
 }
 
 // Converter is the struct that manages the conversion.
@@ -87,6 +91,16 @@ func Merge(cfg Configuration, pman postman2.Collection, swag swagger2.Specificat
 		pman.Info.Schema = "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	}
 
+	switch cfg.PostmanAuthType {
+	case "bearer":
+		pman.Auth = postman2.Auth{
+			Type: cfg.PostmanAuthType,
+			Bearer: postman2.Bearer{
+				Token: "{{" + cfg.PostmanBearerTokenVariable + "}}",
+			},
+		}
+	}
+
 	urls := []string{}
 	for url := range swag.Paths {
 		urls = append(urls, url)
@@ -140,13 +154,24 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 
 	item.Name = endpoint.Summary
 
-	item.Request = postman2.Request{Method: strings.ToUpper(method)}
+	item.Request = postman2.Request{
+		Method:      strings.ToUpper(method),
+		Description: endpoint.Description,
+	}
 
 	item.Request.URL = BuildPostmanURL(cfg, swag, url, endpoint)
 
 	headers := []postman2.Header{}
 
 	requestContentType := ""
+
+	if len(endpoint.Produces) == 0 && len(swag.Produces) > 0 {
+		endpoint.Produces = swag.Produces
+	}
+
+	if len(endpoint.Consumes) == 0 && len(swag.Consumes) > 0 {
+		endpoint.Consumes = swag.Consumes
+	}
 
 	if len(endpoint.Consumes) > 0 {
 		if len(strings.TrimSpace(endpoint.Consumes[0])) > 0 {
@@ -167,12 +192,18 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 
 	item.Request.Header = headers
 
-	jsonCT := "application/json"
-	indexAppJson := strings.Index(
+	err := addParamsToItem(&item, endpoint.Parameters, swag.Definitions)
+	if err != nil {
+		// TODO
+		return item
+	}
+
+	jsonCT := "json"
+	indexAppJSON := strings.Index(
 		strings.ToLower(requestContentType), jsonCT)
-	if indexAppJson > -1 {
+	if indexAppJSON > -1 {
 		jsonExample, err := swagger2.GetJsonBodyParameterExampleForKey(
-			endpoint.Parameters, jsonCT)
+			endpoint.Parameters, requestContentType)
 		if err == nil {
 			jsonExample = strings.TrimSpace(jsonExample)
 			if len(jsonExample) >= 0 {
@@ -243,4 +274,50 @@ func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerURL 
 	}
 
 	return postmanURL
+}
+
+func addParamsToItem(item *postman2.APIItem, params []swagger2.Parameter, defs map[string]swagger2.Definition) error {
+	for _, param := range params {
+		if param.In == "body" && param.Schema != nil {
+			defName := param.Schema.Ref[strings.LastIndex(param.Schema.Ref, "/")+1:]
+			err := addBodyExample(item, defName, defs)
+			if err != nil {
+				return fmt.Errorf("Failed to add body example for [%s].", item.Name)
+			}
+		} else if param.In == "query" {
+			addQueryParam(item, &param)
+		}
+	}
+
+	return nil
+}
+
+func addQueryParam(item *postman2.APIItem, param *swagger2.Parameter) {
+
+	qp := postman2.QueryParam{
+		Key:         param.Name,
+		Disabled:    true,
+		Description: param.Description,
+	}
+
+	item.Request.URL.Query = append(item.Request.URL.Query, qp)
+}
+
+func addBodyExample(item *postman2.APIItem, defName string, defs map[string]swagger2.Definition) error {
+
+	body, err := swagger2.GetJsonBodyFromDefinition(defName, defs)
+	if err != nil {
+		return err
+	}
+
+	var buff bytes.Buffer
+	err = json.Indent(&buff, []byte(body), "", "\t")
+	if err != nil {
+		return err
+	}
+
+	item.Request.Body.Mode = "raw"
+	item.Request.Body.Raw = buff.String()
+
+	return nil
 }

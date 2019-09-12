@@ -9,6 +9,7 @@ import (
 type Collection struct {
 	Info CollectionInfo `json:"info"`
 	Item []FolderItem   `json:"item"`
+	Auth Auth           `json:"auth,omitempty"`
 }
 
 func NewCollectionFromBytes(data []byte) (Collection, error) {
@@ -71,6 +72,15 @@ type APIItem struct {
 	Request Request `json:"request,omitempty"`
 }
 
+type Auth struct {
+	Type   string `json:"type,omitempty"`
+	Bearer Bearer `json:"bearer,omitempty"`
+}
+
+type Bearer struct {
+	Token string `json:"token,omitempty"`
+}
+
 type Event struct {
 	Listen string `json:"listen"`
 	Script Script `json:"script"`
@@ -96,11 +106,19 @@ type URL struct {
 	Host     []string          `json:"host,omitempty"`
 	Path     []string          `json:"path,omitempty"`
 	Variable []URLVariable     `json:"variable,omitempty"`
+	Query    []QueryParam      `json:"query,omitempty"`
 }
 
 type URLVariable struct {
 	Value interface{} `json:"value,omitempty"`
 	ID    string      `json:"id,omitempty"`
+}
+
+type QueryParam struct {
+	Key         string `json:"key,omitempty"`
+	Value       string `json:"value,omitempty"`
+	Disabled    bool   `json:"disabled,omitempty"`
+	Description string `json:"description,omitempty"`
 }
 
 func NewURL(rawURL string) URL {

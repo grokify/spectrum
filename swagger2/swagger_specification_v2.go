@@ -7,6 +7,9 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"time"
+
+	"github.com/tidwall/sjson"
 )
 
 // Specification represents a Swagger 2.0 specification.
@@ -17,6 +20,8 @@ type Specification struct {
 	BasePath                       string                          `json:"basePath,omitempty"`
 	Schemes                        []string                        `json:"schemes,omitempty"`
 	Tags                           []Tag                           `json:"tags,omitempty"`
+	Produces                       []string                        `json:"produces,omitempty"`
+	Consumes                       []string                        `json:"consumes,omitempty"`
 	Paths                          map[string]Path                 `json:"paths,omitempty"`
 	Definitions                    map[string]Definition           `json:"definitions,omitempty"`
 	XAmazonApigatewayDocumentation *XAmazonApigatewayDocumentation `json:"x-amazon-apigateway-documentation,omitempty"`
@@ -26,6 +31,14 @@ type Specification struct {
 func NewSpecificationFromBytes(data []byte) (Specification, error) {
 	spec := Specification{}
 	err := json.Unmarshal(data, &spec)
+	if err != nil {
+		return spec, err
+	}
+
+	if len(spec.Schemes) == 0 {
+		spec.Schemes = []string{"http"}
+	}
+
 	return spec, err
 }
 
@@ -163,11 +176,13 @@ type Definition struct {
 }
 
 type Property struct {
-	Description string `json:"description,omitempty"`
-	Format      string `json:"format,omitempty"`
-	Items       *Items `json:"items,omitempty"`
-	Type        string `json:"type,omitempty"`
-	Ref         string `json:"$ref,omitempty"`
+	Description string      `json:"description,omitempty"`
+	Format      string      `json:"format,omitempty"`
+	Items       *Items      `json:"items,omitempty"`
+	Type        string      `json:"type,omitempty"`
+	Ref         string      `json:"$ref,omitempty"`
+	Example     interface{} `json:"example,omitempty"`
+	Enum        []string    `json:"enum,omitempty"`
 }
 
 type Items struct {
@@ -248,6 +263,7 @@ func GetJsonBodyParameterExampleForKey(params []Parameter, exampleKey string) (s
 		if strings.ToLower(strings.TrimSpace(param.In)) != "body" {
 			continue
 		}
+
 		if len(param.XExamples) == 0 {
 			return "", fmt.Errorf("No `x-examples` in param name [%s]", param.Name)
 		}
@@ -258,4 +274,126 @@ func GetJsonBodyParameterExampleForKey(params []Parameter, exampleKey string) (s
 		}
 	}
 	return "", fmt.Errorf("No `in=body` param in [%d] count params]", len(params))
+}
+
+// GetJsonBodyFromDefinition
+func GetJsonBodyFromDefinition(name string, defs map[string]Definition) (string, error) {
+
+	def := defs[name]
+	var body string
+	var err error
+
+	if def.Properties == nil {
+		switch def.Type {
+		case "string":
+			return `"string"`, nil
+		}
+	}
+
+	for pName, prop := range def.Properties {
+
+		if prop.Ref != "" {
+			defName := prop.Ref[strings.LastIndex(prop.Ref, "/")+1:]
+			b, err := GetJsonBodyFromDefinition(defName, defs)
+			if err != nil {
+				return "", err
+			}
+			body, err = sjson.SetRaw(body, pName, b)
+			if err != nil {
+				return "", err
+			}
+		} else if prop.Example != nil {
+			body, err = sjson.Set(body, pName, prop.Example)
+			if err != nil {
+				return "", err
+			}
+		} else {
+
+			switch prop.Type {
+			case "string":
+				if prop.Enum != nil {
+					body, err = sjson.Set(body, pName, prop.Enum[0])
+				} else {
+					body, err = sjson.Set(body, pName, getExampleString(prop.Format))
+				}
+				if err != nil {
+					return "", err
+				}
+			case "boolean":
+				body, err = sjson.Set(body, pName, true)
+				if err != nil {
+					return "", err
+				}
+			case "number":
+				if prop.Format == "double" {
+					body, err = sjson.Set(body, pName, 3.14159)
+				} else {
+					body, err = sjson.Set(body, pName, 1202)
+				}
+				if err != nil {
+					return "", err
+				}
+			case "integer":
+				body, err = sjson.Set(body, pName, 1201)
+				if err != nil {
+					return "", err
+				}
+			case "object":
+				// TODO get properties and call recursive (need to change bodyFromDef to take map[string]Property)
+				body, err = sjson.SetRaw(body, pName, "{}")
+				if err != nil {
+					return "", err
+				}
+			case "array":
+				if prop.Items != nil && !prop.Items.IsEmpty() {
+					if prop.Items.Type != "" {
+						switch prop.Items.Type {
+						case "string":
+							body, err = sjson.SetRaw(body, pName, `["string", "string"]`)
+						default:
+							body, err = sjson.SetRaw(body, pName, "[12345, 67890]")
+						}
+						if err != nil {
+							return "", err
+						}
+					} else if prop.Items.Ref != "" {
+						defName := prop.Items.Ref[strings.LastIndex(prop.Items.Ref, "/")+1:]
+						b, err := GetJsonBodyFromDefinition(defName, defs)
+						if err != nil {
+							return "", err
+						}
+						body, err = sjson.SetRaw(body, pName, "["+b+"]")
+						if err != nil {
+							return "", err
+						}
+					}
+				}
+
+			default:
+				body, err = sjson.Set(body, pName, "schema type not provided")
+				if err != nil {
+					return "", err
+				}
+			}
+		}
+	}
+
+	return body, nil
+}
+
+func getExampleString(format string) string {
+	switch format {
+	case "date":
+		now := time.Now()
+		return now.Format("2006-01-02")
+	case "date-time":
+		now := time.Now()
+		return now.Format(time.RFC3339)
+	case "uri":
+		return "http://www.ietf.org/rfc/rfc2396.txt"
+	case "email":
+		return "user@example.com"
+	default:
+		return "string"
+	}
 }
