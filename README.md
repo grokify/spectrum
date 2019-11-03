@@ -13,7 +13,8 @@ Swaggman - Swagger to Postman Converter
 # Features
 
 * Supports Postman scripts by accepting an optional base Postman 2.0 spec that contains information not readily stored in Swagger Spec to support functions such as OAuth Password Grant.
-* Supports override URL hostname parameter to support a Postman environment variable for the URL hostname, e.g. `https://{{MY_HOSTNAME}}/restapi`
+* Supports override base URL parameter to support a Postman environment variable for the URL hostname using the `PostmanURLBase` config property, e.g. `{{MY_SERVER}}/restapi`
+* Supports override URL hostname parameter to support a Postman environment variable for the URL hostname using the `PostmanURLHostname` config property, e.g. `https://{{MY_HOSTNAME}}/restapi`
 * Supports additional headers, e.g. authorization headers using enviroment variables, e.g. `Authorization: Bearer {{myAccessToken}}`
 
 These are all used in the included example discussed below.
@@ -57,7 +58,7 @@ import(
 
 // Instantiate a converter with overrides (using Postman environment variables)
 cfg := swaggman.Configuration{
-	PostmanURLHostname: "{{RC_SERVER_HOSTNAME}}",
+	PostmanURLBase: "{{RINGCENTRAL_SERVER_URL}}",
 	PostmanHeaders: []postman2.Header{
 		{
 			Key:   "Authorization",
