@@ -10,6 +10,7 @@ import (
 type Collection struct {
 	Info CollectionInfo `json:"info"`
 	Item []FolderItem   `json:"item"`
+	Event   []Event `json:"event,omitempty"`
 }
 
 func NewCollectionFromBytes(data []byte) (Collection, error) {
