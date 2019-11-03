@@ -2,12 +2,16 @@ package swaggman
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"regexp"
 	"sort"
 	"strings"
 
+	"github.com/grokify/gotilla/fmt/fmtutil"
+	"github.com/grokify/gotilla/net/httputilmore"
 	"github.com/grokify/swaggman/postman2"
 	"github.com/grokify/swaggman/postman2/simple"
 	"github.com/grokify/swaggman/swagger2"
@@ -17,6 +21,7 @@ import (
 // to create the Postman 2.0 collection including overriding Swagger 2.0
 // spec values.
 type Configuration struct {
+	PostmanURLBase     string            `json:"postmanURLBase,omitempty"`
 	PostmanURLHostname string            `json:"postmanURLHostname,omitempty"`
 	PostmanHeaders     []postman2.Header `json:"postmanHeaders,omitempty"`
 }
@@ -44,7 +49,16 @@ func (conv *Converter) MergeConvert(swaggerFilepath string, pmanBaseFilepath str
 	if err != nil {
 		return err
 	}
+	if 1 == 0 { // DELETE
+		fmt.Println("HERE1")
+		fmtutil.PrintJSON(pman)
+		fmtutil.PrintJSON(pman.Item[0].Item[0].Request)
+		fmtutil.PrintJSON(pman.Item[0].Item[0].Request.URL)
+		fmt.Printf("FILE [%v]\n", pmanBaseFilepath)
+		fmt.Printf("NUM [%v]\n", len(pman.Item[0].Item[0].Request.URL.Host))
 
+		panic("Zz")
+	}
 	pm := Merge(conv.Configuration, pman, swag)
 
 	bytes, err := json.MarshalIndent(pm, "", "  ")
@@ -167,7 +181,7 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 
 	item.Request.Header = headers
 
-	jsonCT := "application/json"
+	jsonCT := httputilmore.ContentTypeAppJsonUtf8
 	indexAppJson := strings.Index(
 		strings.ToLower(requestContentType), jsonCT)
 	if indexAppJson > -1 {
@@ -186,20 +200,31 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 
 // BuildPostmanURL creates a Postman 2.0 spec URL from a Swagger URL
 func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerURL string, endpoint *swagger2.Endpoint) postman2.URL {
-	URLParts := []string{}
+	goUrl := url.URL{}
 
+	URLParts := []string{}
+	URLPathParts := []string{}
+
+	cfg.PostmanURLBase = strings.TrimSpace(cfg.PostmanURLBase)
 	// Set URL path parts
-	if len(strings.TrimSpace(cfg.PostmanURLHostname)) > 0 {
+	if len(cfg.PostmanURLBase) > 0 {
+		URLParts = append(URLParts, cfg.PostmanURLBase)
+		goUrl.Host = cfg.PostmanURLBase
+	} else if len(strings.TrimSpace(cfg.PostmanURLHostname)) > 0 {
 		URLParts = append(URLParts, strings.TrimSpace(cfg.PostmanURLHostname))
+		goUrl.Host = cfg.PostmanURLHostname
 	} else if len(strings.TrimSpace(swag.Host)) > 0 {
 		URLParts = append(URLParts, strings.TrimSpace(swag.Host))
+		goUrl.Host = swag.Host
 	}
 
 	if len(strings.TrimSpace(swag.BasePath)) > 0 {
 		URLParts = append(URLParts, strings.TrimSpace(swag.BasePath))
+		URLPathParts = append(URLPathParts, strings.TrimSpace(swag.BasePath))
 	}
 	if len(strings.TrimSpace(swaggerURL)) > 0 {
 		URLParts = append(URLParts, strings.TrimSpace(swaggerURL))
+		URLPathParts = append(URLPathParts, strings.TrimSpace(swaggerURL))
 	}
 
 	// Create URL
@@ -209,20 +234,30 @@ func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerURL 
 	rx2 := regexp.MustCompile(`^/+`)
 	rawPostmanURL = rx2.ReplaceAllString(rawPostmanURL, "")
 
+	rawPostmanURLPath := strings.TrimSpace(strings.Join(URLPathParts, "/"))
+	rawPostmanURLPath = rx1.ReplaceAllString(rawPostmanURLPath, "/")
+	rawPostmanURLPath = rx2.ReplaceAllString(rawPostmanURLPath, "")
+	goUrl.Path = rawPostmanURLPath
+
 	// Add URL Scheme
-	if len(swag.Schemes) > 0 {
-		for _, scheme := range swag.Schemes {
-			if len(strings.TrimSpace(scheme)) > 0 {
-				rawPostmanURL = strings.Join([]string{scheme, rawPostmanURL}, "://")
-				break
+	if len(cfg.PostmanURLBase) == 0 {
+		if len(swag.Schemes) > 0 {
+			for _, scheme := range swag.Schemes {
+				if len(strings.TrimSpace(scheme)) > 0 {
+					rawPostmanURL = strings.Join([]string{scheme, rawPostmanURL}, "://")
+					goUrl.Scheme = scheme
+					break
+				}
 			}
 		}
 	}
 
 	rx3 := regexp.MustCompile(`(^|[^\{])\{([^\/\{\}]+)\}([^\}]|$)`)
 	rawPostmanURL = rx3.ReplaceAllString(rawPostmanURL, "$1:$2$3")
+	goUrl.Path = rx3.ReplaceAllString(goUrl.Path, "$1:$2$3")
 
-	postmanURL := postman2.NewURL(rawPostmanURL)
+	//postmanURL := postman2.NewURL(rawPostmanURL)
+	postmanURL := postman2.NewURLForGoUrl(goUrl)
 
 	// Set Default URL Path Parameters
 	rx4 := regexp.MustCompile(`^\s*(:(.+))\s*$`)

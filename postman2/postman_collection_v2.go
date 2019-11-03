@@ -2,6 +2,7 @@ package postman2
 
 import (
 	"encoding/json"
+	"net/url"
 	"regexp"
 	"strings"
 )
@@ -42,7 +43,8 @@ func (col *Collection) SetFolder(newFolder FolderItem) {
 func (col *Collection) InflateRawURLs() {
 	for _, folder := range col.Item {
 		for j, api := range folder.Item {
-			if len(strings.TrimSpace(api.Request.URL.Raw)) > 0 {
+			if api.Request.URL.IsRawOnly() &&
+				len(strings.TrimSpace(api.Request.URL.Raw)) > 0 {
 				url := NewURL(strings.TrimSpace(api.Request.URL.Raw))
 				url.Auth = api.Request.URL.Auth
 				url.Variable = api.Request.URL.Variable
@@ -98,36 +100,66 @@ type URL struct {
 	Variable []URLVariable     `json:"variable,omitempty"`
 }
 
+func (url *URL) IsRawOnly() bool {
+	url.Protocol = strings.TrimSpace(url.Protocol)
+	if len(url.Protocol) > 0 ||
+		len(url.Host) > 0 ||
+		len(url.Path) > 0 {
+		return false
+	}
+	return true
+}
+
 type URLVariable struct {
 	Value interface{} `json:"value,omitempty"`
 	ID    string      `json:"id,omitempty"`
 }
 
+func NewURLForGoUrl(goUrl url.URL) URL {
+	pmURL := URL{Variable: []URLVariable{}}
+	goUrl.Scheme = strings.TrimSpace(goUrl.Scheme)
+	goUrl.Host = strings.TrimSpace(goUrl.Host)
+	goUrl.Path = strings.TrimSpace(goUrl.Path)
+	urlParts := []string{}
+	if len(goUrl.Host) > 0 {
+		pmURL.Host = strings.Split(goUrl.Host, ".")
+		urlParts = append(urlParts, goUrl.Host)
+	}
+	if len(goUrl.Path) > 0 {
+		pmURL.Path = strings.Split(goUrl.Path, "/")
+		urlParts = append(urlParts, goUrl.Path)
+	}
+	rawURL := strings.Join(urlParts, "/")
+	if len(goUrl.Scheme) > 0 {
+		pmURL.Protocol = goUrl.Scheme
+		rawURL = goUrl.Scheme + "://" + rawURL
+	}
+	pmURL.Raw = rawURL
+	return pmURL
+}
+
 func NewURL(rawURL string) URL {
 	rawURL = strings.TrimSpace(rawURL)
-	url := URL{Raw: rawURL, Variable: []URLVariable{}}
-	rx := regexp.MustCompile(`^([a-z]+)://([^/]+)/(.*)$`)
+	pmURL := URL{Raw: rawURL, Variable: []URLVariable{}}
+	rx := regexp.MustCompile(`^([a-z][0-9a-z]+)://([^/]+)/(.*)$`)
 	rs := rx.FindAllStringSubmatch(rawURL, -1)
 
 	if len(rs) > 0 {
 		for _, m := range rs {
-			url.Protocol = m[1]
+			pmURL.Protocol = m[1]
 			hostname := m[2]
 			path := m[3]
-			hostnameParts := strings.Split(hostname, ".")
-			url.Host = hostnameParts
-
-			pathParts := strings.Split(path, "/")
-			url.Path = pathParts
+			pmURL.Host = strings.Split(hostname, ".")
+			pmURL.Path = strings.Split(path, "/")
 		}
 	}
 
-	return url
+	return pmURL
 }
 
-func (url *URL) AddVariable(key string, value interface{}) {
+func (pmURL *URL) AddVariable(key string, value interface{}) {
 	variable := URLVariable{ID: key, Value: value}
-	url.Variable = append(url.Variable, variable)
+	pmURL.Variable = append(pmURL.Variable, variable)
 }
 
 type Header struct {

@@ -2,18 +2,30 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/grokify/swaggman"
 	"github.com/grokify/swaggman/postman2"
+	"github.com/jessevdk/go-flags"
 )
 
+// Convert yaml2json: https://github.com/bronze1man/yaml2json ... yaml2json_darwin_amd64
+
+type Options struct {
+	PostmanBase string `short:"b" long:"base" description:"Basic Postman File"`
+	Postman     string `short:"p" long:"postman" description:"Output Postman File" required:"true"`
+	Swagger     string `short:"s" long:"swagger" description:"Input Swagger File" required:"true"`
+}
+
 func main() {
-	swagSpecFilepath := "ringcentral.swagger2.basic.json"
-	pmanBaseFilepath := "ringcentral.postman2.base.json"
-	pmanSpecFilepath := "ringcentral.postman2.basic.json"
+	var opts Options
+	_, err := flags.Parse(&opts)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	cfg := swaggman.Configuration{
-		PostmanURLHostname: "{{RC_SERVER_HOSTNAME}}",
+		PostmanURLBase: "{{RINGCENTRAL_SERVER_URL}}",
 		PostmanHeaders: []postman2.Header{{
 			Key:   "Authorization",
 			Value: "Bearer {{my_access_token}}"}}}
@@ -21,18 +33,17 @@ func main() {
 	conv := swaggman.NewConverter(cfg)
 
 	merge := true
-	var err error
 
 	if merge {
-		err = conv.MergeConvert(swagSpecFilepath, pmanBaseFilepath, pmanSpecFilepath)
+		err = conv.MergeConvert(opts.Swagger, opts.PostmanBase, opts.Postman)
 	} else {
-		err = conv.Convert(swagSpecFilepath, pmanSpecFilepath)
+		err = conv.Convert(opts.Swagger, opts.Postman)
 	}
 
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	} else {
-		fmt.Printf("Wrote %v\n", pmanSpecFilepath)
+		fmt.Printf("Wrote %v\n", opts.Postman)
 	}
 
 	fmt.Println("DONE")

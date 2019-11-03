@@ -33,10 +33,10 @@
 								"type": "text/javascript",
 								"exec": [
 									"// Populate the Postman environment with:",
-									"// RC_SERVER_HOSTNAME, RC_APP_KEY, RC_APP_SECRET,",
-									"// RC_USERNAME, RC_EXTENSION, RC_PASSWORD",
-									"var appKey = environment[\"RC_APP_KEY\"];",
-									"var appSecret = environment[\"RC_APP_SECRET\"];",
+									"// RINGCENTRAL_SERVER_URL, RINGCENTRAL_CLIENT_ID, RINGCENTRAL_CLIENT_SECRET,",
+									"// RINGCENTRAL_USERNAME, RINGCENTRAL_EXTENSION, RINGCENTRAL_PASSWORD",
+									"var appKey = environment[\"RINGCENTRAL_CLIENT_ID\"];",
+									"var appSecret = environment[\"RINGCENTRAL_CLIENT_SECRET\"];",
 									"var apiKey = encodeBasicAuthHeader(appKey, appSecret);",
 									"",
 									"postman.setEnvironmentVariable(\"basic_auth_header\", \"Basic \".concat(apiKey));",
@@ -51,7 +51,16 @@
 					],
 					"request": {
 						"url": {
-							"raw": "https://{{RC_SERVER_HOSTNAME}}/restapi/oauth/token"
+							"raw": "{{RINGCENTRAL_SERVER_URL}}/restapi/oauth/token",
+							"auth": null,
+							"host": [
+								"{{RINGCENTRAL_SERVER_URL}}"
+							],
+							"path": [
+								"restapi",
+								"oauth",
+								"token"
+							]
 						},
 						"method": "POST",
 						"header": [
@@ -82,19 +91,19 @@
 								},
 								{
 									"key": "username",
-									"value": "{{RC_USERNAME}}",
+									"value": "{{RINGCENTRAL_USERNAME}}",
 									"type": "text",
 									"enabled": true
 								},
 								{
 									"key": "password",
-									"value": "{{RC_PASSWORD}}",
+									"value": "{{RINGCENTRAL_PASSWORD}}",
 									"type": "text",
 									"enabled": true
 								},
 								{
 									"key": "extension",
-									"value": "{{RC_EXTENSION}}",
+									"value": "{{RINGCENTRAL_EXTENSION}}",
 									"type": "text",
 									"enabled": true
 								}
