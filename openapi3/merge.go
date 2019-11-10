@@ -45,13 +45,13 @@ func Merge(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
 
 func MergeTags(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
 	tagsMap := map[string]int{}
-	for _, tag := range specMaster.Components.Tags {
+	for _, tag := range specMaster.Tags {
 		tagsMap[tag.Name] = 1
 	}
-	for _, tag := range specExtra.Components.Tags {
+	for _, tag := range specExtra.Tags {
 		tag.Name = strings.TrimSpace(tag.Name)
 		if _, ok := tagsMap[tag.Name]; !ok {
-			specMaster.Components.Tags = append(specMaster.Components.Tags, tag)
+			specMaster.Tags = append(specMaster.Tags, tag)
 		}
 	}
 	return specMaster
