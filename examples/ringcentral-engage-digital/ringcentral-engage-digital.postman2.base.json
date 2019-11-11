@@ -1,0 +1,8 @@
+{
+	"variables": [],
+	"info": {
+		"name": "RingCentral REST API",
+		"description": "This is a collection of API requests associated with the Basic usage plan in RingCentral Connect Platform for Sandbox Testing.\n\nPlease use a Postman environment with the following variables: RC_SERVER_HOSTNAME, RC_APP_KEY, RC_APP_SECRET, RC_USERNAME, RC_EXTENSION, RC_PASSWORD\n\nTo use these resources, you must ALWAYS start by executing one of the OAuth \"Auth\" Requests first, then you can use any other requests (for the 60 minutes that the access_token you obtained is valid).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	}
+}

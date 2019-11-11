@@ -1,0 +1,2593 @@
+{
+  "info": {
+    "name": "Engage Digital API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Attachments",
+      "item": [
+        {
+          "name": "Getting all attachments",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/attachments",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating an attachment",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/attachments",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data:"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting an attachment from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/attachments/:attachmentId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Getting all categories",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/categories",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating a category",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/categories",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a category from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/categories/:categoryId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating a category",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/categories/:categoryId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Deleting a category",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/categories/:categoryId",
+              "auth": null
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Channels",
+      "item": [
+        {
+          "name": "Getting all channels",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/channels",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a channel from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/channels/:channelId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating a channel",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/channels/:channelId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Communities",
+      "item": [
+        {
+          "name": "Getting all communities",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/communities",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a community from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/communities/:communityId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sources",
+      "item": [
+        {
+          "name": "Getting all sources",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/content_sources",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a source from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/content_sources/:sourceId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating a source",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/content_sources/:sourceId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Threads",
+      "item": [
+        {
+          "name": "Getting all threads",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/content_threads",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a thread from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/content_threads/:threadId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Close a thread",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/content_threads/:threadId/close",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Archiving a thread",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/content_threads/:threadId/ignore",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Open a thread",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/content_threads/:threadId/open",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Categorizing a thread",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/content_threads/:threadId/update_categories",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contents",
+      "item": [
+        {
+          "name": "Contents",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/contents",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating a content",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/contents",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a content from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/contents/:contentId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Ignoring a content",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/contents/:contentId/ignore",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Categorizing a content",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/contents/:contentId/update_categories",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "CustomFields",
+      "item": [
+        {
+          "name": "Getting all custom fields",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/custom_fields",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating a custom field",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/custom_fields",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a custom field from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/custom_fields/:customFieldId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating a custom field",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/custom_fields/:customFieldId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Deleting a custom field",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/custom_fields/:customFieldId",
+              "auth": null
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Getting all events",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/events",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting an event from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/events/:eventId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Folders",
+      "item": [
+        {
+          "name": "Getting all folders",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/folders",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating a folder",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/folders",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a folder from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/folders/:folderId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating a folder",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/folders/:folderId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Deleting a folder",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/folders/:folderId",
+              "auth": null
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Identities",
+      "item": [
+        {
+          "name": "Getting all identities",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/identities",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting an identity from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/identities/:identityId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Identity Groups",
+      "item": [
+        {
+          "name": "Getting all identity groups",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/identity_groups",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting an identity group from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/identity_groups/:identityGroupId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating an identity group",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/identity_groups/:identityGroupId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Intervention Comments",
+      "item": [
+        {
+          "name": "Getting all intervention comments",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/intervention_comments",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating an intervention comment",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/intervention_comments",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting an intervention comment from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/intervention_comments/:interventionCommentId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Deleting an intervention comment",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/intervention_comments/:interventionCommentId",
+              "auth": null
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Interventions",
+      "item": [
+        {
+          "name": "Getting all interventions",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/interventions",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating an intervention",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/interventions",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting an intervention from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/interventions/:interventionId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Cancelling an intervention",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/interventions/:interventionId/cancel",
+              "auth": null
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Closing an intervention",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/interventions/:interventionId/close",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Reassigning an intervention",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/interventions/:interventionId/reassign",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Categorizing an intervention",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/interventions/:interventionId/update_categories",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Locales",
+      "item": [
+        {
+          "name": "Getting all locales",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/locales",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Presence Status",
+      "item": [
+        {
+          "name": "Getting all presence statuses",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/presence_status",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating a presence status",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/presence_status",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a presence status from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/presence_status/:presenceStatusId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating a presence status",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/presence_status/:presenceStatusId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Deleting a presence status",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/presence_status/:presenceStatusId",
+              "auth": null
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reply Assistant Entries",
+      "item": [
+        {
+          "name": "Getting​ a​ll​ reply assistant e​ntries",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/reply_assistant/entries",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating an entry",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/reply_assistant/entries",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a reply assistant entry from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/reply_assistant/entries/:replyAssistantEntryId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating a reply assistant entry",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/reply_assistant/entries/:replyAssistantEntryId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Deleting a reply assistant entry",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/reply_assistant/entries/:replyAssistantEntryId",
+              "auth": null
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reply Assistant Groups",
+      "item": [
+        {
+          "name": "Getting​ a​ll​ reply assistant groups",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/reply_assistant/groups",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating a reply assistant group",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/reply_assistant/groups",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a reply assistant group from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/reply_assistant/groups/:replyAssistantGroupId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating a reply assistant group",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/reply_assistant/groups/:replyAssistantGroupId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Deleting a reply assistant group",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/reply_assistant/groups/:replyAssistantGroupId",
+              "auth": null
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reply Assistant Versions",
+      "item": [
+        {
+          "name": "Getting​ a​ll​ reply assistant versions",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/reply_assistant/versions",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating a reply assistant version",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/reply_assistant/versions",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a reply assistant version from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/reply_assistant/versions/:replyAssistantVersionId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating a reply assistant version",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/reply_assistant/versions/:replyAssistantVersionId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Deleting a reply assistant version",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/reply_assistant/versions/:replyAssistantVersionId",
+              "auth": null
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Roles",
+      "item": [
+        {
+          "name": "Getting all roles",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/roles",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating a role",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/roles",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a role from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/roles/:roleId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating a role",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/roles/:roleId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Settings",
+      "item": [
+        {
+          "name": "Getting all settings",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/settings",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating settings",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/settings",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Agent Status",
+      "item": [
+        {
+          "name": "Get all connected agents status",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/status",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Get a connected agent status",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/status/:agentId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Changing an agent's status",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/status/:agentId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tags",
+      "item": [
+        {
+          "name": "Getting all tags",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/tags",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating a tag",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/tags",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a tag from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/tags/:tagId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating a tag",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/tags/:tagId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Deleting a tag",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/tags/:tagId",
+              "auth": null
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tasks",
+      "item": [
+        {
+          "name": "Getting all tasks",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/tasks",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a task from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/tasks/:taskId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Move a task to another queue",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/tasks/:taskId/move",
+              "auth": null
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Transferring a task",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/tasks/:taskId/transfer",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Teams",
+      "item": [
+        {
+          "name": "Getting all teams",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/teams",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating a team",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/teams",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a team from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/teams/:teamId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating a team",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/teams/:teamId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Deleting a team",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/teams/:teamId",
+              "auth": null
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Time Sheets",
+      "item": [
+        {
+          "name": "Getting all time sheets",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/time_sheets",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating a time sheet",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/time_sheets",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a time sheet from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/time_sheets/:timeSheetId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating a time sheet",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/time_sheets/:timeSheetId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Deleting a time sheet",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/time_sheets/:timeSheetId",
+              "auth": null
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Timezones",
+      "item": [
+        {
+          "name": "Getting all timezones",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/timezones",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Getting all users",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/users",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating a user",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/users",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Inviting a user",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/users/invite",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a user from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/users/:userId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating a user",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/users/:userId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Deleting a user",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/users/:userId",
+              "auth": null
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Webhooks",
+      "item": [
+        {
+          "name": "Getting all webhooks",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/webhooks",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating a webhook",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/webhooks",
+              "auth": null
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a webhook from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/webhooks/:webhookId",
+              "auth": null
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating a webhook",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/webhooks/:webhookId",
+              "auth": null
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Deleting a webhook",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/webhooks/:webhookId",
+              "auth": null
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "info": {
+    "name": "Engage Digital API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Getting all users",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/users",
+              "auth": null,
+              "host": [
+                "{{RINGCENTRAL_ENGAGE_SERVER_URL}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Creating a user",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/users",
+              "auth": null,
+              "host": [
+                "{{RINGCENTRAL_ENGAGE_SERVER_URL}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Inviting a user",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/users/invite",
+              "auth": null,
+              "host": [
+                "{{RINGCENTRAL_ENGAGE_SERVER_URL}}"
+              ],
+              "path": [
+                "users",
+                "invite"
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Getting a user from its id",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/users/:userId",
+              "auth": null,
+              "host": [
+                "{{RINGCENTRAL_ENGAGE_SERVER_URL}}"
+              ],
+              "path": [
+                "users",
+                ":userId"
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Updating a user",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/users/:userId",
+              "auth": null,
+              "host": [
+                "{{RINGCENTRAL_ENGAGE_SERVER_URL}}"
+              ],
+              "path": [
+                "users",
+                ":userId"
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        },
+        {
+          "name": "Deleting a user",
+          "request": {
+            "url": {
+              "raw": "{{RINGCENTRAL_ENGAGE_SERVER_URL}}/users/:userId",
+              "auth": null,
+              "host": [
+                "{{RINGCENTRAL_ENGAGE_SERVER_URL}}"
+              ],
+              "path": [
+                "users",
+                ":userId"
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {}
+          }
+        }
+      ]
+    }
+  ]
+}

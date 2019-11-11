@@ -150,34 +150,33 @@ func postmanAddItemToFolder(pman postman2.Collection, pmItem postman2.APIItem, p
 // Swagger2PathToPostman2APIItem converts a Swagger 2.0 path to a
 // Postman 2.0 API item
 func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specification, url string, method string, endpoint *swagger2.Endpoint) postman2.APIItem {
-	item := postman2.APIItem{}
-
-	item.Name = endpoint.Summary
-
-	item.Request = postman2.Request{Method: strings.ToUpper(method)}
-
-	item.Request.URL = BuildPostmanURL(cfg, swag, url, endpoint)
-
-	headers := []postman2.Header{}
-
-	requestContentType := ""
-
-	if len(endpoint.Consumes) > 0 {
-		if len(strings.TrimSpace(endpoint.Consumes[0])) > 0 {
-			requestContentType = strings.TrimSpace(endpoint.Consumes[0])
-			headers = append(headers, postman2.Header{
-				Key:   "Content-Type",
-				Value: requestContentType})
-		}
+	item := postman2.APIItem{
+		Name: endpoint.Summary,
+		Request: postman2.Request{
+			Method: strings.ToUpper(method),
+			URL:    BuildPostmanURL(cfg, swag, url, endpoint),
+		},
 	}
-	if len(endpoint.Produces) > 0 {
-		if len(strings.TrimSpace(endpoint.Produces[0])) > 0 {
-			headers = append(headers, postman2.Header{
-				Key:   "Accept",
-				Value: strings.TrimSpace(endpoint.Produces[0])})
-		}
-	}
-	headers = append(headers, cfg.PostmanHeaders...)
+	/*
+		item.Name = endpoint.Summary
+
+		item.Request = postman2.Request{Method: strings.ToUpper(method)}
+
+		item.Request.URL = BuildPostmanURL(cfg, swag, url, endpoint)
+	*/
+	headers := cfg.PostmanHeaders
+
+	headers, requestContentType := postman2.AppendPostmanHeaderValueLower(
+		headers,
+		httputilmore.HeaderContentType,
+		endpoint.Consumes,
+		postman2.DefaultMediaTypePreferencesSlice())
+
+	headers, _ = postman2.AppendPostmanHeaderValueLower(
+		headers,
+		httputilmore.HeaderAccept,
+		endpoint.Produces,
+		postman2.DefaultMediaTypePreferencesSlice())
 
 	item.Request.Header = headers
 
@@ -252,9 +251,14 @@ func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerURL 
 		}
 	}
 
-	rx3 := regexp.MustCompile(`(^|[^\{])\{([^\/\{\}]+)\}([^\}]|$)`)
-	rawPostmanURL = rx3.ReplaceAllString(rawPostmanURL, "$1:$2$3")
-	goUrl.Path = rx3.ReplaceAllString(goUrl.Path, "$1:$2$3")
+	/*
+		rx3 := regexp.MustCompile(`(^|[^\{])\{([^\/\{\}]+)\}([^\}]|$)`)
+		rawPostmanURL = rx3.ReplaceAllString(rawPostmanURL, "$1:$2$3")
+		goUrl.Path = rx3.ReplaceAllString(goUrl.Path, "$1:$2$3")
+	*/
+
+	rawPostmanURL = postman2.ApiUrlOasToPostman(rawPostmanURL)
+	goUrl.Path = postman2.ApiUrlOasToPostman(goUrl.Path)
 
 	//postmanURL := postman2.NewURL(rawPostmanURL)
 	postmanURL := postman2.NewURLForGoUrl(goUrl)

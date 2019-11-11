@@ -2,15 +2,13 @@ package postman2
 
 import (
 	"encoding/json"
-	"net/url"
-	"regexp"
 	"strings"
 )
 
 type Collection struct {
-	Info CollectionInfo `json:"info"`
-	Item []FolderItem   `json:"item"`
-	Event   []Event `json:"event,omitempty"`
+	Info  CollectionInfo `json:"info"`
+	Item  []FolderItem   `json:"item"`
+	Event []Event        `json:"event,omitempty"`
 }
 
 func NewCollectionFromBytes(data []byte) (Collection, error) {
@@ -92,6 +90,7 @@ type Request struct {
 	Description string      `json:"description,omitempty"`
 }
 
+/*
 type URL struct {
 	Raw      string            `json:"raw,omitempty"`
 	Protocol string            `json:"protocol,omitempty"`
@@ -162,7 +161,7 @@ func (pmURL *URL) AddVariable(key string, value interface{}) {
 	variable := URLVariable{ID: key, Value: value}
 	pmURL.Variable = append(pmURL.Variable, variable)
 }
-
+*/
 type Header struct {
 	Key         string `json:"key,omitempty"`
 	Value       string `json:"value,omitempty"`
