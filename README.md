@@ -1,5 +1,5 @@
-Swaggman - Swagger to Postman Converter
-=======================================
+Swaggman - OpenAPI / Swagger Spec to Postman Converter
+======================================================
 
 [![Build Status][build-status-svg]][build-status-link]
 [![Go Report Card][goreport-svg]][goreport-link]
