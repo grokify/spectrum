@@ -260,6 +260,9 @@ func schemaToString(schemaRef *oas3.SchemaRef) string {
 		}
 	}
 	if len(parts) > 0 {
+		if len(parts) == 2 && parts[0] == "array" && parts[1] == "string" {
+			parts = append(parts, "csv")
+		}
 		return "<" + strings.Join(parts, ".") + ">"
 	} else {
 		return ""
