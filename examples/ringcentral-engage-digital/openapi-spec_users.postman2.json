@@ -18,6 +18,48 @@
               ],
               "path": [
                 "users"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "\u003cstring\u003e",
+                  "description": "To filter users on given email."
+                },
+                {
+                  "key": "category_id",
+                  "value": "\u003cstring\u003e",
+                  "description": "To filter users on given category id."
+                },
+                {
+                  "key": "identity_id",
+                  "value": "\u003cstring\u003e",
+                  "description": "To filter users on given identity id."
+                },
+                {
+                  "key": "external_id",
+                  "value": "\u003cstring\u003e",
+                  "description": "To filter users on given external id."
+                },
+                {
+                  "key": "role_id",
+                  "value": "\u003cstring\u003e",
+                  "description": "To filter users on given role id."
+                },
+                {
+                  "key": "team_id",
+                  "value": "\u003cstring\u003e",
+                  "description": "To filter users on given team id."
+                },
+                {
+                  "key": "offset",
+                  "value": "\u003cinteger.int32\u003e",
+                  "description": "The record index to start. Default value is 0."
+                },
+                {
+                  "key": "limit",
+                  "value": "\u003cinteger.int32\u003e",
+                  "description": "The max number of records to return. Default value is 30, max value is 150."
+                }
               ]
             },
             "method": "GET",
@@ -45,6 +87,83 @@
               ],
               "path": [
                 "users"
+              ],
+              "query": [
+                {
+                  "key": "category_ids[]",
+                  "value": "\u003carray\u003e",
+                  "description": "User list of category ids (multiple)."
+                },
+                {
+                  "key": "email",
+                  "value": "\u003cstring\u003e",
+                  "description": "User email (mandatory)."
+                },
+                {
+                  "key": "enabled",
+                  "value": "\u003cboolean\u003e",
+                  "description": "Whether the user is enabled or not (boolean)."
+                },
+                {
+                  "key": "external_id",
+                  "value": "\u003cstring\u003e",
+                  "description": "User external id, used for SSO."
+                },
+                {
+                  "key": "firstname",
+                  "value": "\u003cstring\u003e",
+                  "description": "User firstname (mandatory)."
+                },
+                {
+                  "key": "gender",
+                  "value": "\u003cstring\u003e",
+                  "description": "User gender (\"man\" or \"woman\")."
+                },
+                {
+                  "key": "identity_ids[]",
+                  "value": "\u003carray\u003e",
+                  "description": "User list of identity ids (multiple)."
+                },
+                {
+                  "key": "lastname",
+                  "value": "\u003cstring\u003e",
+                  "description": "User lastname (mandatory)."
+                },
+                {
+                  "key": "locale",
+                  "value": "\u003cstring\u003e",
+                  "description": "Language for the user interface."
+                },
+                {
+                  "key": "nickname",
+                  "value": "\u003cstring\u003e",
+                  "description": "User nickname."
+                },
+                {
+                  "key": "password",
+                  "value": "\u003cstring\u003e",
+                  "description": "User plain password (mandatory)."
+                },
+                {
+                  "key": "role_id",
+                  "value": "\u003cstring\u003e",
+                  "description": "User role id (mandatory)."
+                },
+                {
+                  "key": "team_ids[]",
+                  "value": "\u003carray\u003e",
+                  "description": "User list of team ids (multiple)."
+                },
+                {
+                  "key": "timezone",
+                  "value": "\u003cstring\u003e",
+                  "description": "Use the timezone endpoint to get the timezone name (String), default is empty for domain timezone."
+                },
+                {
+                  "key": "spoken_languages[]",
+                  "value": "\u003carray\u003e",
+                  "description": "List of locales corresponding to the languages spoken by the user (multiple)."
+                }
               ]
             },
             "method": "POST",
@@ -73,6 +192,78 @@
               "path": [
                 "users",
                 "invite"
+              ],
+              "query": [
+                {
+                  "key": "category_ids",
+                  "value": "\u003carray\u003e",
+                  "description": "User list of category ids (multiple)."
+                },
+                {
+                  "key": "email",
+                  "value": "\u003cstring\u003e",
+                  "description": "User email (mandatory)."
+                },
+                {
+                  "key": "enabled",
+                  "value": "\u003cboolean\u003e",
+                  "description": "Whether the user is enabled or not (boolean)."
+                },
+                {
+                  "key": "external_id",
+                  "value": "\u003cstring\u003e",
+                  "description": "User external id."
+                },
+                {
+                  "key": "firstname",
+                  "value": "\u003cstring\u003e",
+                  "description": "User firstname (mandatory)."
+                },
+                {
+                  "key": "gender",
+                  "value": "\u003cstring\u003e",
+                  "description": "User gender (\"man\" or \"woman\")."
+                },
+                {
+                  "key": "identity_ids",
+                  "value": "\u003carray\u003e",
+                  "description": "User list of identity ids (multiple)."
+                },
+                {
+                  "key": "lastname",
+                  "value": "\u003cstring\u003e",
+                  "description": "User lastname (mandatory)."
+                },
+                {
+                  "key": "locale",
+                  "value": "\u003cstring\u003e",
+                  "description": "Language for the user interface."
+                },
+                {
+                  "key": "nickname",
+                  "value": "\u003cstring\u003e",
+                  "description": "User nickname."
+                },
+                {
+                  "key": "role_id",
+                  "value": "\u003cstring\u003e",
+                  "description": "User role id (mandatory)."
+                },
+                {
+                  "key": "team_ids",
+                  "value": "\u003carray\u003e",
+                  "description": "User list of team ids (multiple)."
+                },
+                {
+                  "key": "timezone",
+                  "value": "\u003cstring\u003e",
+                  "description": "Use the timezone endpoint to get the timezone name (String), default is empty for"
+                },
+                {
+                  "key": "spoken_languages",
+                  "value": "\u003carray\u003e",
+                  "description": "List of locales corresponding to the languages spoken by the user (multiple)."
+                }
               ]
             },
             "method": "POST",
@@ -129,6 +320,83 @@
               "path": [
                 "users",
                 ":userId"
+              ],
+              "query": [
+                {
+                  "key": "category_ids[]",
+                  "value": "\u003carray\u003e",
+                  "description": "User list of category ids (multiple)."
+                },
+                {
+                  "key": "email",
+                  "value": "\u003cstring\u003e",
+                  "description": "User email."
+                },
+                {
+                  "key": "enabled",
+                  "value": "\u003cboolean\u003e",
+                  "description": "Whether the user is enabled or not (boolean)."
+                },
+                {
+                  "key": "external_id",
+                  "value": "\u003cstring\u003e",
+                  "description": "User external id, used for SSO."
+                },
+                {
+                  "key": "firstname",
+                  "value": "\u003cstring\u003e",
+                  "description": "User firstname."
+                },
+                {
+                  "key": "gender",
+                  "value": "\u003cstring\u003e",
+                  "description": "User gender (\"man\" or \"woman\")."
+                },
+                {
+                  "key": "identity_ids[]",
+                  "value": "\u003carray\u003e",
+                  "description": "User list of identity ids (multiple)."
+                },
+                {
+                  "key": "lastname",
+                  "value": "\u003cstring\u003e",
+                  "description": "User lastname."
+                },
+                {
+                  "key": "locale",
+                  "value": "\u003cstring\u003e",
+                  "description": "Language for the user interface."
+                },
+                {
+                  "key": "nickname",
+                  "value": "\u003cstring\u003e",
+                  "description": "User nickname."
+                },
+                {
+                  "key": "password",
+                  "value": "\u003cstring\u003e",
+                  "description": "User plain password."
+                },
+                {
+                  "key": "role_id",
+                  "value": "\u003cstring\u003e",
+                  "description": "User role id."
+                },
+                {
+                  "key": "team_ids[]",
+                  "value": "\u003carray\u003e",
+                  "description": "User list of team ids (multiple)."
+                },
+                {
+                  "key": "timezone",
+                  "value": "\u003cstring\u003e",
+                  "description": "Use the timezone endpoint to get the timezone name (String), default is empty for domain timezone."
+                },
+                {
+                  "key": "spoken_languages[]",
+                  "value": "\u003carray\u003e",
+                  "description": "List of locales corresponding to the languages spoken by the user (multiple)."
+                }
               ]
             },
             "method": "PUT",

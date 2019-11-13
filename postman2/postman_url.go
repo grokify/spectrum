@@ -15,7 +15,22 @@ type URL struct {
 	Auth     map[string]string `json:"auth"`
 	Host     []string          `json:"host,omitempty"`
 	Path     []string          `json:"path,omitempty"`
+	Query    []URLQuery        `json:"query,omitempty"`
 	Variable []URLVariable     `json:"variable,omitempty"`
+}
+
+// URLParameters is a temp struct to hold parsed parameters.
+type URLParameters struct {
+	Query    []URLQuery    `json:"query,omitempty"`
+	Variable []URLVariable `json:"variable,omitempty"`
+}
+
+// NewURLParameters returns an initialized empty struct.
+func NewURLParameters() URLParameters {
+	return URLParameters{
+		Query:    []URLQuery{},
+		Variable: []URLVariable{},
+	}
 }
 
 func (url *URL) IsRawOnly() bool {
@@ -28,9 +43,22 @@ func (url *URL) IsRawOnly() bool {
 	return true
 }
 
+type URLQuery struct {
+	Key         string `json:"key,omitempty"`
+	Value       string `json:"value,omitempty"`
+	Description string `json:"description,omitempty"`
+}
+
 type URLVariable struct {
-	Value interface{} `json:"value,omitempty"`
-	ID    string      `json:"id,omitempty"`
+	Key         string                 `json:"key,omitempty"`
+	Value       interface{}            `json:"value,omitempty"`
+	Description URLVariableDescription `json:"description,omitempty"`
+	ID          string                 `json:"id,omitempty"`
+}
+
+type URLVariableDescription struct {
+	Content string `json:"content,omitempty"`
+	Type    string `json:"type,omitempty"`
 }
 
 func NewURLForGoUrl(goUrl url.URL) URL {

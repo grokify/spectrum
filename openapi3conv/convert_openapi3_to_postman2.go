@@ -162,6 +162,14 @@ func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *oas3.Swagge
 
 	item.Request.Header = headers
 
+	params := ParamsOpenAPI3ToPostman(operation.Parameters)
+	if len(params.Query) > 0 {
+		item.Request.URL.Query = params.Query
+	}
+	if len(params.Variable) > 0 {
+		item.Request.URL.Variable = params.Variable
+	}
+
 	return item
 }
 
@@ -208,4 +216,46 @@ func PostmanUrlAddDefaultsOAS3(pmanURL postman2.URL, operation *oas3.Operation) 
 		}
 	}
 	return pmanURL
+}
+
+// ParamsOpenAPI3ToPostman returns a slices of Postman parameters
+// for a slice of OpenAPI 3 parameters.
+func ParamsOpenAPI3ToPostman(oparams []*oas3.ParameterRef) postman2.URLParameters {
+	pparams := postman2.NewURLParameters()
+	for _, oparamRef := range oparams {
+		if oparamRef == nil || oparamRef.Value == nil {
+			continue
+		}
+		oparam := oparamRef.Value
+		if oparam.In == oas3.ParameterInQuery {
+			pparams.Query = append(pparams.Query,
+				postman2.URLQuery{
+					Key:         oparam.Name,
+					Value:       schemaToString(oparam.Schema),
+					Description: oparam.Description,
+				})
+		}
+	}
+	return pparams
+}
+
+func schemaToString(schemaRef *oas3.SchemaRef) string {
+	if schemaRef == nil || schemaRef.Value == nil {
+		return ""
+	}
+	schema := schemaRef.Value
+	parts := []string{}
+	schema.Type = strings.TrimSpace(schema.Type)
+	schema.Format = strings.TrimSpace(schema.Format)
+	if len(schema.Type) > 0 {
+		parts = append(parts, schema.Type)
+	}
+	if len(schema.Format) > 0 {
+		parts = append(parts, schema.Format)
+	}
+	if len(parts) > 0 {
+		return "<" + strings.Join(parts, ".") + ">"
+	} else {
+		return ""
+	}
 }
