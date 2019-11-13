@@ -233,7 +233,8 @@ func ParamsOpenAPI3ToPostman(oparams []*oas3.ParameterRef) postman2.URLParameter
 					Key:         oparam.Name,
 					Value:       schemaToString(oparam.Schema),
 					Description: oparam.Description,
-				})
+				},
+			)
 		}
 	}
 	return pparams
