@@ -91,7 +91,7 @@
               "query": [
                 {
                   "key": "category_ids[]",
-                  "value": "\u003carray\u003e",
+                  "value": "\u003carray.string\u003e",
                   "description": "User list of category ids (multiple)."
                 },
                 {
@@ -121,7 +121,7 @@
                 },
                 {
                   "key": "identity_ids[]",
-                  "value": "\u003carray\u003e",
+                  "value": "\u003carray.string\u003e",
                   "description": "User list of identity ids (multiple)."
                 },
                 {
@@ -151,7 +151,7 @@
                 },
                 {
                   "key": "team_ids[]",
-                  "value": "\u003carray\u003e",
+                  "value": "\u003carray.string\u003e",
                   "description": "User list of team ids (multiple)."
                 },
                 {
@@ -161,7 +161,7 @@
                 },
                 {
                   "key": "spoken_languages[]",
-                  "value": "\u003carray\u003e",
+                  "value": "\u003carray.string\u003e",
                   "description": "List of locales corresponding to the languages spoken by the user (multiple)."
                 }
               ]
@@ -196,7 +196,7 @@
               "query": [
                 {
                   "key": "category_ids",
-                  "value": "\u003carray\u003e",
+                  "value": "\u003carray.string\u003e",
                   "description": "User list of category ids (multiple)."
                 },
                 {
@@ -226,7 +226,7 @@
                 },
                 {
                   "key": "identity_ids",
-                  "value": "\u003carray\u003e",
+                  "value": "\u003carray.string\u003e",
                   "description": "User list of identity ids (multiple)."
                 },
                 {
@@ -251,7 +251,7 @@
                 },
                 {
                   "key": "team_ids",
-                  "value": "\u003carray\u003e",
+                  "value": "\u003carray.string\u003e",
                   "description": "User list of team ids (multiple)."
                 },
                 {
@@ -261,7 +261,7 @@
                 },
                 {
                   "key": "spoken_languages",
-                  "value": "\u003carray\u003e",
+                  "value": "\u003carray.string\u003e",
                   "description": "List of locales corresponding to the languages spoken by the user (multiple)."
                 }
               ]
@@ -324,7 +324,7 @@
               "query": [
                 {
                   "key": "category_ids[]",
-                  "value": "\u003carray\u003e",
+                  "value": "\u003carray.string\u003e",
                   "description": "User list of category ids (multiple)."
                 },
                 {
@@ -354,7 +354,7 @@
                 },
                 {
                   "key": "identity_ids[]",
-                  "value": "\u003carray\u003e",
+                  "value": "\u003carray.string\u003e",
                   "description": "User list of identity ids (multiple)."
                 },
                 {
@@ -384,7 +384,7 @@
                 },
                 {
                   "key": "team_ids[]",
-                  "value": "\u003carray\u003e",
+                  "value": "\u003carray.string\u003e",
                   "description": "User list of team ids (multiple)."
                 },
                 {
@@ -394,7 +394,7 @@
                 },
                 {
                   "key": "spoken_languages[]",
-                  "value": "\u003carray\u003e",
+                  "value": "\u003carray.string\u003e",
                   "description": "List of locales corresponding to the languages spoken by the user (multiple)."
                 }
               ]

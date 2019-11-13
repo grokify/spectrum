@@ -254,6 +254,11 @@ func schemaToString(schemaRef *oas3.SchemaRef) string {
 	if len(schema.Format) > 0 {
 		parts = append(parts, schema.Format)
 	}
+	if strings.ToLower(schema.Type) == "array" {
+		if schema.Items != nil && schema.Items.Value != nil {
+			parts = append(parts, schema.Items.Value.Type)
+		}
+	}
 	if len(parts) > 0 {
 		return "<" + strings.Join(parts, ".") + ">"
 	} else {
