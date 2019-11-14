@@ -23,42 +23,50 @@
                 {
                   "key": "email",
                   "value": "\u003cstring\u003e",
-                  "description": "To filter users on given email."
+                  "description": "To filter users on given email.",
+                  "disabled": true
                 },
                 {
                   "key": "category_id",
                   "value": "\u003cstring\u003e",
-                  "description": "To filter users on given category id."
+                  "description": "To filter users on given category id.",
+                  "disabled": true
                 },
                 {
                   "key": "identity_id",
                   "value": "\u003cstring\u003e",
-                  "description": "To filter users on given identity id."
+                  "description": "To filter users on given identity id.",
+                  "disabled": true
                 },
                 {
                   "key": "external_id",
                   "value": "\u003cstring\u003e",
-                  "description": "To filter users on given external id."
+                  "description": "To filter users on given external id.",
+                  "disabled": true
                 },
                 {
                   "key": "role_id",
                   "value": "\u003cstring\u003e",
-                  "description": "To filter users on given role id."
+                  "description": "To filter users on given role id.",
+                  "disabled": true
                 },
                 {
                   "key": "team_id",
                   "value": "\u003cstring\u003e",
-                  "description": "To filter users on given team id."
+                  "description": "To filter users on given team id.",
+                  "disabled": true
                 },
                 {
                   "key": "offset",
                   "value": "\u003cinteger.int32\u003e",
-                  "description": "The record index to start. Default value is 0."
+                  "description": "The record index to start. Default value is 0.",
+                  "disabled": true
                 },
                 {
                   "key": "limit",
                   "value": "\u003cinteger.int32\u003e",
-                  "description": "The max number of records to return. Default value is 30, max value is 150."
+                  "description": "The max number of records to return. Default value is 30, max value is 150.",
+                  "disabled": true
                 }
               ]
             },
@@ -92,77 +100,92 @@
                 {
                   "key": "category_ids[]",
                   "value": "\u003carray.string.csv\u003e",
-                  "description": "User list of category ids (multiple)."
+                  "description": "User list of category ids (multiple).",
+                  "disabled": true
                 },
                 {
                   "key": "email",
                   "value": "\u003cstring\u003e",
-                  "description": "User email (mandatory)."
+                  "description": "User email (mandatory).",
+                  "disabled": true
                 },
                 {
                   "key": "enabled",
                   "value": "\u003cboolean\u003e",
-                  "description": "Whether the user is enabled or not (boolean)."
+                  "description": "Whether the user is enabled or not (boolean).",
+                  "disabled": true
                 },
                 {
                   "key": "external_id",
                   "value": "\u003cstring\u003e",
-                  "description": "User external id, used for SSO."
+                  "description": "User external id, used for SSO.",
+                  "disabled": true
                 },
                 {
                   "key": "firstname",
                   "value": "\u003cstring\u003e",
-                  "description": "User firstname (mandatory)."
+                  "description": "User firstname (mandatory).",
+                  "disabled": true
                 },
                 {
                   "key": "gender",
                   "value": "\u003cstring\u003e",
-                  "description": "User gender (\"man\" or \"woman\")."
+                  "description": "User gender (\"man\" or \"woman\").",
+                  "disabled": true
                 },
                 {
                   "key": "identity_ids[]",
                   "value": "\u003carray.string.csv\u003e",
-                  "description": "User list of identity ids (multiple)."
+                  "description": "User list of identity ids (multiple).",
+                  "disabled": true
                 },
                 {
                   "key": "lastname",
                   "value": "\u003cstring\u003e",
-                  "description": "User lastname (mandatory)."
+                  "description": "User lastname (mandatory).",
+                  "disabled": true
                 },
                 {
                   "key": "locale",
                   "value": "\u003cstring\u003e",
-                  "description": "Language for the user interface."
+                  "description": "Language for the user interface.",
+                  "disabled": true
                 },
                 {
                   "key": "nickname",
                   "value": "\u003cstring\u003e",
-                  "description": "User nickname."
+                  "description": "User nickname.",
+                  "disabled": true
                 },
                 {
                   "key": "password",
                   "value": "\u003cstring\u003e",
-                  "description": "User plain password (mandatory)."
+                  "description": "User plain password (mandatory).",
+                  "disabled": true
                 },
                 {
                   "key": "role_id",
                   "value": "\u003cstring\u003e",
-                  "description": "User role id (mandatory)."
+                  "description": "User role id (mandatory).",
+                  "disabled": true
                 },
                 {
                   "key": "team_ids[]",
                   "value": "\u003carray.string.csv\u003e",
-                  "description": "User list of team ids (multiple)."
+                  "description": "User list of team ids (multiple).",
+                  "disabled": true
                 },
                 {
                   "key": "timezone",
                   "value": "\u003cstring\u003e",
-                  "description": "Use the timezone endpoint to get the timezone name (String), default is empty for domain timezone."
+                  "description": "Use the timezone endpoint to get the timezone name (String), default is empty for domain timezone.",
+                  "disabled": true
                 },
                 {
                   "key": "spoken_languages[]",
                   "value": "\u003carray.string.csv\u003e",
-                  "description": "List of locales corresponding to the languages spoken by the user (multiple)."
+                  "description": "List of locales corresponding to the languages spoken by the user (multiple).",
+                  "disabled": true
                 }
               ]
             },
@@ -197,72 +220,86 @@
                 {
                   "key": "category_ids",
                   "value": "\u003carray.string.csv\u003e",
-                  "description": "User list of category ids (multiple)."
+                  "description": "User list of category ids (multiple).",
+                  "disabled": true
                 },
                 {
                   "key": "email",
                   "value": "\u003cstring\u003e",
-                  "description": "User email (mandatory)."
+                  "description": "User email (mandatory).",
+                  "disabled": true
                 },
                 {
                   "key": "enabled",
                   "value": "\u003cboolean\u003e",
-                  "description": "Whether the user is enabled or not (boolean)."
+                  "description": "Whether the user is enabled or not (boolean).",
+                  "disabled": true
                 },
                 {
                   "key": "external_id",
                   "value": "\u003cstring\u003e",
-                  "description": "User external id."
+                  "description": "User external id.",
+                  "disabled": true
                 },
                 {
                   "key": "firstname",
                   "value": "\u003cstring\u003e",
-                  "description": "User firstname (mandatory)."
+                  "description": "User firstname (mandatory).",
+                  "disabled": true
                 },
                 {
                   "key": "gender",
                   "value": "\u003cstring\u003e",
-                  "description": "User gender (\"man\" or \"woman\")."
+                  "description": "User gender (\"man\" or \"woman\").",
+                  "disabled": true
                 },
                 {
                   "key": "identity_ids",
                   "value": "\u003carray.string.csv\u003e",
-                  "description": "User list of identity ids (multiple)."
+                  "description": "User list of identity ids (multiple).",
+                  "disabled": true
                 },
                 {
                   "key": "lastname",
                   "value": "\u003cstring\u003e",
-                  "description": "User lastname (mandatory)."
+                  "description": "User lastname (mandatory).",
+                  "disabled": true
                 },
                 {
                   "key": "locale",
                   "value": "\u003cstring\u003e",
-                  "description": "Language for the user interface."
+                  "description": "Language for the user interface.",
+                  "disabled": true
                 },
                 {
                   "key": "nickname",
                   "value": "\u003cstring\u003e",
-                  "description": "User nickname."
+                  "description": "User nickname.",
+                  "disabled": true
                 },
                 {
                   "key": "role_id",
                   "value": "\u003cstring\u003e",
-                  "description": "User role id (mandatory)."
+                  "description": "User role id (mandatory).",
+                  "disabled": true
                 },
                 {
                   "key": "team_ids",
                   "value": "\u003carray.string.csv\u003e",
-                  "description": "User list of team ids (multiple)."
+                  "description": "User list of team ids (multiple).",
+                  "disabled": true
                 },
                 {
                   "key": "timezone",
                   "value": "\u003cstring\u003e",
-                  "description": "Use the timezone endpoint to get the timezone name (String), default is empty for"
+                  "description": "Use the timezone endpoint to get the timezone name (String), default is empty for",
+                  "disabled": true
                 },
                 {
                   "key": "spoken_languages",
                   "value": "\u003carray.string.csv\u003e",
-                  "description": "List of locales corresponding to the languages spoken by the user (multiple)."
+                  "description": "List of locales corresponding to the languages spoken by the user (multiple).",
+                  "disabled": true
                 }
               ]
             },
@@ -325,77 +362,92 @@
                 {
                   "key": "category_ids[]",
                   "value": "\u003carray.string.csv\u003e",
-                  "description": "User list of category ids (multiple)."
+                  "description": "User list of category ids (multiple).",
+                  "disabled": true
                 },
                 {
                   "key": "email",
                   "value": "\u003cstring\u003e",
-                  "description": "User email."
+                  "description": "User email.",
+                  "disabled": true
                 },
                 {
                   "key": "enabled",
                   "value": "\u003cboolean\u003e",
-                  "description": "Whether the user is enabled or not (boolean)."
+                  "description": "Whether the user is enabled or not (boolean).",
+                  "disabled": true
                 },
                 {
                   "key": "external_id",
                   "value": "\u003cstring\u003e",
-                  "description": "User external id, used for SSO."
+                  "description": "User external id, used for SSO.",
+                  "disabled": true
                 },
                 {
                   "key": "firstname",
                   "value": "\u003cstring\u003e",
-                  "description": "User firstname."
+                  "description": "User firstname.",
+                  "disabled": true
                 },
                 {
                   "key": "gender",
                   "value": "\u003cstring\u003e",
-                  "description": "User gender (\"man\" or \"woman\")."
+                  "description": "User gender (\"man\" or \"woman\").",
+                  "disabled": true
                 },
                 {
                   "key": "identity_ids[]",
                   "value": "\u003carray.string.csv\u003e",
-                  "description": "User list of identity ids (multiple)."
+                  "description": "User list of identity ids (multiple).",
+                  "disabled": true
                 },
                 {
                   "key": "lastname",
                   "value": "\u003cstring\u003e",
-                  "description": "User lastname."
+                  "description": "User lastname.",
+                  "disabled": true
                 },
                 {
                   "key": "locale",
                   "value": "\u003cstring\u003e",
-                  "description": "Language for the user interface."
+                  "description": "Language for the user interface.",
+                  "disabled": true
                 },
                 {
                   "key": "nickname",
                   "value": "\u003cstring\u003e",
-                  "description": "User nickname."
+                  "description": "User nickname.",
+                  "disabled": true
                 },
                 {
                   "key": "password",
                   "value": "\u003cstring\u003e",
-                  "description": "User plain password."
+                  "description": "User plain password.",
+                  "disabled": true
                 },
                 {
                   "key": "role_id",
                   "value": "\u003cstring\u003e",
-                  "description": "User role id."
+                  "description": "User role id.",
+                  "disabled": true
                 },
                 {
                   "key": "team_ids[]",
                   "value": "\u003carray.string.csv\u003e",
-                  "description": "User list of team ids (multiple)."
+                  "description": "User list of team ids (multiple).",
+                  "disabled": true
                 },
                 {
                   "key": "timezone",
                   "value": "\u003cstring\u003e",
-                  "description": "Use the timezone endpoint to get the timezone name (String), default is empty for domain timezone."
+                  "description": "Use the timezone endpoint to get the timezone name (String), default is empty for domain timezone.",
+                  "disabled": true
                 },
                 {
                   "key": "spoken_languages[]",
                   "value": "\u003carray.string.csv\u003e",
-                  "description": "List of locales corresponding to the languages spoken by the user (multiple)."
+                  "description": "List of locales corresponding to the languages spoken by the user (multiple).",
+                  "disabled": true
                 }
               ]
             },
@@ -441,7 +493,13 @@
             "body": {}
           }
         }
-      ]
+      ],
+      "request": {
+        "url": {
+          "auth": null
+        },
+        "body": {}
+      }
     }
   ]
 }

@@ -7,7 +7,7 @@ import (
 
 type Collection struct {
 	Info  CollectionInfo `json:"info"`
-	Item  []FolderItem   `json:"item"`
+	Item  []Item         `json:"item"`
 	Event []Event        `json:"event,omitempty"`
 }
 
@@ -17,19 +17,19 @@ func NewCollectionFromBytes(data []byte) (Collection, error) {
 	return pman, err
 }
 
-func (col *Collection) GetOrNewFolder(folderName string) FolderItem {
+func (col *Collection) GetOrNewFolder(folderName string) Item {
 	for _, folder := range col.Item {
 		if folder.Name == folderName {
 			return folder
 		}
 	}
-	folder := FolderItem{
+	folder := Item{
 		Name: folderName}
 	col.Item = append(col.Item, folder)
 	return folder
 }
 
-func (col *Collection) SetFolder(newFolder FolderItem) {
+func (col *Collection) SetFolder(newFolder Item) {
 	for i, folder := range col.Item {
 		if newFolder.Name == folder.Name {
 			col.Item[i] = newFolder
@@ -60,18 +60,23 @@ type CollectionInfo struct {
 	Schema      string `json:"schema,omitempty"`
 }
 
-type FolderItem struct {
-	Name        string    `json:"name,omitempty"`
-	Description string    `json:"description,omitempty"`
-	Item        []APIItem `json:"item,omitempty"`
+// Item can represent a folder or an API
+type Item struct {
+	Name        string  `json:"name,omitempty"`                 // Folder,Operation
+	Description string  `json:"description,omitempty"`          // Folder
+	Item        []Item  `json:"item,omitempty"`                 // Folder
+	IsSubFolder bool    `json:"_postman_isSubFolder,omitempty"` // Folder
+	Event       []Event `json:"event,omitempty"`                // Operation
+	Request     Request `json:"request,omitempty"`              // Operation
 }
 
+/*
 type APIItem struct {
 	Name    string  `json:"name,omitempty"`
 	Event   []Event `json:"event,omitempty"`
 	Request Request `json:"request,omitempty"`
 }
-
+*/
 type Event struct {
 	Listen string `json:"listen"`
 	Script Script `json:"script"`

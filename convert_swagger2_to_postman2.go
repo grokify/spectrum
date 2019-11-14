@@ -140,7 +140,7 @@ func Merge(cfg Configuration, pman postman2.Collection, swag swagger2.Specificat
 	return pman
 }
 
-func postmanAddItemToFolder(pman postman2.Collection, pmItem postman2.APIItem, pmFolderName string) postman2.Collection {
+func postmanAddItemToFolder(pman postman2.Collection, pmItem postman2.Item, pmFolderName string) postman2.Collection {
 	pmFolder := pman.GetOrNewFolder(pmFolderName)
 	pmFolder.Item = append(pmFolder.Item, pmItem)
 	pman.SetFolder(pmFolder)
@@ -149,8 +149,8 @@ func postmanAddItemToFolder(pman postman2.Collection, pmItem postman2.APIItem, p
 
 // Swagger2PathToPostman2APIItem converts a Swagger 2.0 path to a
 // Postman 2.0 API item
-func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specification, url string, method string, endpoint *swagger2.Endpoint) postman2.APIItem {
-	item := postman2.APIItem{
+func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specification, url string, method string, endpoint *swagger2.Endpoint) postman2.Item {
+	item := postman2.Item{
 		Name: endpoint.Summary,
 		Request: postman2.Request{
 			Method: strings.ToUpper(method),

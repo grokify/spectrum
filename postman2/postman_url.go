@@ -47,13 +47,15 @@ type URLQuery struct {
 	Key         string `json:"key,omitempty"`
 	Value       string `json:"value,omitempty"`
 	Description string `json:"description,omitempty"`
+	Disabled    bool   `json:"disabled,omitempty"`
 }
 
 type URLVariable struct {
 	Key         string                 `json:"key,omitempty"`
 	Value       interface{}            `json:"value,omitempty"`
 	Description URLVariableDescription `json:"description,omitempty"`
-	ID          string                 `json:"id,omitempty"`
+	Disabled    bool                   `json:"disabled,omitempty"`
+	ID          string                 `json:"id,omitempty"` // Old, pre 2.0.1
 }
 
 type URLVariableDescription struct {

@@ -9,7 +9,7 @@ import (
 
 type Collection struct {
 	Info postman2.CollectionInfo `json:"info"`
-	Item []FolderItem            `json:"item"`
+	Item []Item                  `json:"item"`
 }
 
 func NewCollectionFromBytes(data []byte) (Collection, error) {
@@ -43,28 +43,32 @@ func ReadCanonicalCollection(filepath string) (postman2.Collection, error) {
 func (col *Collection) ToCanonical() postman2.Collection {
 	cCollection := postman2.Collection{
 		Info: col.Info,
-		Item: []postman2.FolderItem{}}
+		Item: []postman2.Item{}}
 	for _, folder := range col.Item {
 		cCollection.Item = append(cCollection.Item, folder.ToCanonical())
 	}
 	return cCollection
 }
 
-type FolderItem struct {
-	Name        string    `json:"name,omitempty"`
-	Description string    `json:"description,omitempty"`
-	Item        []APIItem `json:"item,omitempty"`
+type Item struct {
+	Name        string           `json:"name,omitempty"`        // Folder,API
+	Description string           `json:"description,omitempty"` // Folder
+	Item        []Item           `json:"item,omitempty"`        // Folder
+	Event       []postman2.Event `json:"event,omitempty"`       // API
+	Request     Request          `json:"request,omitempty"`     // API
 }
 
-func (folder *FolderItem) ToCanonical() postman2.FolderItem {
-	cFolderItem := postman2.FolderItem{
-		Name:        folder.Name,
-		Description: folder.Description,
-		Item:        []postman2.APIItem{}}
-	for _, apiItem := range folder.Item {
-		cFolderItem.Item = append(cFolderItem.Item, apiItem.ToCanonical())
+func (thisItem *Item) ToCanonical() postman2.Item {
+	canItem := postman2.Item{
+		Name:        thisItem.Name,
+		Description: thisItem.Description,
+		Item:        []postman2.Item{},
+		Event:       thisItem.Event,
+		Request:     thisItem.Request.ToCanonical()}
+	for _, subItem := range thisItem.Item {
+		canItem.Item = append(canItem.Item, subItem.ToCanonical())
 	}
-	return cFolderItem
+	return canItem
 }
 
 type APIItem struct {
@@ -73,8 +77,8 @@ type APIItem struct {
 	Request Request          `json:"request,omitempty"`
 }
 
-func (apiItem *APIItem) ToCanonical() postman2.APIItem {
-	return postman2.APIItem{
+func (apiItem *APIItem) ToCanonical() postman2.Item {
+	return postman2.Item{
 		Name:    apiItem.Name,
 		Event:   apiItem.Event,
 		Request: apiItem.Request.ToCanonical()}

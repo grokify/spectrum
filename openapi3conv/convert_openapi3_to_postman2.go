@@ -136,15 +136,15 @@ func Merge(cfg Configuration, pman postman2.Collection, oas3spec *oas3.Swagger) 
 	return pman
 }
 
-func postmanAddItemToFolder(pman postman2.Collection, pmItem postman2.APIItem, pmFolderName string) postman2.Collection {
+func postmanAddItemToFolder(pman postman2.Collection, pmItem postman2.Item, pmFolderName string) postman2.Collection {
 	pmFolder := pman.GetOrNewFolder(pmFolderName)
 	pmFolder.Item = append(pmFolder.Item, pmItem)
 	pman.SetFolder(pmFolder)
 	return pman
 }
 
-func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *oas3.Swagger, url string, method string, operation *oas3.Operation) postman2.APIItem {
-	item := postman2.APIItem{
+func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *oas3.Swagger, url string, method string, operation *oas3.Operation) postman2.Item {
+	item := postman2.Item{
 		Name: operation.Summary,
 		Request: postman2.Request{
 			Method: strings.ToUpper(method),
@@ -233,6 +233,7 @@ func ParamsOpenAPI3ToPostman(oparams []*oas3.ParameterRef) postman2.URLParameter
 					Key:         oparam.Name,
 					Value:       schemaToString(oparam.Schema),
 					Description: oparam.Description,
+					Disabled:    true,
 				},
 			)
 		}
