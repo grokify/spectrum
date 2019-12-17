@@ -29,6 +29,8 @@ var (
 	rxSpringLineStringDef    *regexp.Regexp = regexp.MustCompile(`^private\s+String\s+(\S+)\s+=\s+\"(.*)\"\s*;\s*$`)
 )
 
+// ParseSpringPropertyLinesSliceToSchema takes a set of string slices
+// and attempts to parse one property per set of lines.
 func ParseSpringPropertyLinesSliceToSchema(groups [][]string) (map[string]*oas3.SchemaRef, error) {
 	mss := map[string]*oas3.SchemaRef{}
 	for _, group := range groups {
@@ -47,6 +49,8 @@ func ParseSpringPropertyLinesSliceToSchema(groups [][]string) (map[string]*oas3.
 	return mss, nil
 }
 
+// ParseSpringPropertyLinesToSchema parses a set of lines looking for
+// a property line. Only one property line is matched in this set.
 func ParseSpringPropertyLinesToSchema(lines []string) (string, *oas3.Schema, error) {
 	for _, line := range lines {
 		name, prop, err := ParseSpringLineToSchema(line)
@@ -110,6 +114,9 @@ func lineToStringDef(line string) (string, oas3.Schema, error) {
 	return "", oas3.Schema{}, nil
 }
 
+// ParseSpringLineToSchema parses a Spring Java code line and
+// attempts to extract a property name, type, format and default
+// value.
 func ParseSpringLineToSchema(line string) (string, oas3.Schema, error) {
 	sch := oas3.Schema{}
 	line = strings.Trim(line, " \t")
@@ -160,6 +167,9 @@ func ParseSpringLineToSchema(line string) (string, oas3.Schema, error) {
 	return propName, sch, nil
 }
 
+// ParseSpringCodeColumnsRaw takes a set of Java code lines
+// and groups them into lines per property. Not all Java
+// code may be formatted in a way to take advantage of this.
 func ParseSpringCodeColumnsRaw(input []string) [][]string {
 	columns := [][]string{}
 	curLines := []string{}
