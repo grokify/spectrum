@@ -11,12 +11,13 @@ var parseLineTests = []struct {
 	oasFormat  string
 	oasDefault interface{}
 }{
-	{"private Boolean userManagedByRC;", "userManagedByRC", "boolean", "", nil},
-	{"private DateTime creationDate;", "creationDate", "string", "date-time", nil},
-	{"private Integer softphoneId = 1;", "softphoneId", "integer", "int64", 1},
-	{"private String initLoginBaseState;", "initLoginBaseState", "string", "", nil},
-	{"private String initLoginBaseState = \"AVAILABLE\";", "initLoginBaseState", "string", "", "AVAILABLE"},
-	{"private String manualOutboundDefaultCallerId = \"\";", "manualOutboundDefaultCallerId", "string", "", nil},
+	{"private Boolean myPropBoolean;", "myPropBoolean", "boolean", "", nil},
+	{"private DateTime myPropDateTime;", "myPropDateTime", "string", "date-time", nil},
+	{"private Integer myPropInteger = 1;", "myPropInteger", "integer", "int64", 1},
+	{"private Long myPropLong = 1;", "myPropLong", "integer", "int64", 1},
+	{"private String myPropString;", "myPropString", "string", "", nil},
+	{"private String myPropString = \"\";", "myPropString", "string", "", ""},
+	{"private String myPropString = \"AVAILABLE\";", "myPropString", "string", "", "AVAILABLE"},
 }
 
 func TestParseLine(t *testing.T) {
