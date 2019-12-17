@@ -13,7 +13,7 @@ var parseLineTests = []struct {
 }{
 	{"private Boolean myPropBoolean;", "myPropBoolean", "boolean", "", nil},
 	{"private DateTime myPropDateTime;", "myPropDateTime", "string", "date-time", nil},
-	{"private Integer myPropInteger = 1;", "myPropInteger", "integer", "int64", 1},
+	{"private Integer myPropInteger = 1;", "myPropInteger", "integer", "", 1},
 	{"private Long myPropLong = 1;", "myPropLong", "integer", "int64", 1},
 	{"private String myPropString;", "myPropString", "string", "", nil},
 	{"private String myPropString = \"\";", "myPropString", "string", "", ""},

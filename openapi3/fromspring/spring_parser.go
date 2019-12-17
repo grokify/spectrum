@@ -79,6 +79,7 @@ func lineToIntOrLongDef(line string) (string, oas3.Schema, error) {
 	// error needs to return empty name.
 	m1 := rxSpringLineIntOrLongDef.FindAllStringSubmatch(line, -1)
 	if len(m1) > 0 {
+		intOrLong := strings.ToLower(strings.TrimSpace(m1[0][1]))
 		propName := m1[0][2]
 		intDefaultVal := m1[0][3]
 		defaultVal, err := strconv.Atoi(intDefaultVal)
@@ -87,8 +88,10 @@ func lineToIntOrLongDef(line string) (string, oas3.Schema, error) {
 		}
 		sch := oas3.Schema{
 			Type:    TypeInteger,
-			Format:  FormatIntegerInt64,
 			Default: defaultVal}
+		if intOrLong == "long" {
+			sch.Format = FormatIntegerInt64
+		}
 		return propName, sch, nil
 	}
 	return "", oas3.Schema{}, nil
@@ -146,7 +149,6 @@ func ParseSpringLineToSchema(line string) (string, oas3.Schema, error) {
 		sch.Format = FormatStringDateTime
 	case "integer":
 		sch.Type = TypeInteger
-		sch.Format = FormatIntegerInt64
 	case "long":
 		sch.Type = TypeInteger
 		sch.Format = FormatIntegerInt64
