@@ -134,8 +134,8 @@ func ParseSpringLineToSchema(line string) (string, oas3.Schema, error) {
 	}
 	m2a := m[0]
 	propName := m2a[2]
-	javaType := strings.ToLower(strings.TrimSpace(m2a[1]))
-	switch javaType {
+	javaTypeLc := strings.ToLower(strings.TrimSpace(m2a[1]))
+	switch javaTypeLc {
 	case "boolean":
 		sch.Type = TypeBoolean
 	case "date":
@@ -153,7 +153,7 @@ func ParseSpringLineToSchema(line string) (string, oas3.Schema, error) {
 	case "string":
 		sch.Type = TypeString
 	default:
-		panic(javaType)
+		panic(javaTypeLc)
 	}
 	return propName, sch, nil
 }
