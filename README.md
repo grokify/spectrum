@@ -31,6 +31,7 @@ These are all used in the included example discussed below.
 
 ## Simple Usage
 
+```
 // Instantiate a converter with default configuration
 conv := swaggman.NewConverter(swaggman.Configuration{})
 
