@@ -1,21 +1,23 @@
 package openapi3
 
 import (
-	"encoding/json"
 	"fmt"
 	"path/filepath"
 	"regexp"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/gotilla/fmt/fmtutil"
 	"github.com/grokify/gotilla/io/ioutilmore"
 	"github.com/pkg/errors"
 )
 
 var jsonFileRx = regexp.MustCompile(`(?i)\.json\s*$`)
 
-func MergeDirectory(dir string, validateEach, validateFinal bool) (*oas3.Swagger, error) {
+func MergeDirectory(dir string) (*oas3.Swagger, error) {
+	return MergeDirectoryMore(dir, false, true)
+}
+
+func MergeDirectoryMore(dir string, validateEach, validateFinal bool) (*oas3.Swagger, error) {
 	fileInfos, err := ioutilmore.DirEntriesRxSizeGt0(dir, ioutilmore.File, jsonFileRx)
 	if err != nil {
 		return nil, err
@@ -27,7 +29,6 @@ func MergeDirectory(dir string, validateEach, validateFinal bool) (*oas3.Swagger
 	for _, fi := range fileInfos {
 		filePaths = append(filePaths, filepath.Join(dir, fi.Name()))
 	}
-	fmtutil.PrintJSON(filePaths)
 	return MergeFiles(filePaths, validateEach, validateFinal)
 }
 
@@ -46,7 +47,7 @@ func MergeFiles(filepaths []string, validateEach, validateFinal bool) (*oas3.Swa
 	}
 
 	if validateFinal {
-		bytes, err := json.Marshal(specMaster)
+		bytes, err := specMaster.MarshalJSON()
 		if err != nil {
 			return specMaster, err
 		}
