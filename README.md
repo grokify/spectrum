@@ -46,7 +46,7 @@ The following can be added which are especially useful to use with environment v
 * Custom Hostname
 * Custom Headers
 
-
+```
 // Instantiate a converter with overrides (using Postman environment variables)
 cfg := swaggman.Configuration{
 	PostmanURLBase: "{{RINGCENTRAL_SERVER_URL}}",
