@@ -57,7 +57,6 @@ func MergeFiles(filepaths []string, validateEach, validateFinal bool) (*oas3.Swa
 			return newSpec, errors.Wrap(err, "Loader.LoadSwaggerFromData")
 		}
 		return newSpec, nil
-		//return newSpec, newSpec.Validate(loader.Context)
 	}
 	return specMaster, nil
 }
