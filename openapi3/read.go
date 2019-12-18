@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/getkin/kin-openapi/openapi3"
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/pkg/errors"
 )
@@ -28,5 +27,5 @@ func ReadFile(file string, validate bool) (*oas3.Swagger, error) {
 }
 
 func ReadFileLoader(file string) (*oas3.Swagger, error) {
-	return openapi3.NewSwaggerLoader().LoadSwaggerFromFile(file)
+	return oas3.NewSwaggerLoader().LoadSwaggerFromFile(file)
 }
