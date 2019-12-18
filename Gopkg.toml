@@ -3,3 +3,11 @@
   name = "github.com/getkin/kin-openapi"
   branch = "master"
 
+[[constraint]]
+  name = "github.com/grokify/gotilla"
+  branch = "master"
+
+[[constraint]]
+  name = "github.com/grokify/swaggman"
+  branch = "master"
+
