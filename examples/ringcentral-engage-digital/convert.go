@@ -11,8 +11,6 @@ import (
 
 // Convert yaml2json: https://github.com/bronze1man/yaml2json ... yaml2json_darwin_amd64
 
-var ApiUrlFormat string = "https://{account}.api.engagement.dimelo.com/1.0"
-
 type Options struct {
 	PostmanBase string `short:"b" long:"base" description:"Basic Postman File"`
 	Postman     string `short:"p" long:"postman" description:"Output Postman File" required:"true"`
@@ -35,9 +33,7 @@ func main() {
 
 	conv := openapi3conv.NewConverter(cfg)
 
-	merge := true
-
-	if merge && len(opts.PostmanBase) > 0 {
+	if len(opts.PostmanBase) > 0 {
 		err = conv.MergeConvert(opts.Swagger, opts.PostmanBase, opts.Postman)
 	} else {
 		err = conv.Convert(opts.Swagger, opts.Postman)

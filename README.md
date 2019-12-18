@@ -31,11 +31,6 @@ These are all used in the included example discussed below.
 
 ## Simple Usage
 
-```go
-import(
-	"github.com/grokify/swaggman"
-)
-
 // Instantiate a converter with default configuration
 conv := swaggman.NewConverter(swaggman.Configuration{})
 
@@ -50,11 +45,6 @@ The following can be added which are especially useful to use with environment v
 * Custom Hostname
 * Custom Headers
 
-```go
-import(
-	"github.com/grokify/swaggman"
-	"github.com/grokify/swaggman/postman2"
-)
 
 // Instantiate a converter with overrides (using Postman environment variables)
 cfg := swaggman.Configuration{

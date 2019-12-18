@@ -31,14 +31,7 @@ func main() {
 			Value: "Bearer {{my_access_token}}"}}}
 
 	conv := swaggman.NewConverter(cfg)
-
-	merge := true
-
-	if merge {
-		err = conv.MergeConvert(opts.Swagger, opts.PostmanBase, opts.Postman)
-	} else {
-		err = conv.Convert(opts.Swagger, opts.Postman)
-	}
+	err = conv.MergeConvert(opts.Swagger, opts.PostmanBase, opts.Postman)
 
 	if err != nil {
 		log.Fatal(err)
