@@ -1,18 +1,21 @@
 package openapi3
 
 import (
+	"encoding/json"
 	"fmt"
 	"path/filepath"
 	"regexp"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/gotilla/fmt/fmtutil"
 	"github.com/grokify/gotilla/io/ioutilmore"
+	"github.com/pkg/errors"
 )
 
 var jsonFileRx = regexp.MustCompile(`(?i)\.json\s*$`)
 
-func MergeDirectory(dir string) (*oas3.Swagger, error) {
+func MergeDirectory(dir string, validateEach, validateFinal bool) (*oas3.Swagger, error) {
 	fileInfos, err := ioutilmore.DirEntriesRxSizeGt0(dir, ioutilmore.File, jsonFileRx)
 	if err != nil {
 		return nil, err
@@ -20,19 +23,40 @@ func MergeDirectory(dir string) (*oas3.Swagger, error) {
 	if len(fileInfos) == 0 {
 		return nil, fmt.Errorf("No JSON files found in directory [%s]", dir)
 	}
-	loader := oas3.NewSwaggerLoader()
+	filePaths := []string{}
+	for _, fi := range fileInfos {
+		filePaths = append(filePaths, filepath.Join(dir, fi.Name()))
+	}
+	fmtutil.PrintJSON(filePaths)
+	return MergeFiles(filePaths, validateEach, validateFinal)
+}
+
+func MergeFiles(filepaths []string, validateEach, validateFinal bool) (*oas3.Swagger, error) {
 	var specMaster *oas3.Swagger
-	for i, fi := range fileInfos {
-		thisSpecFilepath := filepath.Join(dir, fi.Name())
-		thisSpec, err := loader.LoadSwaggerFromFile(thisSpecFilepath)
+	for i, fpath := range filepaths {
+		thisSpec, err := ReadFile(fpath, validateEach)
 		if err != nil {
-			return specMaster, err
+			return specMaster, errors.Wrap(err, fmt.Sprintf("Filepath [%v]", fpath))
 		}
 		if i == 0 {
 			specMaster = thisSpec
 		} else {
 			specMaster = Merge(specMaster, thisSpec)
 		}
+	}
+
+	if validateFinal {
+		bytes, err := json.Marshal(specMaster)
+		if err != nil {
+			return specMaster, err
+		}
+		loader := oas3.NewSwaggerLoader()
+		newSpec, err := loader.LoadSwaggerFromData(bytes)
+		if err != nil {
+			return newSpec, errors.Wrap(err, "Loader.LoadSwaggerFromData")
+		}
+		return newSpec, nil
+		//return newSpec, newSpec.Validate(loader.Context)
 	}
 	return specMaster, nil
 }
