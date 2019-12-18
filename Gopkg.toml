@@ -1,0 +1,5 @@
+
+[[constraint]]
+  name = "github.com/getkin/kin-openapi"
+  branch = "master"
+

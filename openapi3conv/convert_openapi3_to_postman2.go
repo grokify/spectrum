@@ -183,7 +183,7 @@ func BuildPostmanURL(cfg Configuration, spec *oas3.Swagger, specPath string, ope
 	return pmanURL
 }
 
-var postmanUrlDefaultsRx *regexp.Regexp = regexp.MustCompile(`^\s*(:(.+))\s*$`)
+var postmanUrlDefaultsRx = regexp.MustCompile(`^\s*(:(.+))\s*$`)
 
 func PostmanUrlAddDefaultsOAS3(pmanURL postman2.URL, operation *oas3.Operation) postman2.URL {
 	for _, part := range pmanURL.Path {
@@ -194,17 +194,17 @@ func PostmanUrlAddDefaultsOAS3(pmanURL postman2.URL, operation *oas3.Operation) 
 			for _, parameterRef := range operation.Parameters {
 				if parameterRef == nil || parameterRef.Value == nil {
 					continue
-					if parameterRef.Value.Name != baseVariable {
-						continue
-					}
-					schemaRef := parameterRef.Value.Schema
-					if schemaRef == nil || schemaRef.Value == nil {
-						continue
-					}
-					if schemaRef.Value.Default != nil {
-						defaultValue = schemaRef.Value.Default
-						pmanURL.AddVariable(baseVariable, defaultValue)
-					}
+				}
+				if parameterRef.Value.Name != baseVariable {
+					continue
+				}
+				schemaRef := parameterRef.Value.Schema
+				if schemaRef == nil || schemaRef.Value == nil {
+					continue
+				}
+				if schemaRef.Value.Default != nil {
+					defaultValue = schemaRef.Value.Default
+					pmanURL.AddVariable(baseVariable, defaultValue)
 				}
 				/*
 					if parameter.Name == baseVariable {

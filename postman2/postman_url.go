@@ -26,6 +26,7 @@ type URLParameters struct {
 }
 
 // NewURLParameters returns an initialized empty struct.
+//noinspection ALL
 func NewURLParameters() URLParameters {
 	return URLParameters{
 		Query:    []URLQuery{},
@@ -86,7 +87,7 @@ func NewURLForGoUrl(goUrl url.URL) URL {
 	return pmURL
 }
 
-var simpleURLRx *regexp.Regexp = regexp.MustCompile(`^([a-z][0-9a-z]+)://([^/]+)/(.*)$`)
+var simpleURLRx = regexp.MustCompile(`^([a-z][0-9a-z]+)://([^/]+)/(.*)$`)
 
 func NewURL(rawURL string) URL {
 	rawURL = strings.TrimSpace(rawURL)
@@ -125,9 +126,10 @@ const (
 	apiUrlOasToPostmanVarReplace string = "$1:$2$3"
 )
 
-var apiUrlOasToPostmanVarMatchRx *regexp.Regexp = regexp.MustCompile(
+var apiUrlOasToPostmanVarMatchRx = regexp.MustCompile(
 	apiUrlOasToPostmanVarMatch)
 
+//noinspection ALL
 func ApiUrlOasToPostman(urlWithOasVars string) string {
 	return apiUrlOasToPostmanVarMatchRx.ReplaceAllString(
 		urlWithOasVars, apiUrlOasToPostmanVarReplace)

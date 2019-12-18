@@ -17,20 +17,19 @@ const (
 	TypeString           string = "string"
 	FormatStringDate     string = "date"
 	FormatStringDateTime string = "date-time"
-	FormatIntegerInt32   string = "int32"
 	FormatIntegerInt64   string = "int64"
 )
 
 var (
-	rxSpringLine             *regexp.Regexp = regexp.MustCompile(`^private\s+(\S+)\s+(\S+)\s*;\s*$`)
-	rxSpringLineBoolDef      *regexp.Regexp = regexp.MustCompile(`^private\s+Boolean\s+(\S+)\s+=\s+(true|false);\s*$`)
-	rxSpringLineIntDef       *regexp.Regexp = regexp.MustCompile(`^private\s+Integer\s+(\S+)\s+=\s+(\d+);\s*$`)
-	rxSpringLineIntOrLongDef *regexp.Regexp = regexp.MustCompile(`^private\s+(Integer|Long)\s+(\S+)\s+=\s+(\d+);\s*$`)
-	rxSpringLineStringDef    *regexp.Regexp = regexp.MustCompile(`^private\s+String\s+(\S+)\s+=\s+\"(.*)\"\s*;\s*$`)
+	rxSpringLine             = regexp.MustCompile(`^private\s+(\S+)\s+(\S+)\s*;\s*$`)
+	rxSpringLineBoolDef      = regexp.MustCompile(`^private\s+Boolean\s+(\S+)\s+=\s+(true|false);\s*$`)
+	rxSpringLineIntOrLongDef = regexp.MustCompile(`^private\s+(Integer|Long)\s+(\S+)\s+=\s+(\d+);\s*$`)
+	rxSpringLineStringDef    = regexp.MustCompile(`^private\s+String\s+(\S+)\s+=\s+"(.*)"\s*;\s*$`)
 )
 
 // ParseSpringPropertyLinesSliceToSchema takes a set of string slices
 // and attempts to parse one property per set of lines.
+//noinspection ALL
 func ParseSpringPropertyLinesSliceToSchema(groups [][]string) (map[string]*oas3.SchemaRef, error) {
 	mss := map[string]*oas3.SchemaRef{}
 	for _, group := range groups {
@@ -170,6 +169,7 @@ func ParseSpringLineToSchema(line string) (string, oas3.Schema, error) {
 // ParseSpringCodeColumnsRaw takes a set of Java code lines
 // and groups them into lines per property. Not all Java
 // code may be formatted in a way to take advantage of this.
+//noinspection ALL
 func ParseSpringCodeColumnsRaw(input []string) [][]string {
 	columns := [][]string{}
 	curLines := []string{}
