@@ -8,6 +8,6 @@
   branch = "master"
 
 [[constraint]]
-  name = "github.com/andrewcretin/swaggman"
+  name = "github.com/grokify/swaggman"
   branch = "master"
 

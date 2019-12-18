@@ -3,7 +3,7 @@ package postman2
 import (
 	"strings"
 
-	"github.com/andrewcretin/swaggman/openapi3"
+	"github.com/grokify/swaggman/openapi3"
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gotilla/net/httputilmore"
 	"github.com/grokify/gotilla/type/stringsutil"
@@ -11,6 +11,7 @@ import (
 
 const DefaultMediaTypePreferences string = `multipart/form-data,application/json,application/x-www-form-urlencoded,application/xml,text/plain`
 
+//noinspection ALL
 func DefaultMediaTypePreferencesSlice() []string {
 	return strings.Split(DefaultMediaTypePreferences, ",")
 }
@@ -26,6 +27,7 @@ func AppendPostmanHeaderValueLower(headers []Header, headerName string, options,
 	return headers, headerValue
 }
 
+//noinspection ALL
 func AddOperationReqResMediaTypeHeaders(
 	headers []Header,
 	operation *oas3.Operation,

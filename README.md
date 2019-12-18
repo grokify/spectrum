@@ -64,15 +64,15 @@ err := conv.MergeConvert("path/to/swagger.json", "path/to/pman.base.json", "path
 
 ## Example
 
-An example conversion is included, [`examples/ringcentral/convert.go`](https://github.com/andrewcretin/swaggman/blob/master/examples/ringcentral/convert.go) which creates a Postman 2.0 spec for the [RingCentral REST API](https://developers.ringcentral.com) using a base Postman 2.0 spec and the RingCentral basic Swagger 2.0 spec.
+An example conversion is included, [`examples/ringcentral/convert.go`](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/convert.go) which creates a Postman 2.0 spec for the [RingCentral REST API](https://developers.ringcentral.com) using a base Postman 2.0 spec and the RingCentral basic Swagger 2.0 spec.
 
 [A video of importing the resulting Postman collection is available on YouTube](https://youtu.be/5kE4UPXJ-5Q).
 
 Example files include:
 
-* [RingCentral Swagger 2.0 spec](https://github.com/andrewcretin/swaggman/blob/master/examples/ringcentral/ringcentral.swagger2.basic.json)
-* [RingCentral Postman 2.0 base](https://github.com/andrewcretin/swaggman/blob/master/examples/ringcentral/ringcentral.postman2.base.json)
-* [RingCentral Postman 2.0 spec](https://github.com/andrewcretin/swaggman/blob/master/examples/ringcentral/ringcentral.postman2.basic.json) - Import this into Postman
+* [RingCentral Swagger 2.0 spec](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/ringcentral.swagger2.basic.json)
+* [RingCentral Postman 2.0 base](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/ringcentral.postman2.base.json)
+* [RingCentral Postman 2.0 spec](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/ringcentral.postman2.basic.json) - Import this into Postman
 
 The RingCentral spec uses the following environment variables. The following is the Postman bulk edit format:
 
@@ -94,11 +94,11 @@ To set your environment variables, use the Settings Gear icon and then click "Ma
 * Medium: [Using Postman, Swagger and the RingCentral API](https://medium.com/ringcentral-developers/using-postman-with-swagger-and-the-ringcentral-api-523712f792a0)
 * YouTube: [Getting Started with RingCentral APIs using Postman ](https://youtu.be/5kE4UPXJ-5Q)
 
- [build-status-svg]: https://api.travis-ci.org/andrewcretin/swaggman.svg?branch=master
- [build-status-link]: https://travis-ci.org/andrewcretin/swaggman
- [goreport-svg]: https://goreportcard.com/badge/github.com/andrewcretin/swaggman
- [goreport-link]: https://goreportcard.com/report/github.com/andrewcretin/swaggman
+ [build-status-svg]: https://api.travis-ci.org/grokify/swaggman.svg?branch=master
+ [build-status-link]: https://travis-ci.org/grokify/swaggman
+ [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/swaggman
+ [goreport-link]: https://goreportcard.com/report/github.com/grokify/swaggman
  [docs-godoc-svg]: https://img.shields.io/badge/docs-godoc-blue.svg
- [docs-godoc-link]: https://godoc.org/github.com/andrewcretin/swaggman
+ [docs-godoc-link]: https://godoc.org/github.com/grokify/swaggman
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-link]: https://github.com/andrewcretin/swaggman/blob/master/LICENSE.md
+ [license-link]: https://github.com/grokify/swaggman/blob/master/LICENSE.md

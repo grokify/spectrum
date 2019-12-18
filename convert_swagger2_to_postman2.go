@@ -9,9 +9,9 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/andrewcretin/swaggman/postman2"
-	"github.com/andrewcretin/swaggman/postman2/simple"
-	"github.com/andrewcretin/swaggman/swagger2"
+	"github.com/grokify/swaggman/postman2"
+	"github.com/grokify/swaggman/postman2/simple"
+	"github.com/grokify/swaggman/swagger2"
 	"github.com/grokify/gotilla/net/httputilmore"
 )
 
