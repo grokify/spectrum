@@ -191,7 +191,6 @@ func ParseSpringCodeColumnsRaw(input []string) [][]string {
 	if len(curLines) > 0 {
 		if strings.Index(curLines[0], "@") == 0 {
 			columns = append(columns, curLines)
-			curLines = []string{}
 		}
 	}
 	columns = stringsutil.Slice2FilterLinesHaveIndex(columns, "@Column", 0)
