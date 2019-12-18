@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 
-	"github.com/grokify/swaggman/postman2"
+	"github.com/andrewcretin/swaggman/postman2"
 )
 
 type Collection struct {

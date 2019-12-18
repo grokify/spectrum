@@ -2,7 +2,6 @@ package swaggman
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -10,11 +9,10 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/grokify/gotilla/fmt/fmtutil"
+	"github.com/andrewcretin/swaggman/postman2"
+	"github.com/andrewcretin/swaggman/postman2/simple"
+	"github.com/andrewcretin/swaggman/swagger2"
 	"github.com/grokify/gotilla/net/httputilmore"
-	"github.com/grokify/swaggman/postman2"
-	"github.com/grokify/swaggman/postman2/simple"
-	"github.com/grokify/swaggman/swagger2"
 )
 
 // Configuration is a Swaggman configuration that holds information on how
@@ -48,16 +46,6 @@ func (conv *Converter) MergeConvert(swaggerFilepath string, pmanBaseFilepath str
 	pman, err := simple.ReadCanonicalCollection(pmanBaseFilepath)
 	if err != nil {
 		return err
-	}
-	if 1 == 0 { // DELETE
-		fmt.Println("HERE1")
-		fmtutil.PrintJSON(pman)
-		fmtutil.PrintJSON(pman.Item[0].Item[0].Request)
-		fmtutil.PrintJSON(pman.Item[0].Item[0].Request.URL)
-		fmt.Printf("FILE [%v]\n", pmanBaseFilepath)
-		fmt.Printf("NUM [%v]\n", len(pman.Item[0].Item[0].Request.URL.Host))
-
-		panic("Zz")
 	}
 	pm := Merge(conv.Configuration, pman, swag)
 
@@ -102,37 +90,37 @@ func Merge(cfg Configuration, pman postman2.Collection, swag swagger2.Specificat
 	}
 
 	urls := []string{}
-	for url := range swag.Paths {
-		urls = append(urls, url)
+	for u := range swag.Paths {
+		urls = append(urls, u)
 	}
 	sort.Strings(urls)
 
-	for _, url := range urls {
-		path := swag.Paths[url]
+	for _, u := range urls {
+		path := swag.Paths[u]
 
 		if path.HasMethodWithTag(http.MethodGet) {
 			pman = postmanAddItemToFolder(pman,
-				Swagger2PathToPostman2APIItem(cfg, swag, url, http.MethodGet, path.Get),
+				Swagger2PathToPostman2APIItem(cfg, swag, u, http.MethodGet, path.Get),
 				strings.TrimSpace(path.Get.Tags[0]))
 		}
 		if path.HasMethodWithTag(http.MethodPatch) {
 			pman = postmanAddItemToFolder(pman,
-				Swagger2PathToPostman2APIItem(cfg, swag, url, http.MethodPatch, path.Patch),
+				Swagger2PathToPostman2APIItem(cfg, swag, u, http.MethodPatch, path.Patch),
 				strings.TrimSpace(path.Patch.Tags[0]))
 		}
 		if path.HasMethodWithTag(http.MethodPost) {
 			pman = postmanAddItemToFolder(pman,
-				Swagger2PathToPostman2APIItem(cfg, swag, url, http.MethodPost, path.Post),
+				Swagger2PathToPostman2APIItem(cfg, swag, u, http.MethodPost, path.Post),
 				strings.TrimSpace(path.Post.Tags[0]))
 		}
 		if path.HasMethodWithTag(http.MethodPut) {
 			pman = postmanAddItemToFolder(pman,
-				Swagger2PathToPostman2APIItem(cfg, swag, url, http.MethodPut, path.Put),
+				Swagger2PathToPostman2APIItem(cfg, swag, u, http.MethodPut, path.Put),
 				strings.TrimSpace(path.Put.Tags[0]))
 		}
 		if path.HasMethodWithTag(http.MethodDelete) {
 			pman = postmanAddItemToFolder(pman,
-				Swagger2PathToPostman2APIItem(cfg, swag, url, http.MethodDelete, path.Delete),
+				Swagger2PathToPostman2APIItem(cfg, swag, u, http.MethodDelete, path.Delete),
 				strings.TrimSpace(path.Delete.Tags[0]))
 		}
 	}

@@ -8,10 +8,10 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/andrewcretin/swaggman/openapi3"
+	"github.com/andrewcretin/swaggman/postman2"
+	"github.com/andrewcretin/swaggman/postman2/simple"
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/swaggman/openapi3"
-	"github.com/grokify/swaggman/postman2"
-	"github.com/grokify/swaggman/postman2/simple"
 )
 
 //const DefaultContentTypePreferences string = `multipart/form-data,application/json,application/x-www-form-urlencoded,application/xml,text/plain`

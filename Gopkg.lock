@@ -67,21 +67,6 @@
   revision = "c37774b2caf5c7ce119b1d931533afb0357ae59f"
 
 [[projects]]
-  branch = "master"
-  digest = "1:3a876577429dc9a2389c345df24329195985e75174e8805b5fd96f131b0f0d8d"
-  name = "github.com/grokify/swaggman"
-  packages = [
-    ".",
-    "openapi3",
-    "openapi3conv",
-    "postman2",
-    "postman2/simple",
-    "swagger2",
-  ]
-  pruneopts = ""
-  revision = "1991eeb826af5d8ce46d579a6e6384cb7c55f6c3"
-
-[[projects]]
   digest = "1:f1b89f22b86ebdb4a336a212f2667d9ae37b435c3a6237a421b916a4c6f6528d"
   name = "github.com/huandu/xstrings"
   packages = ["."]
@@ -149,12 +134,6 @@
     "github.com/grokify/gotilla/net/httputilmore",
     "github.com/grokify/gotilla/net/urlutil",
     "github.com/grokify/gotilla/type/stringsutil",
-    "github.com/grokify/swaggman",
-    "github.com/grokify/swaggman/openapi3",
-    "github.com/grokify/swaggman/openapi3conv",
-    "github.com/grokify/swaggman/postman2",
-    "github.com/grokify/swaggman/postman2/simple",
-    "github.com/grokify/swaggman/swagger2",
     "github.com/jessevdk/go-flags",
     "github.com/pkg/errors",
   ]

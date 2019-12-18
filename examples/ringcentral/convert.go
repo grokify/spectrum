@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/grokify/swaggman"
-	"github.com/grokify/swaggman/postman2"
+	"github.com/andrewcretin/swaggman"
+	"github.com/andrewcretin/swaggman/postman2"
 	"github.com/jessevdk/go-flags"
 )
 
@@ -31,14 +31,7 @@ func main() {
 			Value: "Bearer {{my_access_token}}"}}}
 
 	conv := swaggman.NewConverter(cfg)
-
-	merge := true
-
-	if merge {
-		err = conv.MergeConvert(opts.Swagger, opts.PostmanBase, opts.Postman)
-	} else {
-		err = conv.Convert(opts.Swagger, opts.Postman)
-	}
+	err = conv.MergeConvert(opts.Swagger, opts.PostmanBase, opts.Postman)
 
 	if err != nil {
 		log.Fatal(err)
