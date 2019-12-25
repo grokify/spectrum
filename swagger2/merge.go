@@ -74,12 +74,12 @@ func MergeDefinitions(specMaster, specExtra Specification) Specification {
 func WriteFileDirMerge(outfile, inputDir string, perm os.FileMode) error {
 	spec, err := MergeDirectory(inputDir)
 	if err != nil {
-		return errors.Wrap(err, "E_MERGE_DIRECTORY_FAILED")
+		return errors.Wrap(err, "E_OPENAPI3_MERGE_DIRECTORY_FAILED")
 	}
 
 	err = ioutilmore.WriteFileJSON(outfile, spec, perm, "", "  ")
 	if err != nil {
-		return errors.Wrap(err, "E_WRITE_FAILED")
+		return errors.Wrap(err, "E_OPENAPI3_WRITE_FAILED")
 	}
 	return nil
 }

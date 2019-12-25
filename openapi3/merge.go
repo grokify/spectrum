@@ -99,17 +99,17 @@ func MergeSchemas(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
 func WriteFileDirMerge(outfile, inputDir string, perm os.FileMode) error {
 	spec, err := MergeDirectory(inputDir)
 	if err != nil {
-		return errors.Wrap(err, "E_MERGE_DIRECTORY_FAILED")
+		return errors.Wrap(err, "E_SWAGGER2_MERGE_DIRECTORY_FAILED")
 	}
 
 	bytes, err := spec.MarshalJSON()
 	if err != nil {
-		return errors.Wrap(err, "E_JSON_ENCODING_FAILED")
+		return errors.Wrap(err, "E_SWAGGER2_JSON_ENCODING_FAILED")
 	}
 
 	err = ioutil.WriteFile(outfile, bytes, perm)
 	if err != nil {
-		return errors.Wrap(err, "E_WRITE_FAILED")
+		return errors.Wrap(err, "E_SWAGGER2_WRITE_FAILED")
 	}
 	return nil
 }
