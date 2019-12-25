@@ -2,11 +2,13 @@ package swagger2
 
 import (
 	"fmt"
+	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
 
 	"github.com/grokify/gotilla/io/ioutilmore"
+	"github.com/pkg/errors"
 )
 
 var jsonFileRx = regexp.MustCompile(`(?i)\.json\s*$`)
@@ -67,4 +69,17 @@ func MergeDefinitions(specMaster, specExtra Specification) Specification {
 		specMaster.Definitions[definitionName] = def
 	}
 	return specMaster
+}
+
+func WriteFileDirMerge(outfile, inputDir string, perm os.FileMode) error {
+	spec, err := MergeDirectory(inputDir)
+	if err != nil {
+		return errors.Wrap(err, "E_MERGE_DIRECTORY_FAILED")
+	}
+
+	err = ioutilmore.WriteFileJSON(outfile, spec, perm, "", "  ")
+	if err != nil {
+		return errors.Wrap(err, "E_WRITE_FAILED")
+	}
+	return nil
 }
