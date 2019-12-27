@@ -1,7 +1,6 @@
 package fromspring
 
 import (
-	"errors"
 	"fmt"
 	"regexp"
 	"strconv"
@@ -12,6 +11,7 @@ import (
 )
 
 const (
+	TypeArray            string = "array"
 	TypeBoolean          string = "boolean"
 	TypeInteger          string = "integer"
 	TypeString           string = "string"
@@ -22,9 +22,10 @@ const (
 
 var (
 	rxSpringLine             = regexp.MustCompile(`^private\s+(\S+)\s+(\S+)\s*;\s*$`)
-	rxSpringLineBoolDef      = regexp.MustCompile(`^private\s+Boolean\s+(\S+)\s+=\s+(true|false);\s*$`)
+	rxSpringLineBoolDef      = regexp.MustCompile(`^private\s+[Bb]oolean\s+(\S+)\s+=\s+(true|false);\s*$`)
 	rxSpringLineIntOrLongDef = regexp.MustCompile(`^private\s+(Integer|Long)\s+(\S+)\s+=\s+(\d+);\s*$`)
 	rxSpringLineStringDef    = regexp.MustCompile(`^private\s+String\s+(\S+)\s+=\s+"(.*)"\s*;\s*$`)
+	rxSpringLineIntArrayDef  = regexp.MustCompile(`^private\s+List<([^<>]+)>\s+(\S+)\b`)
 )
 
 // ParseSpringPropertyLinesSliceToSchema takes a set of string slices
@@ -56,7 +57,7 @@ func ParseSpringPropertyLinesToSchema(lines []string) (string, *oas3.Schema, err
 		if err != nil { // not every line is designed to match
 			continue
 		}
-		return name, &prop, nil
+		return name, prop, nil
 	}
 	return "", nil, nil
 }
@@ -113,33 +114,175 @@ func lineToStringDef(line string) (string, oas3.Schema, error) {
 	return "", oas3.Schema{}, nil
 }
 
-// ParseSpringLineToSchema parses a Spring Java code line and
+func lineToArrayDef(line string, explicitCustomTypes []string) (string, *oas3.SchemaRef, error) {
+	// error needs to return empty name.
+	// private List<Integer> leadIds = new ArrayList<>();
+	m1 := rxSpringLineIntArrayDef.FindAllStringSubmatch(line, -1)
+	//fmt.Println("lineToArrayDef")
+	//fmtutil.PrintJSON(m1)
+	if len(m1) > 0 {
+		javaType := strings.TrimSpace(m1[0][1])
+		javaTypeLc := strings.ToLower(javaType)
+		propName := m1[0][2]
+		switch javaTypeLc {
+		case "integer":
+			sch := oas3.Schema{
+				Type: TypeArray,
+				Items: oas3.NewSchemaRef("",
+					&oas3.Schema{
+						Type: TypeInteger})}
+			sr := oas3.NewSchemaRef("", &sch)
+			return propName, sr, nil
+		case "string":
+			sch := oas3.Schema{
+				Type: TypeArray,
+				Items: oas3.NewSchemaRef("",
+					&oas3.Schema{
+						Type: TypeString})}
+			sr := oas3.NewSchemaRef("", &sch)
+			return propName, sr, nil
+		default:
+			for _, exType := range explicitCustomTypes {
+				exType = strings.TrimSpace(exType)
+				if exType == javaType {
+					sr := oas3.NewSchemaRef(schemaPath(exType), nil)
+					return propName, sr, nil
+				}
+			}
+		}
+	}
+	if 1 == 1 && strings.Index(line, "List<Timezone>") > 0 {
+		fmt.Println(line)
+		panic("ZZZ")
+	}
+	return "", nil, nil
+}
+
+// ParseSpringLinesToMapStringSchemaRefs parses a Spring Java code line and
 // attempts to extract a property name, type, format and default
 // value.
-func ParseSpringLineToSchema(line string) (string, oas3.Schema, error) {
+func ParseSpringLinesToMapStringSchemaRefs(lines, explicitCustomTypes []string) (map[string]*oas3.SchemaRef, error) {
+	mss := map[string]*oas3.SchemaRef{}
+	for _, line := range lines {
+		line = strings.TrimSpace(line)
+		if len(line) == 0 {
+			continue
+		}
+		name, prop, err := ParseSpringLineToSchemaRef(line, explicitCustomTypes)
+		if err != nil {
+			return mss, err
+		} else if name == "" || prop == nil {
+			continue
+		} else {
+			mss[name] = prop
+		}
+	}
+	return mss, nil
+}
+
+// ParseSpringLineToSchemaRef parses a Spring Java code line and
+// attempts to extract a property name, type, format and default
+// value.
+func ParseSpringLineToSchemaRef(line string, explicitCustomTypes []string) (string, *oas3.SchemaRef, error) {
 	sch := oas3.Schema{}
 	line = strings.Trim(line, " \t")
 
 	name, sch, err := lineToStringDef(line)
 	if err == nil && len(name) > 0 {
-		return name, sch, nil
+		return name, oas3.NewSchemaRef("", &sch), nil
 	}
 	name, sch, err = lineToBoolDef(line)
 	if err == nil && len(name) > 0 {
-		return name, sch, nil
+		return name, oas3.NewSchemaRef("", &sch), nil
+	}
+	name, schRef, err := lineToArrayDef(line, explicitCustomTypes)
+	if err == nil && len(name) > 0 {
+		return name, schRef, nil
 	}
 	name, sch, err = lineToIntOrLongDef(line)
 	if err != nil {
-		return "", oas3.Schema{}, err
+		return "", nil, err
 	} else if len(name) > 0 {
-		return name, sch, nil
+		return name, oas3.NewSchemaRef("", &sch), nil
 	}
 
 	m := rxSpringLine.FindAllStringSubmatch(line, -1)
 	if len(m) == 0 {
-		return "", sch, errors.New("E_SPRING_TO_OAS_SCHEMA_NO_MATCH")
+		return "", nil, fmt.Errorf("E_SPRING_TO_OAS_SCHEMA_NO_MATCH [%v]", line)
 	} else if len(m) != 1 && len(m[1]) != 3 {
-		return "", sch, fmt.Errorf("E_SPRING_TO_OAS_SCHEMA_NO_MATCH [%v]", m)
+		return "", nil, fmt.Errorf("E_SPRING_TO_OAS_SCHEMA_NO_MATCH [%v]", m)
+	}
+	m2a := m[0]
+	propName := m2a[2]
+	javaType := strings.TrimSpace(m2a[1])
+	javaTypeLc := strings.ToLower(javaType)
+	schemaRef := &oas3.SchemaRef{}
+	switch javaTypeLc {
+	case "boolean":
+		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: TypeBoolean})
+	case "date":
+		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{
+			Type: TypeString, Format: FormatStringDate})
+	case "datetime":
+		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{
+			Type: TypeString, Format: FormatStringDateTime})
+	case "integer":
+		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: TypeInteger})
+	case "long":
+		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{
+			Type: TypeInteger, Format: FormatIntegerInt64})
+	case "string":
+		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: TypeString})
+	default:
+		found := false
+		for _, exType := range explicitCustomTypes {
+			if javaType == exType {
+				schemaRef = oas3.NewSchemaRef(schemaPath(javaType), nil)
+				found = true
+			}
+		}
+		if !found {
+			panic(fmt.Sprintf("TYPE [%v] LINE [%v]", javaTypeLc, line))
+		}
+	}
+	return propName, schemaRef, nil
+}
+
+func schemaPath(object string) string {
+	return "#/components/schemas/" + object
+}
+
+// ParseSpringLineToSchema parses a Spring Java code line and
+// attempts to extract a property name, type, format and default
+// value. DEPRECATED
+func ParseSpringLineToSchema(line string) (string, *oas3.Schema, error) {
+	sch := oas3.Schema{}
+	line = strings.Trim(line, " \t")
+
+	name, sch, err := lineToStringDef(line)
+	if err == nil && len(name) > 0 {
+		return name, &sch, nil
+	}
+	name, sch, err = lineToBoolDef(line)
+	if err == nil && len(name) > 0 {
+		return name, &sch, nil
+	} /*
+		name, sch, err = lineToArrayDef(line)
+		if err == nil && len(name) > 0 {
+			return name, &sch, nil
+		}*/
+	name, sch, err = lineToIntOrLongDef(line)
+	if err != nil {
+		return "", nil, err
+	} else if len(name) > 0 {
+		return name, &sch, nil
+	}
+
+	m := rxSpringLine.FindAllStringSubmatch(line, -1)
+	if len(m) == 0 {
+		return "", &sch, fmt.Errorf("E_SPRING_TO_OAS_SCHEMA_NO_MATCH [%v]", line)
+	} else if len(m) != 1 && len(m[1]) != 3 {
+		return "", &sch, fmt.Errorf("E_SPRING_TO_OAS_SCHEMA_NO_MATCH [%v]", m)
 	}
 	m2a := m[0]
 	propName := m2a[2]
@@ -161,9 +304,9 @@ func ParseSpringLineToSchema(line string) (string, oas3.Schema, error) {
 	case "string":
 		sch.Type = TypeString
 	default:
-		panic(javaTypeLc)
+		panic(fmt.Sprintf("TYPE [%v] LINE [%v]", javaTypeLc, line))
 	}
-	return propName, sch, nil
+	return propName, &sch, nil
 }
 
 // ParseSpringCodeColumnsRaw takes a set of Java code lines
