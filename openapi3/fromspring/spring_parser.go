@@ -14,6 +14,7 @@ const (
 	TypeArray            string = "array"
 	TypeBoolean          string = "boolean"
 	TypeInteger          string = "integer"
+	TypeObject           string = "object"
 	TypeString           string = "string"
 	FormatStringDate     string = "date"
 	FormatStringDateTime string = "date-time"
@@ -21,7 +22,7 @@ const (
 )
 
 var (
-	rxSpringLine             = regexp.MustCompile(`^private\s+(\S+)\s+(\S+)\s*;\s*$`)
+	rxSpringLine             = regexp.MustCompile(`^(?:private\s+)?(\S+)\s+(\S+)\s*;\s*$`)
 	rxSpringLineBoolDef      = regexp.MustCompile(`^private\s+[Bb]oolean\s+(\S+)\s+=\s+(true|false);\s*$`)
 	rxSpringLineIntOrLongDef = regexp.MustCompile(`^private\s+(Integer|Long)\s+(\S+)\s+=\s+(\d+);\s*$`)
 	rxSpringLineStringDef    = regexp.MustCompile(`^private\s+String\s+(\S+)\s+=\s+"(.*)"\s*;\s*$`)
@@ -125,7 +126,7 @@ func lineToArrayDef(line string, explicitCustomTypes []string) (string, *oas3.Sc
 		javaTypeLc := strings.ToLower(javaType)
 		propName := m1[0][2]
 		switch javaTypeLc {
-		case "integer":
+		case TypeInteger:
 			sch := oas3.Schema{
 				Type: TypeArray,
 				Items: oas3.NewSchemaRef("",
@@ -133,7 +134,7 @@ func lineToArrayDef(line string, explicitCustomTypes []string) (string, *oas3.Sc
 						Type: TypeInteger})}
 			sr := oas3.NewSchemaRef("", &sch)
 			return propName, sr, nil
-		case "string":
+		case TypeString:
 			sch := oas3.Schema{
 				Type: TypeArray,
 				Items: oas3.NewSchemaRef("",
@@ -150,10 +151,6 @@ func lineToArrayDef(line string, explicitCustomTypes []string) (string, *oas3.Sc
 				}
 			}
 		}
-	}
-	if 1 == 1 && strings.Index(line, "List<Timezone>") > 0 {
-		fmt.Println(line)
-		panic("ZZZ")
 	}
 	return "", nil, nil
 }
@@ -225,13 +222,15 @@ func ParseSpringLineToSchemaRef(line string, explicitCustomTypes []string) (stri
 			Type: TypeString, Format: FormatStringDate})
 	case "datetime":
 		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{
-			Type: TypeString, Format: FormatStringDateTime})
-	case "integer":
+			Type:        TypeString,
+			Description: "Date-time in Java format. Example: `2019-01-01T01:01:01.000+0000`. Note this is not compatible with RFC-3339 which is used by OpenAPI 3.0 Spec because it doesn't have a `:` between hours and minutes.",
+		})
+	case TypeInteger:
 		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: TypeInteger})
 	case "long":
 		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{
 			Type: TypeInteger, Format: FormatIntegerInt64})
-	case "string":
+	case TypeString:
 		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: TypeString})
 	default:
 		found := false
