@@ -62,12 +62,14 @@ type ExternalDocs struct {
 
 // Path represents a Swagger 2.0 spec path object.
 type Path struct {
-	Get    *Endpoint `json:"get,omitempty"`
-	Patch  *Endpoint `json:"patch,omitempty"`
-	Post   *Endpoint `json:"post,omitempty"`
-	Put    *Endpoint `json:"put,omitempty"`
-	Delete *Endpoint `json:"delete,omitempty"`
-	Ref    string    `json:"$ref,omitempty"`
+	Delete  *Endpoint `json:"delete,omitempty"`
+	Get     *Endpoint `json:"get,omitempty"`
+	Head    *Endpoint `json:"head,omitempty"`
+	Options *Endpoint `json:"options,omitempty"`
+	Patch   *Endpoint `json:"patch,omitempty"`
+	Post    *Endpoint `json:"post,omitempty"`
+	Put     *Endpoint `json:"put,omitempty"`
+	Ref     string    `json:"$ref,omitempty"`
 }
 
 func (p *Path) HasMethodWithTag(method string) bool {
@@ -98,16 +100,21 @@ func (p *Path) HasMethodWithTag(method string) bool {
 
 func (p *Path) SetEndpoint(method string, endpoint Endpoint) error {
 	switch strings.ToUpper(strings.TrimSpace(method)) {
+	case http.MethodDelete:
+		p.Delete = &endpoint
 	case http.MethodGet:
 		p.Get = &endpoint
+	case http.MethodHead:
+		p.Head = &endpoint
+	case http.MethodOptions:
+		p.Options = &endpoint
+	case http.MethodPatch:
+		p.Patch = &endpoint
 	case http.MethodPost:
 		p.Post = &endpoint
 	case http.MethodPut:
 		p.Put = &endpoint
-	case http.MethodPatch:
-		p.Patch = &endpoint
-	case http.MethodDelete:
-		p.Delete = &endpoint
+
 	default:
 		return fmt.Errorf("Method [%v] not supported.", method)
 	}

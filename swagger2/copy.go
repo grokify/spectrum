@@ -8,8 +8,26 @@ import (
 func CopyEndpointsByTag(tag string, specOld, specNew Specification) (Specification, error) {
 	var err error
 	for url, path := range specOld.Paths {
+		if path.Delete != nil {
+			specNew, err = copyOrIgnoreEndpoint(http.MethodDelete, *path.Delete, url, path, tag, specOld, specNew)
+			if err != nil {
+				return specNew, err
+			}
+		}
 		if path.Get != nil {
 			specNew, err = copyOrIgnoreEndpoint(http.MethodGet, *path.Get, url, path, tag, specOld, specNew)
+			if err != nil {
+				return specNew, err
+			}
+		}
+		if path.Head != nil {
+			specNew, err = copyOrIgnoreEndpoint(http.MethodHead, *path.Head, url, path, tag, specOld, specNew)
+			if err != nil {
+				return specNew, err
+			}
+		}
+		if path.Options != nil {
+			specNew, err = copyOrIgnoreEndpoint(http.MethodOptions, *path.Options, url, path, tag, specOld, specNew)
 			if err != nil {
 				return specNew, err
 			}
@@ -28,12 +46,6 @@ func CopyEndpointsByTag(tag string, specOld, specNew Specification) (Specificati
 		}
 		if path.Put != nil {
 			specNew, err = copyOrIgnoreEndpoint(http.MethodPut, *path.Put, url, path, tag, specOld, specNew)
-			if err != nil {
-				return specNew, err
-			}
-		}
-		if path.Delete != nil {
-			specNew, err = copyOrIgnoreEndpoint(http.MethodDelete, *path.Delete, url, path, tag, specOld, specNew)
 			if err != nil {
 				return specNew, err
 			}
