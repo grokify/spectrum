@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
@@ -35,6 +36,7 @@ func MergeDirectoryMore(dir string, validateEach, validateFinal bool) (*oas3.Swa
 }
 
 func MergeFiles(filepaths []string, validateEach, validateFinal bool) (*oas3.Swagger, error) {
+	sort.Strings(filepaths)
 	var specMaster *oas3.Swagger
 	for i, fpath := range filepaths {
 		thisSpec, err := ReadFile(fpath, validateEach)
