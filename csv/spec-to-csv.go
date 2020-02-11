@@ -54,13 +54,13 @@ func TableAddOpenAPI2Path(tbl *table.TableData, path *openapi2.PathItem, prefix 
 		tbl.Records = append(tbl.Records, pathOpenApi2ToRow(prefix, path.Options, http.MethodOptions))
 	}
 	if path.Patch != nil {
-		tbl.Records = append(tbl.Records, pathOpenApi2ToRow(prefix, path.Patch, http.MethodDelete))
+		tbl.Records = append(tbl.Records, pathOpenApi2ToRow(prefix, path.Patch, http.MethodPatch))
 	}
 	if path.Post != nil {
-		tbl.Records = append(tbl.Records, pathOpenApi2ToRow(prefix, path.Post, http.MethodDelete))
+		tbl.Records = append(tbl.Records, pathOpenApi2ToRow(prefix, path.Post, http.MethodPost))
 	}
 	if path.Put != nil {
-		tbl.Records = append(tbl.Records, pathOpenApi2ToRow(prefix, path.Put, http.MethodDelete))
+		tbl.Records = append(tbl.Records, pathOpenApi2ToRow(prefix, path.Put, http.MethodPut))
 	}
 	return tbl
 }
