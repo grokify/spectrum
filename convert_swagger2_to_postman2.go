@@ -9,10 +9,10 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/grokify/gotilla/net/httputilmore"
 	"github.com/grokify/swaggman/postman2"
 	"github.com/grokify/swaggman/postman2/simple"
 	"github.com/grokify/swaggman/swagger2"
-	"github.com/grokify/gotilla/net/httputilmore"
 )
 
 // Configuration is a Swaggman configuration that holds information on how
@@ -38,7 +38,7 @@ func NewConverter(cfg Configuration) Converter {
 // MergeConvert builds a Postman 2.0 spec using a base Postman 2.0 collection
 // and a Swagger 2.0 spec.
 func (conv *Converter) MergeConvert(swaggerFilepath string, pmanBaseFilepath string, pmanSpecFilepath string) error {
-	swag, err := swagger2.ReadSwagger2Spec(swaggerFilepath)
+	swag, err := swagger2.ReadSwagger2SpecFile(swaggerFilepath)
 	if err != nil {
 		return err
 	}
@@ -58,7 +58,7 @@ func (conv *Converter) MergeConvert(swaggerFilepath string, pmanBaseFilepath str
 
 // Convert builds a Postman 2.0 spec using a Swagger 2.0 spec.
 func (conv *Converter) Convert(swaggerFilepath string, pmanSpecFilepath string) error {
-	swag, err := swagger2.ReadSwagger2Spec(swaggerFilepath)
+	swag, err := swagger2.ReadSwagger2SpecFile(swaggerFilepath)
 	if err != nil {
 		return err
 	}

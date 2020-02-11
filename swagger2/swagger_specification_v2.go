@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"strings"
 )
@@ -29,6 +28,7 @@ func NewSpecificationFromBytes(data []byte) (Specification, error) {
 	return spec, err
 }
 
+/*
 // ReadSwagger2Spec returns a Swagger Specification from a filepath.
 func ReadSwagger2Spec(filepath string) (Specification, error) {
 	bytes, err := ioutil.ReadFile(filepath)
@@ -36,7 +36,7 @@ func ReadSwagger2Spec(filepath string) (Specification, error) {
 		return Specification{}, err
 	}
 	return NewSpecificationFromBytes(bytes)
-}
+}*/
 
 // Info represents a Swagger 2.0 spec info object.
 type Info struct {

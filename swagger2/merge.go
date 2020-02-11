@@ -24,9 +24,26 @@ func MergeDirectory(dir string) (Specification, error) {
 	var specMaster Specification
 	for i, fi := range fileInfos {
 		thisSpecFilepath := filepath.Join(dir, fi.Name())
-		thisSpec, err := ReadSwagger2Spec(thisSpecFilepath)
+		thisSpec, err := ReadOpenAPI2SpecFileDirect(thisSpecFilepath)
 		if err != nil {
 			return specMaster, err
+		}
+		if i == 0 {
+			specMaster = thisSpec
+		} else {
+			specMaster = Merge(specMaster, thisSpec)
+		}
+	}
+	return specMaster, nil
+}
+
+func MergeFilepaths(filepaths []string) (Specification, error) {
+	var specMaster Specification
+	for i, fpath := range filepaths {
+		fmt.Printf("[%v][%v]\n", i, fpath)
+		thisSpec, err := ReadOpenAPI2SpecFileDirect(fpath)
+		if err != nil {
+			return specMaster, errors.Wrap(err, fmt.Sprintf("E_READ_SPEC [%v]", fpath))
 		}
 		if i == 0 {
 			specMaster = thisSpec
@@ -66,6 +83,9 @@ func MergePaths(specMaster, specExtra Specification) Specification {
 
 func MergeDefinitions(specMaster, specExtra Specification) Specification {
 	for definitionName, def := range specExtra.Definitions {
+		if specMaster.Definitions == nil {
+			specMaster.Definitions = map[string]Definition{}
+		}
 		specMaster.Definitions[definitionName] = def
 	}
 	return specMaster
