@@ -8,7 +8,7 @@ Swaggman - OpenAPI / Swagger Spec to Postman Converter
 
 ![](docs/images/logo_swaggman_600x150.png "")
 
-`swaggman` is an API specification converter that creates a Postman 2.0 Collection spec from a Swagger (OAI) 2.0 spec.
+`swaggman` is an API specification converter that creates a Postman 2.0 Collection spec from OpenAPI 3.0 and 2.0 (fka Swagger 2.0) specifications.
 
 # Features
 
