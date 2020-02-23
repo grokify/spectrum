@@ -48,11 +48,21 @@ func ReadOpenAPI2KinSpecFile(filename string) (*openapi2.Swagger, error) {
 	if err != nil {
 		return &swag, err
 	}
-	rx := regexp.MustCompile(`.ya?ml$`)
-	if rx.MatchString(strings.ToLower(strings.TrimSpace(filename))) {
+	if FilenameIsYAML(filename) {
 		err = yaml.Unmarshal(bytes, &swag)
 	} else {
 		err = json.Unmarshal(bytes, &swag)
 	}
 	return &swag, err
+}
+
+var rxYAMLExtension = regexp.MustCompile(`.ya?ml$`)
+
+// FilenameIsYAML checks to see if a filename ends
+// in `.yml` or `.yaml` with a case-insensitive match.
+func FilenameIsYAML(filename string) bool {
+	if rxYAMLExtension.MatchString(strings.ToLower(strings.TrimSpace(filename))) {
+		return true
+	}
+	return false
 }
