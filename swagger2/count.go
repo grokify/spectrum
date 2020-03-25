@@ -12,7 +12,7 @@ import (
 )
 
 func CountEndpointsByTag(spec Specification, tags []string) histogram.HistogramSet {
-	tags = stringsutil.SliceLinesTrimSpace(tags, true)
+	tags = stringsutil.SliceTrimSpace(tags, true)
 	hist := histogram.NewHistogramSet()
 	for url, path := range spec.Paths {
 		hist = countEndpointByTag(hist, tags, url, http.MethodGet, path.Get)
