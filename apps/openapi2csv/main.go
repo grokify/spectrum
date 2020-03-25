@@ -24,7 +24,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	files, err := ioutilmore.DirEntriesReSizeGt0(
+	files, err := ioutilmore.DirEntriesReNotEmpty(
 		opts.Directory, regexp.MustCompile(opts.Regexp))
 
 	filepaths := osutil.FinfosToFilepaths(opts.Directory, files)
