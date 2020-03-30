@@ -1,7 +1,6 @@
 package modify
 
 import (
-	"regexp"
 	"strings"
 
 	"github.com/getkin/kin-openapi/openapi3"
@@ -78,19 +77,11 @@ func SpecPathsModify(spec *oas3.Swagger, opts SpecPathsModifyOpts) error {
 			}
 			for oldPathURL := range oldPathURLs {
 				pathItem := spec.Paths[oldPathURL]
-				newPathURL := Join(opts.OpPathRenameNewBase, oldPathURL)
+				newPathURL := urlutil.Join(opts.OpPathRenameNewBase, oldPathURL)
 				spec.Paths[newPathURL] = pathItem
 				delete(spec.Paths, oldPathURL)
 			}
 		}
 	}
 	return nil
-}
-
-var rxSlashMulti = regexp.MustCompile(`/+`)
-
-func Join(parts ...string) string {
-	return rxSlashMulti.ReplaceAllString(
-		strings.Join(parts, "/"),
-		"/")
 }
