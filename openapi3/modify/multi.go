@@ -65,12 +65,12 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 	// Update Tags
 	if len(opts.Tags) > 0 {
 		if opts.TagsShow {
-			fmtutil.PrintJSON(SpecTags(sm.Spec))
+			fmtutil.PrintJSON(SpecTags(sm.Spec, true, true))
 		}
 		if opts.TagsExec {
 			SpecTagsModify(sm.Spec, opts.Tags)
 			if opts.TagsShow {
-				fmtutil.PrintJSON(SpecTags(sm.Spec))
+				fmtutil.PrintJSON(SpecTags(sm.Spec, true, true))
 			}
 		}
 	}
