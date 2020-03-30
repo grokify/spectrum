@@ -215,11 +215,13 @@ func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerURL 
 	}
 
 	// Create URL
-	rawPostmanURL := strings.TrimSpace(strings.Join(URLParts, "/"))
 	rx1 := regexp.MustCompile(`/+`)
-	rawPostmanURL = rx1.ReplaceAllString(rawPostmanURL, "/")
 	rx2 := regexp.MustCompile(`^/+`)
-	rawPostmanURL = rx2.ReplaceAllString(rawPostmanURL, "")
+	/*
+		rawPostmanURL := strings.TrimSpace(strings.Join(URLParts, "/"))
+		rawPostmanURL = rx1.ReplaceAllString(rawPostmanURL, "/")
+		rawPostmanURL = rx2.ReplaceAllString(rawPostmanURL, "")
+	*/
 
 	rawPostmanURLPath := strings.TrimSpace(strings.Join(URLPathParts, "/"))
 	rawPostmanURLPath = rx1.ReplaceAllString(rawPostmanURLPath, "/")
@@ -231,7 +233,7 @@ func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerURL 
 		if len(swag.Schemes) > 0 {
 			for _, scheme := range swag.Schemes {
 				if len(strings.TrimSpace(scheme)) > 0 {
-					rawPostmanURL = strings.Join([]string{scheme, rawPostmanURL}, "://")
+					//rawPostmanURL = strings.Join([]string{scheme, rawPostmanURL}, "://")
 					goUrl.Scheme = scheme
 					break
 				}
