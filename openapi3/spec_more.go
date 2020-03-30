@@ -10,7 +10,6 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/table"
 	"github.com/grokify/gotilla/encoding/jsonutil"
-	"github.com/grokify/swaggman/openapi3/urlpath"
 )
 
 type SpecMore struct {
@@ -25,10 +24,11 @@ func ReadSpecMore(path string, validate bool) (*SpecMore, error) {
 	return &SpecMore{Spec: spec}, nil
 }
 
+/*
 func (s *SpecMore) Paths() urlpath.SpecPaths {
 	return urlpath.InspectPaths(s.Spec)
 }
-
+*/
 func (s *SpecMore) OperationsTable() *table.TableData {
 	tbl := table.NewTableData()
 	tbl.Columns = []string{"operationId", "path", "url", "tags"}
