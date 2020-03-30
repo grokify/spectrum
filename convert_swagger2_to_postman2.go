@@ -189,28 +189,28 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerURL string, endpoint *swagger2.Endpoint) postman2.URL {
 	goUrl := url.URL{}
 
-	URLParts := []string{}
+	//URLParts := []string{}
 	URLPathParts := []string{}
 
 	cfg.PostmanURLBase = strings.TrimSpace(cfg.PostmanURLBase)
 	// Set URL path parts
 	if len(cfg.PostmanURLBase) > 0 {
-		URLParts = append(URLParts, cfg.PostmanURLBase)
+		//URLParts = append(URLParts, cfg.PostmanURLBase)
 		goUrl.Host = cfg.PostmanURLBase
 	} else if len(strings.TrimSpace(cfg.PostmanURLHostname)) > 0 {
-		URLParts = append(URLParts, strings.TrimSpace(cfg.PostmanURLHostname))
+		//URLParts = append(URLParts, strings.TrimSpace(cfg.PostmanURLHostname))
 		goUrl.Host = cfg.PostmanURLHostname
 	} else if len(strings.TrimSpace(swag.Host)) > 0 {
-		URLParts = append(URLParts, strings.TrimSpace(swag.Host))
+		//URLParts = append(URLParts, strings.TrimSpace(swag.Host))
 		goUrl.Host = swag.Host
 	}
 
 	if len(strings.TrimSpace(swag.BasePath)) > 0 {
-		URLParts = append(URLParts, strings.TrimSpace(swag.BasePath))
+		//URLParts = append(URLParts, strings.TrimSpace(swag.BasePath))
 		URLPathParts = append(URLPathParts, strings.TrimSpace(swag.BasePath))
 	}
 	if len(strings.TrimSpace(swaggerURL)) > 0 {
-		URLParts = append(URLParts, strings.TrimSpace(swaggerURL))
+		//URLParts = append(URLParts, strings.TrimSpace(swaggerURL))
 		URLPathParts = append(URLPathParts, strings.TrimSpace(swaggerURL))
 	}
 
