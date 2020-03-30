@@ -16,7 +16,7 @@ func TableFromSpecFiles(files []string, includeFilename bool) (*table.TableData,
 	if includeFilename {
 		tbl.Columns = append(tbl.Columns, "Filename")
 	}
-	tbl.Columns = append(tbl.Columns, []string{"Path", "Method", "Summary", "Description"}...)
+	tbl.Columns = append(tbl.Columns, []string{"Path", "Method", "OperationID", "Summary", "Description"}...)
 	for _, file := range files {
 		spec, err := swagger2.ReadOpenAPI2KinSpecFile(file)
 		if err != nil {
@@ -67,6 +67,6 @@ func TableAddOpenAPI2Path(tbl *table.TableData, path *openapi2.PathItem, prefix 
 
 func pathOpenApi2ToRow(prefix []string, op *openapi2.Operation, method string) []string {
 	row := prefix
-	row = append(row, method, op.Summary, op.Description)
+	row = append(row, method, op.OperationID, op.Summary, op.Description)
 	return row
 }
