@@ -1,16 +1,32 @@
 package openapi3
 
 import (
+	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/getkin/kin-openapi/openapi3"
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/table"
+	"github.com/grokify/gotilla/encoding/jsonutil"
+	"github.com/grokify/swaggman/openapi3/urlpath"
 )
 
 type SpecMore struct {
 	Spec *oas3.Swagger
+}
+
+func ReadSpecMore(path string, validate bool) (*SpecMore, error) {
+	spec, err := ReadFile(path, validate)
+	if err != nil {
+		return nil, err
+	}
+	return &SpecMore{Spec: spec}, nil
+}
+
+func (s *SpecMore) Paths() urlpath.SpecPaths {
+	return urlpath.InspectPaths(s.Spec)
 }
 
 func (s *SpecMore) OperationsTable() *table.TableData {
@@ -78,4 +94,15 @@ type OperationMeta struct {
 	Method      string
 	Path        string
 	Tags        []string
+}
+
+func (s *SpecMore) WriteFileJSON(filename string, perm os.FileMode, pretty bool) error {
+	jsonData, err := s.Spec.MarshalJSON()
+	if err != nil {
+		return err
+	}
+	if pretty {
+		jsonData = jsonutil.PrettyPrint(jsonData, "", "  ")
+	}
+	return ioutil.WriteFile(filename, jsonData, perm)
 }
