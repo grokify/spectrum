@@ -245,11 +245,11 @@ func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerURL 
 		goUrl.Path = rx3.ReplaceAllString(goUrl.Path, "$1:$2$3")
 	*/
 
-	rawPostmanURL = postman2.ApiUrlOasToPostman(rawPostmanURL)
 	goUrl.Path = postman2.ApiUrlOasToPostman(goUrl.Path)
-
-	//postmanURL := postman2.NewURL(rawPostmanURL)
 	postmanURL := postman2.NewURLForGoUrl(goUrl)
+
+	// rawPostmanURL = postman2.ApiUrlOasToPostman(rawPostmanURL)
+	// postmanURL := postman2.NewURL(rawPostmanURL)
 
 	// Set Default URL Path Parameters
 	rx4 := regexp.MustCompile(`^\s*(:(.+))\s*$`)
