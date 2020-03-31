@@ -1,6 +1,8 @@
 package modify
 
 import (
+	"net/http"
+	"regexp"
 	"strings"
 
 	"github.com/getkin/kin-openapi/openapi3"
@@ -84,4 +86,56 @@ func SpecPathsModify(spec *oas3.Swagger, opts SpecPathsModifyOpts) error {
 		}
 	}
 	return nil
+}
+
+func SpecEndpoints(spec *oas3.Swagger, generic bool) []string {
+	endpoints := []string{}
+	for url, pathItem := range spec.Paths {
+		if generic {
+			url = PathVarsToGeneric(url)
+		}
+		pathMethods := PathMethods(pathItem)
+		for _, pathMethod := range pathMethods {
+			endpoints = append(endpoints, url+" "+pathMethod)
+		}
+	}
+	return endpoints
+}
+
+var rxPathVarToGeneric = regexp.MustCompile(`{[^}{]*}`)
+
+func PathVarsToGeneric(input string) string {
+	return rxPathVarToGeneric.ReplaceAllString(input, "{}")
+}
+
+func PathMethods(pathItem *oas3.PathItem) []string {
+	methods := []string{}
+	if pathItem.Connect != nil {
+		methods = append(methods, http.MethodConnect)
+	}
+	if pathItem.Delete != nil {
+		methods = append(methods, http.MethodDelete)
+	}
+	if pathItem.Get != nil {
+		methods = append(methods, http.MethodGet)
+	}
+	if pathItem.Head != nil {
+		methods = append(methods, http.MethodHead)
+	}
+	if pathItem.Options != nil {
+		methods = append(methods, http.MethodOptions)
+	}
+	if pathItem.Patch != nil {
+		methods = append(methods, http.MethodPatch)
+	}
+	if pathItem.Post != nil {
+		methods = append(methods, http.MethodPost)
+	}
+	if pathItem.Put != nil {
+		methods = append(methods, http.MethodPut)
+	}
+	if pathItem.Trace != nil {
+		methods = append(methods, http.MethodTrace)
+	}
+	return methods
 }

@@ -1,6 +1,8 @@
 package modify
 
-import oas3 "github.com/getkin/kin-openapi/openapi3"
+import (
+	oas3 "github.com/getkin/kin-openapi/openapi3"
+)
 
 func VisitOperations(spec *oas3.Swagger, visitOp func(op *oas3.Operation)) {
 	for _, pathItem := range spec.Paths {

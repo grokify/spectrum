@@ -52,7 +52,7 @@ func SecuritySchemeAddDefinitionOperations(spec *oas3.Swagger, tags []string, ke
 		tagsMap[tagName] = 1
 	}
 	VisitOperations(spec, func(op *oas3.Operation) {
-		if op == nil || !SliceIntersectionExists(tagsMap, op.Tags) {
+		if op == nil || !MapSliceIntersectionExists(tagsMap, op.Tags) {
 			return
 		}
 		if op.Security == nil {
@@ -64,7 +64,7 @@ func SecuritySchemeAddDefinitionOperations(spec *oas3.Swagger, tags []string, ke
 	})
 }
 
-func SliceIntersection(haystack map[string]int, needles []string, unique bool) []string {
+func MapSliceIntersection(haystack map[string]int, needles []string, unique bool) []string {
 	if unique {
 		needles = stringsutil.SliceCondenseSpace(needles, true, false)
 	}
@@ -77,7 +77,7 @@ func SliceIntersection(haystack map[string]int, needles []string, unique bool) [
 	return matches
 }
 
-func SliceIntersectionExists(haystack map[string]int, needles []string) bool {
+func MapSliceIntersectionExists(haystack map[string]int, needles []string) bool {
 	for _, needle := range needles {
 		if _, ok := haystack[needle]; ok {
 			return true
