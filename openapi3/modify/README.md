@@ -12,6 +12,14 @@ Key Features include:
 
 ## Usage
 
+Steps for clean merging of multiple specs.
+
+1. Examine all specs for consistent operationIds and tags
+1. Ensure that all specs can be merged to common server base URL and paths
+1. Optionally delete endpoint security from each spec and add it to merged spec
+1. Check / deletee overlapping operationIDs, endpoints (method+path) and schema components
+1. Validate resulting spec
+
 ### Inspect & Modify
 
 Use `SpecMoreModifyMulti` and `SpecMoreModifyMultiOpts` to handle 
