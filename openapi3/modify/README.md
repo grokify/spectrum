@@ -1,4 +1,4 @@
-# Swaggman OpenAPI 3 Inspect & Modify
+# Swaggman OpenAPI 3 Inspect & Modify & Compare
 
 Swaggman `modify` is a library to assist in inspecting and modifying OpenAPI specs.
 
@@ -17,7 +17,7 @@ Key Features include:
 Use `SpecMoreModifyMulti` and `SpecMoreModifyMultiOpts` to handle 
 to inspect and modify mulitple files. 
 
-### Inspect
+### Compare
 
 Use `modify.SpecsIntersection()`
 
