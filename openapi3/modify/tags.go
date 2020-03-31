@@ -135,3 +135,17 @@ func TagsOrder(curTags oas3.Tags, explicitSortedTagNames []string) (oas3.Tags, e
 
 	return newTags, nil
 }
+
+// SpecTagsCondense removes unused tags from the top
+// level specification by comparing with tags used
+// in operations.
+func SpecTagsCondense(spec *oas3.Swagger) {
+	opTags := SpecTags(spec, false, true)
+	newTags := oas3.Tags{}
+	for _, curTag := range spec.Tags {
+		if _, ok := opTags[curTag.Name]; ok {
+			newTags = append(newTags, curTag)
+		}
+	}
+	spec.Tags = newTags
+}
