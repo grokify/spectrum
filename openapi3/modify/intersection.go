@@ -36,6 +36,15 @@ func (md *SpecMetadata) Intersection(md2 SpecMetadata) SpecMetadata {
 	return idata
 }
 
+func (md *SpecMetadata) IsEmpty() bool {
+	if len(md.Endpoints) == 0 &&
+		len(md.OperationIDs) == 0 &&
+		len(md.SchemaNames) == 0 {
+		return true
+	}
+	return false
+}
+
 func (md *SpecMetadata) Sort() {
 	sort.Strings(md.Endpoints)
 	sort.Strings(md.OperationIDs)

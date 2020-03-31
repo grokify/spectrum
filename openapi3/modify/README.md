@@ -26,3 +26,13 @@ Use `modify.SpecsIntersection()`
 intersectionData := modify.SpecsIntersection(spec1, spec2)
 intersectionData.Sort()
 ```
+
+### Delete
+
+After running intersection, you can use the resulting data to delete those items from a spec using `SpecDeleteProperties`. Be sure to validate afterwards.
+
+This is useful when merging to specs with an overlap. To check for cleanliness of merging, you can:
+
+1. run an intersection
+1. delete the intersection from one of the sepcs and ensures it still validates
+1. merge the specs

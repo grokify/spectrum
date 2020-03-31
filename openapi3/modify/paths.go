@@ -20,8 +20,7 @@ func InspectPaths(spec *openapi3.Swagger) SpecPaths {
 		Servers: spec.Servers,
 		Paths:   []PathMeta{}}
 	for url := range spec.Paths {
-		pm := PathMeta{
-			Current: url}
+		pm := PathMeta{Current: url}
 		specPaths.Paths = append(specPaths.Paths, pm)
 	}
 	return specPaths
@@ -102,10 +101,57 @@ func SpecEndpoints(spec *oas3.Swagger, generic bool) []string {
 	return endpoints
 }
 
-var rxPathVarToGeneric = regexp.MustCompile(`{[^}{]*}`)
+type Endpoint struct {
+	Path      string
+	Method    string
+	Operation *oas3.Operation
+}
 
-func PathVarsToGeneric(input string) string {
-	return rxPathVarToGeneric.ReplaceAllString(input, "{}")
+func (ep *Endpoint) String() string {
+	ep.Path = strings.TrimSpace(ep.Path)
+	ep.Method = strings.TrimSpace(ep.Method)
+	return ep.Path + " " + ep.Method
+}
+
+func PathEndpoints(url string, pathItem *oas3.PathItem) []Endpoint {
+	pathOps := []Endpoint{}
+	if pathItem.Connect != nil {
+		pathOps = append(pathOps, Endpoint{Path: url,
+			Operation: pathItem.Connect, Method: http.MethodConnect})
+	}
+	if pathItem.Delete != nil {
+		pathOps = append(pathOps, Endpoint{Path: url,
+			Operation: pathItem.Delete, Method: http.MethodDelete})
+	}
+	if pathItem.Get != nil {
+		pathOps = append(pathOps, Endpoint{Path: url,
+			Operation: pathItem.Get, Method: http.MethodGet})
+	}
+	if pathItem.Head != nil {
+		pathOps = append(pathOps, Endpoint{Path: url,
+			Operation: pathItem.Head, Method: http.MethodHead})
+	}
+	if pathItem.Options != nil {
+		pathOps = append(pathOps, Endpoint{Path: url,
+			Operation: pathItem.Options, Method: http.MethodOptions})
+	}
+	if pathItem.Patch != nil {
+		pathOps = append(pathOps, Endpoint{Path: url,
+			Operation: pathItem.Patch, Method: http.MethodPatch})
+	}
+	if pathItem.Post != nil {
+		pathOps = append(pathOps, Endpoint{Path: url,
+			Operation: pathItem.Post, Method: http.MethodPost})
+	}
+	if pathItem.Put != nil {
+		pathOps = append(pathOps, Endpoint{Path: url,
+			Operation: pathItem.Put, Method: http.MethodPut})
+	}
+	if pathItem.Trace != nil {
+		pathOps = append(pathOps, Endpoint{Path: url,
+			Operation: pathItem.Trace, Method: http.MethodTrace})
+	}
+	return pathOps
 }
 
 func PathMethods(pathItem *oas3.PathItem) []string {
@@ -138,4 +184,19 @@ func PathMethods(pathItem *oas3.PathItem) []string {
 		methods = append(methods, http.MethodTrace)
 	}
 	return methods
+}
+
+var rxPathVarToGeneric = regexp.MustCompile(`{[^}{]*}`)
+
+func PathVarsToGeneric(input string) string {
+	return rxPathVarToGeneric.ReplaceAllString(input, "{}")
+}
+
+func PathMatchGeneric(path1, path2 string) bool {
+	gen1 := PathVarsToGeneric(path1)
+	gen2 := PathVarsToGeneric(path2)
+	if gen1 != gen2 {
+		return false
+	}
+	return true
 }
