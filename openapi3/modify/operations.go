@@ -7,6 +7,17 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 )
 
+func SpecOperationsCount(spec *oas3.Swagger) uint {
+	count := uint(0)
+	VisitOperations(spec, func(op *oas3.Operation) {
+		if op == nil {
+			return
+		}
+		count++
+	})
+	return count
+}
+
 func SpecOperationIds(spec *oas3.Swagger) map[string]int {
 	msi := map[string]int{}
 	VisitOperations(spec, func(op *oas3.Operation) {

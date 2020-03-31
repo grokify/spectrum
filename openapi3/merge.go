@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/gocharts/data/table"
 	"github.com/grokify/gotilla/io/ioutilmore"
 	"github.com/pkg/errors"
 )
@@ -84,9 +85,56 @@ func MergeTags(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
 	return specMaster
 }
 
+// MergeWithTables performs a spec merge and returns comparison
+// tables. This is useful to combine with github.com/grokify/gocharts/data/table
+// WriteXLSX() to write out comparison tables for debugging.
+func MergeWithTables(spec1, spec2 *oas3.Swagger) (*oas3.Swagger, []*table.TableData) {
+	tbls := []*table.TableData{}
+	sm1 := SpecMore{Spec: spec1}
+	sm2 := SpecMore{Spec: spec2}
+	tbls = append(tbls, sm1.OperationsTable())
+	tbls[0].Name = "Spec1"
+	tbls = append(tbls, sm2.OperationsTable())
+	tbls[1].Name = "Spec2"
+	specf := Merge(spec1, spec2)
+	smf := SpecMore{Spec: specf}
+	tbls = append(tbls, smf.OperationsTable())
+	tbls[2].Name = "SpecFinal"
+	return specf, tbls
+}
+
 func MergePaths(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
-	for url, path := range specExtra.Paths {
-		specMaster.Paths[url] = path
+	for url, pathItem := range specExtra.Paths {
+		if _, ok := specMaster.Paths[url]; !ok {
+			specMaster.Paths[url] = &oas3.PathItem{}
+		}
+		if pathItem.Connect != nil {
+			specMaster.Paths[url].Connect = pathItem.Connect
+		}
+		if pathItem.Delete != nil {
+			specMaster.Paths[url].Delete = pathItem.Delete
+		}
+		if pathItem.Get != nil {
+			specMaster.Paths[url].Get = pathItem.Get
+		}
+		if pathItem.Head != nil {
+			specMaster.Paths[url].Head = pathItem.Head
+		}
+		if pathItem.Options != nil {
+			specMaster.Paths[url].Options = pathItem.Options
+		}
+		if pathItem.Patch != nil {
+			specMaster.Paths[url].Patch = pathItem.Patch
+		}
+		if pathItem.Post != nil {
+			specMaster.Paths[url].Post = pathItem.Post
+		}
+		if pathItem.Put != nil {
+			specMaster.Paths[url].Put = pathItem.Put
+		}
+		if pathItem.Trace != nil {
+			specMaster.Paths[url].Trace = pathItem.Trace
+		}
 	}
 	return specMaster
 }
