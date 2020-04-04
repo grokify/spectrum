@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"reflect"
 	"regexp"
 	"sort"
 	"strings"
@@ -47,7 +48,10 @@ func MergeFiles(filepaths []string, validateEach, validateFinal bool) (*oas3.Swa
 		if i == 0 {
 			specMaster = thisSpec
 		} else {
-			specMaster = Merge(specMaster, thisSpec)
+			specMaster, err = Merge(specMaster, thisSpec)
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 
@@ -65,7 +69,7 @@ func MergeFiles(filepaths []string, validateEach, validateFinal bool) (*oas3.Swa
 	return specMaster, nil
 }
 
-func Merge(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
+func Merge(specMaster, specExtra *oas3.Swagger) (*oas3.Swagger, error) {
 	specMaster = MergeTags(specMaster, specExtra)
 	specMaster = MergePaths(specMaster, specExtra)
 	return MergeSchemas(specMaster, specExtra)
@@ -88,7 +92,7 @@ func MergeTags(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
 // MergeWithTables performs a spec merge and returns comparison
 // tables. This is useful to combine with github.com/grokify/gocharts/data/table
 // WriteXLSX() to write out comparison tables for debugging.
-func MergeWithTables(spec1, spec2 *oas3.Swagger) (*oas3.Swagger, []*table.TableData) {
+func MergeWithTables(spec1, spec2 *oas3.Swagger) (*oas3.Swagger, []*table.TableData, error) {
 	tbls := []*table.TableData{}
 	sm1 := SpecMore{Spec: spec1}
 	sm2 := SpecMore{Spec: spec2}
@@ -96,11 +100,14 @@ func MergeWithTables(spec1, spec2 *oas3.Swagger) (*oas3.Swagger, []*table.TableD
 	tbls[0].Name = "Spec1"
 	tbls = append(tbls, sm2.OperationsTable())
 	tbls[1].Name = "Spec2"
-	specf := Merge(spec1, spec2)
+	specf, err := Merge(spec1, spec2)
+	if err != nil {
+		return specf, tbls, err
+	}
 	smf := SpecMore{Spec: specf}
 	tbls = append(tbls, smf.OperationsTable())
 	tbls[2].Name = "SpecFinal"
-	return specf, tbls
+	return specf, tbls, nil
 }
 
 func MergePaths(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
@@ -139,11 +146,20 @@ func MergePaths(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
 	return specMaster
 }
 
-func MergeSchemas(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
+func MergeSchemas(specMaster, specExtra *oas3.Swagger) (*oas3.Swagger, error) {
 	for schemaName, schema := range specExtra.Components.Schemas {
+		if _, ok := specMaster.Components.Schemas[schemaName]; ok {
+			if !reflect.DeepEqual(
+				specMaster.Components.Schemas[schemaName],
+				schema,
+			) {
+				return nil, fmt.Errorf("E_SCHEMA_COLLISION [%v]", schemaName)
+			}
+			continue
+		}
 		specMaster.Components.Schemas[schemaName] = schema
 	}
-	return specMaster
+	return specMaster, nil
 }
 
 func WriteFileDirMerge(outfile, inputDir string, perm os.FileMode) error {
