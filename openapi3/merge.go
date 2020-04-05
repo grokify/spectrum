@@ -71,7 +71,10 @@ func MergeFiles(filepaths []string, validateEach, validateFinal bool) (*oas3.Swa
 
 func Merge(specMaster, specExtra *oas3.Swagger) (*oas3.Swagger, error) {
 	specMaster = MergeTags(specMaster, specExtra)
-	specMaster = MergePaths(specMaster, specExtra)
+	specMaster, err := MergePaths(specMaster, specExtra)
+	if err != nil {
+		return specMaster, err
+	}
 	return MergeSchemas(specMaster, specExtra)
 }
 
@@ -110,40 +113,76 @@ func MergeWithTables(spec1, spec2 *oas3.Swagger) (*oas3.Swagger, []*table.TableD
 	return specf, tbls, nil
 }
 
-func MergePaths(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
+func MergePaths(specMaster, specExtra *oas3.Swagger) (*oas3.Swagger, error) {
 	for url, pathItem := range specExtra.Paths {
-		if _, ok := specMaster.Paths[url]; !ok {
+		if pathInfoMaster, ok := specMaster.Paths[url]; !ok || pathInfoMaster == nil {
 			specMaster.Paths[url] = &oas3.PathItem{}
 		}
 		if pathItem.Connect != nil {
-			specMaster.Paths[url].Connect = pathItem.Connect
+			if specMaster.Paths[url].Connect == nil {
+				specMaster.Paths[url].Connect = pathItem.Connect
+			} else if !reflect.DeepEqual(pathItem.Connect, specMaster.Paths[url].Connect) {
+				return specMaster, fmt.Errorf("E_OPERATION_COLLISION_CONNECT [%v]", pathItem.Connect.OperationID)
+			}
 		}
 		if pathItem.Delete != nil {
-			specMaster.Paths[url].Delete = pathItem.Delete
+			if specMaster.Paths[url].Delete == nil {
+				specMaster.Paths[url].Delete = pathItem.Delete
+			} else if !reflect.DeepEqual(pathItem.Delete, specMaster.Paths[url].Delete) {
+				return specMaster, fmt.Errorf("E_OPERATION_COLLISION_DELETE [%v]", pathItem.Delete.OperationID)
+			}
 		}
 		if pathItem.Get != nil {
-			specMaster.Paths[url].Get = pathItem.Get
+			if specMaster.Paths[url].Get == nil {
+				specMaster.Paths[url].Get = pathItem.Get
+			} else if !reflect.DeepEqual(pathItem.Get, specMaster.Paths[url].Get) {
+				return specMaster, fmt.Errorf("E_OPERATION_COLLISION_GET [%v]", pathItem.Get.OperationID)
+			}
 		}
 		if pathItem.Head != nil {
-			specMaster.Paths[url].Head = pathItem.Head
+			if specMaster.Paths[url].Head == nil {
+				specMaster.Paths[url].Head = pathItem.Head
+			} else if !reflect.DeepEqual(pathItem.Head, specMaster.Paths[url].Head) {
+				return specMaster, fmt.Errorf("E_OPERATION_COLLISION_HEAD [%v]", pathItem.Head.OperationID)
+			}
 		}
 		if pathItem.Options != nil {
-			specMaster.Paths[url].Options = pathItem.Options
+			if specMaster.Paths[url].Options == nil {
+				specMaster.Paths[url].Options = pathItem.Options
+			} else if !reflect.DeepEqual(pathItem.Options, specMaster.Paths[url].Options) {
+				return specMaster, fmt.Errorf("E_OPERATION_COLLISION_OPTIONS [%v]", pathItem.Options.OperationID)
+			}
 		}
 		if pathItem.Patch != nil {
-			specMaster.Paths[url].Patch = pathItem.Patch
+			if specMaster.Paths[url].Patch == nil {
+				specMaster.Paths[url].Patch = pathItem.Patch
+			} else if !reflect.DeepEqual(pathItem.Patch, specMaster.Paths[url].Patch) {
+				return specMaster, fmt.Errorf("E_OPERATION_COLLISION_PATCH [%v]", pathItem.Patch.OperationID)
+			}
 		}
 		if pathItem.Post != nil {
-			specMaster.Paths[url].Post = pathItem.Post
+			if specMaster.Paths[url].Post == nil {
+				specMaster.Paths[url].Post = pathItem.Post
+			} else if !reflect.DeepEqual(pathItem.Post, specMaster.Paths[url].Post) {
+				return specMaster, fmt.Errorf("E_OPERATION_COLLISION_POST [%v]", pathItem.Post.OperationID)
+			}
 		}
 		if pathItem.Put != nil {
-			specMaster.Paths[url].Put = pathItem.Put
+			if specMaster.Paths[url].Put == nil {
+				specMaster.Paths[url].Put = pathItem.Put
+			} else if !reflect.DeepEqual(pathItem.Put, specMaster.Paths[url].Put) {
+				return specMaster, fmt.Errorf("E_OPERATION_COLLISION_PUT [%v]", pathItem.Put.OperationID)
+			}
 		}
 		if pathItem.Trace != nil {
-			specMaster.Paths[url].Trace = pathItem.Trace
+			if specMaster.Paths[url].Trace == nil {
+				specMaster.Paths[url].Trace = pathItem.Trace
+			} else if !reflect.DeepEqual(pathItem.Trace, specMaster.Paths[url].Trace) {
+				return specMaster, fmt.Errorf("E_OPERATION_COLLISION_TRACE [%v]", pathItem.Trace.OperationID)
+			}
 		}
 	}
-	return specMaster
+	return specMaster, nil
 }
 
 func MergeSchemas(specMaster, specExtra *oas3.Swagger) (*oas3.Swagger, error) {
