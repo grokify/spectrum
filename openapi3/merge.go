@@ -147,17 +147,19 @@ func MergePaths(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
 }
 
 func MergeSchemas(specMaster, specExtra *oas3.Swagger) (*oas3.Swagger, error) {
-	for schemaName, schema := range specExtra.Components.Schemas {
-		if _, ok := specMaster.Components.Schemas[schemaName]; ok {
-			if !reflect.DeepEqual(
-				specMaster.Components.Schemas[schemaName],
-				schema,
-			) {
-				return nil, fmt.Errorf("E_SCHEMA_COLLISION [%v]", schemaName)
-			}
+	for schemaName, schemaExtra := range specExtra.Components.Schemas {
+		if schemaExtra == nil {
 			continue
 		}
-		specMaster.Components.Schemas[schemaName] = schema
+		if schemaMaster, ok := specMaster.Components.Schemas[schemaName]; ok {
+			if schemaMaster != nil {
+				if !reflect.DeepEqual(schemaMaster, schemaExtra) {
+					return nil, fmt.Errorf("E_SCHEMA_COLLISION [%v]", schemaName)
+				}
+				continue
+			}
+		}
+		specMaster.Components.Schemas[schemaName] = schemaExtra
 	}
 	return specMaster, nil
 }
