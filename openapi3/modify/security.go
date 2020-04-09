@@ -9,16 +9,98 @@ import (
 	"github.com/grokify/gotilla/type/stringsutil"
 )
 
-const SecuritySchemeDefaultNameApiKeyAuth = "ApiKeyAuth"
+const (
+	SecuritySchemeApikeyDefaultName      = "ApiKeyAuth"
+	SecuritySchemeBearertokenDefaultName = "BearerAuth"
+	SchemeHTTP                           = "http"
+	TokenTypeBearer                      = "bearer"
+)
+
+// SecuritySchemeAddBearertoken adds bearer token auth
+// to spec and operations.
+func SecuritySchemeAddBearertoken(spec *oas3.Swagger, schemeName, bearerFormat string, inclTags, skipTags []string) {
+	schemeName = strings.TrimSpace(schemeName)
+	if len(schemeName) == 0 {
+		schemeName = SecuritySchemeBearertokenDefaultName
+	}
+	SecuritySchemeBearertokenAddDefinition(spec, schemeName, bearerFormat)
+	SecuritySchemeBearertokenAddOperationsByTags(spec, schemeName, inclTags, skipTags)
+}
+
+func SecuritySchemeBearertokenAddOperationsByTags(spec *oas3.Swagger, schemeName string, inclTags, skipTags []string) {
+	inclTagsMap := map[string]int{}
+	for _, tag := range inclTags {
+		tag = strings.ToLower(strings.TrimSpace(tag))
+		if len(tag) > 0 {
+			inclTagsMap[tag] = 1
+		}
+	}
+	skipTagsMap := map[string]int{}
+	for _, tag := range skipTags {
+		tag = strings.ToLower(strings.TrimSpace(tag))
+		if len(tag) > 0 {
+			skipTagsMap[tag] = 1
+		}
+	}
+	VisitOperations(spec, func(op *oas3.Operation) {
+		if op == nil {
+			return
+		}
+		addSecurity := false
+		for _, tag := range op.Tags {
+			tag = strings.ToLower(strings.TrimSpace(tag))
+			if _, ok := inclTagsMap[tag]; ok {
+				addSecurity = true
+			}
+			if len(inclTagsMap) == 0 {
+				if len(skipTagsMap) == 0 {
+					addSecurity = true
+				} else if _, ok := skipTagsMap[tag]; !ok {
+					addSecurity = true
+				}
+			}
+		}
+		if addSecurity {
+			SecuritySchemeAddOperation(op, schemeName, []string{})
+		}
+	})
+}
+
+// SecuritySchemeAddOperation adds a scheme name and value to an operation.
+func SecuritySchemeAddOperation(op *oas3.Operation, schemeName string, schemeValue []string) {
+	if op.Security == nil {
+		op.Security = &oas3.SecurityRequirements{}
+	}
+	op.Security.With(
+		oas3.SecurityRequirement(
+			map[string][]string{
+				schemeName: schemeValue}))
+}
+
+func SecuritySchemeBearertokenAddDefinition(spec *oas3.Swagger, schemeName, bearerFormat string) {
+	schemeName = strings.TrimSpace(schemeName)
+	bearerFormat = strings.TrimSpace(bearerFormat)
+	if len(schemeName) == 0 {
+		schemeName = SecuritySchemeBearertokenDefaultName
+	}
+	scheme := &oas3.SecuritySchemeRef{
+		Value: &oas3.SecurityScheme{
+			Type:   SchemeHTTP,
+			Scheme: TokenTypeBearer}}
+	if len(bearerFormat) > 0 {
+		scheme.Value.BearerFormat = bearerFormat
+	}
+	spec.Components.SecuritySchemes[schemeName] = scheme
+}
 
 // AddAPIKey adds an API Key definition to the spec.
 // https://swagger.io/docs/specification/authentication/api-keys/
-func SecuritySchemeAddDefinitionApiKey(spec *oas3.Swagger, schemeName, location, name string) error {
+func SecuritySchemeApikeyAddDefinition(spec *oas3.Swagger, schemeName, location, name string) error {
 	schemeName = strings.TrimSpace(schemeName)
 	location = strings.TrimSpace(location)
 	name = strings.TrimSpace(name)
 	if len(schemeName) == 0 {
-		schemeName = SecuritySchemeDefaultNameApiKeyAuth
+		schemeName = SecuritySchemeApikeyDefaultName
 	}
 	if len(location) == 0 {
 		return errors.New("API Key Security Scheme Location cannot be empty. Must be one of: [\"header\", \"query\", \"cookie\"]")
@@ -41,10 +123,10 @@ func SecuritySchemeAddDefinitionApiKey(spec *oas3.Swagger, schemeName, location,
 	return nil
 }
 
-func SecuritySchemeAddDefinitionOperations(spec *oas3.Swagger, tags []string, keyName string) {
+func SecuritySchemeApikeyAddOperations(spec *oas3.Swagger, tags []string, keyName string) {
 	keyName = strings.TrimSpace(keyName)
 	if len(keyName) == 0 {
-		keyName = SecuritySchemeDefaultNameApiKeyAuth
+		keyName = SecuritySchemeApikeyDefaultName
 	}
 	tagsMap := map[string]int{}
 	for _, tagName := range tags {
@@ -55,12 +137,7 @@ func SecuritySchemeAddDefinitionOperations(spec *oas3.Swagger, tags []string, ke
 		if op == nil || !MapSliceIntersectionExists(tagsMap, op.Tags) {
 			return
 		}
-		if op.Security == nil {
-			op.Security = &oas3.SecurityRequirements{}
-		}
-		secreq := oas3.SecurityRequirement{}
-		secreq[keyName] = []string{}
-		*op.Security = append(*op.Security, secreq)
+		SecuritySchemeAddOperation(op, keyName, []string{})
 	})
 }
 
