@@ -105,7 +105,7 @@ func SpecTagsOrder(spec *oas3.Swagger, explicitSortedTagNames []string) error {
 // and explitcit sort order. The remaining tags are sorted
 // alphabetically.
 func TagsOrder(curTags oas3.Tags, explicitSortedTagNames []string) (oas3.Tags, error) {
-	tagMap := map[string]*oas3.Tag{}
+	tagMap := map[string]*oas3.Tag{} // curTags
 	newTags := oas3.Tags{}
 	for _, tag := range curTags {
 		tag.Name = strings.TrimSpace(tag.Name)
@@ -116,8 +116,9 @@ func TagsOrder(curTags oas3.Tags, explicitSortedTagNames []string) (oas3.Tags, e
 		if tag, ok := tagMap[tagName]; ok {
 			newTags = append(newTags, tag)
 			delete(tagMap, tagName)
-		} else {
-			return newTags, fmt.Errorf("E_EXPLICIT_TAG_NAME_NOT_FOUND [%v]", tagName)
+			// } else {
+			// skip
+			// return newTags, fmt.Errorf("swaggman/openapi3/smodify.TagsOrder.Explicit.E_EXPLICIT_TAG_NAME_NOT_FOUND [%v]", tagName)
 		}
 	}
 	remainingSorted := []string{}
@@ -129,10 +130,9 @@ func TagsOrder(curTags oas3.Tags, explicitSortedTagNames []string) (oas3.Tags, e
 		if tag, ok := tagMap[tagName]; ok {
 			newTags = append(newTags, tag)
 		} else {
-			return newTags, fmt.Errorf("E_EXPLICIT_TAG_NAME_NOT_FOUND [%v]", tagName)
+			return newTags, fmt.Errorf("swaggman/openapi3/modify.TagsOrder.Remaining.sE_EXPLICIT_TAG_NAME_NOT_FOUND [%v]", tagName)
 		}
 	}
-
 	return newTags, nil
 }
 
