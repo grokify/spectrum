@@ -44,3 +44,18 @@ This is useful when merging to specs with an overlap. To check for cleanliness o
 1. run an intersection
 1. delete the intersection from one of the sepcs and ensures it still validates
 1. merge the specs
+
+
+## Examples
+
+### Add Bearer Token Auth
+
+```go
+modify.SecuritySchemeAddBearertoken(
+    spec, "", "",
+    []string{},
+    []string{
+        "Authentication",
+    },
+)
+```
