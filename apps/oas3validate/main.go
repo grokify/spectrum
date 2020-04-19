@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/grokify/swaggman/openapi3"
 	"github.com/jessevdk/go-flags"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type Options struct {
@@ -19,14 +20,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	valid, err := openapi3.ValidateSpec(opts.SpecFileOAS3)
+	spec, err := openapi3.ReadAndValidateFile(opts.SpecFileOAS3)
 
 	if err != nil {
 		log.Fatal(err)
-	} else if !valid {
-		log.Fatalf("E_SPEC_NOT_VALID [%v]", opts.SpecFileOAS3)
 	} else {
-		log.Fatalf("S_SPEC_VALID [%v]", opts.SpecFileOAS3)
+		log.Infof("S_SPEC_VALID File [%s] Title [%s]", opts.SpecFileOAS3, spec.Info.Title)
 	}
 
 	fmt.Println("DONE")
