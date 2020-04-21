@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"strings"
 
-	"github.com/getkin/kin-openapi/openapi3"
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gotilla/encoding/jsonutil"
 	"github.com/pkg/errors"
@@ -61,7 +60,7 @@ context: "#/info"
 openapi: 3.0.0
 */
 
-func ValidateMore(spec *openapi3.Swagger) (ValidationStatus, error) {
+func ValidateMore(spec *oas3.Swagger) (ValidationStatus, error) {
 	vs := ValidationStatus{OpenAPI: "3.0.0"}
 	version := strings.TrimSpace(spec.Info.Version)
 	if len(version) == 0 {
