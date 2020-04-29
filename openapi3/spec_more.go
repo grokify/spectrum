@@ -24,11 +24,6 @@ func ReadSpecMore(path string, validate bool) (*SpecMore, error) {
 	return &SpecMore{Spec: spec}, nil
 }
 
-/*
-func (s *SpecMore) Paths() urlpath.SpecPaths {
-	return urlpath.InspectPaths(s.Spec)
-}
-*/
 func (s *SpecMore) OperationsTable() *table.TableData {
 	tbl := table.NewTableData()
 	tbl.Columns = []string{"operationId", "path", "url", "tags"}
@@ -79,6 +74,10 @@ func (s *SpecMore) OperationMetas() []OperationMeta {
 	}
 
 	return ometas
+}
+
+func (s *SpecMore) OperationsCount() uint {
+	return uint(len(s.OperationMetas()))
 }
 
 func opToMeta(url, method string, op *openapi3.Operation) OperationMeta {
