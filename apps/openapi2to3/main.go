@@ -10,6 +10,8 @@ import (
 	"github.com/jessevdk/go-flags"
 )
 
+// install: go get github.com/grokify/swaggman/apps/openapi2to3
+
 type Options struct {
 	OAS2File string `short:"i" long:"input" description:"Input filepath" required:"true"`
 	OAS3File string `short:"o" long:"output" description:"Output filepath" required:"true"`
