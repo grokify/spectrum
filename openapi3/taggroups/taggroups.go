@@ -30,9 +30,6 @@ func (set *TagGroupSet) AddToSpec(spec *oas3.Swagger) error {
 	if len(missing) > 0 {
 		return fmt.Errorf("E_TAGS_WITHOUT_GROUPS [%s]", strings.Join(missing, ","))
 	}
-	/*	if spec.Extensions == nil {
-
-		}*/
 	spec.ExtensionProps.Extensions["x-tag-groups"] = set.TagGroups
 	return nil
 }
@@ -45,15 +42,10 @@ type TagGroup struct {
 
 func TagsWithoutGroups(spec *oas3.Swagger, tagGroupSet TagGroupSet) []string {
 	missing := []string{}
-	for i, tag := range spec.Tags {
-		tagName := strings.TrimSpace(tag.Name)
-		if tagName != tag.Name {
-			spec.Tags[i].Name = tagName
+	for _, tag := range spec.Tags {
+		if !tagGroupSet.Exists(tag.Name) {
+			missing = append(missing, tag.Name)
 		}
-		if !tagGroupSet.Exists(tagName) {
-			missing = append(missing, tagName)
-		}
-
 	}
 	return missing
 }
