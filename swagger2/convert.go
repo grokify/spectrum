@@ -7,7 +7,6 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi2"
 	"github.com/getkin/kin-openapi/openapi2conv"
-	"github.com/grokify/gotilla/io/ioutilmore"
 	"gopkg.in/yaml.v2"
 )
 
@@ -37,9 +36,9 @@ func ConvertOAS2FileToOAS3File(oas2file, oas3file string, perm os.FileMode, pret
 		}
 		return ioutil.WriteFile(oas3file, bytes, perm)
 	}
-	indent := ""
-	if pretty {
-		indent = "  "
+	bytes, err := oas3.MarshalJSON()
+	if err != nil {
+		return err
 	}
-	return ioutilmore.WriteFileJSON(oas3file, oas3, perm, "", indent)
+	return ioutil.WriteFile(oas3file, bytes, perm)
 }
