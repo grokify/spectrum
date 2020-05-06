@@ -7,6 +7,8 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 )
 
+const XTagGroupsPropertyName = "x-tag-groups"
+
 type TagGroupSet struct {
 	TagGroups []TagGroup
 }
@@ -30,7 +32,7 @@ func (set *TagGroupSet) AddToSpec(spec *oas3.Swagger) error {
 	if len(missing) > 0 {
 		return fmt.Errorf("E_TAGS_WITHOUT_GROUPS [%s]", strings.Join(missing, ","))
 	}
-	spec.ExtensionProps.Extensions["x-tag-groups"] = set.TagGroups
+	spec.ExtensionProps.Extensions[XTagGroupsPropertyName] = set.TagGroups
 	return nil
 }
 
