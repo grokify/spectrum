@@ -15,8 +15,8 @@ type TagGroupSet struct {
 
 func (set *TagGroupSet) Exists(tagName string) bool {
 	for _, tg := range set.TagGroups {
-		for _, tagName := range tg.Tags {
-			if tagName == tg.Name {
+		for _, tgTagName := range tg.Tags {
+			if tagName == tgTagName {
 				return true
 			}
 		}
