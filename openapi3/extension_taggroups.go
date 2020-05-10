@@ -35,7 +35,7 @@ func (set *TagGroupSet) GetTagGroupsForTags(wantTagNames ...string) []string {
 		for _, tgTagName := range tg.Tags {
 			for _, wantTagName := range wantTagNames {
 				if wantTagName == tgTagName {
-					tagGroupNames = append(tagGroupNames, tgTagName)
+					tagGroupNames = append(tagGroupNames, tg.Name)
 				}
 			}
 		}
