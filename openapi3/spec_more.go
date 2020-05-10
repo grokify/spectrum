@@ -26,14 +26,31 @@ func ReadSpecMore(path string, validate bool) (*SpecMore, error) {
 
 func (s *SpecMore) OperationsTable() *table.TableData {
 	tbl := table.NewTableData()
-	tbl.Columns = []string{"operationId", "path", "url", "tags"}
+	tgs := SpecTagGroups(s.Spec)
+	addTagGroups := false
+	if len(tgs.TagGroups) > 0 {
+		addTagGroups = true
+		tbl.Columns = []string{"OperationId", "Path", "URL", "Tag Groups", "Tags"}
+	} else {
+		tbl.Columns = []string{"OperationId", "Path", "URL", "Tags"}
+	}
 	ops := s.OperationMetas()
 	for _, op := range ops {
-		tbl.Records = append(tbl.Records, []string{
-			op.OperationID,
-			op.Path,
-			op.Method,
-			strings.Join(op.Tags, ",")})
+		if addTagGroups {
+			tagGroupNames := tgs.GetTagGroupsForTags(op.Tags...)
+			tbl.Records = append(tbl.Records, []string{
+				op.OperationID,
+				op.Path,
+				op.Method,
+				strings.Join(tagGroupNames, ","),
+				strings.Join(op.Tags, ",")})
+		} else {
+			tbl.Records = append(tbl.Records, []string{
+				op.OperationID,
+				op.Path,
+				op.Method,
+				strings.Join(op.Tags, ",")})
+		}
 	}
 	return &tbl
 }

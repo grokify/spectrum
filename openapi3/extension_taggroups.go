@@ -1,16 +1,21 @@
-package taggroups
+package openapi3
 
 import (
 	"fmt"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/gotilla/type/stringsutil"
 )
 
 const XTagGroupsPropertyName = "x-tag-groups"
 
 type TagGroupSet struct {
 	TagGroups []TagGroup
+}
+
+func NewTagGroupSet() TagGroupSet {
+	return TagGroupSet{TagGroups: []TagGroup{}}
 }
 
 func (set *TagGroupSet) Exists(tagName string) bool {
@@ -22,6 +27,21 @@ func (set *TagGroupSet) Exists(tagName string) bool {
 		}
 	}
 	return false
+}
+
+func (set *TagGroupSet) GetTagGroupsForTags(wantTagNames ...string) []string {
+	tagGroupNames := []string{}
+	for _, tg := range set.TagGroups {
+		for _, tgTagName := range tg.Tags {
+			for _, wantTagName := range wantTagNames {
+				if wantTagName == tgTagName {
+					tagGroupNames = append(tagGroupNames, tgTagName)
+				}
+			}
+		}
+	}
+	tagGroupNames = stringsutil.SliceCondenseSpace(tagGroupNames, true, true)
+	return tagGroupNames
 }
 
 func (set *TagGroupSet) AddToSpec(spec *oas3.Swagger) error {
@@ -50,4 +70,14 @@ func TagsWithoutGroups(spec *oas3.Swagger, tagGroupSet TagGroupSet) []string {
 		}
 	}
 	return missing
+}
+
+func SpecTagGroups(spec *oas3.Swagger) TagGroupSet {
+	tgs := NewTagGroupSet()
+	raw, ok := spec.ExtensionProps.Extensions[XTagGroupsPropertyName]
+	if !ok {
+		return tgs
+	}
+	tgs.TagGroups = raw.([]TagGroup)
+	return tgs
 }
