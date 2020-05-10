@@ -37,7 +37,7 @@ func (s *SpecMore) OperationsTable() *table.TableData {
 	ops := s.OperationMetas()
 	for _, op := range ops {
 		if addTagGroups {
-			tagGroupNames := tgs.GetTagGroupsForTags(op.Tags...)
+			tagGroupNames := tgs.GetTagGroupNamesForTagNames(op.Tags...)
 			tbl.Records = append(tbl.Records, []string{
 				op.OperationID,
 				op.Path,

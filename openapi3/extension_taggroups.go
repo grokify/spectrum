@@ -29,7 +29,7 @@ func (set *TagGroupSet) Exists(tagName string) bool {
 	return false
 }
 
-func (set *TagGroupSet) GetTagGroupsForTags(wantTagNames ...string) []string {
+func (set *TagGroupSet) GetTagGroupNamesForTagNames(wantTagNames ...string) []string {
 	tagGroupNames := []string{}
 	for _, tg := range set.TagGroups {
 		for _, tgTagName := range tg.Tags {
@@ -40,8 +40,7 @@ func (set *TagGroupSet) GetTagGroupsForTags(wantTagNames ...string) []string {
 			}
 		}
 	}
-	tagGroupNames = stringsutil.SliceCondenseSpace(tagGroupNames, true, true)
-	return tagGroupNames
+	return stringsutil.SliceCondenseSpace(tagGroupNames, true, true)
 }
 
 func (set *TagGroupSet) AddToSpec(spec *oas3.Swagger) error {
