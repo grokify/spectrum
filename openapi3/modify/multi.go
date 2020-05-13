@@ -3,18 +3,20 @@ package modify
 import (
 	"fmt"
 
+	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gotilla/fmt/fmtutil"
 	"github.com/grokify/swaggman/openapi3"
 	"github.com/pkg/errors"
 )
 
 type SpecMoreModifyMultiOpts struct {
-	OperationIdsRename           func(string) string
+	OperationIdsRenameFunc       func(string, string, *oas3.Operation)
 	OperationIdsRenameExec       bool
 	OperationIdsShow             bool
 	Paths                        SpecPathsModifyOpts
 	PathsShow                    bool
 	PathsExec                    bool
+	TagsOperationFunc            func(string, string, *oas3.Operation)
 	Tags                         map[string]string
 	TagsShow                     bool
 	TagsExec                     bool
@@ -37,7 +39,10 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 		}
 	}
 	if opts.OperationIdsRenameExec {
-		UpdateOperationIds(sm.Spec, opts.OperationIdsRename)
+		if opts.OperationIdsRenameFunc != nil {
+			VisitOperationsMore(sm.Spec, opts.OperationIdsRenameFunc)
+		}
+		// UpdateOperationIds(sm.Spec, opts.OperationIdsRename)
 		newIds := SpecOperationIds(sm.Spec)
 		if opts.OperationIdsShow {
 			fmtutil.PrintJSON(newIds)
@@ -63,11 +68,14 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 	}
 
 	// Update Tags
-	if len(opts.Tags) > 0 {
+	if opts.TagsOperationFunc != nil || len(opts.Tags) > 0 {
 		if opts.TagsShow {
 			fmtutil.PrintJSON(SpecTags(sm.Spec, true, true))
 		}
 		if opts.TagsExec {
+			if opts.TagsOperationFunc != nil {
+				VisitOperationsMore(sm.Spec, opts.TagsOperationFunc)
+			}
 			SpecTagsModify(sm.Spec, opts.Tags)
 			if opts.TagsShow {
 				fmtutil.PrintJSON(SpecTags(sm.Spec, true, true))

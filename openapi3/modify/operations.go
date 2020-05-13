@@ -1,7 +1,6 @@
 package modify
 
 import (
-	"fmt"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
@@ -33,6 +32,7 @@ func SpecOperationIds(spec *oas3.Swagger) map[string]int {
 	return msi
 }
 
+/*
 func UpdateOperationIds(spec *oas3.Swagger, renameOpId func(orig string) string) {
 	VisitOperations(spec, func(op *oas3.Operation) {
 		if op == nil {
@@ -53,6 +53,7 @@ func UpdateOperationIds(spec *oas3.Swagger, renameOpId func(orig string) string)
 		}
 	}
 }
+*/
 
 func SpecAddCustomProperties(spec *oas3.Swagger, custom map[string]interface{}, addToOperations, addToSchemas bool) {
 	if len(custom) == 0 {
