@@ -10,6 +10,7 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/table"
 	"github.com/grokify/gotilla/encoding/jsonutil"
+	"github.com/grokify/gotilla/type/stringsutil"
 )
 
 type SpecMore struct {
@@ -30,9 +31,9 @@ func (s *SpecMore) OperationsTable() *table.TableData {
 	addTagGroups := false
 	if len(tgs.TagGroups) > 0 {
 		addTagGroups = true
-		tbl.Columns = []string{"OperationId", "Path", "URL", "Tag Groups", "Tags"}
+		tbl.Columns = []string{"OperationId", "Path", "Method", "Tag Groups", "Tags"}
 	} else {
-		tbl.Columns = []string{"OperationId", "Path", "URL", "Tags"}
+		tbl.Columns = []string{"OperationId", "Path", "Method", "Tags"}
 	}
 	ops := s.OperationMetas()
 	for _, op := range ops {
@@ -43,7 +44,7 @@ func (s *SpecMore) OperationsTable() *table.TableData {
 				op.Path,
 				op.Method,
 				strings.Join(tagGroupNames, ","),
-				strings.Join(op.Tags, ",")})
+				strings.Join(stringsutil.SliceCondenseSpace(op.Tags, true, true), ",")})
 		} else {
 			tbl.Records = append(tbl.Records, []string{
 				op.OperationID,
