@@ -77,3 +77,12 @@ func ValidateMore(spec *oas3.Swagger) (ValidationStatus, error) {
 	vs.Status = true
 	return vs, nil
 }
+
+func Copy(spec *oas3.Swagger) (*oas3.Swagger, error) {
+	bytes, err := spec.MarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	loader := oas3.NewSwaggerLoader()
+	return loader.LoadSwaggerFromData(bytes)
+}
