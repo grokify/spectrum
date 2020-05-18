@@ -5,17 +5,16 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/getkin/kin-openapi/openapi3"
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gotilla/net/urlutil"
 )
 
 type SpecPaths struct {
-	Servers openapi3.Servers
+	Servers oas3.Servers
 	Paths   []PathMeta
 }
 
-func InspectPaths(spec *openapi3.Swagger) SpecPaths {
+func InspectPaths(spec *oas3.Swagger) SpecPaths {
 	specPaths := SpecPaths{
 		Servers: spec.Servers,
 		Paths:   []PathMeta{}}
