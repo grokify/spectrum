@@ -43,9 +43,6 @@ func SecuritySchemeBearertokenAddOperationsByTags(spec *oas3.Swagger, schemeName
 		}
 	}
 	VisitOperations(spec, func(skipPath string, skipMethod string, op *oas3.Operation) {
-		if op == nil {
-			return
-		}
 		addSecurity := false
 		for _, tag := range op.Tags {
 			tag = strings.ToLower(strings.TrimSpace(tag))
@@ -134,7 +131,7 @@ func SecuritySchemeApikeyAddOperations(spec *oas3.Swagger, tags []string, keyNam
 		tagsMap[tagName] = 1
 	}
 	VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
-		if op == nil || !MapSliceIntersectionExists(tagsMap, op.Tags) {
+		if !MapSliceIntersectionExists(tagsMap, op.Tags) {
 			return
 		}
 		SecuritySchemeAddOperation(op, keyName, []string{})
@@ -169,9 +166,6 @@ func MapSliceIntersectionExists(haystack map[string]int, needles []string) bool 
 // correct security property.
 func RemoveOperationsSecurity(spec *oas3.Swagger) {
 	VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
-		if op == nil {
-			return
-		}
 		op.Security = &oas3.SecurityRequirements{}
 	})
 }

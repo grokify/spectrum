@@ -25,9 +25,6 @@ func SpecTags(spec *oas3.Swagger, inclTop, inclOp bool) map[string]int {
 	}
 	if inclOp {
 		VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
-			if op == nil {
-				return
-			}
 			for _, tagName := range op.Tags {
 				tagName = strings.TrimSpace(tagName)
 				if len(tagName) > 0 {
@@ -63,9 +60,6 @@ TAG:
 	}
 
 	VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
-		if op == nil {
-			return
-		}
 	TAG:
 		for i, tagName := range op.Tags {
 			tagName = strings.TrimSpace(tagName)
