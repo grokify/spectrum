@@ -93,30 +93,3 @@ func PathItemHasEndpoints(pathItem *oas3.PathItem) bool {
 	}
 	return false
 }
-
-func PathItemDeleteOperationID(pathItem *oas3.PathItem, opID string) {
-	if pathItem.Connect != nil && pathItem.Connect.OperationID == opID {
-		pathItem.Connect = nil
-	}
-	if pathItem.Delete != nil && pathItem.Delete.OperationID == opID {
-		pathItem.Delete = nil
-	}
-	if pathItem.Get != nil && pathItem.Get.OperationID == opID {
-		pathItem.Get = nil
-	}
-	if pathItem.Head != nil && pathItem.Head.OperationID == opID {
-		pathItem.Head = nil
-	}
-	if pathItem.Patch != nil && pathItem.Patch.OperationID == opID {
-		pathItem.Patch = nil
-	}
-	if pathItem.Post != nil && pathItem.Post.OperationID == opID {
-		pathItem.Post = nil
-	}
-	if pathItem.Put != nil && pathItem.Put.OperationID == opID {
-		pathItem.Put = nil
-	}
-	if pathItem.Trace != nil && pathItem.Trace.OperationID == opID {
-		pathItem.Trace = nil
-	}
-}
