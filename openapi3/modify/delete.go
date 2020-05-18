@@ -43,32 +43,55 @@ func SpecDeleteProperties(spec *oas3.Swagger, md SpecMetadata) {
 }
 
 func SpecDeleteOperations(spec *oas3.Swagger, delThis func(urlpath, method string, op *oas3.Operation) bool) {
+	newPaths := oas3.Paths{}
+
 	for urlpath, pathItem := range spec.Paths {
-		if delThis(urlpath, http.MethodConnect, pathItem.Connect) {
-			pathItem.Connect = nil
+		newPathItem := oas3.PathItem{
+			ExtensionProps: pathItem.ExtensionProps,
+			Ref:            pathItem.Ref,
+			Summary:        pathItem.Summary,
+			Description:    pathItem.Description,
+			Servers:        pathItem.Servers,
+			Parameters:     pathItem.Parameters}
+		if pathItem.Connect != nil && !delThis(urlpath, http.MethodConnect, pathItem.Connect) {
+			newPathItem.Connect = pathItem.Connect
 		}
-		if delThis(urlpath, http.MethodDelete, pathItem.Delete) {
-			pathItem.Delete = nil
+		if pathItem.Delete != nil && !delThis(urlpath, http.MethodDelete, pathItem.Delete) {
+			newPathItem.Delete = pathItem.Delete
 		}
-		if delThis(urlpath, http.MethodGet, pathItem.Get) {
-			pathItem.Get = nil
+		if pathItem.Get != nil && !delThis(urlpath, http.MethodGet, pathItem.Get) {
+			newPathItem.Get = pathItem.Get
 		}
-		if delThis(urlpath, http.MethodHead, pathItem.Head) {
-			pathItem.Head = nil
+		if pathItem.Head != nil && !delThis(urlpath, http.MethodHead, pathItem.Head) {
+			newPathItem.Head = pathItem.Head
 		}
-		if delThis(urlpath, http.MethodPatch, pathItem.Patch) {
-			pathItem.Patch = nil
+		if pathItem.Patch != nil && !delThis(urlpath, http.MethodPatch, pathItem.Patch) {
+			newPathItem.Patch = pathItem.Patch
 		}
-		if delThis(urlpath, http.MethodPost, pathItem.Post) {
-			pathItem.Post = nil
+		if pathItem.Post != nil && !delThis(urlpath, http.MethodPost, pathItem.Post) {
+			newPathItem.Post = pathItem.Post
 		}
-		if delThis(urlpath, http.MethodPut, pathItem.Put) {
-			pathItem.Put = nil
+		if pathItem.Put != nil && !delThis(urlpath, http.MethodPut, pathItem.Put) {
+			newPathItem.Put = pathItem.Put
 		}
-		if delThis(urlpath, http.MethodTrace, pathItem.Trace) {
-			pathItem.Trace = nil
+		if pathItem.Trace != nil && !delThis(urlpath, http.MethodTrace, pathItem.Trace) {
+			newPathItem.Trace = pathItem.Trace
+		}
+		if PathItemHasEndpoints(&newPathItem) {
+			newPaths[urlpath] = &newPathItem
 		}
 	}
+	spec.Paths = newPaths
+}
+
+func PathItemHasEndpoints(pathItem *oas3.PathItem) bool {
+	if pathItem.Connect != nil || pathItem.Delete != nil ||
+		pathItem.Get != nil || pathItem.Head != nil ||
+		pathItem.Patch != nil || pathItem.Post != nil ||
+		pathItem.Put != nil || pathItem.Trace != nil {
+		return true
+	}
+	return false
 }
 
 func PathItemDeleteOperationID(pathItem *oas3.PathItem, opID string) {
