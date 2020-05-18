@@ -8,7 +8,7 @@ import (
 
 func SpecOperationsCount(spec *oas3.Swagger) uint {
 	count := uint(0)
-	VisitOperations(spec, func(op *oas3.Operation) {
+	VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 		if op == nil {
 			return
 		}
@@ -19,7 +19,7 @@ func SpecOperationsCount(spec *oas3.Swagger) uint {
 
 func SpecOperationIds(spec *oas3.Swagger) map[string]int {
 	msi := map[string]int{}
-	VisitOperations(spec, func(op *oas3.Operation) {
+	VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 		if op == nil {
 			return
 		}
@@ -32,35 +32,12 @@ func SpecOperationIds(spec *oas3.Swagger) map[string]int {
 	return msi
 }
 
-/*
-func UpdateOperationIds(spec *oas3.Swagger, renameOpId func(orig string) string) {
-	VisitOperations(spec, func(op *oas3.Operation) {
-		if op == nil {
-			return
-		}
-		op.OperationID = strings.TrimSpace(renameOpId(op.OperationID))
-	})
-	opIds := map[string]int{}
-	VisitOperations(spec, func(op *oas3.Operation) {
-		if op == nil {
-			return
-		}
-		opIds[strings.TrimSpace(op.OperationID)] = 1
-	})
-	for opId, count := range opIds {
-		if count > 1 {
-			panic(fmt.Sprintf("OPID ID[%s] COUNT[%d]", opId, count))
-		}
-	}
-}
-*/
-
 func SpecAddCustomProperties(spec *oas3.Swagger, custom map[string]interface{}, addToOperations, addToSchemas bool) {
 	if len(custom) == 0 {
 		return
 	}
 	if addToOperations {
-		VisitOperations(spec, func(op *oas3.Operation) {
+		VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 			if op == nil {
 				return
 			}

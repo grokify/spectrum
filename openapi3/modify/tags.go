@@ -24,7 +24,7 @@ func SpecTags(spec *oas3.Swagger, inclTop, inclOp bool) map[string]int {
 		}
 	}
 	if inclOp {
-		VisitOperations(spec, func(op *oas3.Operation) {
+		VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 			if op == nil {
 				return
 			}
@@ -62,7 +62,7 @@ TAG:
 		}
 	}
 
-	VisitOperations(spec, func(op *oas3.Operation) {
+	VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 		if op == nil {
 			return
 		}

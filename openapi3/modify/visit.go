@@ -6,6 +6,7 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 )
 
+/*
 func VisitOperations(spec *oas3.Swagger, visitOp func(op *oas3.Operation)) {
 	for _, pathItem := range spec.Paths {
 		visitOp(pathItem.Connect)
@@ -18,9 +19,9 @@ func VisitOperations(spec *oas3.Swagger, visitOp func(op *oas3.Operation)) {
 		visitOp(pathItem.Put)
 		visitOp(pathItem.Trace)
 	}
-}
+}*/
 
-func VisitOperationsMore(spec *oas3.Swagger, visitOp func(path, method string, op *oas3.Operation)) {
+func VisitOperations(spec *oas3.Swagger, visitOp func(path, method string, op *oas3.Operation)) {
 	for path, pathItem := range spec.Paths {
 		visitOp(path, http.MethodConnect, pathItem.Connect)
 		visitOp(path, http.MethodDelete, pathItem.Delete)
