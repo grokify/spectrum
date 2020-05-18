@@ -16,9 +16,6 @@ func SpecDeleteProperties(spec *oas3.Swagger, md SpecMetadata) {
 				}
 				return false
 			})
-		/*for _, pathItem := range spec.Paths {
-			PathItemDeleteOperationID(pathItem, opID)
-		}*/
 	}
 	for _, epDel := range md.Endpoints {
 		SpecDeleteOperations(spec,
