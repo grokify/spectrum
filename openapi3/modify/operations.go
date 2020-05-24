@@ -47,3 +47,39 @@ func SpecAddCustomProperties(spec *oas3.Swagger, custom map[string]interface{}, 
 		}
 	}
 }
+
+type OperationMoreSet struct {
+	OperationMores []OperationMore
+}
+
+type OperationMore struct {
+	UrlPath   string
+	Method    string
+	Operation *oas3.Operation
+}
+
+func QueryOperationsByTags(spec *oas3.Swagger, tags []string) *OperationMoreSet {
+	tagsWantMatch := map[string]int{}
+	for _, tag := range tags {
+		tagsWantMatch[tag] = 1
+	}
+	opmSet := &OperationMoreSet{OperationMores: []OperationMore{}}
+	// for path, pathInfo := range spec.Paths {
+	VisitOperations(spec, func(url, method string, op *oas3.Operation) {
+		if op == nil {
+			return
+		}
+		for _, tagTry := range op.Tags {
+			if _, ok := tagsWantMatch[tagTry]; ok {
+				opmSet.OperationMores = append(opmSet.OperationMores,
+					OperationMore{
+						UrlPath:   url,
+						Method:    method,
+						Operation: op})
+				return
+			}
+		}
+	})
+	// }
+	return opmSet
+}

@@ -18,11 +18,11 @@ import (
 
 var jsonFileRx = regexp.MustCompile(`(?i)\.json\s*$`)
 
-func MergeDirectory(dir string) (*oas3.Swagger, error) {
-	return MergeDirectoryMore(dir, false, true)
+func MergeDirectory(dir string, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
+	return MergeDirectoryMore(dir, false, true, mergeOpts)
 }
 
-func MergeDirectoryMore(dir string, validateEach, validateFinal bool) (*oas3.Swagger, error) {
+func MergeDirectoryMore(dir string, validateEach, validateFinal bool, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
 	fileInfos, err := ioutilmore.DirEntriesRxSizeGt0(dir, ioutilmore.File, jsonFileRx)
 	if err != nil {
 		return nil, err
@@ -34,23 +34,49 @@ func MergeDirectoryMore(dir string, validateEach, validateFinal bool) (*oas3.Swa
 	for _, fi := range fileInfos {
 		filePaths = append(filePaths, filepath.Join(dir, fi.Name()))
 	}
-	return MergeFiles(filePaths, validateEach, validateFinal)
+	return MergeFiles(filePaths, validateEach, validateFinal, mergeOpts)
 }
 
-func MergeFiles(filepaths []string, validateEach, validateFinal bool) (*oas3.Swagger, error) {
+type MergeOptions struct {
+	SchemaFunc func(schemaName string, sch1, sch2 interface{}, hint2 string) CollisionCheckResult
+}
+
+func (mo *MergeOptions) CheckSchemaCollision(schemaName string, sch1, sch2 interface{}, hint2 string) CollisionCheckResult {
+	if mo.SchemaFunc == nil {
+		mo.SchemaFunc = SchemaCheckCollisionDefault
+	}
+	return mo.SchemaFunc(schemaName, sch1, sch2, hint2)
+}
+
+type CollisionCheckResult int
+
+const (
+	CollisionCheckSame CollisionCheckResult = iota
+	CollisionCheckOverwrite
+	CollisionCheckError
+)
+
+func SchemaCheckCollisionDefault(schemaName string, item1, item2 interface{}, item2Note string) CollisionCheckResult {
+	if reflect.DeepEqual(item1, item2) {
+		return CollisionCheckSame
+	}
+	return CollisionCheckError
+}
+
+func MergeFiles(filepaths []string, validateEach, validateFinal bool, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
 	sort.Strings(filepaths)
 	var specMaster *oas3.Swagger
 	for i, fpath := range filepaths {
 		thisSpec, err := ReadFile(fpath, validateEach)
 		if err != nil {
-			return specMaster, errors.Wrap(err, fmt.Sprintf("Filepath [%v]", fpath))
+			return specMaster, errors.Wrap(err, fmt.Sprintf("ReadSpecError [%v] ValidateEach [%v]", fpath, validateEach))
 		}
 		if i == 0 {
 			specMaster = thisSpec
 		} else {
-			specMaster, err = Merge(specMaster, thisSpec)
+			specMaster, err = Merge(specMaster, thisSpec, fpath, mergeOpts)
 			if err != nil {
-				return nil, err
+				return nil, errors.Wrap(err, fmt.Sprintf("Merging [%v]", fpath))
 			}
 		}
 	}
@@ -62,20 +88,24 @@ func MergeFiles(filepaths []string, validateEach, validateFinal bool) (*oas3.Swa
 		}
 		newSpec, err := oas3.NewSwaggerLoader().LoadSwaggerFromData(bytes)
 		if err != nil {
-			return newSpec, errors.Wrap(err, "Loader.LoadSwaggerFromData")
+			return newSpec, errors.Wrap(err, "Loader.LoadSwaggerFromData (MergeFiles().ValidateFinal)")
 		}
 		return newSpec, nil
 	}
 	return specMaster, nil
 }
 
-func Merge(specMaster, specExtra *oas3.Swagger) (*oas3.Swagger, error) {
+func Merge(specMaster, specExtra *oas3.Swagger, specExtraNote string, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
 	specMaster = MergeTags(specMaster, specExtra)
 	specMaster, err := MergePaths(specMaster, specExtra)
 	if err != nil {
 		return specMaster, err
 	}
-	return MergeSchemas(specMaster, specExtra)
+	specMaster, err = MergeSchemas(specMaster, specExtra, specExtraNote, mergeOpts)
+	if err != nil {
+		return specMaster, err
+	}
+	return MergeRequestBodies(specMaster, specExtra, specExtraNote)
 }
 
 func MergeTags(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
@@ -95,7 +125,7 @@ func MergeTags(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
 // MergeWithTables performs a spec merge and returns comparison
 // tables. This is useful to combine with github.com/grokify/gocharts/data/table
 // WriteXLSX() to write out comparison tables for debugging.
-func MergeWithTables(spec1, spec2 *oas3.Swagger) (*oas3.Swagger, []*table.TableData, error) {
+func MergeWithTables(spec1, spec2 *oas3.Swagger, specExtraNote string, mergeOpts *MergeOptions) (*oas3.Swagger, []*table.TableData, error) {
 	tbls := []*table.TableData{}
 	sm1 := SpecMore{Spec: spec1}
 	sm2 := SpecMore{Spec: spec2}
@@ -103,7 +133,7 @@ func MergeWithTables(spec1, spec2 *oas3.Swagger) (*oas3.Swagger, []*table.TableD
 	tbls[0].Name = "Spec1"
 	tbls = append(tbls, sm2.OperationsTable())
 	tbls[1].Name = "Spec2"
-	specf, err := Merge(spec1, spec2)
+	specf, err := Merge(spec1, spec2, specExtraNote, mergeOpts)
 	if err != nil {
 		return specf, tbls, err
 	}
@@ -185,26 +215,61 @@ func MergePaths(specMaster, specExtra *oas3.Swagger) (*oas3.Swagger, error) {
 	return specMaster, nil
 }
 
-func MergeSchemas(specMaster, specExtra *oas3.Swagger) (*oas3.Swagger, error) {
+func MergeSchemas(specMaster, specExtra *oas3.Swagger, specExtraNote string, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
 	for schemaName, schemaExtra := range specExtra.Components.Schemas {
 		if schemaExtra == nil {
 			continue
-		}
-		if schemaMaster, ok := specMaster.Components.Schemas[schemaName]; ok {
+		} else if schemaMaster, ok := specMaster.Components.Schemas[schemaName]; ok {
 			if schemaMaster != nil {
-				if !reflect.DeepEqual(schemaMaster, schemaExtra) {
-					return nil, fmt.Errorf("E_SCHEMA_COLLISION [%v]", schemaName)
+				if mergeOpts == nil {
+					mergeOpts = &MergeOptions{}
 				}
+				checkCollisionResult := mergeOpts.CheckSchemaCollision(schemaName, schemaMaster, schemaExtra, specExtraNote)
+				switch checkCollisionResult {
+				case CollisionCheckError:
+					return nil, fmt.Errorf("E_SCHEMA_COLLISION [%v] EXTRA_SPEC [%s]", schemaName, specExtraNote)
+				case CollisionCheckOverwrite:
+					delete(specMaster.Components.Schemas, schemaName)
+					specMaster.Components.Schemas[schemaName] = schemaExtra
+				}
+				/*
+					if !reflect.DeepEqual(schemaMaster, schemaExtra) {
+						return nil, fmt.Errorf("E_SCHEMA_COLLISION [%v] EXTRA_SPEC [%s]", schemaName, specExtraNote)
+					}*/
 				continue
 			}
+		} else {
+			specMaster.Components.Schemas[schemaName] = schemaExtra
 		}
-		specMaster.Components.Schemas[schemaName] = schemaExtra
 	}
 	return specMaster, nil
 }
 
-func WriteFileDirMerge(outfile, inputDir string, perm os.FileMode) error {
-	spec, err := MergeDirectory(inputDir)
+func MergeRequestBodies(specMaster, specExtra *oas3.Swagger, specExtraNote string) (*oas3.Swagger, error) {
+	for rbName, rbExtra := range specExtra.Components.RequestBodies {
+		if rbExtra == nil {
+			continue
+		} else if rbMaster, ok := specMaster.Components.RequestBodies[rbName]; ok {
+			if rbMaster == nil {
+				if specMaster.Components.RequestBodies == nil {
+					specMaster.Components.RequestBodies = map[string]*oas3.RequestBodyRef{}
+				}
+				specMaster.Components.RequestBodies[rbName] = rbExtra
+			} else if !reflect.DeepEqual(rbMaster, rbExtra) {
+				return nil, fmt.Errorf("E_SCHEMA_COLLISION [%v] EXTRA_SPEC [%s]", rbName, specExtraNote)
+			}
+		} else {
+			if specMaster.Components.RequestBodies == nil {
+				specMaster.Components.RequestBodies = map[string]*oas3.RequestBodyRef{}
+			}
+			specMaster.Components.RequestBodies[rbName] = rbExtra
+		}
+	}
+	return specMaster, nil
+}
+
+func WriteFileDirMerge(outfile, inputDir string, perm os.FileMode, mergeOpts *MergeOptions) error {
+	spec, err := MergeDirectory(inputDir, mergeOpts)
 	if err != nil {
 		return errors.Wrap(err, "E_OPENAPI3_MERGE_DIRECTORY_FAILED")
 	}

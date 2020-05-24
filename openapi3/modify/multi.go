@@ -10,26 +10,27 @@ import (
 )
 
 type SpecMoreModifyMultiOpts struct {
-	OperationIdsRenameFunc       func(string, string, *oas3.Operation)
-	OperationIdsRenameExec       bool
-	OperationIdsShow             bool
-	Paths                        SpecPathsModifyOpts
-	PathsShow                    bool
-	PathsExec                    bool
-	TagsOperationFunc            func(string, string, *oas3.Operation)
-	Tags                         map[string]string
-	TagsShow                     bool
-	TagsExec                     bool
-	OperationsRemoveSecurityExec bool
+	OperationsDeleteFunc     func(urlpath, method string, op *oas3.Operation) bool
+	OperationsRenameIdsFunc  func(string, string, *oas3.Operation)
+	OperationsRemoveSecurity bool
+	OperationsShowIds        bool
+	OperationsExec           bool
+	Paths                    SpecPathsModifyOpts
+	PathsShow                bool
+	PathsExec                bool
+	TagsOperationFunc        func(string, string, *oas3.Operation)
+	Tags                     map[string]string
+	TagsShow                 bool
+	TagsExec                 bool
 }
 
 // SpecMoreModifyMulti is used to perform multiple updates on
 // an OpenAPI 3 spec.
 func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) error {
-	if opts.OperationIdsShow {
+	if opts.OperationsShowIds {
 		fmtutil.PrintJSON(SpecOperationIds(sm.Spec))
 		oldIds := SpecOperationIds(sm.Spec)
-		if opts.OperationIdsShow {
+		if opts.OperationsShowIds {
 			fmtutil.PrintJSON(oldIds)
 		}
 		for id, count := range oldIds {
@@ -38,19 +39,26 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 			}
 		}
 	}
-	if opts.OperationIdsRenameExec {
-		if opts.OperationIdsRenameFunc != nil {
-			VisitOperations(sm.Spec, opts.OperationIdsRenameFunc)
+	if opts.OperationsExec {
+		if opts.OperationsDeleteFunc != nil {
+			SpecDeleteOperations(sm.Spec, opts.OperationsDeleteFunc)
+		}
+		if opts.OperationsRenameIdsFunc != nil {
+			VisitOperations(sm.Spec, opts.OperationsRenameIdsFunc)
 		}
 		// UpdateOperationIds(sm.Spec, opts.OperationIdsRename)
 		newIds := SpecOperationIds(sm.Spec)
-		if opts.OperationIdsShow {
+		if opts.OperationsShowIds {
 			fmtutil.PrintJSON(newIds)
 		}
 		for id, count := range newIds {
 			if count != 1 {
 				return fmt.Errorf("E_OPERATION_ID_BAD_COUNT_AFTER_RENAME ID[%s]COUNT[%d]", id, count)
 			}
+		}
+
+		if opts.OperationsRemoveSecurity {
+			RemoveOperationsSecurity(sm.Spec)
 		}
 	}
 	// Update Paths
@@ -81,10 +89,6 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 				fmtutil.PrintJSON(SpecTags(sm.Spec, true, true))
 			}
 		}
-	}
-
-	if opts.OperationsRemoveSecurityExec {
-		RemoveOperationsSecurity(sm.Spec)
 	}
 
 	return nil

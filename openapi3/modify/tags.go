@@ -6,13 +6,15 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/gotilla/type/stringsutil"
+	"github.com/grokify/swaggman/openapi3"
 )
 
 // SpecTags returns a set of tags present in the current
 // spec.
-func SpecTags(spec *oas3.Swagger, inclTop, inclOp bool) map[string]int {
+func SpecTags(spec *oas3.Swagger, scanTop, scanOperations bool) map[string]int {
 	tagsMap := map[string]int{}
-	if inclTop {
+	if scanTop {
 		for _, tag := range spec.Tags {
 			tagName := strings.TrimSpace(tag.Name)
 			if len(tagName) > 0 {
@@ -23,7 +25,7 @@ func SpecTags(spec *oas3.Swagger, inclTop, inclOp bool) map[string]int {
 			}
 		}
 	}
-	if inclOp {
+	if scanOperations {
 		VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 			for _, tagName := range op.Tags {
 				tagName = strings.TrimSpace(tagName)
@@ -142,4 +144,25 @@ func SpecTagsCondense(spec *oas3.Swagger) {
 		}
 	}
 	spec.Tags = newTags
+}
+
+type UpdateTagsOpts struct {
+	TagURLsMap   map[string][]string
+	TagsMap      map[string]string
+	TagGroupsSet openapi3.TagGroupSet
+}
+
+func (uto *UpdateTagsOpts) ModifyTagsOperationFunc(path, method string, op *oas3.Operation) {
+	if op == nil {
+		return
+	}
+	for tagTry, urlSuffixes := range uto.TagURLsMap {
+		tags := strings.Split(tagTry, ",")
+		tags = stringsutil.SliceCondenseSpace(tags, true, false)
+		if stringsutil.SliceIndex(
+			urlSuffixes,
+			path, true, true, stringsutil.MatchHasSuffix) > -1 {
+			op.Tags = tags
+		}
+	}
 }

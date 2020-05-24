@@ -32,7 +32,7 @@ type SpecMeta struct {
 	ValidationError string
 }
 
-func ReadSpecMetas(dir string, rx *regexp.Regexp) (SpecMetas, error) {
+func ReadSpecMetasDir(dir string, rx *regexp.Regexp) (SpecMetas, error) {
 	metas := SpecMetas{Metas: []SpecMeta{}}
 	files, err := ioutilmore.DirEntriesPathsReNotEmpty(dir, rx)
 
@@ -40,6 +40,26 @@ func ReadSpecMetas(dir string, rx *regexp.Regexp) (SpecMetas, error) {
 		return metas, err
 	}
 
+	return ReadSpecMetasFiles(files)
+	/*
+		for _, f := range files {
+			_, err := ReadFile(f, true)
+			meta := SpecMeta{
+				Filepath: f,
+				Version:  3}
+			if err != nil {
+				meta.ValidationError = err.Error()
+			} else {
+				meta.IsValid = true
+			}
+			metas.Metas = append(metas.Metas, meta)
+		}
+
+		return metas, nil*/
+}
+
+func ReadSpecMetasFiles(files []string) (SpecMetas, error) {
+	metas := SpecMetas{Metas: []SpecMeta{}}
 	for _, f := range files {
 		_, err := ReadFile(f, true)
 		meta := SpecMeta{
@@ -56,14 +76,14 @@ func ReadSpecMetas(dir string, rx *regexp.Regexp) (SpecMetas, error) {
 	return metas, nil
 }
 
-func (metas *SpecMetas) Merge(validatesOnly, validateEach, validateFinal bool) (SpecMore, error) {
-	return MergeSpecMetas(metas, validatesOnly, validateEach, validateFinal)
+func (metas *SpecMetas) Merge(validatesOnly, validateEach, validateFinal bool, mergeOpts *MergeOptions) (SpecMore, error) {
+	return MergeSpecMetas(metas, validatesOnly, validateEach, validateFinal, mergeOpts)
 }
 
-func MergeSpecMetas(metas *SpecMetas, validatesOnly, validateEach, validateFinal bool) (SpecMore, error) {
+func MergeSpecMetas(metas *SpecMetas, validatesOnly, validateEach, validateFinal bool, mergeOpts *MergeOptions) (SpecMore, error) {
 	specMore := SpecMore{}
 	filepaths := metas.Filepaths(validatesOnly)
-	spec, err := MergeFiles(filepaths, validateEach, validateFinal)
+	spec, err := MergeFiles(filepaths, validateEach, validateFinal, mergeOpts)
 	if err != nil {
 		return specMore, err
 	}
