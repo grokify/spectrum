@@ -7,7 +7,7 @@ import (
 
 type Collection struct {
 	Info  CollectionInfo `json:"info"`
-	Item  []Item         `json:"item"`
+	Item  []*Item        `json:"item"`
 	Event []Event        `json:"event,omitempty"`
 }
 
@@ -17,19 +17,25 @@ func NewCollectionFromBytes(data []byte) (Collection, error) {
 	return pman, err
 }
 
-func (col *Collection) GetOrNewFolder(folderName string) Item {
+func (col *Collection) GetOrNewFolder(folderName string) *Item {
+	/*if len(folderNames) == 0 {
+		folderNames = []string{""}
+	}*/
+
 	for _, folder := range col.Item {
 		if folder.Name == folderName {
 			return folder
 		}
 	}
-	folder := Item{
-		Name: folderName}
+	folder := &Item{Name: folderName}
 	col.Item = append(col.Item, folder)
 	return folder
 }
 
-func (col *Collection) SetFolder(newFolder Item) {
+func (col *Collection) SetFolder(newFolder *Item) {
+	if newFolder == nil {
+		return
+	}
 	for i, folder := range col.Item {
 		if newFolder.Name == folder.Name {
 			col.Item[i] = newFolder
@@ -64,19 +70,12 @@ type CollectionInfo struct {
 type Item struct {
 	Name        string  `json:"name,omitempty"`                 // Folder,Operation
 	Description string  `json:"description,omitempty"`          // Folder
-	Item        []Item  `json:"item,omitempty"`                 // Folder
+	Item        []*Item `json:"item,omitempty"`                 // Folder
 	IsSubFolder bool    `json:"_postman_isSubFolder,omitempty"` // Folder
 	Event       []Event `json:"event,omitempty"`                // Operation
 	Request     Request `json:"request,omitempty"`              // Operation
 }
 
-/*
-type APIItem struct {
-	Name    string  `json:"name,omitempty"`
-	Event   []Event `json:"event,omitempty"`
-	Request Request `json:"request,omitempty"`
-}
-*/
 type Event struct {
 	Listen string `json:"listen"`
 	Script Script `json:"script"`
@@ -95,78 +94,6 @@ type Request struct {
 	Description string      `json:"description,omitempty"`
 }
 
-/*
-type URL struct {
-	Raw      string            `json:"raw,omitempty"`
-	Protocol string            `json:"protocol,omitempty"`
-	Auth     map[string]string `json:"auth"`
-	Host     []string          `json:"host,omitempty"`
-	Path     []string          `json:"path,omitempty"`
-	Variable []URLVariable     `json:"variable,omitempty"`
-}
-
-func (url *URL) IsRawOnly() bool {
-	url.Protocol = strings.TrimSpace(url.Protocol)
-	if len(url.Protocol) > 0 ||
-		len(url.Host) > 0 ||
-		len(url.Path) > 0 {
-		return false
-	}
-	return true
-}
-
-type URLVariable struct {
-	Value interface{} `json:"value,omitempty"`
-	ID    string      `json:"id,omitempty"`
-}
-
-func NewURLForGoUrl(goUrl url.URL) URL {
-	pmURL := URL{Variable: []URLVariable{}}
-	goUrl.Scheme = strings.TrimSpace(goUrl.Scheme)
-	goUrl.Host = strings.TrimSpace(goUrl.Host)
-	goUrl.Path = strings.TrimSpace(goUrl.Path)
-	urlParts := []string{}
-	if len(goUrl.Host) > 0 {
-		pmURL.Host = strings.Split(goUrl.Host, ".")
-		urlParts = append(urlParts, goUrl.Host)
-	}
-	if len(goUrl.Path) > 0 {
-		pmURL.Path = strings.Split(goUrl.Path, "/")
-		urlParts = append(urlParts, goUrl.Path)
-	}
-	rawURL := strings.Join(urlParts, "/")
-	if len(goUrl.Scheme) > 0 {
-		pmURL.Protocol = goUrl.Scheme
-		rawURL = goUrl.Scheme + "://" + rawURL
-	}
-	pmURL.Raw = rawURL
-	return pmURL
-}
-
-func NewURL(rawURL string) URL {
-	rawURL = strings.TrimSpace(rawURL)
-	pmURL := URL{Raw: rawURL, Variable: []URLVariable{}}
-	rx := regexp.MustCompile(`^([a-z][0-9a-z]+)://([^/]+)/(.*)$`)
-	rs := rx.FindAllStringSubmatch(rawURL, -1)
-
-	if len(rs) > 0 {
-		for _, m := range rs {
-			pmURL.Protocol = m[1]
-			hostname := m[2]
-			path := m[3]
-			pmURL.Host = strings.Split(hostname, ".")
-			pmURL.Path = strings.Split(path, "/")
-		}
-	}
-
-	return pmURL
-}
-
-func (pmURL *URL) AddVariable(key string, value interface{}) {
-	variable := URLVariable{ID: key, Value: value}
-	pmURL.Variable = append(pmURL.Variable, variable)
-}
-*/
 type Header struct {
 	Key         string `json:"key,omitempty"`
 	Value       string `json:"value,omitempty"`

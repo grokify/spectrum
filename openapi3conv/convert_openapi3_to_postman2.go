@@ -8,10 +8,10 @@ import (
 	"sort"
 	"strings"
 
+	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/swaggman/openapi3"
 	"github.com/grokify/swaggman/postman2"
 	"github.com/grokify/swaggman/postman2/simple"
-	oas3 "github.com/getkin/kin-openapi/openapi3"
 )
 
 //const DefaultContentTypePreferences string = `multipart/form-data,application/json,application/x-www-form-urlencoded,application/xml,text/plain`
@@ -25,6 +25,7 @@ type Configuration struct {
 	PostmanServerURL         string            `json:"postmanServerUrl,omitempty"`
 	PostmanURLHostname       string            `json:"postmanURLHostname,omitempty"`
 	PostmanHeaders           []postman2.Header `json:"postmanHeaders,omitempty"`
+	UseXTagGroups            bool              `json:"useXTagGroups,omitempty"`
 }
 
 // Converter is the struct that manages the conversion.
@@ -105,7 +106,6 @@ func Merge(cfg Configuration, pman postman2.Collection, oas3spec *oas3.Swagger) 
 	for _, url := range urls {
 		path := oas3spec.Paths[url] // *PathItem
 
-		//if path.HasMethodWithTag(http.MethodGet) {
 		if path.Get != nil {
 			pman = postmanAddItemToFolder(pman,
 				Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodGet, path.Get),
@@ -136,15 +136,23 @@ func Merge(cfg Configuration, pman postman2.Collection, oas3spec *oas3.Swagger) 
 	return pman
 }
 
-func postmanAddItemToFolder(pman postman2.Collection, pmItem postman2.Item, pmFolderName string) postman2.Collection {
+/*
+func postmanAddItemToFolders(pman postman2.Collection, pmItem *postman2.Item, pmFolderNames []string) postman2.Collection {
+	pmFolder := pman.GetOrNewFolder(pmFolderName)
+	pmFolder.Item = append(pmFolder.Item, pmItem)
+	pman.SetFolder(pmFolder)
+	return pman
+}*/
+
+func postmanAddItemToFolder(pman postman2.Collection, pmItem *postman2.Item, pmFolderName string) postman2.Collection {
 	pmFolder := pman.GetOrNewFolder(pmFolderName)
 	pmFolder.Item = append(pmFolder.Item, pmItem)
 	pman.SetFolder(pmFolder)
 	return pman
 }
 
-func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *oas3.Swagger, url string, method string, operation *oas3.Operation) postman2.Item {
-	item := postman2.Item{
+func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *oas3.Swagger, url string, method string, operation *oas3.Operation) *postman2.Item {
+	item := &postman2.Item{
 		Name: operation.Summary,
 		Request: postman2.Request{
 			Method: strings.ToUpper(method),
@@ -183,7 +191,7 @@ func BuildPostmanURL(cfg Configuration, spec *oas3.Swagger, specPath string, ope
 	return pmanURL
 }
 
-var postmanUrlDefaultsRx = regexp.MustCompile(`^\s*(:(.+))\s*$`)
+var postmanUrlDefaultsRx *regexp.Regexp = regexp.MustCompile(`^\s*(:(.+))\s*$`)
 
 func PostmanUrlAddDefaultsOAS3(pmanURL postman2.URL, operation *oas3.Operation) postman2.URL {
 	for _, part := range pmanURL.Path {
@@ -194,17 +202,17 @@ func PostmanUrlAddDefaultsOAS3(pmanURL postman2.URL, operation *oas3.Operation) 
 			for _, parameterRef := range operation.Parameters {
 				if parameterRef == nil || parameterRef.Value == nil {
 					continue
-				}
-				if parameterRef.Value.Name != baseVariable {
-					continue
-				}
-				schemaRef := parameterRef.Value.Schema
-				if schemaRef == nil || schemaRef.Value == nil {
-					continue
-				}
-				if schemaRef.Value.Default != nil {
-					defaultValue = schemaRef.Value.Default
-					pmanURL.AddVariable(baseVariable, defaultValue)
+					if parameterRef.Value.Name != baseVariable {
+						continue
+					}
+					schemaRef := parameterRef.Value.Schema
+					if schemaRef == nil || schemaRef.Value == nil {
+						continue
+					}
+					if schemaRef.Value.Default != nil {
+						defaultValue = schemaRef.Value.Default
+						pmanURL.AddVariable(baseVariable, defaultValue)
+					}
 				}
 				/*
 					if parameter.Name == baseVariable {

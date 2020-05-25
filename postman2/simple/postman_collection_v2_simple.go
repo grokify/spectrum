@@ -9,7 +9,7 @@ import (
 
 type Collection struct {
 	Info postman2.CollectionInfo `json:"info"`
-	Item []Item                  `json:"item"`
+	Item []*Item                 `json:"item"`
 }
 
 func NewCollectionFromBytes(data []byte) (Collection, error) {
@@ -44,7 +44,7 @@ func ReadCanonicalCollection(filepath string) (postman2.Collection, error) {
 func (col *Collection) ToCanonical() postman2.Collection {
 	cCollection := postman2.Collection{
 		Info: col.Info,
-		Item: []postman2.Item{}}
+		Item: []*postman2.Item{}}
 	for _, folder := range col.Item {
 		cCollection.Item = append(cCollection.Item, folder.ToCanonical())
 	}
@@ -54,16 +54,16 @@ func (col *Collection) ToCanonical() postman2.Collection {
 type Item struct {
 	Name        string           `json:"name,omitempty"`        // Folder,API
 	Description string           `json:"description,omitempty"` // Folder
-	Item        []Item           `json:"item,omitempty"`        // Folder
+	Item        []*Item          `json:"item,omitempty"`        // Folder
 	Event       []postman2.Event `json:"event,omitempty"`       // API
 	Request     Request          `json:"request,omitempty"`     // API
 }
 
-func (thisItem *Item) ToCanonical() postman2.Item {
-	canItem := postman2.Item{
+func (thisItem *Item) ToCanonical() *postman2.Item {
+	canItem := &postman2.Item{
 		Name:        thisItem.Name,
 		Description: thisItem.Description,
-		Item:        []postman2.Item{},
+		Item:        []*postman2.Item{},
 		Event:       thisItem.Event,
 		Request:     thisItem.Request.ToCanonical()}
 	for _, subItem := range thisItem.Item {
