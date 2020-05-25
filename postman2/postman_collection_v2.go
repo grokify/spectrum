@@ -18,22 +18,18 @@ func NewCollectionFromBytes(data []byte) (Collection, error) {
 }
 
 func (col *Collection) GetOrNewFolder(folderName string) *Item {
-	/*if len(folderNames) == 0 {
-		folderNames = []string{""}
-	}*/
-
 	for _, folder := range col.Item {
 		if folder.Name == folderName {
 			return folder
 		}
 	}
-	folder := &Item{Name: folderName}
+	folder := &Item{Name: folderName, Item: []*Item{}}
 	col.Item = append(col.Item, folder)
 	return folder
 }
 
 func (col *Collection) SetFolder(newFolder *Item) {
-	if newFolder == nil {
+	if newFolder == nil || len(strings.TrimSpace(newFolder.Name)) == 0 {
 		return
 	}
 	for i, folder := range col.Item {
@@ -74,6 +70,19 @@ type Item struct {
 	IsSubFolder bool    `json:"_postman_isSubFolder,omitempty"` // Folder
 	Event       []Event `json:"event,omitempty"`                // Operation
 	Request     Request `json:"request,omitempty"`              // Operation
+}
+
+func (item *Item) UpsertSubItem(newItem *Item) {
+	if newItem == nil || len(strings.TrimSpace(newItem.Name)) == 0 {
+		return
+	}
+	for i, itemTry := range item.Item {
+		if itemTry.Name == newItem.Name {
+			item.Item[i] = newItem
+			return
+		}
+	}
+	return
 }
 
 type Event struct {

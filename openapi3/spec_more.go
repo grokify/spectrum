@@ -123,3 +123,16 @@ func (s *SpecMore) WriteFileJSON(filename string, perm os.FileMode, pretty bool)
 	}
 	return ioutil.WriteFile(filename, jsonData, perm)
 }
+
+type TagsMore struct {
+	Tags oas3.Tags
+}
+
+func (tg *TagsMore) Get(tagName string) *oas3.Tag {
+	for _, tag := range tg.Tags {
+		if tagName == tag.Name {
+			return tag
+		}
+	}
+	return nil
+}
