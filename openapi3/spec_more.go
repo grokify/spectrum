@@ -25,15 +25,18 @@ func ReadSpecMore(path string, validate bool) (*SpecMore, error) {
 	return &SpecMore{Spec: spec}, nil
 }
 
-func (s *SpecMore) OperationsTable() *table.TableData {
+func (s *SpecMore) OperationsTable() (*table.TableData, error) {
 	tbl := table.NewTableData()
-	tgs := SpecTagGroups(s.Spec)
+	tgs, err := SpecTagGroups(s.Spec)
+	if err != nil {
+		return nil, err
+	}
 	addTagGroups := false
 	if len(tgs.TagGroups) > 0 {
 		addTagGroups = true
-		tbl.Columns = []string{"OperationId", "Path", "Method", "Tag Groups", "Tags"}
+		tbl.Columns = []string{"OperationId", "Summary", "Path", "Method", "Tag Groups", "Tags"}
 	} else {
-		tbl.Columns = []string{"OperationId", "Path", "Method", "Tags"}
+		tbl.Columns = []string{"OperationId", "Summary", "Path", "Method", "Tags"}
 	}
 	ops := s.OperationMetas()
 	for _, op := range ops {
@@ -41,6 +44,7 @@ func (s *SpecMore) OperationsTable() *table.TableData {
 			tagGroupNames := tgs.GetTagGroupNamesForTagNames(op.Tags...)
 			tbl.Records = append(tbl.Records, []string{
 				op.OperationID,
+				op.Summary,
 				op.Path,
 				op.Method,
 				strings.Join(tagGroupNames, ","),
@@ -48,12 +52,13 @@ func (s *SpecMore) OperationsTable() *table.TableData {
 		} else {
 			tbl.Records = append(tbl.Records, []string{
 				op.OperationID,
+				op.Summary,
 				op.Path,
 				op.Method,
 				strings.Join(op.Tags, ",")})
 		}
 	}
-	return &tbl
+	return &tbl, nil
 }
 
 func (s *SpecMore) OperationMetas() []OperationMeta {
@@ -101,6 +106,7 @@ func (s *SpecMore) OperationsCount() uint {
 func opToMeta(url, method string, op *openapi3.Operation) OperationMeta {
 	return OperationMeta{
 		OperationID: strings.TrimSpace(op.OperationID),
+		Summary:     strings.TrimSpace(op.Summary),
 		Method:      strings.ToUpper(strings.TrimSpace(method)),
 		Path:        strings.TrimSpace(url),
 		Tags:        op.Tags}
@@ -108,6 +114,7 @@ func opToMeta(url, method string, op *openapi3.Operation) OperationMeta {
 
 type OperationMeta struct {
 	OperationID string
+	Summary     string
 	Method      string
 	Path        string
 	Tags        []string
