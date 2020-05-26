@@ -42,27 +42,35 @@ func NewConverter(cfg Configuration) Converter {
 // MergeConvert builds a Postman 2.0 spec using a base Postman 2.0 collection
 // and a Swagger 2.0 spec.
 func (conv *Converter) MergeConvert(openapiFilepath string, pmanBaseFilepath string, pmanSpecFilepath string) error {
-	oas3Loader := oas3.NewSwaggerLoader()
+	/*oas3Loader := oas3.NewSwaggerLoader()
 	oas3spec, err := oas3Loader.LoadSwaggerFromFile(openapiFilepath)
 	if err != nil {
 		return err
-	}
-
-	pman, err := simple.ReadCanonicalCollection(pmanBaseFilepath)
+	}*/
+	oas3spec, err := openapi3.ReadFile(openapiFilepath, true)
 	if err != nil {
 		return err
 	}
 
-	pm, err := Merge(conv.Configuration, pman, oas3spec)
-	if err != nil {
-		return err
-	}
+	pmanBaseFilepath = strings.TrimSpace(pmanBaseFilepath)
+	if len(pmanBaseFilepath) > 0 {
+		pman, err := simple.ReadCanonicalCollection(pmanBaseFilepath)
+		if err != nil {
+			return err
+		}
 
-	bytes, err := json.MarshalIndent(pm, "", "  ")
-	if err != nil {
-		return err
+		pm, err := Merge(conv.Configuration, pman, oas3spec)
+		if err != nil {
+			return err
+		}
+
+		bytes, err := json.MarshalIndent(pm, "", "  ")
+		if err != nil {
+			return err
+		}
+		return ioutil.WriteFile(pmanSpecFilepath, bytes, 0644)
 	}
-	return ioutil.WriteFile(pmanSpecFilepath, bytes, 0644)
+	return conv.Convert(openapiFilepath, pmanSpecFilepath)
 }
 
 // Convert builds a Postman 2.0 spec using a Swagger 2.0 spec.
@@ -108,9 +116,9 @@ func Merge(cfg Configuration, pman postman2.Collection, oas3spec *oas3.Swagger) 
 		return pman, err
 	}
 
-	tagGroupSet := openapi3.NewTagGroupSet()
-	if tgRaw, ok := spec.ExtensionProps.Extensions[openapi3.XTagGroupsPropertyName]; ok {
-		tagGroupSet = tgRaw.(openapi3.TagGroupSet)
+	tagGroupSet, err := openapi3.SpecTagGroups(oas3spec)
+	if err != nil {
+		return pman, err
 	}
 
 	urls := []string{}
@@ -197,11 +205,12 @@ func postmanAddItemToFolder(pman postman2.Collection, pmItem *postman2.Item, pmF
 }
 
 func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *oas3.Swagger, url string, method string, operation *oas3.Operation) *postman2.Item {
+	pmUrl := BuildPostmanURL(cfg, oas3spec, url, operation)
 	item := &postman2.Item{
 		Name: operation.Summary,
-		Request: postman2.Request{
+		Request: &postman2.Request{
 			Method: strings.ToUpper(method),
-			URL:    BuildPostmanURL(cfg, oas3spec, url, operation),
+			URL:    &pmUrl,
 		},
 	}
 
