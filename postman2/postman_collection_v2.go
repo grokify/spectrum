@@ -49,7 +49,7 @@ func (col *Collection) InflateRawURLs() {
 				url := NewURL(strings.TrimSpace(api.Request.URL.Raw))
 				url.Auth = api.Request.URL.Auth
 				url.Variable = api.Request.URL.Variable
-				folder.Item[j].Request.URL = url
+				folder.Item[j].Request.URL = &url
 			}
 		}
 	}
@@ -64,12 +64,12 @@ type CollectionInfo struct {
 
 // Item can represent a folder or an API
 type Item struct {
-	Name        string  `json:"name,omitempty"`                 // Folder,Operation
-	Description string  `json:"description,omitempty"`          // Folder
-	Item        []*Item `json:"item,omitempty"`                 // Folder
-	IsSubFolder bool    `json:"_postman_isSubFolder,omitempty"` // Folder
-	Event       []Event `json:"event,omitempty"`                // Operation
-	Request     Request `json:"request,omitempty"`              // Operation
+	Name        string   `json:"name,omitempty"`                 // Folder,Operation
+	Description string   `json:"description,omitempty"`          // Folder
+	Item        []*Item  `json:"item,omitempty"`                 // Folder
+	IsSubFolder bool     `json:"_postman_isSubFolder,omitempty"` // Folder
+	Event       []Event  `json:"event,omitempty"`                // Operation
+	Request     *Request `json:"request,omitempty"`              // Operation
 }
 
 func (item *Item) UpsertSubItem(newItem *Item) {
@@ -82,6 +82,7 @@ func (item *Item) UpsertSubItem(newItem *Item) {
 			return
 		}
 	}
+	item.Item = append(item.Item, newItem)
 	return
 }
 
@@ -96,11 +97,11 @@ type Script struct {
 }
 
 type Request struct {
-	URL         URL         `json:"url,omitempty"`
-	Method      string      `json:"method,omitempty"`
-	Header      []Header    `json:"header,omitempty"`
-	Body        RequestBody `json:"body,omitempty"`
-	Description string      `json:"description,omitempty"`
+	URL         *URL         `json:"url,omitempty"`
+	Method      string       `json:"method,omitempty"`
+	Header      []Header     `json:"header,omitempty"`
+	Body        *RequestBody `json:"body,omitempty"`
+	Description string       `json:"description,omitempty"`
 }
 
 type Header struct {

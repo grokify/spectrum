@@ -12,7 +12,7 @@ import (
 type URL struct {
 	Raw      string            `json:"raw,omitempty"`
 	Protocol string            `json:"protocol,omitempty"`
-	Auth     map[string]string `json:"auth"`
+	Auth     map[string]string `json:"auth,omitempty"`
 	Host     []string          `json:"host,omitempty"`
 	Path     []string          `json:"path,omitempty"`
 	Query    []URLQuery        `json:"query,omitempty"`

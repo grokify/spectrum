@@ -60,12 +60,13 @@ type Item struct {
 }
 
 func (thisItem *Item) ToCanonical() *postman2.Item {
+	canRequest := thisItem.Request.ToCanonical()
 	canItem := &postman2.Item{
 		Name:        thisItem.Name,
 		Description: thisItem.Description,
 		Item:        []*postman2.Item{},
 		Event:       thisItem.Event,
-		Request:     thisItem.Request.ToCanonical()}
+		Request:     &canRequest}
 	for _, subItem := range thisItem.Item {
 		canItem.Item = append(canItem.Item, subItem.ToCanonical())
 	}
@@ -79,10 +80,11 @@ type APIItem struct {
 }
 
 func (apiItem *APIItem) ToCanonical() postman2.Item {
+	canReq := apiItem.Request.ToCanonical()
 	return postman2.Item{
 		Name:    apiItem.Name,
 		Event:   apiItem.Event,
-		Request: apiItem.Request.ToCanonical()}
+		Request: &canReq}
 }
 
 type Request struct {
@@ -94,10 +96,11 @@ type Request struct {
 }
 
 func (req *Request) ToCanonical() postman2.Request {
+	pmUrl := postman2.NewURL(req.URL)
 	return postman2.Request{
-		URL:         postman2.NewURL(req.URL),
+		URL:         &pmUrl,
 		Method:      req.Method,
 		Header:      req.Header,
-		Body:        req.Body,
+		Body:        &req.Body,
 		Description: req.Description}
 }
