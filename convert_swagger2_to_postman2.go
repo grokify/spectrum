@@ -140,11 +140,12 @@ func postmanAddItemToFolder(pman postman2.Collection, pmItem *postman2.Item, pmF
 // Swagger2PathToPostman2APIItem converts a Swagger 2.0 path to a
 // Postman 2.0 API item
 func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specification, url string, method string, endpoint *swagger2.Endpoint) *postman2.Item {
+	pmUrl := BuildPostmanURL(cfg, swag, url, endpoint)
 	item := &postman2.Item{
 		Name: endpoint.Summary,
-		Request: postman2.Request{
+		Request: &postman2.Request{
 			Method: strings.ToUpper(method),
-			URL:    BuildPostmanURL(cfg, swag, url, endpoint),
+			URL:    &pmUrl,
 		},
 	}
 	/*

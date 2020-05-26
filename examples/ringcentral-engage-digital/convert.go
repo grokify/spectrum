@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/grokify/swaggman/openapi3conv"
+	"github.com/grokify/swaggman/openapi3/topostman2"
 	"github.com/grokify/swaggman/postman2"
 	"github.com/jessevdk/go-flags"
 )
 
 // Convert yaml2json: https://github.com/bronze1man/yaml2json ... yaml2json_darwin_amd64
+
+var ApiUrlFormat string = "https://{account}.api.engagement.dimelo.com/1.0"
 
 type Options struct {
 	PostmanBase string `short:"b" long:"base" description:"Basic Postman File"`
@@ -24,16 +26,19 @@ func main() {
 		log.Fatal(err)
 	}
 
-	cfg := openapi3conv.Configuration{
+	cfg := topostman2.Configuration{
+		UseXTagGroups:            true,
 		PostmanServerURLBasePath: "1.0",
 		PostmanServerURL:         "{{RINGCENTRAL_ENGAGE_SERVER_URL}}",
 		PostmanHeaders: []postman2.Header{{
 			Key:   "Authorization",
 			Value: "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}"}}}
 
-	conv := openapi3conv.NewConverter(cfg)
+	conv := topostman2.NewConverter(cfg)
 
-	if len(opts.PostmanBase) > 0 {
+	merge := true
+
+	if merge && len(opts.PostmanBase) > 0 {
 		err = conv.MergeConvert(opts.Swagger, opts.PostmanBase, opts.Postman)
 	} else {
 		err = conv.Convert(opts.Swagger, opts.Postman)
