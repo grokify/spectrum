@@ -1,7 +1,9 @@
 package openapi3
 
 import (
+	"encoding/json"
 	"fmt"
+	"reflect"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
@@ -71,12 +73,29 @@ func TagsWithoutGroups(spec *oas3.Swagger, tagGroupSet TagGroupSet) []string {
 	return missing
 }
 
-func SpecTagGroups(spec *oas3.Swagger) TagGroupSet {
+// SpecTagGroups parses a TagGroupSet from an OpenAPI3 spec.
+func SpecTagGroups(spec *oas3.Swagger) (TagGroupSet, error) {
 	tgs := NewTagGroupSet()
-	raw, ok := spec.ExtensionProps.Extensions[XTagGroupsPropertyName]
+	iface, ok := spec.ExtensionProps.Extensions[XTagGroupsPropertyName]
 	if !ok {
-		return tgs
+		return tgs, nil
 	}
-	tgs.TagGroups = raw.([]TagGroup)
-	return tgs
+
+	tagGroups := []TagGroup{}
+	if reflect.TypeOf(iface) == reflect.TypeOf(tagGroups) {
+		tgs.TagGroups = iface.([]TagGroup)
+		return tgs, nil
+	}
+
+	// message is stored as `json.RawMessage` when the data
+	// is read in from JSON, vs. set via code.
+	rawMessage := iface.(json.RawMessage)
+	err := json.Unmarshal(rawMessage, &tagGroups)
+	if err != nil {
+		return tgs, err
+	}
+	tgs.TagGroups = tagGroups
+	delete(spec.ExtensionProps.Extensions, XTagGroupsPropertyName)
+	spec.ExtensionProps.Extensions[XTagGroupsPropertyName] = tagGroups
+	return tgs, nil
 }

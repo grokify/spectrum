@@ -10,8 +10,11 @@ import (
 )
 
 func CreateTagsAndTagGroups(pman postman2.Collection, spec *oas3.Swagger) (postman2.Collection, error) {
-	if tgRaw, ok := spec.ExtensionProps.Extensions[openapi3.XTagGroupsPropertyName]; ok {
-		tagGroupSet := tgRaw.(openapi3.TagGroupSet)
+	tagGroupSet, err := openapi3.SpecTagGroups(spec)
+	if err != nil {
+		return pman, err
+	}
+	if len(tagGroupSet.TagGroups) > 0 {
 		return addFoldersFromTagGroups(pman, tagGroupSet, spec.Tags)
 	}
 	return addFoldersFromTags(pman, spec.Tags), nil
@@ -33,11 +36,11 @@ func addFoldersFromTagGroups(pman postman2.Collection, tgSet openapi3.TagGroupSe
 			if len(tagName) == 0 {
 				continue
 			}
+			subFolder := &postman2.Item{Name: tagName}
 			tag := tagsMore.Get(tagName)
-			tagDesc := strings.TrimSpace(tag.Description)
-			subFolder := &postman2.Item{
-				Name:        tagName,
-				Description: tagDesc}
+			if tag != nil {
+				subFolder.Description = strings.TrimSpace(tag.Description)
+			}
 			topFolder.UpsertSubItem(subFolder)
 		}
 		pman.SetFolder(topFolder)
