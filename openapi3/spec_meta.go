@@ -41,21 +41,6 @@ func ReadSpecMetasDir(dir string, rx *regexp.Regexp) (SpecMetas, error) {
 	}
 
 	return ReadSpecMetasFiles(files)
-	/*
-		for _, f := range files {
-			_, err := ReadFile(f, true)
-			meta := SpecMeta{
-				Filepath: f,
-				Version:  3}
-			if err != nil {
-				meta.ValidationError = err.Error()
-			} else {
-				meta.IsValid = true
-			}
-			metas.Metas = append(metas.Metas, meta)
-		}
-
-		return metas, nil*/
 }
 
 func ReadSpecMetasFiles(files []string) (SpecMetas, error) {

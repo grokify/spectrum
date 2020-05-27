@@ -44,7 +44,7 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 			SpecDeleteOperations(sm.Spec, opts.OperationsDeleteFunc)
 		}
 		if opts.OperationsRenameIdsFunc != nil {
-			VisitOperations(sm.Spec, opts.OperationsRenameIdsFunc)
+			openapi3.VisitOperations(sm.Spec, opts.OperationsRenameIdsFunc)
 		}
 		// UpdateOperationIds(sm.Spec, opts.OperationIdsRename)
 		newIds := SpecOperationIds(sm.Spec)
@@ -82,7 +82,7 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 		}
 		if opts.TagsExec {
 			if opts.TagsOperationFunc != nil {
-				VisitOperations(sm.Spec, opts.TagsOperationFunc)
+				openapi3.VisitOperations(sm.Spec, opts.TagsOperationFunc)
 			}
 			SpecTagsModify(sm.Spec, opts.Tags)
 			if opts.TagsShow {

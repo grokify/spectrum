@@ -148,13 +148,7 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 			URL:    &pmUrl,
 		},
 	}
-	/*
-		item.Name = endpoint.Summary
 
-		item.Request = postman2.Request{Method: strings.ToUpper(method)}
-
-		item.Request.URL = BuildPostmanURL(cfg, swag, url, endpoint)
-	*/
 	headers := cfg.PostmanHeaders
 
 	headers, requestContentType := postman2.AppendPostmanHeaderValueLower(

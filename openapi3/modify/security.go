@@ -7,6 +7,7 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gotilla/type/stringsutil"
+	"github.com/grokify/swaggman/openapi3"
 )
 
 const (
@@ -42,7 +43,7 @@ func SecuritySchemeBearertokenAddOperationsByTags(spec *oas3.Swagger, schemeName
 			skipTagsMap[tag] = 1
 		}
 	}
-	VisitOperations(spec, func(skipPath string, skipMethod string, op *oas3.Operation) {
+	openapi3.VisitOperations(spec, func(skipPath string, skipMethod string, op *oas3.Operation) {
 		addSecurity := false
 		for _, tag := range op.Tags {
 			tag = strings.ToLower(strings.TrimSpace(tag))
@@ -130,7 +131,7 @@ func SecuritySchemeApikeyAddOperations(spec *oas3.Swagger, tags []string, keyNam
 		tagName = strings.TrimSpace(tagName)
 		tagsMap[tagName] = 1
 	}
-	VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
+	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 		if !MapSliceIntersectionExists(tagsMap, op.Tags) {
 			return
 		}
@@ -165,7 +166,7 @@ func MapSliceIntersectionExists(haystack map[string]int, needles []string) bool 
 // to get individual specs to validate before setting the
 // correct security property.
 func RemoveOperationsSecurity(spec *oas3.Swagger) {
-	VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
+	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 		op.Security = &oas3.SecurityRequirements{}
 	})
 }

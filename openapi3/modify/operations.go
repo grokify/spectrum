@@ -4,11 +4,12 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/swaggman/openapi3"
 )
 
 func SpecOperationsCount(spec *oas3.Swagger) uint {
 	count := uint(0)
-	VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
+	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 		count++
 	})
 	return count
@@ -16,7 +17,7 @@ func SpecOperationsCount(spec *oas3.Swagger) uint {
 
 func SpecOperationIds(spec *oas3.Swagger) map[string]int {
 	msi := map[string]int{}
-	VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
+	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 		op.OperationID = strings.TrimSpace(op.OperationID)
 		if _, ok := msi[op.OperationID]; !ok {
 			msi[op.OperationID] = 0
@@ -31,7 +32,7 @@ func SpecAddCustomProperties(spec *oas3.Swagger, custom map[string]interface{}, 
 		return
 	}
 	if addToOperations {
-		VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
+		openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 			for key, val := range custom {
 				op.Extensions[key] = val
 			}
@@ -65,7 +66,7 @@ func QueryOperationsByTags(spec *oas3.Swagger, tags []string) *OperationMoreSet 
 	}
 	opmSet := &OperationMoreSet{OperationMores: []OperationMore{}}
 	// for path, pathInfo := range spec.Paths {
-	VisitOperations(spec, func(url, method string, op *oas3.Operation) {
+	openapi3.VisitOperations(spec, func(url, method string, op *oas3.Operation) {
 		if op == nil {
 			return
 		}

@@ -6,7 +6,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/getkin/kin-openapi/openapi3"
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/table"
 	"github.com/grokify/gotilla/encoding/jsonutil"
@@ -68,31 +67,31 @@ func (s *SpecMore) OperationMetas() []OperationMeta {
 	}
 	for url, path := range s.Spec.Paths {
 		if path.Connect != nil {
-			ometas = append(ometas, opToMeta(url, http.MethodConnect, path.Connect))
+			ometas = append(ometas, OperationToMeta(url, http.MethodConnect, path.Connect))
 		}
 		if path.Delete != nil {
-			ometas = append(ometas, opToMeta(url, http.MethodDelete, path.Delete))
+			ometas = append(ometas, OperationToMeta(url, http.MethodDelete, path.Delete))
 		}
 		if path.Get != nil {
-			ometas = append(ometas, opToMeta(url, http.MethodGet, path.Get))
+			ometas = append(ometas, OperationToMeta(url, http.MethodGet, path.Get))
 		}
 		if path.Head != nil {
-			ometas = append(ometas, opToMeta(url, http.MethodHead, path.Head))
+			ometas = append(ometas, OperationToMeta(url, http.MethodHead, path.Head))
 		}
 		if path.Options != nil {
-			ometas = append(ometas, opToMeta(url, http.MethodOptions, path.Options))
+			ometas = append(ometas, OperationToMeta(url, http.MethodOptions, path.Options))
 		}
 		if path.Patch != nil {
-			ometas = append(ometas, opToMeta(url, http.MethodPatch, path.Patch))
+			ometas = append(ometas, OperationToMeta(url, http.MethodPatch, path.Patch))
 		}
 		if path.Post != nil {
-			ometas = append(ometas, opToMeta(url, http.MethodPost, path.Post))
+			ometas = append(ometas, OperationToMeta(url, http.MethodPost, path.Post))
 		}
 		if path.Put != nil {
-			ometas = append(ometas, opToMeta(url, http.MethodPut, path.Put))
+			ometas = append(ometas, OperationToMeta(url, http.MethodPut, path.Put))
 		}
 		if path.Trace != nil {
-			ometas = append(ometas, opToMeta(url, http.MethodTrace, path.Trace))
+			ometas = append(ometas, OperationToMeta(url, http.MethodTrace, path.Trace))
 		}
 	}
 
@@ -101,23 +100,6 @@ func (s *SpecMore) OperationMetas() []OperationMeta {
 
 func (s *SpecMore) OperationsCount() uint {
 	return uint(len(s.OperationMetas()))
-}
-
-func opToMeta(url, method string, op *openapi3.Operation) OperationMeta {
-	return OperationMeta{
-		OperationID: strings.TrimSpace(op.OperationID),
-		Summary:     strings.TrimSpace(op.Summary),
-		Method:      strings.ToUpper(strings.TrimSpace(method)),
-		Path:        strings.TrimSpace(url),
-		Tags:        op.Tags}
-}
-
-type OperationMeta struct {
-	OperationID string
-	Summary     string
-	Method      string
-	Path        string
-	Tags        []string
 }
 
 func (s *SpecMore) WriteFileJSON(filename string, perm os.FileMode, pretty bool) error {

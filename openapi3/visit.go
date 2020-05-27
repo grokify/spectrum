@@ -1,4 +1,4 @@
-package modify
+package openapi3
 
 import (
 	"net/http"
