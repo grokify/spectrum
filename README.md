@@ -1,5 +1,5 @@
-Swaggman - OpenAPI / Swagger Spec to Postman Converter
-======================================================
+Swaggman - OpenAPI / Swagger Spec Utility and Postman Converter
+===============================================================
 
 [![Build Status][build-status-svg]][build-status-link]
 [![Go Report Card][goreport-svg]][goreport-link]
@@ -8,7 +8,22 @@ Swaggman - OpenAPI / Swagger Spec to Postman Converter
 
 ![](docs/images/logo_swaggman_600x150.png "")
 
-`swaggman` is an API specification converter that creates a Postman 2.0 Collection spec from OpenAPI 3.0 and 2.0 (fka Swagger 2.0) specifications. There are also a variety of collection of OpenAPI tools including merging, inspecting and modifying OpenAPI specs, with a focus on OAS3.
+Swaggman is a multi-purpose OpenAPI and Postman utility.
+
+It can perform the following:
+
+OpenAPI Spec 3
+
+* Convert OpenAPI v3 to Postman Collection v2
+* Merge Multiple OAS3 Specs
+* Validate OAS3 Specs
+* Programmatically examine and modify OAS3 Specs
+* Programmatically fix OAS3 Specs
+
+OpenAPI Spec 2
+
+* Convert OpenAPI v2 to Postman Collection v2
+* Merge Multiple OAS2 Specs
 
 # Features
 
