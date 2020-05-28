@@ -21,10 +21,11 @@ if err != nil {
 
 ## Response Type - Examination and Resolution
 
-If he respoonses sschema type is `string` or `integer`, the following will
-ensure that the content type is `text/plain`. This will solve issues where
-the spec MIME type is listed as `application/json` or some other incompatible
-MIME type.
+Sometimes a spec can be misdefined to use a `application/json` response MIME
+type when the schema returned doesn't ssupport JSON, e.g. with the type is
+`string` or `integer`. The following will examine and optionally update the
+type to `text/plain` to resolve then issue when the response is mis-classified
+as `application/json` or some other incompatible MIME type.
 
 ```go
 ops, err := modify.ValidateFixOperationResponseTypes(specFinal, true)
@@ -36,7 +37,7 @@ if err != nil {
 
 ## Move Request Bodies
 
-Some OpenAPI 3 spec defintions can use request body refeerences like the following
+Some OpenAPI 3 spec defintions can use request body references like the following
 which may not be supported by all tools.
 
 ```json
