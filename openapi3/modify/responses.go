@@ -79,6 +79,9 @@ func SortParameters(sourceParams oas3.Parameters, sortOrder []string) oas3.Param
 	return sortedParams
 }
 
+// ValidateFixOperationPathParameters will add missing path parameters
+// and re-sort parameters so required path parameters are on top and
+// sorted by their position in the path.
 func ValidateFixOperationPathParameters(spec *oas3.Swagger, fix bool) ([]*openapi3.OperationMeta, error) {
 	errorOperations := []*openapi3.OperationMeta{}
 	openapi3.VisitOperations(
@@ -141,7 +144,8 @@ func ValidateFixOperationPathParameters(spec *oas3.Swagger, fix bool) ([]*openap
 }
 
 // ValidateFixOperationResponseTypes looks for `application/json` responses
-// with response schema types that are not `array` or `object`.
+// with response schema types that are not `array` or `object`. If the responses
+// is a string or integer, it will reset the response mime type to `text/plain`.
 func ValidateFixOperationResponseTypes(spec *oas3.Swagger, fix bool) ([]*openapi3.OperationMeta, error) {
 	errorOperations := []*openapi3.OperationMeta{}
 	openapi3.VisitOperations(
@@ -151,10 +155,7 @@ func ValidateFixOperationResponseTypes(spec *oas3.Swagger, fix bool) ([]*openapi
 				return
 			}
 			for _, resRef := range op.Responses {
-				if resRef == nil {
-					continue
-				}
-				if resRef.Value == nil {
+				if resRef == nil || resRef.Value == nil {
 					continue
 				}
 				response := resRef
