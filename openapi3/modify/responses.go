@@ -14,22 +14,22 @@ import (
 
 var rxParens = regexp.MustCompile(`{([^}{}]+)}`)
 
-func ParseVariablesParens(str string) []string {
-	vars := []string{}
-	m := rxParens.FindAllStringSubmatch(str, -1)
+func ParsePathParametersParens(urlPath string) []string {
+	paramNames := []string{}
+	m := rxParens.FindAllStringSubmatch(urlPath, -1)
 	if len(m) == 0 {
-		return vars
+		return paramNames
 	}
 	for _, n := range m {
 		if len(n) == 2 {
 			varName := strings.TrimSpace(n[1])
-			vars = append(vars, varName)
+			paramNames = append(paramNames, varName)
 		}
 	}
-	if len(vars) > 0 {
-		vars = stringsutil.SliceCondenseSpace(vars, true, false)
+	if len(paramNames) > 0 {
+		paramNames = stringsutil.SliceCondenseSpace(paramNames, true, false)
 	}
-	return vars
+	return paramNames
 }
 
 func OperationHasParameter(paramNameWant string, op *oas3.Operation) bool {
@@ -90,7 +90,7 @@ func ValidateFixOperationPathParameters(spec *oas3.Swagger, fix bool) ([]*openap
 			if op == nil {
 				return
 			}
-			varNamesPath := ParseVariablesParens(path)
+			varNamesPath := ParsePathParametersParens(path)
 			if len(varNamesPath) == 0 {
 				return
 			}
@@ -137,6 +137,37 @@ func ValidateFixOperationPathParameters(spec *oas3.Swagger, fix bool) ([]*openap
 		},
 	)
 
+	if len(errorOperations) > 0 {
+		return errorOperations, fmt.Errorf("E_NUM_VALIDATION_ERRORS [%v]", len(errorOperations))
+	}
+	return errorOperations, nil
+}
+
+// MoveRequestBodies moves `requestBody` `$ref` to the operation
+// which appears to be supported by more tools.
+func MoveRequestBodies(spec *oas3.Swagger, move bool) ([]*openapi3.OperationMeta, error) {
+	errorOperations := []*openapi3.OperationMeta{}
+	openapi3.VisitOperations(
+		spec,
+		func(path, method string, op *oas3.Operation) {
+			if op == nil || op.RequestBody == nil {
+				return
+			}
+			if len(op.RequestBody.Ref) > 0 {
+				if move {
+					requestBodyRef := openapi3.SpecGetComponentRequestBody(spec, op.RequestBody.Ref)
+					if requestBodyRef != nil {
+						op.RequestBody = requestBodyRef
+					}
+				} else {
+					om := openapi3.OperationToMeta(path, method, op)
+					om.MetaNotes = append(om.MetaNotes,
+						fmt.Sprintf("E_REQUEST_BODY_DEFINITION REF[%s]", op.RequestBody.Ref))
+					errorOperations = append(errorOperations, &om)
+				}
+			}
+		},
+	)
 	if len(errorOperations) > 0 {
 		return errorOperations, fmt.Errorf("E_NUM_VALIDATION_ERRORS [%v]", len(errorOperations))
 	}
