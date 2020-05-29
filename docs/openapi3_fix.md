@@ -1,18 +1,20 @@
-# OpenAPI 3 Specs Fixer
+# OpenAPI 3 Specs Auto-Fixer
 
 In addition to enabling introspection and programmatic modification of
-OpenAPI 3 specifications, swaggman can fix/update some issues with
-specs.
+OpenAPI 3 specifications, Sswaggman can automatically fix/update some
+issues with specs.
 
 ## Path Parameters - Examination and Resolution
 
-Path parameters are required to be defined. The following will add operation
-path parameters if they are missing. It will also move path parameters to
-the of the parameter list and maintain the order in which they appeaer in
-the URL path. Otheer parameters will maintain their original order.
+Path parameters are required to be defined. The following will identify or
+automatically add add operation path parameters if they are missing. It
+will also move path parameters to the top of the parameter list and maintain
+the order in which they appear in the URL path. Other parameters will
+maintain their original order.
 
 ```go
-ops, err = modify.ValidateFixOperationPathParameters(specFinal, true)
+// `spec` is *openapi3.Swagger, `true` indicates whether to auto-fix.
+ops, err = modify.ValidateFixOperationPathParameters(spec, true)
 if err != nil {
     fmtutil.PrintJSON(ops)
     log.Fatal(err)
@@ -22,13 +24,14 @@ if err != nil {
 ## Response Type - Examination and Resolution
 
 Sometimes a spec can be misdefined to use a `application/json` response MIME
-type when the schema returned doesn't ssupport JSON, e.g. with the type is
+type when the schema returned doesn't support JSON, e.g. with the type is
 `string` or `integer`. The following will examine and optionally update the
 type to `text/plain` to resolve then issue when the response is mis-classified
 as `application/json` or some other incompatible MIME type.
 
 ```go
-ops, err := modify.ValidateFixOperationResponseTypes(specFinal, true)
+// `spec` is *openapi3.Swagger, `true` indicates whether to auto-fix.
+ops, err := modify.ValidateFixOperationResponseTypes(spec, true)
 if err != nil {
     fmtutil.PrintJSON(ops)
     log.Fatal(err)
@@ -69,7 +72,8 @@ The following will move the request body definition so that `content`
 and MIME types are specified directly in the operation definition.
 
 ```go
-ops, err = modify.MoveRequestBodies(specFinal, true)
+// `spec` is *openapi3.Swagger, `true` indicates whether to auto-fix.
+ops, err = modify.MoveRequestBodies(spec, true)
 if err != nil {
     fmtutil.PrintJSON(ops)
     log.Fatal(err)

@@ -18,7 +18,7 @@ OpenAPI Spec 3
 * Merge Multiple OAS3 Specs
 * Validate OAS3 Specs
 * Programmatically examine and modify OAS3 Specs
-* [Programmatically fix OAS3 Specs](docs/openapi3_fix.md)
+* [Programmatically auto-correct OAS3 Specs](docs/openapi3_fix.md)
 
 OpenAPI Spec 2
 
