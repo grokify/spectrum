@@ -102,10 +102,14 @@ func (s *SpecMore) OperationsCount() uint {
 	return uint(len(s.OperationMetas()))
 }
 
-func (s *SpecMore) WriteFileJSON(filename string, perm os.FileMode, pretty bool) error {
+func (s *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, indent string) error {
 	jsonData, err := s.Spec.MarshalJSON()
 	if err != nil {
 		return err
+	}
+	pretty := false
+	if len(prefix) > 0 || len(indent) > 0 {
+		pretty = true
 	}
 	if pretty {
 		jsonData = jsonutil.PrettyPrint(jsonData, "", "  ")
