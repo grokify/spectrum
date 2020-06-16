@@ -37,32 +37,6 @@ func MergeDirectoryMore(dir string, validateEach, validateFinal bool, mergeOpts 
 	return MergeFiles(filePaths, validateEach, validateFinal, mergeOpts)
 }
 
-type MergeOptions struct {
-	SchemaFunc func(schemaName string, sch1, sch2 interface{}, hint2 string) CollisionCheckResult
-}
-
-func (mo *MergeOptions) CheckSchemaCollision(schemaName string, sch1, sch2 interface{}, hint2 string) CollisionCheckResult {
-	if mo.SchemaFunc == nil {
-		mo.SchemaFunc = SchemaCheckCollisionDefault
-	}
-	return mo.SchemaFunc(schemaName, sch1, sch2, hint2)
-}
-
-type CollisionCheckResult int
-
-const (
-	CollisionCheckSame CollisionCheckResult = iota
-	CollisionCheckOverwrite
-	CollisionCheckError
-)
-
-func SchemaCheckCollisionDefault(schemaName string, item1, item2 interface{}, item2Note string) CollisionCheckResult {
-	if reflect.DeepEqual(item1, item2) {
-		return CollisionCheckSame
-	}
-	return CollisionCheckError
-}
-
 func MergeFiles(filepaths []string, validateEach, validateFinal bool, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
 	sort.Strings(filepaths)
 	var specMaster *oas3.Swagger
