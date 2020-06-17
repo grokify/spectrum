@@ -135,6 +135,8 @@ github.com/grokify/gotilla v1.0.0 h1:M2XRT2KamEPVUMeF5Kww6VZaFh4csboCpL5iT3hW4lU
 github.com/grokify/gotilla v1.0.0/go.mod h1:tTGPBMZMNQeDz6A0jzkB76/Y2loHcdqoYREZybLc/KQ=
 github.com/grokify/gotilla v1.0.1 h1:yr8yb4KxajXl59O1bvYCwOzYY3rdt1S7Jrc5mILw8FQ=
 github.com/grokify/gotilla v1.0.1/go.mod h1:d2zAVKc6FVTZ7El9a5QfsSbknLbE+Mcy+9UfMiMHHk0=
+github.com/grokify/gotilla v1.0.2 h1:Aswd7WEwlrRNLwfkbEnx1krrIGN5BV/UP2fXRcRQfT8=
+github.com/grokify/gotilla v1.0.2/go.mod h1:d2zAVKc6FVTZ7El9a5QfsSbknLbE+Mcy+9UfMiMHHk0=
 github.com/grokify/oauth2more v0.3.1/go.mod h1:33eQMekLyetSGUY/me967It3sCVjHARGQ/jOhCIrggw=
 github.com/grokify/swaggman v1.0.1-0.20191218055924-1991eeb826af/go.mod h1:3czl0/XO7vl4ZDt3NfaK3cg0EjVd0jrIWk32A2X9fS0=
 github.com/hashicorp/golang-lru v0.5.0/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ4Ao+sR/qLZy8=
