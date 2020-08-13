@@ -84,11 +84,19 @@ func MergeFiles(filepaths []string, validateEach, validateFinal bool, mergeOpts 
 
 func Merge(specMaster, specExtra *oas3.Swagger, specExtraNote string, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
 	specMaster = MergeTags(specMaster, specExtra)
-	specMaster, err := MergePaths(specMaster, specExtra)
+	specMaster, err := MergeParameters(specMaster, specExtra, specExtraNote, mergeOpts)
 	if err != nil {
 		return specMaster, err
 	}
 	specMaster, err = MergeSchemas(specMaster, specExtra, specExtraNote, mergeOpts)
+	if err != nil {
+		return specMaster, err
+	}
+	specMaster, err = MergePaths(specMaster, specExtra)
+	if err != nil {
+		return specMaster, err
+	}
+	specMaster, err = MergeResponses(specMaster, specExtra, specExtraNote, mergeOpts)
 	if err != nil {
 		return specMaster, err
 	}
@@ -215,12 +223,72 @@ func MergePaths(specMaster, specExtra *oas3.Swagger) (*oas3.Swagger, error) {
 	return specMaster, nil
 }
 
+func MergeParameters(specMaster, specExtra *oas3.Swagger, specExtraNote string, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
+	if specMaster.Components.Parameters == nil {
+		specMaster.Components.Parameters = map[string]*oas3.ParameterRef{}
+	}
+	for pName, pExtra := range specExtra.Components.Parameters {
+		if pExtra == nil {
+			continue
+		} else if pMaster, ok := specMaster.Components.Parameters[pName]; ok {
+			if pMaster == nil {
+				specMaster.Components.Parameters[pName] = pExtra
+			} else {
+				if mergeOpts == nil {
+					mergeOpts = &MergeOptions{}
+				}
+				if mergeOpts.CollisionCheckResult == CollisionCheckSkip {
+					continue
+				} else if reflect.DeepEqual(pExtra, pMaster) {
+					continue
+				} else {
+					return nil, fmt.Errorf("E_SCHEMA_COLLISION [%v] EXTRA_COMPONENTS_PARAMETER [%s]", specExtraNote, pName)
+				}
+			}
+		} else {
+			specMaster.Components.Parameters[pName] = pExtra
+		}
+	}
+	return specMaster, nil
+}
+
+func MergeResponses(specMaster, specExtra *oas3.Swagger, specExtraNote string, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
+	if specMaster.Components.Responses == nil {
+		specMaster.Components.Responses = map[string]*oas3.ResponseRef{}
+	}
+	for rName, rExtra := range specExtra.Components.Responses {
+		if rExtra == nil {
+			continue
+		} else if rMaster, ok := specMaster.Components.Responses[rName]; ok {
+			if rMaster == nil {
+				specMaster.Components.Responses[rName] = rExtra
+			} else {
+				if mergeOpts == nil {
+					mergeOpts = &MergeOptions{}
+				}
+				if mergeOpts.CollisionCheckResult == CollisionCheckSkip {
+					continue
+				} else if reflect.DeepEqual(rExtra, rMaster) {
+					continue
+				} else {
+					return nil, fmt.Errorf("E_SCHEMA_COLLISION [%v] EXTRA_COMPONENTS_RESPONSE [%s]", specExtraNote, rName)
+				}
+			}
+		} else {
+			specMaster.Components.Responses[rName] = rExtra
+		}
+	}
+	return specMaster, nil
+}
+
 func MergeSchemas(specMaster, specExtra *oas3.Swagger, specExtraNote string, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
 	for schemaName, schemaExtra := range specExtra.Components.Schemas {
 		if schemaExtra == nil {
 			continue
 		} else if schemaMaster, ok := specMaster.Components.Schemas[schemaName]; ok {
-			if schemaMaster != nil {
+			if schemaMaster == nil {
+				specMaster.Components.Schemas[schemaName] = schemaExtra
+			} else {
 				if mergeOpts == nil {
 					mergeOpts = &MergeOptions{}
 				}

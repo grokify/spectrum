@@ -6,8 +6,9 @@ import (
 )
 
 type MergeOptions struct {
-	FileRx     *regexp.Regexp
-	SchemaFunc func(schemaName string, sch1, sch2 interface{}, hint2 string) CollisionCheckResult
+	FileRx               *regexp.Regexp
+	SchemaFunc           func(schemaName string, sch1, sch2 interface{}, hint2 string) CollisionCheckResult
+	CollisionCheckResult CollisionCheckResult
 }
 
 func NewMergeOptionsSkip() *MergeOptions {
@@ -16,7 +17,9 @@ func NewMergeOptionsSkip() *MergeOptions {
 }
 
 func (mo *MergeOptions) CheckSchemaCollision(schemaName string, sch1, sch2 interface{}, hint2 string) CollisionCheckResult {
-	if mo.SchemaFunc == nil {
+	if mo.CollisionCheckResult == CollisionCheckSkip {
+		mo.SchemaFunc = SchemaCheckCollisionSkip
+	} else if mo.SchemaFunc == nil {
 		mo.SchemaFunc = SchemaCheckCollisionDefault
 	}
 	return mo.SchemaFunc(schemaName, sch1, sch2, hint2)
