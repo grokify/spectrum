@@ -3,12 +3,16 @@ package openapi3
 import (
 	"fmt"
 	"io/ioutil"
+	"regexp"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/ghodss/yaml"
 	"github.com/grokify/gotilla/encoding/jsonutil"
 	"github.com/pkg/errors"
 )
+
+var rxYamlExtension = regexp.MustCompile(`(?i)\.ya?ml\s*$`)
 
 // ReadFile does optional validation which is useful when
 // merging incomplete spec files.
@@ -19,6 +23,12 @@ func ReadFile(oas3file string, validate bool) (*oas3.Swagger, error) {
 	bytes, err := ioutil.ReadFile(oas3file)
 	if err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("ReadFile.ReadFile.Error.Filename [%v]", oas3file))
+	}
+	if rxYamlExtension.MatchString(oas3file) {
+		bytes, err = yaml.YAMLToJSON(bytes)
+		if err != nil {
+			return nil, err
+		}
 	}
 	swag := &oas3.Swagger{}
 	err = swag.UnmarshalJSON(bytes)
