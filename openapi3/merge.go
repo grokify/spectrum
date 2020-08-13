@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path/filepath"
 	"reflect"
 	"regexp"
 	"sort"
@@ -18,39 +17,53 @@ import (
 
 var jsonFileRx = regexp.MustCompile(`(?i)\.json\s*$`)
 
-func MergeDirectory(dir string, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
+func MergeDirectory(dir string, mergeOpts *MergeOptions) (*oas3.Swagger, int, error) {
 	return MergeDirectoryMore(dir, false, true, mergeOpts)
 }
 
-func MergeDirectoryMore(dir string, validateEach, validateFinal bool, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
-	fileInfos, err := ioutilmore.DirEntriesRxSizeGt0(dir, ioutilmore.File, jsonFileRx)
-	if err != nil {
-		return nil, err
-	}
-	if len(fileInfos) == 0 {
-		return nil, fmt.Errorf("No JSON files found in directory [%s]", dir)
-	}
+func MergeDirectoryMore(dir string, validateEach, validateFinal bool, mergeOpts *MergeOptions) (*oas3.Swagger, int, error) {
+	/*
+		fileInfos, err := ioutilmore.DirEntriesRxSizeGt0(dir, ioutilmore.File, jsonFileRx)
+		if err != nil {
+			return nil, err
+		}
+		if len(fileInfos) == 0 {
+			return nil, fmt.Errorf("No JSON files found in directory [%s]", dir)
+		}
+
+		for _, fi := range fileInfos {
+			filePaths = append(filePaths, filepath.Join(dir, fi.Name()))
+		}
+	*/
 	filePaths := []string{}
-	for _, fi := range fileInfos {
-		filePaths = append(filePaths, filepath.Join(dir, fi.Name()))
+	var err error
+	if mergeOpts != nil && mergeOpts.FileRx != nil {
+		filePaths, err = ioutilmore.DirEntriesRxSizeGt0Filepaths(dir, ioutilmore.File, mergeOpts.FileRx)
+	} else {
+		filePaths, err = ioutilmore.DirEntriesRxSizeGt0Filepaths(dir, ioutilmore.File, jsonFileRx)
 	}
+
+	if err != nil {
+		return nil, len(filePaths), err
+	}
+
 	return MergeFiles(filePaths, validateEach, validateFinal, mergeOpts)
 }
 
-func MergeFiles(filepaths []string, validateEach, validateFinal bool, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
+func MergeFiles(filepaths []string, validateEach, validateFinal bool, mergeOpts *MergeOptions) (*oas3.Swagger, int, error) {
 	sort.Strings(filepaths)
 	var specMaster *oas3.Swagger
 	for i, fpath := range filepaths {
 		thisSpec, err := ReadFile(fpath, validateEach)
 		if err != nil {
-			return specMaster, errors.Wrap(err, fmt.Sprintf("ReadSpecError [%v] ValidateEach [%v]", fpath, validateEach))
+			return specMaster, len(filepaths), errors.Wrap(err, fmt.Sprintf("ReadSpecError [%v] ValidateEach [%v]", fpath, validateEach))
 		}
 		if i == 0 {
 			specMaster = thisSpec
 		} else {
 			specMaster, err = Merge(specMaster, thisSpec, fpath, mergeOpts)
 			if err != nil {
-				return nil, errors.Wrap(err, fmt.Sprintf("Merging [%v]", fpath))
+				return nil, len(filepaths), errors.Wrap(err, fmt.Sprintf("Merging [%v]", fpath))
 			}
 		}
 	}
@@ -58,15 +71,15 @@ func MergeFiles(filepaths []string, validateEach, validateFinal bool, mergeOpts 
 	if validateFinal {
 		bytes, err := specMaster.MarshalJSON()
 		if err != nil {
-			return specMaster, err
+			return specMaster, len(filepaths), err
 		}
 		newSpec, err := oas3.NewSwaggerLoader().LoadSwaggerFromData(bytes)
 		if err != nil {
-			return newSpec, errors.Wrap(err, "Loader.LoadSwaggerFromData (MergeFiles().ValidateFinal)")
+			return newSpec, len(filepaths), errors.Wrap(err, "Loader.LoadSwaggerFromData (MergeFiles().ValidateFinal)")
 		}
-		return newSpec, nil
+		return newSpec, len(filepaths), nil
 	}
-	return specMaster, nil
+	return specMaster, len(filepaths), nil
 }
 
 func Merge(specMaster, specExtra *oas3.Swagger, specExtraNote string, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
@@ -255,20 +268,20 @@ func MergeRequestBodies(specMaster, specExtra *oas3.Swagger, specExtraNote strin
 	return specMaster, nil
 }
 
-func WriteFileDirMerge(outfile, inputDir string, perm os.FileMode, mergeOpts *MergeOptions) error {
-	spec, err := MergeDirectory(inputDir, mergeOpts)
+func WriteFileDirMerge(outfile, inputDir string, perm os.FileMode, mergeOpts *MergeOptions) (int, error) {
+	spec, num, err := MergeDirectory(inputDir, mergeOpts)
 	if err != nil {
-		return errors.Wrap(err, "E_OPENAPI3_MERGE_DIRECTORY_FAILED")
+		return num, errors.Wrap(err, "E_OPENAPI3_MERGE_DIRECTORY_FAILED")
 	}
 
 	bytes, err := spec.MarshalJSON()
 	if err != nil {
-		return errors.Wrap(err, "E_SWAGGER2_JSON_ENCODING_FAILED")
+		return num, errors.Wrap(err, "E_SWAGGER2_JSON_ENCODING_FAILED")
 	}
 
 	err = ioutil.WriteFile(outfile, bytes, perm)
 	if err != nil {
-		return errors.Wrap(err, "E_SWAGGER2_WRITE_FAILED")
+		return num, errors.Wrap(err, "E_SWAGGER2_WRITE_FAILED")
 	}
-	return nil
+	return num, nil
 }
