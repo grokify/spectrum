@@ -86,9 +86,9 @@ An example conversion is included, [`examples/ringcentral/convert.go`](https://g
 
 Example files include:
 
-* [RingCentral Swagger 2.0 spec](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/ringcentral.swagger2.basic.json)
+* [RingCentral Swagger 2.0 spec](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/ringcentral.spec.swagger2.2019110220191017-1140.json)
 * [RingCentral Postman 2.0 base](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/ringcentral.postman2.base.json)
-* [RingCentral Postman 2.0 spec](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/ringcentral.postman2.basic.json) - Import this into Postman
+* [RingCentral Postman 2.0 spec](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/ringcentral.spec.postman2.2019110220191017-1140.json) - Import this into Postman
 
 The RingCentral spec uses the following environment variables. The following is the Postman bulk edit format:
 
