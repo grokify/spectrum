@@ -7,7 +7,7 @@ import (
 
 	"github.com/grokify/gotilla/io/ioutilmore"
 	"github.com/grokify/gotilla/os/osutil"
-	"github.com/grokify/swaggman/csv"
+	csv "github.com/grokify/swaggman/swagger2/tocsv"
 	"github.com/jessevdk/go-flags"
 )
 
