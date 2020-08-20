@@ -4,11 +4,11 @@ go 1.14
 
 require (
 	github.com/buger/jsonparser v1.0.0
-	github.com/getkin/kin-openapi v0.13.0
+	github.com/getkin/kin-openapi v0.20.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/google/go-querystring v1.0.0
-	github.com/grokify/gocharts v1.0.0
-	github.com/grokify/gotilla v1.0.2
+	github.com/grokify/gocharts v2.0.0+incompatible
+	github.com/grokify/gotilla v1.1.0
 	github.com/huandu/xstrings v1.3.2
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/json-iterator/go v1.1.10 // indirect
@@ -18,6 +18,6 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.6.0
 	github.com/stretchr/objx v0.1.1 // indirect
-	golang.org/x/sys v0.0.0-20200615200032-f1bc736245b1
+	golang.org/x/sys v0.0.0-20200819171115-d785dc25833f
 	gopkg.in/yaml.v2 v2.3.0
 )
