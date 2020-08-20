@@ -6,7 +6,6 @@ import (
 	"regexp"
 
 	"github.com/grokify/gotilla/io/ioutilmore"
-	"github.com/grokify/gotilla/os/osutil"
 	csv "github.com/grokify/swaggman/swagger2/tocsv"
 	"github.com/jessevdk/go-flags"
 )
@@ -24,10 +23,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	files, err := ioutilmore.DirEntriesReNotEmpty(
-		opts.Directory, regexp.MustCompile(opts.Regexp))
-
-	filepaths := osutil.FinfosToFilepaths(opts.Directory, files)
+	_, filepaths, err := ioutilmore.ReadDirRx(
+		opts.Directory, regexp.MustCompile(opts.Regexp), true)
 
 	tbl, err := csv.TableFromSpecFiles(filepaths, true)
 	if err != nil {
