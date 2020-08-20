@@ -26,6 +26,7 @@ func ReadSpecMore(path string, validate bool) (*SpecMore, error) {
 
 func (s *SpecMore) OperationsTable() (*table.TableData, error) {
 	tbl := table.NewTableData()
+	tbl.Name = "Operations"
 	tgs, err := SpecTagGroups(s.Spec)
 	if err != nil {
 		return nil, err
@@ -115,6 +116,14 @@ func (s *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, inde
 		jsonData = jsonutil.PrettyPrint(jsonData, "", "  ")
 	}
 	return ioutil.WriteFile(filename, jsonData, perm)
+}
+
+func (sm *SpecMore) WriteFileXLSX(filename string) error {
+	tbl, err := sm.OperationsTable()
+	if err != nil {
+		return err
+	}
+	return table.WriteXLSX(filename, tbl)
 }
 
 type TagsMore struct {
