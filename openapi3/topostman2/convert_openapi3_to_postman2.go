@@ -256,17 +256,17 @@ func PostmanUrlAddDefaultsOAS3(pmanURL postman2.URL, operation *oas3.Operation) 
 			for _, parameterRef := range operation.Parameters {
 				if parameterRef == nil || parameterRef.Value == nil {
 					continue
-					if parameterRef.Value.Name != baseVariable {
-						continue
-					}
-					schemaRef := parameterRef.Value.Schema
-					if schemaRef == nil || schemaRef.Value == nil {
-						continue
-					}
-					if schemaRef.Value.Default != nil {
-						defaultValue = schemaRef.Value.Default
-						pmanURL.AddVariable(baseVariable, defaultValue)
-					}
+				}
+				if parameterRef.Value.Name != baseVariable {
+					continue
+				}
+				schemaRef := parameterRef.Value.Schema
+				if schemaRef == nil || schemaRef.Value == nil {
+					continue
+				}
+				if schemaRef.Value.Default != nil {
+					defaultValue = schemaRef.Value.Default
+					pmanURL.AddVariable(baseVariable, defaultValue)
 				}
 				/*
 					if parameter.Name == baseVariable {

@@ -35,7 +35,8 @@ func MergeDirectoryMore(dir string, validateEach, validateFinal bool, mergeOpts 
 			filePaths = append(filePaths, filepath.Join(dir, fi.Name()))
 		}
 	*/
-	filePaths := []string{}
+	// filePaths := []string{}
+	var filePaths []string
 	var err error
 	if mergeOpts != nil && mergeOpts.FileRx != nil {
 		filePaths, err = ioutilmore.DirEntriesRxSizeGt0Filepaths(dir, ioutilmore.File, mergeOpts.FileRx)
