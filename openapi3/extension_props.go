@@ -9,18 +9,19 @@ import (
 
 // GetExtensionPropAsString converts extension prop value from `json.RawMessage` to `string`.
 func GetExtensionPropAsStringOrEmpty(xprops oas3.ExtensionProps, key string) string {
-	valIface, ok := xprops.Extensions[key]
-	if !ok {
+	str, err := GetExtensionPropAsString(xprops, key)
+	if err != nil {
 		return ""
 	}
-	return strings.Trim(fmt.Sprintf("%s", valIface), "\"")
+	return str
 }
 
 // GetExtensionPropAsString converts extension prop value from `json.RawMessage` to `string`.
 func GetExtensionPropAsString(xprops oas3.ExtensionProps, key string) (string, error) {
-	valIface, ok := xprops.Extensions[key]
+	iface, ok := xprops.Extensions[key]
 	if !ok {
 		return "", fmt.Errorf("extension prop key [%s] not found", key)
 	}
-	return strings.Trim(fmt.Sprintf("%s", valIface), "\""), nil
+	// Important to use %s instead of %v.
+	return strings.Trim(fmt.Sprintf("%s", iface), "\""), nil
 }
