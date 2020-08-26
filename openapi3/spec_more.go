@@ -24,6 +24,15 @@ func ReadSpecMore(path string, validate bool) (*SpecMore, error) {
 	return &SpecMore{Spec: spec}, nil
 }
 
+func (s *SpecMore) SchemaCount() int {
+	if s.Spec == nil {
+		return -1
+	} else if s.Spec.Components.Schemas == nil {
+		return 0
+	}
+	return len(s.Spec.Components.Schemas)
+}
+
 func (s *SpecMore) OperationsTable() (*table.TableData, error) {
 	tbl := table.NewTableData()
 	tbl.Name = "Operations"
