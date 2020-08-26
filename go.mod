@@ -18,6 +18,6 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.6.0
 	github.com/stretchr/objx v0.1.1 // indirect
-	golang.org/x/sys v0.0.0-20200819171115-d785dc25833f
+	golang.org/x/sys v0.0.0-20200824131525-c12d262b63d8
 	gopkg.in/yaml.v2 v2.3.0
 )
