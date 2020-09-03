@@ -1,0 +1,122 @@
+{% func SwaggmanUIPage(data PageParams) %}<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>{%s data.PageTitle %}</title>
+	<!-- http://tabulator.info/examples/4.7?#filter-header -->
+	<link href="https://unpkg.com/tabulator-tables@4.1.4/dist/css/tabulator.min.css" rel="stylesheet">
+	<script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.1.4/dist/js/tabulator.min.js"></script>
+</head>
+<body>
+	<h1>{%s= data.PageLinkHTML() %}</h1>
+
+	<div id="{%s data.TableDomID %}"></div>
+
+<script>
+
+    var tabledata = {%z= data.TableJSON %};
+
+    //custom max min header filter
+    var minMaxFilterEditor = function(cell, onRendered, success, cancel, editorParams){
+
+    var end;
+
+    var container = document.createElement("span");
+
+    //create and style inputs
+    var start = document.createElement("input");
+    start.setAttribute("type", "number");
+    start.setAttribute("placeholder", "Min");
+    start.setAttribute("min", 0);
+    start.setAttribute("max", 100);
+    start.style.padding = "4px";
+    start.style.width = "50%";
+    start.style.boxSizing = "border-box";
+
+    start.value = cell.getValue();
+
+    function buildValues(){
+        success({
+            start:start.value,
+            end:end.value,
+        });
+    }
+
+    function keypress(e){
+        if(e.keyCode == 13){
+            buildValues();
+        }
+
+        if(e.keyCode == 27){
+            cancel();
+        }
+    }
+
+    end = start.cloneNode();
+    end.setAttribute("placeholder", "Max");
+
+    start.addEventListener("change", buildValues);
+    start.addEventListener("blur", buildValues);
+    start.addEventListener("keydown", keypress);
+
+    end.addEventListener("change", buildValues);
+    end.addEventListener("blur", buildValues);
+    end.addEventListener("keydown", keypress);
+
+    container.appendChild(start);
+    container.appendChild(end);
+
+    return container;
+ }
+
+//custom max min filter function
+function minMaxFilterFunction(headerValue, rowValue, rowData, filterParams){
+    //headerValue - the value of the header filter element
+    //rowValue - the value of the column in this row
+    //rowData - the data for the row being filtered
+    //filterParams - params object passed to the headerFilterFuncParams property
+
+        if(rowValue){
+            if(headerValue.start != ""){
+                if(headerValue.end != ""){
+                    return rowValue >= headerValue.start && rowValue <= headerValue.end;
+                }else{
+                    return rowValue >= headerValue.start;
+                }
+            }else{
+                if(headerValue.end != ""){
+                    return rowValue <= headerValue.end;
+                }
+            }
+        }
+
+    return true; //must return a boolean, true if it passes the filter.
+}
+
+var table = new Tabulator("#{%s data.TableDomID %}", {
+    //height:"500px",
+    layout:"fitColumns",
+    data:tabledata, //load initial data into table
+    columns:[
+		{title:"Method", field:"Method", width:70, headerFilter:"input"},
+		{title:"Path", field:"Path", width:400, headerFilter:"input"},
+		{title:"OperationID", field:"OperationID", width:150, headerFilter:"input"},
+		{title:"Summary", field:"Summary", width:150, headerFilter:"input"},
+		{title:"Tags", field:"Tags", width:150, headerFilter:"input"},
+		{title:"API Group", field:"API Group", width:150, headerFilter:"input"},
+		{title:"Throttling", field:"Throttling", width:150, headerFilter:"input"},
+		{title:"App Permission", field:"App Permission", width:150, headerFilter:"input"},
+        {title:"User Permissions", field:"User Permissions", width:150, headerFilter:"input"}
+	],
+	rowClick:function(e, row){
+		var data = row.getData();
+		var baseURL = "https://developers.ringcentral.com/api-reference/";
+		baseURL += data["Tags"].replace(' ', '-') + "/" + data["OperationID"];
+		window.open(baseURL, '_blank');
+	},
+});
+</script>
+
+</body>
+</html>
+{% endfunc %}
