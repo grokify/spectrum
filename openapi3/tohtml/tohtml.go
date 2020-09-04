@@ -5,12 +5,10 @@ import (
 	"html"
 	"strings"
 
-	"github.com/grokify/gotilla/net/urlutil"
-
-	"github.com/grokify/gotilla/type/stringsutil"
-
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/table"
+	"github.com/grokify/gotilla/net/urlutil"
+	"github.com/grokify/gotilla/type/stringsutil"
 	"github.com/grokify/swaggman/openapi3"
 )
 
