@@ -111,7 +111,7 @@ var table = new Tabulator("#{%s data.TableDomID %}", {
 	rowClick:function(e, row){
 		var data = row.getData();
 		var baseURL = "https://developers.ringcentral.com/api-reference/";
-		baseURL += data["Tags"].replace(' ', '-') + "/" + data["OperationID"];
+		baseURL += data["Tags"].replace(/\s+/g, '-') + "/" + data["OperationID"];
 		window.open(baseURL, '_blank');
 	},
 });
