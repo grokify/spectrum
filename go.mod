@@ -7,9 +7,10 @@ require (
 	github.com/buger/jsonparser v1.0.0
 	github.com/getkin/kin-openapi v0.20.0
 	github.com/ghodss/yaml v1.0.0
+	github.com/go-openapi/spec v0.19.9
 	github.com/google/go-querystring v1.0.0
 	github.com/grokify/gocharts v1.1.1
-	github.com/grokify/gotilla v1.2.0
+	github.com/grokify/gotilla v1.2.1
 	github.com/huandu/xstrings v1.3.2
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/json-iterator/go v1.1.10 // indirect

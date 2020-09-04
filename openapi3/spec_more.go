@@ -9,7 +9,7 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/table"
 	"github.com/grokify/gotilla/encoding/jsonutil"
-	"github.com/grokify/gotilla/type/stringsutil"
+	"github.com/grokify/gotilla/text"
 )
 
 type SpecMore struct {
@@ -33,7 +33,74 @@ func (s *SpecMore) SchemaCount() int {
 	return len(s.Spec.Components.Schemas)
 }
 
-func (s *SpecMore) OperationsTable() (*table.TableData, error) {
+func (s *SpecMore) OperationsTable(columns *text.TextSet) (*table.TableData, error) {
+	return operationsTable(s.Spec, columns)
+}
+
+func operationsTable(spec *oas3.Swagger, columns *text.TextSet) (*table.TableData, error) {
+	if columns == nil {
+		columns = &text.TextSet{Texts: DefaultColumns()}
+	}
+	tbl := table.NewTableData()
+	tbl.Name = spec.Info.Title
+	tbl.Columns = columns.DisplayTexts()
+
+	tgs, err := SpecTagGroups(spec)
+	if err != nil {
+		return nil, err
+	}
+
+	VisitOperations(spec, func(path, method string, op *oas3.Operation) {
+		row := []string{}
+
+		for _, text := range columns.Texts {
+			switch text.Slug {
+			case "method":
+				row = append(row, method)
+			case "path":
+				row = append(row, path)
+			case "operationId":
+				row = append(row, op.OperationID)
+			case "summary":
+				row = append(row, op.Summary)
+			case "tags":
+				row = append(row, strings.Join(op.Tags, ", "))
+			case "x-tag-groups":
+				row = append(row, strings.Join(
+					tgs.GetTagGroupNamesForTagNames(op.Tags...), ", "))
+			default:
+				row = append(row, GetExtensionPropStringOrEmpty(op.ExtensionProps, text.Slug))
+			}
+		}
+
+		tbl.Records = append(tbl.Records, row)
+	})
+	return &tbl, nil
+}
+
+func DefaultColumns() []text.Text {
+	texts := []text.Text{
+		{
+			Display: "Method",
+			Slug:    "method"},
+		{
+			Display: "Path",
+			Slug:    "path"},
+		{
+			Display: "OperationID",
+			Slug:    "operationId"},
+		{
+			Display: "Summary",
+			Slug:    "summary"},
+		{
+			Display: "Tags",
+			Slug:    "tags"},
+	}
+	return texts
+}
+
+/*
+func (s *SpecMore) OperationsTableOld() (*table.TableData, error) {
 	tbl := table.NewTableData()
 	tbl.Name = "Operations"
 	tgs, err := SpecTagGroups(s.Spec)
@@ -69,6 +136,7 @@ func (s *SpecMore) OperationsTable() (*table.TableData, error) {
 	}
 	return &tbl, nil
 }
+*/
 
 func (s *SpecMore) OperationMetas() []OperationMeta {
 	ometas := []OperationMeta{}
@@ -128,7 +196,7 @@ func (s *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, inde
 }
 
 func (sm *SpecMore) WriteFileXLSX(filename string) error {
-	tbl, err := sm.OperationsTable()
+	tbl, err := sm.OperationsTable(nil)
 	if err != nil {
 		return err
 	}
