@@ -161,6 +161,7 @@ github.com/go-sql-driver/mysql v1.4.0/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG
 github.com/go-sql-driver/mysql v1.4.1/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
 github.com/go-sql-driver/mysql v1.5.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=
 github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=
+github.com/gocarina/gocsv v0.0.0-20200827134620-49f5c3fa2b3e/go.mod h1:5YoVOkjYAQumqlV356Hj3xeYh4BdZuLE0/nRkf2NKkI=
 github.com/gogo/googleapis v1.1.0/go.mod h1:gf4bu3Q80BeJ6H1S1vYPm8/ELATdvryBaNFGgqEef3s=
 github.com/gogo/protobuf v1.1.1/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
 github.com/gogo/protobuf v1.2.0/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
@@ -227,16 +228,21 @@ github.com/gorilla/mux v1.7.3/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2z
 github.com/gorilla/websocket v0.0.0-20170926233335-4201258b820c/go.mod h1:E7qHFY5m1UJ88s3WnNqhKjPHQ0heANvMoAMk2YaljkQ=
 github.com/grokify/base36 v1.0.1/go.mod h1:A0Pzze8AN96L1APGKrZu4Qtuyvcf3tf4oQZfGbdhMPc=
 github.com/grokify/bitcoinmath v0.0.0-20171208015713-6ef5b53bef73/go.mod h1:FrFkuJ9mhcBuUZBBN5m3J5ihG6cvRsiBHwSXO15kOPc=
+github.com/grokify/elastirad-go v0.0.0-20200223053444-efd32a19dc05/go.mod h1:ZnW+S1+q2FAslCm9CsxXa/xQRhZQmb33dOYlhKRtzxI=
 github.com/grokify/gocharts v0.0.0-20191130075056-0ac737b8660f h1:S/TuJ5iXptD8rFCr8qIoAoXlSd1JAtGP3ofclTxOxPc=
 github.com/grokify/gocharts v0.0.0-20191130075056-0ac737b8660f/go.mod h1:JvoO1tG2tHh3xvYxfKnHPjNfxHuCbNblUKrrzJO56d0=
 github.com/grokify/gocharts v0.0.0-20200519050948-730f48e1a73f h1:1xHArXoMzbUEMmIEbLROX5wUiT8pEYYsqVo8VV47jP8=
 github.com/grokify/gocharts v0.0.0-20200519050948-730f48e1a73f/go.mod h1:JvoO1tG2tHh3xvYxfKnHPjNfxHuCbNblUKrrzJO56d0=
 github.com/grokify/gocharts v1.0.0 h1:Frehk+2FAEeZ12wtG5A4v8fbF0PcQRUsgH9ykdRXb/Q=
 github.com/grokify/gocharts v1.0.0/go.mod h1:JvoO1tG2tHh3xvYxfKnHPjNfxHuCbNblUKrrzJO56d0=
+github.com/grokify/gocharts v1.1.1 h1:pSUjdzRsBrLhELx8MdLfpl0VRd/HzPs9v4UON1TalJU=
+github.com/grokify/gocharts v1.1.1/go.mod h1:eUJgMtsyi39Wj++MkWeS7VEXqMQ3ZL7N4Na3HkGZTDE=
 github.com/grokify/gocharts v2.0.0+incompatible h1:2dT8uEClnDuxeCD4Y7iIGMuulqJNFhv78iQOk0kRs/o=
 github.com/grokify/gocharts v2.0.0+incompatible/go.mod h1:JvoO1tG2tHh3xvYxfKnHPjNfxHuCbNblUKrrzJO56d0=
 github.com/grokify/gocharts v2.1.0+incompatible h1:XeMavFQ4y3eYm+lr+k+wo1JGycduX1tk1T/bqjEhSrU=
 github.com/grokify/gocharts v2.1.0+incompatible/go.mod h1:JvoO1tG2tHh3xvYxfKnHPjNfxHuCbNblUKrrzJO56d0=
+github.com/grokify/gocharts v2.1.1+incompatible h1:KbOihWNgyK7PrmokPN1pqoX3k0GYPwZvPZUXCvJRQnA=
+github.com/grokify/gocharts v2.1.1+incompatible/go.mod h1:JvoO1tG2tHh3xvYxfKnHPjNfxHuCbNblUKrrzJO56d0=
 github.com/grokify/gotilla v0.0.0-20191217154415-c37774b2caf5 h1:zVOQ6ZJqfK2/tSunpjZJ4IuM9uMbGPspj2CGNNbvZXQ=
 github.com/grokify/gotilla v0.0.0-20191217154415-c37774b2caf5/go.mod h1:bPsMuRQD2E5u6LlJv5bpr1LuXl0T2dFhW1wmygrd3kc=
 github.com/grokify/gotilla v1.0.0 h1:M2XRT2KamEPVUMeF5Kww6VZaFh4csboCpL5iT3hW4lU=
@@ -491,6 +497,7 @@ github.com/valyala/quicktemplate v1.5.0/go.mod h1:v7yYWpBEiutDyNfVaph6oC/yKwejzV
 github.com/valyala/quicktemplate v1.6.2 h1:k0vgK7zlmFzqAoIBIOrhrfmZ6JoTGJlLRPLbkPGr2/M=
 github.com/valyala/quicktemplate v1.6.2/go.mod h1:mtEJpQtUiBV0SHhMX6RtiJtqxncgrfmjcUy5T68X8TM=
 github.com/valyala/tcplisten v0.0.0-20161114210144-ceec8f93295a/go.mod h1:v3UYOV9WzVtRmSR+PDvWpU/qWl4Wa5LApYYX4ZtKbio=
+github.com/wcharczuk/go-chart v2.0.1+incompatible/go.mod h1:PF5tmL4EIx/7Wf+hEkpCqYi5He4u90sw+0+6FhrryuE=
 github.com/wendal/errors v0.0.0-20130201093226-f66c77a7882b/go.mod h1:Q12BUT7DqIlHRmgv3RskH+UCM/4eqVMgI0EMmlSpAXc=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
 github.com/yuin/goldmark v1.1.25/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
