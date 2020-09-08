@@ -9,8 +9,8 @@ import (
 	"github.com/grokify/swaggman/swagger2"
 )
 
-func TableFromSpecFiles(files []string, includeFilename bool) (*table.TableData, error) {
-	tbl := table.NewTableData()
+func TableFromSpecFiles(files []string, includeFilename bool) (*table.Table, error) {
+	tbl := table.NewTable()
 	tblp := &tbl
 	tbl.Columns = []string{}
 	if includeFilename {
@@ -32,7 +32,7 @@ func TableFromSpecFiles(files []string, includeFilename bool) (*table.TableData,
 	return tblp, nil
 }
 
-func TableAddOpenAPI2Spec(tbl *table.TableData, spec *openapi2.Swagger, prefix []string) *table.TableData {
+func TableAddOpenAPI2Spec(tbl *table.Table, spec *openapi2.Swagger, prefix []string) *table.Table {
 	for url, path := range spec.Paths {
 		tbl = TableAddOpenAPI2Path(tbl, path, append(prefix, url))
 	}
@@ -40,7 +40,7 @@ func TableAddOpenAPI2Spec(tbl *table.TableData, spec *openapi2.Swagger, prefix [
 }
 
 // prefix can be `filename`,`path`
-func TableAddOpenAPI2Path(tbl *table.TableData, path *openapi2.PathItem, prefix []string) *table.TableData {
+func TableAddOpenAPI2Path(tbl *table.Table, path *openapi2.PathItem, prefix []string) *table.Table {
 	if path.Delete != nil {
 		tbl.Records = append(tbl.Records, pathOpenApi2ToRow(prefix, path.Delete, http.MethodDelete))
 	}

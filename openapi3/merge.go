@@ -121,8 +121,8 @@ func MergeTags(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
 // MergeWithTables performs a spec merge and returns comparison
 // tables. This is useful to combine with github.com/grokify/gocharts/data/table
 // WriteXLSX() to write out comparison tables for debugging.
-func MergeWithTables(spec1, spec2 *oas3.Swagger, specExtraNote string, mergeOpts *MergeOptions) (*oas3.Swagger, []*table.TableData, error) {
-	tbls := []*table.TableData{}
+func MergeWithTables(spec1, spec2 *oas3.Swagger, specExtraNote string, mergeOpts *MergeOptions) (*oas3.Swagger, []*table.Table, error) {
+	tbls := []*table.Table{}
 	sm1 := SpecMore{Spec: spec1}
 	sm2 := SpecMore{Spec: spec2}
 	tbls1, err := sm1.OperationsTable(nil)

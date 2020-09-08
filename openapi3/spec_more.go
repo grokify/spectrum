@@ -35,15 +35,15 @@ func (s *SpecMore) SchemaCount() int {
 	return len(s.Spec.Components.Schemas)
 }
 
-func (s *SpecMore) OperationsTable(columns *text.TextSet) (*table.TableData, error) {
+func (s *SpecMore) OperationsTable(columns *text.TextSet) (*table.Table, error) {
 	return operationsTable(s.Spec, columns)
 }
 
-func operationsTable(spec *oas3.Swagger, columns *text.TextSet) (*table.TableData, error) {
+func operationsTable(spec *oas3.Swagger, columns *text.TextSet) (*table.Table, error) {
 	if columns == nil {
 		columns = &text.TextSet{Texts: DefaultColumns()}
 	}
-	tbl := table.NewTableData()
+	tbl := table.NewTable()
 	tbl.Name = spec.Info.Title
 	tbl.Columns = columns.DisplayTexts()
 

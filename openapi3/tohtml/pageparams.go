@@ -37,7 +37,7 @@ func (pp *PageParams) AddSpec(spec *oas3.Swagger, columns *text.TextSet) error {
 	return pp.AddTable(tbl)
 }
 
-func (pp *PageParams) AddTable(tbl *table.TableData) error {
+func (pp *PageParams) AddTable(tbl *table.Table) error {
 	docs := table.ToDocuments(tbl)
 	jdocs, err := json.Marshal(docs)
 	if err != nil {
