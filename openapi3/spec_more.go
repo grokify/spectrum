@@ -6,6 +6,8 @@ import (
 	"os"
 	"strings"
 
+	"github.com/grokify/gotilla/type/stringsutil"
+
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/table"
 	"github.com/grokify/gotilla/encoding/jsonutil"
@@ -178,6 +180,36 @@ func (s *SpecMore) OperationMetas() []OperationMeta {
 
 func (s *SpecMore) OperationsCount() uint {
 	return uint(len(s.OperationMetas()))
+}
+
+func (sm *SpecMore) SchemaNames() []string {
+	schemaNames := []string{}
+	for schemaName := range sm.Spec.Components.Schemas {
+		schemaNames = append(schemaNames, schemaName)
+	}
+	return stringsutil.SliceCondenseSpace(schemaNames, true, true)
+}
+
+func (sm *SpecMore) SchemaNameExists(schemaName string, includeNil bool) bool {
+	for schemaNameTry, schemaRef := range sm.Spec.Components.Schemas {
+		if schemaNameTry == schemaName {
+			if includeNil {
+				return true
+			} else if schemaRef == nil {
+				return false
+			}
+			schemaRef.Ref = strings.TrimSpace(schemaRef.Ref)
+			if len(schemaRef.Ref) > 0 {
+				return true
+			}
+			if schemaRef.Value == nil {
+				return false
+			} else {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 func (s *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, indent string) error {
