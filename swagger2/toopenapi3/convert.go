@@ -30,25 +30,25 @@ func Convert(filenames []string, outdir string, renameFunc func(string) string) 
 		if err != nil {
 			if err.Error() == "exit status 1" {
 				ei := errorsutil.ErrorInfo{
-					Input:   srcpath,
-					Correct: outpath,
-					Display: cmd,
-					Error:   errors.New(stderr.String())}
+					Input:       srcpath,
+					Correct:     outpath,
+					Description: cmd,
+					Error:       errors.New(stderr.String())}
 				errinfos = append(errinfos, &ei)
 			} else {
 				ei := errorsutil.ErrorInfo{
-					Input:   srcpath,
-					Correct: outpath,
-					Display: cmd,
-					Error:   err}
+					Input:       srcpath,
+					Correct:     outpath,
+					Description: cmd,
+					Error:       err}
 				errinfos = append(errinfos, &ei)
 			}
 		} else {
 			ei := errorsutil.ErrorInfo{
-				Input:   srcpath,
-				Correct: outpath,
-				Display: cmd,
-				Error:   nil}
+				Input:       srcpath,
+				Correct:     outpath,
+				Description: cmd,
+				Error:       nil}
 			errinfos = append(errinfos, &ei)
 		}
 	}
