@@ -10,7 +10,7 @@ require (
 	github.com/go-openapi/spec v0.19.9
 	github.com/google/go-querystring v1.0.0
 	github.com/grokify/gocharts v1.2.0
-	github.com/grokify/gotilla v1.2.1
+	github.com/grokify/gotilla v1.3.0
 	github.com/huandu/xstrings v1.3.2
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/konsorten/go-windows-terminal-sequences v1.0.3
