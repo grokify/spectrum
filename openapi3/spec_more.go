@@ -41,7 +41,7 @@ func (s *SpecMore) OperationsTable(columns *text.TextSet) (*table.Table, error) 
 
 func operationsTable(spec *oas3.Swagger, columns *text.TextSet) (*table.Table, error) {
 	if columns == nil {
-		columns = &text.TextSet{Texts: DefaultColumns()}
+		columns = &text.TextSet{Texts: OpTableColumnsDefault()}
 	}
 	tbl := table.NewTable()
 	tbl.Name = spec.Info.Title
@@ -80,7 +80,7 @@ func operationsTable(spec *oas3.Swagger, columns *text.TextSet) (*table.Table, e
 	return &tbl, nil
 }
 
-func DefaultColumns() []text.Text {
+func OpTableColumnsDefault() []text.Text {
 	texts := []text.Text{
 		{
 			Display: "Method",
@@ -99,6 +99,39 @@ func DefaultColumns() []text.Text {
 			Slug:    "tags"},
 	}
 	return texts
+}
+
+func OpTableColumnsRingCentral() *text.TextSet {
+	texts := []text.Text{
+		{
+			Display: "Method",
+			Slug:    "method"},
+		{
+			Display: "Path",
+			Slug:    "path"},
+		{
+			Display: "OperationID",
+			Slug:    "operationId"},
+		{
+			Display: "Summary",
+			Slug:    "summary"},
+		{
+			Display: "Tags",
+			Slug:    "tags"},
+		{
+			Display: "API Group",
+			Slug:    "x-api-group"},
+		{
+			Display: "Throttling",
+			Slug:    "x-throttling-group"},
+		{
+			Display: "App Permission",
+			Slug:    "x-app-permission"},
+		{
+			Display: "User Permissions",
+			Slug:    "x-user-permission"},
+	}
+	return &text.TextSet{Texts: texts}
 }
 
 /*
