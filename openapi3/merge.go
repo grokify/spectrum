@@ -22,20 +22,6 @@ func MergeDirectory(dir string, mergeOpts *MergeOptions) (*oas3.Swagger, int, er
 }
 
 func MergeDirectoryMore(dir string, mergeOpts *MergeOptions) (*oas3.Swagger, int, error) {
-	/*
-		fileInfos, err := ioutilmore.DirEntriesRxSizeGt0(dir, ioutilmore.File, jsonFileRx)
-		if err != nil {
-			return nil, err
-		}
-		if len(fileInfos) == 0 {
-			return nil, fmt.Errorf("No JSON files found in directory [%s]", dir)
-		}
-
-		for _, fi := range fileInfos {
-			filePaths = append(filePaths, filepath.Join(dir, fi.Name()))
-		}
-	*/
-	// filePaths := []string{}
 	var filePaths []string
 	var err error
 	if mergeOpts != nil && mergeOpts.FileRx != nil {
