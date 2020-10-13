@@ -18,10 +18,10 @@ import (
 var jsonFileRx = regexp.MustCompile(`(?i)\.json\s*$`)
 
 func MergeDirectory(dir string, mergeOpts *MergeOptions) (*oas3.Swagger, int, error) {
-	return MergeDirectoryMore(dir, false, true, mergeOpts)
+	return MergeDirectoryMore(dir, mergeOpts)
 }
 
-func MergeDirectoryMore(dir string, validateEach, validateFinal bool, mergeOpts *MergeOptions) (*oas3.Swagger, int, error) {
+func MergeDirectoryMore(dir string, mergeOpts *MergeOptions) (*oas3.Swagger, int, error) {
 	/*
 		fileInfos, err := ioutilmore.DirEntriesRxSizeGt0(dir, ioutilmore.File, jsonFileRx)
 		if err != nil {
@@ -48,11 +48,17 @@ func MergeDirectoryMore(dir string, validateEach, validateFinal bool, mergeOpts 
 		return nil, len(filePaths), err
 	}
 
-	return MergeFiles(filePaths, validateEach, validateFinal, mergeOpts)
+	return MergeFiles(filePaths, mergeOpts)
 }
 
-func MergeFiles(filepaths []string, validateEach, validateFinal bool, mergeOpts *MergeOptions) (*oas3.Swagger, int, error) {
+func MergeFiles(filepaths []string, mergeOpts *MergeOptions) (*oas3.Swagger, int, error) {
 	sort.Strings(filepaths)
+	validateEach := false
+	validateFinal := true
+	if mergeOpts != nil {
+		validateEach = mergeOpts.ValidateEach
+		validateFinal = mergeOpts.ValidateFinal
+	}
 	var specMaster *oas3.Swagger
 	for i, fpath := range filepaths {
 		thisSpec, err := ReadFile(fpath, validateEach)

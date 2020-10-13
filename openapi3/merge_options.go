@@ -9,6 +9,8 @@ type MergeOptions struct {
 	FileRx               *regexp.Regexp
 	SchemaFunc           func(schemaName string, sch1, sch2 interface{}, hint2 string) CollisionCheckResult
 	CollisionCheckResult CollisionCheckResult
+	ValidateEach         bool
+	ValidateFinal        bool
 }
 
 func NewMergeOptionsSkip() *MergeOptions {
