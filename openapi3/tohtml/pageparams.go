@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"html"
+	"os"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
@@ -45,4 +46,18 @@ func (pp *PageParams) AddTable(tbl *table.Table) error {
 	}
 	pp.TableJSON = jdocs
 	return nil
+}
+
+func (pp *PageParams) WriteFile(filename string) error {
+	f, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	WriteSwaggmanUIPage(f, *pp)
+	return nil
+}
+
+func DefaultColumns() {
+
 }
