@@ -10,38 +10,6 @@ import (
 	"github.com/grokify/swaggman/openapi3"
 )
 
-/*
-// SpecTags returns a set of tags present in the current
-// spec.
-func SpecTags(spec *oas3.Swagger, scanTop, scanOperations bool) map[string]int {
-	tagsMap := map[string]int{}
-	if scanTop {
-		for _, tag := range spec.Tags {
-			tagName := strings.TrimSpace(tag.Name)
-			if len(tagName) > 0 {
-				if _, ok := tagsMap[tagName]; !ok {
-					tagsMap[tagName] = 0
-				}
-				tagsMap[tagName]++
-			}
-		}
-	}
-	if scanOperations {
-		openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
-			for _, tagName := range op.Tags {
-				tagName = strings.TrimSpace(tagName)
-				if len(tagName) > 0 {
-					if _, ok := tagsMap[tagName]; !ok {
-						tagsMap[tagName] = 0
-					}
-					tagsMap[tagName]++
-				}
-			}
-		})
-	}
-	return tagsMap
-}
-*/
 func SpecTagsModify(spec *oas3.Swagger, changeTagsRaw map[string]string) {
 	changeTags := map[string]string{}
 	for old, new := range changeTagsRaw {
