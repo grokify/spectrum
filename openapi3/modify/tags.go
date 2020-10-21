@@ -10,6 +10,7 @@ import (
 	"github.com/grokify/swaggman/openapi3"
 )
 
+/*
 // SpecTags returns a set of tags present in the current
 // spec.
 func SpecTags(spec *oas3.Swagger, scanTop, scanOperations bool) map[string]int {
@@ -40,7 +41,7 @@ func SpecTags(spec *oas3.Swagger, scanTop, scanOperations bool) map[string]int {
 	}
 	return tagsMap
 }
-
+*/
 func SpecTagsModify(spec *oas3.Swagger, changeTagsRaw map[string]string) {
 	changeTags := map[string]string{}
 	for old, new := range changeTagsRaw {
@@ -83,7 +84,8 @@ TAG:
 func SpecTagsOrder(spec *oas3.Swagger, explicitSortedTagNames []string) error {
 	curTags := spec.Tags
 
-	opTagNames := SpecTags(spec, false, true)
+	sm := openapi3.SpecMore{Spec: spec}
+	opTagNames := sm.TagsMap(false, true)
 	for tagName := range opTagNames {
 		curTags = append(curTags, &oas3.Tag{Name: tagName})
 	}
@@ -136,7 +138,8 @@ func TagsOrder(curTags oas3.Tags, explicitSortedTagNames []string) (oas3.Tags, e
 // level specification by comparing with tags used
 // in operations.
 func SpecTagsCondense(spec *oas3.Swagger) {
-	opTags := SpecTags(spec, false, true)
+	sm := openapi3.SpecMore{Spec: spec}
+	opTags := sm.TagsMap(false, true)
 	newTags := oas3.Tags{}
 	for _, curTag := range spec.Tags {
 		if _, ok := opTags[curTag.Name]; ok {

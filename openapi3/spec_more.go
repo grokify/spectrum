@@ -245,6 +245,46 @@ func (sm *SpecMore) SchemaNameExists(schemaName string, includeNil bool) bool {
 	return false
 }
 
+func (sm *SpecMore) Tags(inclTop, inclOps bool) []string {
+	tags := []string{}
+	tagsMap := sm.TagsMap(inclTop, inclOps)
+	for tag := range tagsMap {
+		tags = append(tags, tag)
+	}
+	return stringsutil.SliceCondenseSpace(tags, true, true)
+}
+
+// TagsMap returns a set of tags present in the current
+// spec.
+func (sm *SpecMore) TagsMap(inclTop, inclOps bool) map[string]int {
+	tagsMap := map[string]int{}
+	if inclTop {
+		for _, tag := range sm.Spec.Tags {
+			tagName := strings.TrimSpace(tag.Name)
+			if len(tagName) > 0 {
+				if _, ok := tagsMap[tagName]; !ok {
+					tagsMap[tagName] = 0
+				}
+				tagsMap[tagName]++
+			}
+		}
+	}
+	if inclOps {
+		VisitOperations(sm.Spec, func(skipPath, skipMethod string, op *oas3.Operation) {
+			for _, tagName := range op.Tags {
+				tagName = strings.TrimSpace(tagName)
+				if len(tagName) > 0 {
+					if _, ok := tagsMap[tagName]; !ok {
+						tagsMap[tagName] = 0
+					}
+					tagsMap[tagName]++
+				}
+			}
+		})
+	}
+	return tagsMap
+}
+
 func (s *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, indent string) error {
 	jsonData, err := s.Spec.MarshalJSON()
 	if err != nil {
