@@ -134,45 +134,6 @@ func OpTableColumnsRingCentral() *text.TextSet {
 	return &text.TextSet{Texts: texts}
 }
 
-/*
-func (s *SpecMore) OperationsTableOld() (*table.TableData, error) {
-	tbl := table.NewTableData()
-	tbl.Name = "Operations"
-	tgs, err := SpecTagGroups(s.Spec)
-	if err != nil {
-		return nil, err
-	}
-	addTagGroups := false
-	if len(tgs.TagGroups) > 0 {
-		addTagGroups = true
-		tbl.Columns = []string{"OperationId", "Summary", "Path", "Method", "Tag Groups", "Tags"}
-	} else {
-		tbl.Columns = []string{"OperationId", "Summary", "Path", "Method", "Tags"}
-	}
-	ops := s.OperationMetas()
-	for _, op := range ops {
-		if addTagGroups {
-			tagGroupNames := tgs.GetTagGroupNamesForTagNames(op.Tags...)
-			tbl.Records = append(tbl.Records, []string{
-				op.OperationID,
-				op.Summary,
-				op.Path,
-				op.Method,
-				strings.Join(tagGroupNames, ","),
-				strings.Join(stringsutil.SliceCondenseSpace(op.Tags, true, true), ",")})
-		} else {
-			tbl.Records = append(tbl.Records, []string{
-				op.OperationID,
-				op.Summary,
-				op.Path,
-				op.Method,
-				strings.Join(op.Tags, ",")})
-		}
-	}
-	return &tbl, nil
-}
-*/
-
 func (s *SpecMore) OperationMetas() []OperationMeta {
 	ometas := []OperationMeta{}
 	if s.Spec == nil {
