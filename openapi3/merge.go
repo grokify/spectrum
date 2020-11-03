@@ -34,10 +34,11 @@ func MergeDirectoryMore(dir string, mergeOpts *MergeOptions) (*oas3.Swagger, int
 		return nil, len(filePaths), err
 	}
 
-	return MergeFiles(filePaths, mergeOpts)
+	spec, err := MergeFiles(filePaths, mergeOpts)
+	return spec, len(filePaths), err
 }
 
-func MergeFiles(filepaths []string, mergeOpts *MergeOptions) (*oas3.Swagger, int, error) {
+func MergeFiles(filepaths []string, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
 	sort.Strings(filepaths)
 	validateEach := false
 	validateFinal := true
@@ -49,14 +50,14 @@ func MergeFiles(filepaths []string, mergeOpts *MergeOptions) (*oas3.Swagger, int
 	for i, fpath := range filepaths {
 		thisSpec, err := ReadFile(fpath, validateEach)
 		if err != nil {
-			return specMaster, len(filepaths), errors.Wrap(err, fmt.Sprintf("ReadSpecError [%v] ValidateEach [%v]", fpath, validateEach))
+			return specMaster, errors.Wrap(err, fmt.Sprintf("ReadSpecError [%v] ValidateEach [%v]", fpath, validateEach))
 		}
 		if i == 0 {
 			specMaster = thisSpec
 		} else {
 			specMaster, err = Merge(specMaster, thisSpec, fpath, mergeOpts)
 			if err != nil {
-				return nil, len(filepaths), errors.Wrap(err, fmt.Sprintf("Merging [%v]", fpath))
+				return nil, errors.Wrap(err, fmt.Sprintf("Merging [%v]", fpath))
 			}
 		}
 	}
@@ -64,15 +65,15 @@ func MergeFiles(filepaths []string, mergeOpts *MergeOptions) (*oas3.Swagger, int
 	if validateFinal {
 		bytes, err := specMaster.MarshalJSON()
 		if err != nil {
-			return specMaster, len(filepaths), err
+			return specMaster, err
 		}
 		newSpec, err := oas3.NewSwaggerLoader().LoadSwaggerFromData(bytes)
 		if err != nil {
-			return newSpec, len(filepaths), errors.Wrap(err, "Loader.LoadSwaggerFromData (MergeFiles().ValidateFinal)")
+			return newSpec, errors.Wrap(err, "Loader.LoadSwaggerFromData (MergeFiles().ValidateFinal)")
 		}
-		return newSpec, len(filepaths), nil
+		return newSpec, nil
 	}
-	return specMaster, len(filepaths), nil
+	return specMaster, nil
 }
 
 func Merge(specMaster, specExtra *oas3.Swagger, specExtraNote string, mergeOpts *MergeOptions) (*oas3.Swagger, error) {

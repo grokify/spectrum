@@ -61,17 +61,17 @@ func ReadSpecMetasFiles(files []string) (SpecMetas, error) {
 	return metas, nil
 }
 
-func (metas *SpecMetas) Merge(validatesOnly bool, mergeOpts *MergeOptions) (SpecMore, int, error) {
+func (metas *SpecMetas) Merge(validatesOnly bool, mergeOpts *MergeOptions) (SpecMore, error) {
 	return MergeSpecMetas(metas, validatesOnly, mergeOpts)
 }
 
-func MergeSpecMetas(metas *SpecMetas, validatesOnly bool, mergeOpts *MergeOptions) (SpecMore, int, error) {
+func MergeSpecMetas(metas *SpecMetas, validatesOnly bool, mergeOpts *MergeOptions) (SpecMore, error) {
 	specMore := SpecMore{}
 	filepaths := metas.Filepaths(validatesOnly)
-	spec, num, err := MergeFiles(filepaths, mergeOpts)
+	spec, err := MergeFiles(filepaths, mergeOpts)
 	if err != nil {
-		return specMore, num, err
+		return specMore, err
 	}
 	specMore.Spec = spec
-	return specMore, num, nil
+	return specMore, nil
 }
