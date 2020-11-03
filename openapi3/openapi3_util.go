@@ -5,7 +5,6 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/gotilla/net/urlutil"
 )
 
 /*
@@ -49,28 +48,4 @@ func OperationResponseMediaTypes(op *oas3.Operation) []string {
 	}
 	sort.Strings(mediaTypes)
 	return mediaTypes
-}
-
-// ServerURL returns the OAS3 Spec URL for the index
-// specified.
-func ServerURL(spec *oas3.Swagger, index int) string {
-	if index+1 > len(spec.Servers) {
-		return ""
-	}
-	server := spec.Servers[index]
-	return strings.TrimSpace(server.URL)
-}
-
-// BasePath extracts the base path from a OAS URL
-// which can include variables.
-func BasePath(spec *oas3.Swagger) (string, error) {
-	serverURL := ServerURL(spec, 0)
-	if len(serverURL) == 0 {
-		return "", nil
-	}
-	serverURLParsed, err := urlutil.ParseURLTemplate(serverURL)
-	if err != nil {
-		return "", err
-	}
-	return serverURLParsed.Path, nil
 }

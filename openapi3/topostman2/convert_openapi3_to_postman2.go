@@ -116,7 +116,9 @@ func Merge(cfg Configuration, pman postman2.Collection, oas3spec *oas3.Swagger) 
 		return pman, err
 	}
 
-	tagGroupSet, err := openapi3.SpecTagGroups(oas3spec)
+	oas3specMore := openapi3.SpecMore{Spec: oas3spec}
+	tagGroupSet, err := oas3specMore.TagGroups()
+	//tagGroupSet, err := openapi3.SpecTagGroups(oas3spec)
 	if err != nil {
 		return pman, err
 	}
@@ -236,7 +238,8 @@ func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *oas3.Swagge
 }
 
 func BuildPostmanURL(cfg Configuration, spec *oas3.Swagger, specPath string, operation *oas3.Operation) postman2.URL {
-	specServerURL := openapi3.ServerURL(spec, 0)
+	specMore := openapi3.SpecMore{Spec: spec}
+	specServerURL := specMore.ServerURL(0)
 	overrideServerURL := cfg.PostmanServerURL
 	specURLString := openapi3.BuildApiUrlOAS(specServerURL, overrideServerURL, specPath)
 	pmanURLString := postman2.ApiUrlOasToPostman(specURLString)

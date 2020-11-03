@@ -73,10 +73,10 @@ func TagsWithoutGroups(spec *oas3.Swagger, tagGroupSet TagGroupSet) []string {
 	return missing
 }
 
-// SpecTagGroups parses a TagGroupSet from an OpenAPI3 spec.
-func SpecTagGroups(spec *oas3.Swagger) (TagGroupSet, error) {
+// TagGroups parses a TagGroupSet from an OpenAPI3 spec.
+func (sm *SpecMore) TagGroups() (TagGroupSet, error) {
 	tgs := NewTagGroupSet()
-	iface, ok := spec.ExtensionProps.Extensions[XTagGroupsPropertyName]
+	iface, ok := sm.Spec.ExtensionProps.Extensions[XTagGroupsPropertyName]
 	if !ok {
 		return tgs, nil
 	}
@@ -95,7 +95,7 @@ func SpecTagGroups(spec *oas3.Swagger) (TagGroupSet, error) {
 		return tgs, err
 	}
 	tgs.TagGroups = tagGroups
-	delete(spec.ExtensionProps.Extensions, XTagGroupsPropertyName)
-	spec.ExtensionProps.Extensions[XTagGroupsPropertyName] = tagGroups
+	delete(sm.Spec.ExtensionProps.Extensions, XTagGroupsPropertyName)
+	sm.Spec.ExtensionProps.Extensions[XTagGroupsPropertyName] = tagGroups
 	return tgs, nil
 }

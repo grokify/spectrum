@@ -10,7 +10,9 @@ import (
 )
 
 func CreateTagsAndTagGroups(pman postman2.Collection, spec *oas3.Swagger) (postman2.Collection, error) {
-	tagGroupSet, err := openapi3.SpecTagGroups(spec)
+	oas3specMore := openapi3.SpecMore{Spec: spec}
+	tagGroupSet, err := oas3specMore.TagGroups()
+	// tagGroupSet, err := openapi3.SpecTagGroups(spec)
 	if err != nil {
 		return pman, err
 	}

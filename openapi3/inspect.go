@@ -2,14 +2,12 @@ package openapi3
 
 import (
 	"strings"
-
-	oas3 "github.com/getkin/kin-openapi/openapi3"
 )
 
-// SpecExtensionNames is not complete yet.
-func SpecExtensionNames(spec *oas3.Swagger) map[string]int {
+// ExtensionNames is not complete yet.
+func (sm *SpecMore) ExtensionNames() map[string]int {
 	extNames := map[string]int{}
-	for _, schRef := range spec.Components.Schemas {
+	for _, schRef := range sm.Spec.Components.Schemas {
 		if schRef.Value == nil {
 			continue
 		}
@@ -25,21 +23,21 @@ func SpecExtensionNames(spec *oas3.Swagger) map[string]int {
 	return extNames
 }
 
-func SpecHasComponentSchema(spec *oas3.Swagger, name string, lowerCaseMatch bool) bool {
-	name = strings.TrimSpace(name)
+func (sm *SpecMore) HasComponentSchema(componentSchemaName string, lowerCaseMatch bool) bool {
+	componentSchemaName = strings.TrimSpace(componentSchemaName)
 	if lowerCaseMatch {
-		name = strings.ToLower(name)
+		componentSchemaName = strings.ToLower(componentSchemaName)
 	}
-	if len(spec.Components.Schemas) == 0 {
+	if len(sm.Spec.Components.Schemas) == 0 {
 		return false
 	}
-	if _, ok := spec.Components.Schemas[name]; ok {
+	if _, ok := sm.Spec.Components.Schemas[componentSchemaName]; ok {
 		return true
 	}
 	if lowerCaseMatch {
-		for nameTry := range spec.Components.Schemas {
+		for nameTry := range sm.Spec.Components.Schemas {
 			nameTry = strings.ToLower(strings.TrimSpace(nameTry))
-			if nameTry == name {
+			if nameTry == componentSchemaName {
 				return true
 			}
 		}

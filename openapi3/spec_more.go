@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/grokify/gotilla/net/urlutil"
 	"github.com/grokify/gotilla/type/stringsutil"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
@@ -47,7 +48,10 @@ func operationsTable(spec *oas3.Swagger, columns *text.TextSet) (*table.Table, e
 	tbl.Name = spec.Info.Title
 	tbl.Columns = columns.DisplayTexts()
 
-	tgs, err := SpecTagGroups(spec)
+	specMore := SpecMore{Spec: spec}
+
+	//tgs, err := SpecTagGroups(spec)
+	tgs, err := specMore.TagGroups()
 	if err != nil {
 		return nil, err
 	}
@@ -204,6 +208,30 @@ func (sm *SpecMore) SchemaNameExists(schemaName string, includeNil bool) bool {
 		}
 	}
 	return false
+}
+
+// ServerURL returns the OAS3 Spec URL for the index
+// specified.
+func (sm *SpecMore) ServerURL(index uint) string {
+	if int(index)+1 > len(sm.Spec.Servers) {
+		return ""
+	}
+	server := sm.Spec.Servers[index]
+	return strings.TrimSpace(server.URL)
+}
+
+// ServerURLBasePath extracts the base path from a OAS URL
+// which can include variables.
+func (sm *SpecMore) ServerURLBasePath(index uint) (string, error) {
+	serverURL := sm.ServerURL(index)
+	if len(serverURL) == 0 {
+		return "", nil
+	}
+	serverURLParsed, err := urlutil.ParseURLTemplate(serverURL)
+	if err != nil {
+		return "", err
+	}
+	return serverURLParsed.Path, nil
 }
 
 func (sm *SpecMore) Tags(inclTop, inclOps bool) []string {
