@@ -26,17 +26,17 @@ func ReadSpecMore(path string, validate bool) (*SpecMore, error) {
 	return &SpecMore{Spec: spec}, nil
 }
 
-func (s *SpecMore) SchemaCount() int {
-	if s.Spec == nil {
+func (sm *SpecMore) SchemaCount() int {
+	if sm.Spec == nil {
 		return -1
-	} else if s.Spec.Components.Schemas == nil {
+	} else if sm.Spec.Components.Schemas == nil {
 		return 0
 	}
-	return len(s.Spec.Components.Schemas)
+	return len(sm.Spec.Components.Schemas)
 }
 
-func (s *SpecMore) OperationsTable(columns *text.TextSet) (*table.Table, error) {
-	return operationsTable(s.Spec, columns)
+func (sm *SpecMore) OperationsTable(columns *text.TextSet) (*table.Table, error) {
+	return operationsTable(sm.Spec, columns)
 }
 
 func operationsTable(spec *oas3.Swagger, columns *text.TextSet) (*table.Table, error) {
@@ -134,12 +134,12 @@ func OpTableColumnsRingCentral() *text.TextSet {
 	return &text.TextSet{Texts: texts}
 }
 
-func (s *SpecMore) OperationMetas() []OperationMeta {
+func (sm *SpecMore) OperationMetas() []OperationMeta {
 	ometas := []OperationMeta{}
-	if s.Spec == nil {
+	if sm.Spec == nil {
 		return ometas
 	}
-	for url, path := range s.Spec.Paths {
+	for url, path := range sm.Spec.Paths {
 		if path.Connect != nil {
 			ometas = append(ometas, OperationToMeta(url, http.MethodConnect, path.Connect))
 		}
@@ -172,8 +172,8 @@ func (s *SpecMore) OperationMetas() []OperationMeta {
 	return ometas
 }
 
-func (s *SpecMore) OperationsCount() uint {
-	return uint(len(s.OperationMetas()))
+func (sm *SpecMore) OperationsCount() uint {
+	return uint(len(sm.OperationMetas()))
 }
 
 func (sm *SpecMore) SchemaNames() []string {
@@ -246,8 +246,8 @@ func (sm *SpecMore) TagsMap(inclTop, inclOps bool) map[string]int {
 	return tagsMap
 }
 
-func (s *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, indent string) error {
-	jsonData, err := s.Spec.MarshalJSON()
+func (sm *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, indent string) error {
+	jsonData, err := sm.Spec.MarshalJSON()
 	if err != nil {
 		return err
 	}
