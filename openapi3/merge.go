@@ -18,10 +18,6 @@ import (
 var jsonFileRx = regexp.MustCompile(`(?i)\.json\s*$`)
 
 func MergeDirectory(dir string, mergeOpts *MergeOptions) (*oas3.Swagger, int, error) {
-	return MergeDirectoryMore(dir, mergeOpts)
-}
-
-func MergeDirectoryMore(dir string, mergeOpts *MergeOptions) (*oas3.Swagger, int, error) {
 	var filePaths []string
 	var err error
 	if mergeOpts != nil && mergeOpts.FileRx != nil {
