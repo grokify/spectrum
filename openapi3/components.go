@@ -6,7 +6,7 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 )
 
-func SpecGetComponentRequestBody(spec *oas3.Swagger, componentPath string) *oas3.RequestBodyRef {
+func (sm *SpecMore) ComponentRequestBody(componentPath string) *oas3.RequestBodyRef {
 	componentPathParts := strings.Split(strings.TrimSpace(componentPath), "/")
 	if len(componentPathParts) != 4 ||
 		componentPathParts[0] != "#" ||
@@ -15,7 +15,7 @@ func SpecGetComponentRequestBody(spec *oas3.Swagger, componentPath string) *oas3
 		len(componentPathParts[3]) == 0 {
 		return nil
 	}
-	if reqBodyRef, ok := spec.Components.RequestBodies[componentPathParts[3]]; ok {
+	if reqBodyRef, ok := sm.Spec.Components.RequestBodies[componentPathParts[3]]; ok {
 		return reqBodyRef
 	}
 	return nil

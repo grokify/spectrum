@@ -147,6 +147,7 @@ func ValidateFixOperationPathParameters(spec *oas3.Swagger, fix bool) ([]*openap
 // which appears to be supported by more tools.
 func MoveRequestBodies(spec *oas3.Swagger, move bool) ([]*openapi3.OperationMeta, error) {
 	errorOperations := []*openapi3.OperationMeta{}
+	specMore := openapi3.SpecMore{Spec: spec}
 	openapi3.VisitOperations(
 		spec,
 		func(path, method string, op *oas3.Operation) {
@@ -155,7 +156,7 @@ func MoveRequestBodies(spec *oas3.Swagger, move bool) ([]*openapi3.OperationMeta
 			}
 			if len(op.RequestBody.Ref) > 0 {
 				if move {
-					requestBodyRef := openapi3.SpecGetComponentRequestBody(spec, op.RequestBody.Ref)
+					requestBodyRef := specMore.ComponentRequestBody(op.RequestBody.Ref)
 					if requestBodyRef != nil {
 						op.RequestBody = requestBodyRef
 					}

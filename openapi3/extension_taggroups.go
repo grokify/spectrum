@@ -63,6 +63,25 @@ type TagGroup struct {
 	Tags    []string `json:"tags"`
 }
 
+/*
+func (sm *SpecMore) TagsWithoutGroups() ([]string, []string, []string, error) {
+	tgs, err := sm.TagGroups()
+	if err != nil {
+		return []string{}, []string{}, []string{}, err
+	}
+	allTags := []string{}
+
+	topTags := stringsutil.SliceCondenseSpace(sm.Tags(true, false), true, true)
+	allTags = append(allTags, topTags...)
+
+	opsTags := stringsutil.SliceCondenseSpace(sm.Tags(false, true), true, true)
+	allTags = append(allTags, opsTags...)
+
+	allTags = stringsutil.SliceCondenseSpace(allTags, true, true)
+	return allTags, topTags, opsTags, nil
+}
+*/
+
 func TagsWithoutGroups(spec *oas3.Swagger, tagGroupSet TagGroupSet) []string {
 	missing := []string{}
 	for _, tag := range spec.Tags {
