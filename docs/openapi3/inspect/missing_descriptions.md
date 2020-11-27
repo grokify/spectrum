@@ -12,11 +12,11 @@ specmore := openapi3.SpecMore{Spec: spec}
 // OperationPropertiesDescriptionStatus returns a
 // map[string]map[string]int as a `gotilla/maputil.MapStringMapStringInt`
 // where `1` indicates with desc and `0` indicates without desc.
-status := OperationPropertiesDescriptionStatus()
+status := specmore.OperationPropertiesDescriptionStatus()
 
 // OperationParametersWithoutDescriptionsWriteFile
 // will write the operationIds and param names to a file
-err := OperationParametersWithoutDescriptionsWriteFile(
+err := specmore.OperationParametersWithoutDescriptionsWriteFile(
     "missing-descs_op-params.txt")
 ```
 
@@ -28,10 +28,10 @@ specmore := openapi3.SpecMore{Spec: spec}
 // SchemaPropertiesDescriptionStatus returns a
 // map[string]map[string]int as a `gotilla/maputil.MapStringMapStringInt`
 // where `1` indicates with desc and `0` indicates without desc.
-status := SchemaPropertiesDescriptionStatus()
+status := specmore.SchemaPropertiesDescriptionStatus()
 
 // SchemaPropertiesWithoutDescriptionsWriteFile
 // will write the schema names and property names to a file
-err := SchemaPropertiesWithoutDescriptionsWriteFile(
+err := specmore.SchemaPropertiesWithoutDescriptionsWriteFile(
     "missing-descs_schema-props.txt")
 ```
