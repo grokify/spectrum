@@ -9,6 +9,8 @@ import (
 	"github.com/grokify/gotilla/type/maputil"
 )
 
+const defaultSep = " ~~~ "
+
 // OperationPropertiesDescriptionStatus returns a set of
 // operationIds and parameters with description status where `1`
 // indicates a description and `0` indicates no descriptions.
@@ -80,9 +82,9 @@ func (sm *SpecMore) OperationParametersWithoutDescriptionsWriteFile(filename str
 	arr := missing.Flatten("#/paths/...", "/",
 		maputil.MapStringMapStringIntFuncExactMatch(1),
 		true, true)
-	withCount1, withCount2 := missing.CountsWithVal(1, " ~~~ ")
-	woutCount1, woutCount2 := missing.CountsWithVal(0, " ~~~ ")
-	allCount1, allCount2 := missing.Counts(" ~~~ ")
+	withCount1, withCount2 := missing.CountsWithVal(1, defaultSep)
+	woutCount1, woutCount2 := missing.CountsWithVal(0, defaultSep)
+	allCount1, allCount2 := missing.Counts(defaultSep)
 	lines := []string{
 		fmt.Sprintf("Operations Missing/Have/All [%d/%d/%d] Params Missing/Have/All [%d/%d/%d]",
 			woutCount1, withCount1, allCount1,
@@ -98,9 +100,9 @@ func (sm *SpecMore) SchemaPropertiesWithoutDescriptionsWriteFile(filename string
 	arr := missing.Flatten("#/components/schemas", "/",
 		maputil.MapStringMapStringIntFuncExactMatch(1),
 		true, true)
-	withCount1, withCount2 := missing.CountsWithVal(1, " ~~~ ")
-	woutCount1, woutCount2 := missing.CountsWithVal(0, " ~~~ ")
-	allCount1, allCount2 := missing.Counts(" ~~~ ")
+	withCount1, withCount2 := missing.CountsWithVal(1, defaultSep)
+	woutCount1, woutCount2 := missing.CountsWithVal(0, defaultSep)
+	allCount1, allCount2 := missing.Counts(defaultSep)
 	lines := []string{
 		fmt.Sprintf("Schemas Missing/Have/All [%d/%d/%d] Props Missing/Have/All [%d/%d/%d]",
 			woutCount1, withCount1, allCount1,

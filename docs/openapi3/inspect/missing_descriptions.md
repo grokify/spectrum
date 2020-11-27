@@ -9,9 +9,10 @@ Swaggman provides an ability to list operation parameters and schema properties 
 ```golang
 specmore := openapi3.SpecMore{Spec: spec}
 
-// OperationPropertiesWithoutDescriptions returns a
+// OperationPropertiesDescriptionStatus returns a
 // map[string]map[string]int as a `gotilla/maputil.MapStringMapStringInt`
-missing := OperationPropertiesWithoutDescriptions()
+// where `1` indicates with desc and `0` indicates without desc.
+status := OperationPropertiesDescriptionStatus()
 
 // OperationParametersWithoutDescriptionsWriteFile
 // will write the operationIds and param names to a file
@@ -24,12 +25,13 @@ err := OperationParametersWithoutDescriptionsWriteFile(
 ```golang
 specmore := openapi3.SpecMore{Spec: spec}
 
-// SchemaPropertiesWithoutDescriptions returns a
+// SchemaPropertiesDescriptionStatus returns a
 // map[string]map[string]int as a `gotilla/maputil.MapStringMapStringInt`
-missing := SchemaPropertiesWithoutDescriptions()
+// where `1` indicates with desc and `0` indicates without desc.
+status := SchemaPropertiesDescriptionStatus()
+
 // SchemaPropertiesWithoutDescriptionsWriteFile
 // will write the schema names and property names to a file
-
 err := SchemaPropertiesWithoutDescriptionsWriteFile(
     "missing-descs_schema-props.txt")
 ```
