@@ -9,13 +9,14 @@ import (
 	"github.com/grokify/gotilla/type/maputil"
 )
 
-// OperationPropertiesWithoutDescriptions returns a set of
-// operation ids and parameters without descriptions. Descriptions
-// for references aren't processed so they aren't analyzed and
-// reported on. This returns a `MapStringMapStringInt` where the
-// first key is the operation id and the second key is the
+// OperationPropertiesDescriptionStatus returns a set of
+// operationIds and parameters with description status where `1`
+// indicates a description and `0` indicates no descriptions.
+// Descriptions for references aren't processed so they aren't
+// analyzed and reported on. This returns a `MapStringMapStringInt`
+// where the first key is the operationIds and the second key is the
 // parameter name.
-func (sm *SpecMore) OperationPropertiesWithoutDescriptions() maputil.MapStringMapStringInt {
+func (sm *SpecMore) OperationPropertiesDescriptionStatus() maputil.MapStringMapStringInt {
 	missingDescs := maputil.MapStringMapStringInt{}
 	VisitOperations(sm.Spec, func(path, method string, op *oas3.Operation) {
 		if op == nil {
@@ -35,6 +36,8 @@ func (sm *SpecMore) OperationPropertiesWithoutDescriptions() maputil.MapStringMa
 			}
 			descTry := strings.TrimSpace(paramRef.Value.Description)
 			if len(descTry) == 0 {
+				missingDescs.Set(op.OperationID, paramRef.Value.Name, 0)
+			} else {
 				missingDescs.Set(op.OperationID, paramRef.Value.Name, 1)
 			}
 		}
@@ -42,13 +45,14 @@ func (sm *SpecMore) OperationPropertiesWithoutDescriptions() maputil.MapStringMa
 	return missingDescs
 }
 
-// SchemaPropertiesWithoutDescriptions returns a set of
-// schema names and properties without descriptions. Descriptions
-// for references aren't processed so they aren't analyzed and
-// reported on. This returns a `MapStringMapStringInt` where the
-// first key is the component name and the second key is the
+// SchemaPropertiesDescriptionStatus returns a set of
+// schema names and properties with description status where `1`
+// indicates a description and `0` indicates no descriptions.
+// Descriptions for references aren't processed so they aren't
+// analyzed and reported on. This returns a `MapStringMapStringInt`
+// where the first key is the component name and the second key is the
 // property name.
-func (sm *SpecMore) SchemaPropertiesWithoutDescriptions() maputil.MapStringMapStringInt {
+func (sm *SpecMore) SchemaPropertiesDescriptionStatus() maputil.MapStringMapStringInt {
 	missingDescs := maputil.MapStringMapStringInt{}
 	for schName, schRef := range sm.Spec.Components.Schemas {
 		if len(schRef.Ref) > 0 || schRef.Value == nil {
@@ -62,6 +66,8 @@ func (sm *SpecMore) SchemaPropertiesWithoutDescriptions() maputil.MapStringMapSt
 			}
 			desc := strings.TrimSpace(propRef.Value.Description)
 			if len(desc) == 0 {
+				missingDescs.Set(schName, propName, 0)
+			} else {
 				missingDescs.Set(schName, propName, 1)
 			}
 		}
@@ -70,10 +76,17 @@ func (sm *SpecMore) SchemaPropertiesWithoutDescriptions() maputil.MapStringMapSt
 }
 
 func (sm *SpecMore) OperationParametersWithoutDescriptionsWriteFile(filename string) error {
-	missing := sm.OperationPropertiesWithoutDescriptions()
-	arr := missing.Flatten("#/paths/...", "/", true, true)
+	missing := sm.OperationPropertiesDescriptionStatus()
+	arr := missing.Flatten("#/paths/...", "/",
+		maputil.MapStringMapStringIntFuncExactMatch(1),
+		true, true)
+	withCount1, withCount2 := missing.CountsWithVal(1, " ~~~ ")
+	woutCount1, woutCount2 := missing.CountsWithVal(0, " ~~~ ")
+	allCount1, allCount2 := missing.Counts(" ~~~ ")
 	lines := []string{
-		fmt.Sprintf("Missing Desc Operations [%d] Missing Desc Parameters [%d]", len(missing), len(arr)),
+		fmt.Sprintf("Operations Missing/Have/All [%d/%d/%d] Params Missing/Have/All [%d/%d/%d]",
+			woutCount1, withCount1, allCount1,
+			woutCount2, withCount2, allCount2),
 	}
 	lines = append(lines, arr...)
 
@@ -81,10 +94,17 @@ func (sm *SpecMore) OperationParametersWithoutDescriptionsWriteFile(filename str
 }
 
 func (sm *SpecMore) SchemaPropertiesWithoutDescriptionsWriteFile(filename string) error {
-	missing := sm.SchemaPropertiesWithoutDescriptions()
-	arr := missing.Flatten("#/components/schemas", "/", true, true)
+	missing := sm.SchemaPropertiesDescriptionStatus()
+	arr := missing.Flatten("#/components/schemas", "/",
+		maputil.MapStringMapStringIntFuncExactMatch(1),
+		true, true)
+	withCount1, withCount2 := missing.CountsWithVal(1, " ~~~ ")
+	woutCount1, woutCount2 := missing.CountsWithVal(0, " ~~~ ")
+	allCount1, allCount2 := missing.Counts(" ~~~ ")
 	lines := []string{
-		fmt.Sprintf("Missing Desc Schemas [%d] Missing Desc Properties [%d]", len(missing), len(arr)),
+		fmt.Sprintf("Schemas Missing/Have/All [%d/%d/%d] Props Missing/Have/All [%d/%d/%d]",
+			woutCount1, withCount1, allCount1,
+			woutCount2, withCount2, allCount2),
 	}
 	lines = append(lines, arr...)
 
