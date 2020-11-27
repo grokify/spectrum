@@ -1,0 +1,14 @@
+site_name: Swaggman
+repo_url: https://github.com/grokify/swagggman
+edit_uri: tree/master/docs
+docs_dir: docs
+theme: readthedocs
+
+markdown_extensions:
+  - codehilite:
+      linenums: "None"
+
+nav:
+    - Home: index.md
+    - Inspect:
+        - Missing Descriptions: openapi3/inspect/missing_descriptions.md
