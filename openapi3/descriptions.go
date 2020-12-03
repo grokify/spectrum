@@ -9,6 +9,11 @@ import (
 	"github.com/grokify/gotilla/type/maputil"
 )
 
+const (
+	DescStatusIsEmpty    = 0
+	DescStatusIsNotEmpty = 1
+)
+
 const defaultSep = " ~~~ "
 
 // OperationPropertiesDescriptionStatus returns a set of
@@ -19,7 +24,7 @@ const defaultSep = " ~~~ "
 // where the first key is the operationIds and the second key is the
 // parameter name.
 func (sm *SpecMore) OperationPropertiesDescriptionStatus() maputil.MapStringMapStringInt {
-	missingDescs := maputil.MapStringMapStringInt{}
+	descStatus := maputil.MapStringMapStringInt{}
 	VisitOperations(sm.Spec, func(path, method string, op *oas3.Operation) {
 		if op == nil {
 			return
@@ -38,13 +43,13 @@ func (sm *SpecMore) OperationPropertiesDescriptionStatus() maputil.MapStringMapS
 			}
 			descTry := strings.TrimSpace(paramRef.Value.Description)
 			if len(descTry) == 0 {
-				missingDescs.Set(op.OperationID, paramRef.Value.Name, 0)
+				descStatus.Set(op.OperationID, paramRef.Value.Name, DescStatusIsEmpty)
 			} else {
-				missingDescs.Set(op.OperationID, paramRef.Value.Name, 1)
+				descStatus.Set(op.OperationID, paramRef.Value.Name, DescStatusIsNotEmpty)
 			}
 		}
 	})
-	return missingDescs
+	return descStatus
 }
 
 // SchemaPropertiesDescriptionStatus returns a set of
@@ -55,7 +60,7 @@ func (sm *SpecMore) OperationPropertiesDescriptionStatus() maputil.MapStringMapS
 // where the first key is the component name and the second key is the
 // property name.
 func (sm *SpecMore) SchemaPropertiesDescriptionStatus() maputil.MapStringMapStringInt {
-	missingDescs := maputil.MapStringMapStringInt{}
+	descStatus := maputil.MapStringMapStringInt{}
 	for schName, schRef := range sm.Spec.Components.Schemas {
 		if len(schRef.Ref) > 0 || schRef.Value == nil {
 			continue
@@ -68,29 +73,29 @@ func (sm *SpecMore) SchemaPropertiesDescriptionStatus() maputil.MapStringMapStri
 			}
 			desc := strings.TrimSpace(propRef.Value.Description)
 			if len(desc) == 0 {
-				missingDescs.Set(schName, propName, 0)
+				descStatus.Set(schName, propName, DescStatusIsEmpty)
 			} else {
-				missingDescs.Set(schName, propName, 1)
+				descStatus.Set(schName, propName, DescStatusIsNotEmpty)
 			}
 		}
 	}
-	return missingDescs
+	return descStatus
 }
 
 func (sm *SpecMore) OperationParametersWithoutDescriptionsWriteFile(filename string) error {
-	missing := sm.OperationPropertiesDescriptionStatus()
-	arr := missing.Flatten("#/paths/...", "/",
-		maputil.MapStringMapStringIntFuncExactMatch(1),
+	descStatus := sm.OperationPropertiesDescriptionStatus()
+	missingDescPaths := descStatus.Flatten("#/paths/...", "/",
+		maputil.MapStringMapStringIntFuncExactMatch(DescStatusIsEmpty),
 		true, true)
-	withCount1, withCount2 := missing.CountsWithVal(1, defaultSep)
-	woutCount1, woutCount2 := missing.CountsWithVal(0, defaultSep)
-	allCount1, allCount2 := missing.Counts(defaultSep)
+	withCount1, withCount2 := descStatus.CountsWithVal(DescStatusIsNotEmpty, defaultSep)
+	woutCount1, woutCount2 := descStatus.CountsWithVal(DescStatusIsEmpty, defaultSep)
+	allCount1, allCount2 := descStatus.Counts(defaultSep)
 	lines := []string{
 		fmt.Sprintf("Operations Missing/Have/All [%d/%d/%d] Params Missing/Have/All [%d/%d/%d]",
 			woutCount1, withCount1, allCount1,
 			woutCount2, withCount2, allCount2),
 	}
-	lines = append(lines, arr...)
+	lines = append(lines, missingDescPaths...)
 
 	return osutil.CreateFileWithLines(filename, lines, "\n", true)
 }
@@ -98,10 +103,10 @@ func (sm *SpecMore) OperationParametersWithoutDescriptionsWriteFile(filename str
 func (sm *SpecMore) SchemaPropertiesWithoutDescriptionsWriteFile(filename string) error {
 	missing := sm.SchemaPropertiesDescriptionStatus()
 	arr := missing.Flatten("#/components/schemas", "/",
-		maputil.MapStringMapStringIntFuncExactMatch(1),
+		maputil.MapStringMapStringIntFuncExactMatch(DescStatusIsEmpty),
 		true, true)
-	withCount1, withCount2 := missing.CountsWithVal(1, defaultSep)
-	woutCount1, woutCount2 := missing.CountsWithVal(0, defaultSep)
+	withCount1, withCount2 := missing.CountsWithVal(DescStatusIsNotEmpty, defaultSep)
+	woutCount1, woutCount2 := missing.CountsWithVal(DescStatusIsEmpty, defaultSep)
 	allCount1, allCount2 := missing.Counts(defaultSep)
 	lines := []string{
 		fmt.Sprintf("Schemas Missing/Have/All [%d/%d/%d] Props Missing/Have/All [%d/%d/%d]",
