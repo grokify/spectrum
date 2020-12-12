@@ -283,12 +283,14 @@ func MergeSchemas(specMaster, specExtra *oas3.Swagger, specExtraNote string, mer
 					mergeOpts = &MergeOptions{}
 				}
 				checkCollisionResult := mergeOpts.CheckSchemaCollision(schemaName, schemaMaster, schemaExtra, specExtraNote)
-				switch checkCollisionResult {
-				case CollisionCheckError:
-					return nil, fmt.Errorf("E_SCHEMA_COLLISION [%v] EXTRA_SPEC [%s]", schemaName, specExtraNote)
-				case CollisionCheckOverwrite:
-					delete(specMaster.Components.Schemas, schemaName)
-					specMaster.Components.Schemas[schemaName] = schemaExtra
+				if checkCollisionResult != CollisionCheckSame &&
+					mergeOpts.CollisionCheckResult != CollisionCheckSkip {
+					if mergeOpts.CollisionCheckResult == CollisionCheckOverwrite {
+						delete(specMaster.Components.Schemas, schemaName)
+						specMaster.Components.Schemas[schemaName] = schemaExtra
+					} else if mergeOpts.CollisionCheckResult == CollisionCheckError {
+						return nil, fmt.Errorf("E_SCHEMA_COLLISION [%v] EXTRA_SPEC [%s]", schemaName, specExtraNote)
+					}
 				}
 				/*
 					if !reflect.DeepEqual(schemaMaster, schemaExtra) {

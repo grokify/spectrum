@@ -5,6 +5,15 @@ import (
 	"regexp"
 )
 
+type CollisionCheckResult int
+
+const (
+	CollisionCheckSame CollisionCheckResult = iota
+	CollisionCheckOverwrite
+	CollisionCheckError
+	CollisionCheckSkip
+)
+
 type MergeOptions struct {
 	FileRx               *regexp.Regexp
 	SchemaFunc           func(schemaName string, sch1, sch2 interface{}, hint2 string) CollisionCheckResult
@@ -26,15 +35,6 @@ func (mo *MergeOptions) CheckSchemaCollision(schemaName string, sch1, sch2 inter
 	}
 	return mo.SchemaFunc(schemaName, sch1, sch2, hint2)
 }
-
-type CollisionCheckResult int
-
-const (
-	CollisionCheckSame CollisionCheckResult = iota
-	CollisionCheckOverwrite
-	CollisionCheckError
-	CollisionCheckSkip
-)
 
 func SchemaCheckCollisionDefault(schemaName string, item1, item2 interface{}, item2Note string) CollisionCheckResult {
 	if reflect.DeepEqual(item1, item2) {
