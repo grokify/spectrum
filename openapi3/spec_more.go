@@ -27,7 +27,7 @@ func ReadSpecMore(path string, validate bool) (*SpecMore, error) {
 	return &SpecMore{Spec: spec}, nil
 }
 
-func (sm *SpecMore) SchemaCount() int {
+func (sm *SpecMore) SchemasCount() int {
 	if sm.Spec == nil {
 		return -1
 	} else if sm.Spec.Components.Schemas == nil {
@@ -176,8 +176,11 @@ func (sm *SpecMore) OperationMetas() []OperationMeta {
 	return ometas
 }
 
-func (sm *SpecMore) OperationsCount() uint {
-	return uint(len(sm.OperationMetas()))
+func (sm *SpecMore) OperationsCount() int {
+	if sm.Spec == nil {
+		return -1
+	}
+	return len(sm.OperationMetas())
 }
 
 func (sm *SpecMore) SchemaNames() []string {
@@ -272,6 +275,18 @@ func (sm *SpecMore) TagsMap(inclTop, inclOps bool) map[string]int {
 		})
 	}
 	return tagsMap
+}
+
+type SpecStats struct {
+	OperationsCount int
+	SchemasCount    int
+}
+
+func (sm *SpecMore) Stats() SpecStats {
+	return SpecStats{
+		OperationsCount: sm.OperationsCount(),
+		SchemasCount:    sm.SchemasCount(),
+	}
 }
 
 func (sm *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, indent string) error {
