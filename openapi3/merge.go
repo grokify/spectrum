@@ -231,6 +231,8 @@ func MergeParameters(specMaster, specExtra *oas3.Swagger, specExtraNote string, 
 					continue
 				} else if reflect.DeepEqual(pExtra, pMaster) {
 					continue
+				} else if mergeOpts.CollisionCheckResult == CollisionCheckOverwrite {
+					specExtra.Components.Parameters[pName] = pExtra
 				} else {
 					return nil, fmt.Errorf("E_SCHEMA_COLLISION [%v] EXTRA_COMPONENTS_PARAMETER [%s]", specExtraNote, pName)
 				}
