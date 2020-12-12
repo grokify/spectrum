@@ -1,7 +1,6 @@
 Swaggman - OpenAPI / Swagger Spec Utility and Postman Converter
 ===============================================================
 
-[![Build Status][build-status-svg]][build-status-link]
 [![Build Status](https://github.com/grokify/swaggman/workflows/build/badge.svg)](https://github.com/grokify/swaggman/actions)
 [![Go Report Card][goreport-svg]][goreport-link]
 [![Docs][docs-godoc-svg]][docs-godoc-link]
