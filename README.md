@@ -1,7 +1,7 @@
 Swaggman - OpenAPI / Swagger Spec Utility and Postman Converter
 ===============================================================
 
-[![Build Status](https://github.com/grokify/swaggman/workflows/build/badge.svg)](https://github.com/grokify/swaggman/actions)
+[![Build Status][build-status-svg]][build-status-link]
 [![Go Report Card][goreport-svg]][goreport-link]
 [![Docs][docs-godoc-svg]][docs-godoc-link]
 [![License][license-svg]][license-link]
@@ -110,8 +110,8 @@ To set your environment variables, use the Settings Gear icon and then click "Ma
 * Medium: [Using Postman, Swagger and the RingCentral API](https://medium.com/ringcentral-developers/using-postman-with-swagger-and-the-ringcentral-api-523712f792a0)
 * YouTube: [Getting Started with RingCentral APIs using Postman ](https://youtu.be/5kE4UPXJ-5Q)
 
- [build-status-svg]: https://api.travis-ci.org/grokify/swaggman.svg?branch=master
- [build-status-link]: https://travis-ci.org/grokify/swaggman
+ [build-status-svg]: https://github.com/grokify/swaggman/workflows/build/badge.svg
+ [build-status-link]: https://github.com/grokify/swaggman/actions
  [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/swaggman
  [goreport-link]: https://goreportcard.com/report/github.com/grokify/swaggman
  [docs-godoc-svg]: https://img.shields.io/badge/docs-godoc-blue.svg
