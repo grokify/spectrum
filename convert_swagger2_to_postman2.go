@@ -9,7 +9,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/grokify/gotilla/net/httputilmore"
+	"github.com/grokify/simplego/net/httputilmore"
 	"github.com/grokify/swaggman/postman2"
 	"github.com/grokify/swaggman/postman2/simple"
 	"github.com/grokify/swaggman/swagger2"

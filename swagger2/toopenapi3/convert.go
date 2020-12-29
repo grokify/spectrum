@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/grokify/gotilla/cmd/cmdutil"
-	"github.com/grokify/gotilla/errors/errorsutil"
-	"github.com/grokify/gotilla/type/stringsutil"
+	"github.com/grokify/simplego/cmd/cmdutil"
+	"github.com/grokify/simplego/errors/errorsutil"
+	"github.com/grokify/simplego/type/stringsutil"
 )
 
 const cmdSwagger2OpenAPI = "swagger2openapi"

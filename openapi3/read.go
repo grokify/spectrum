@@ -8,7 +8,7 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/ghodss/yaml"
-	"github.com/grokify/gotilla/encoding/jsonutil"
+	"github.com/grokify/simplego/encoding/jsonutil"
 	"github.com/pkg/errors"
 )
 

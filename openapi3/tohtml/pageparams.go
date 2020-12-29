@@ -9,7 +9,7 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/table"
-	"github.com/grokify/gotilla/text"
+	"github.com/grokify/simplego/text"
 	"github.com/grokify/swaggman/openapi3"
 )
 
@@ -35,10 +35,10 @@ func (pp *PageParams) AddSpec(spec *oas3.Swagger, columns *text.TextSet) error {
 	if err != nil {
 		return err
 	}
-	return pp.AddTable(tbl)
+	return pp.AddOperationsTable(tbl)
 }
 
-func (pp *PageParams) AddTable(tbl *table.Table) error {
+func (pp *PageParams) AddOperationsTable(tbl *table.Table) error {
 	docs := table.ToDocuments(tbl)
 	jdocs, err := json.Marshal(docs)
 	if err != nil {
@@ -58,6 +58,23 @@ func (pp *PageParams) WriteFile(filename string) error {
 	return nil
 }
 
-func DefaultColumns() {
-
+func DefaultColumns() text.TextSet {
+	texts := []text.Text{
+		{
+			Display: "Method",
+			Slug:    "method"},
+		{
+			Display: "Path",
+			Slug:    "path"},
+		{
+			Display: "OperationID",
+			Slug:    "operationId"},
+		{
+			Display: "Summary",
+			Slug:    "summary"},
+		{
+			Display: "Tags",
+			Slug:    "tags"},
+	}
+	return text.TextSet{Texts: texts}
 }

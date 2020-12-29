@@ -6,13 +6,12 @@ import (
 	"os"
 	"strings"
 
-	"github.com/grokify/gotilla/net/urlutil"
-	"github.com/grokify/gotilla/type/stringsutil"
-
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/table"
-	"github.com/grokify/gotilla/encoding/jsonutil"
-	"github.com/grokify/gotilla/text"
+	"github.com/grokify/simplego/encoding/jsonutil"
+	"github.com/grokify/simplego/net/urlutil"
+	"github.com/grokify/simplego/text"
+	"github.com/grokify/simplego/type/stringsutil"
 )
 
 type SpecMore struct {

@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/grokify/gotilla/io/ioutilmore"
+	"github.com/grokify/simplego/io/ioutilmore"
 	"github.com/grokify/swaggman/swagger2"
 	"github.com/jessevdk/go-flags"
 )

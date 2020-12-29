@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/grokify/gotilla/text"
+	"github.com/grokify/simplego/text"
 	"github.com/grokify/swaggman/openapi3"
 	"github.com/grokify/swaggman/openapi3/tohtml"
 )
@@ -65,6 +65,9 @@ func ColumnTexts() *text.TextSet {
 		{
 			Display: "User Permissions",
 			Slug:    "x-user-permission"},
+		{
+			Display: "Docs Level",
+			Slug:    "x-docs-level"},
 	}
 	return &text.TextSet{Texts: texts}
 }

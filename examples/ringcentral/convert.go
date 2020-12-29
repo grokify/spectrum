@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/grokify/swaggman"
+	"github.com/grokify/swaggman/openapi3"
 	"github.com/grokify/swaggman/postman2"
 	"github.com/jessevdk/go-flags"
 )
@@ -18,10 +19,33 @@ type Options struct {
 }
 
 func main() {
+
 	var opts Options
 	_, err := flags.Parse(&opts)
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	if 1 == 1 {
+		spec, err := openapi3.ReadFile(opts.Swagger, true)
+		if err != nil {
+			log.Fatal(err)
+		}
+		sm := openapi3.SpecMore{Spec: spec}
+		if 1 == 1 {
+			err := sm.SchemaPropertiesWithoutDescriptionsWriteFile("rc-platform.yml.schema-properties_missing-descriptions.txt")
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+		if 1 == 1 {
+			err := sm.OperationParametersWithoutDescriptionsWriteFile("rc-platform.yml.op-params_missing-descriptions.txt")
+			if err != nil {
+				log.Fatal(err)
+			}
+
+		}
+		panic("ZZZ")
 	}
 
 	cfg := swaggman.Configuration{

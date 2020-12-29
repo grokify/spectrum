@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/gotilla/net/urlutil"
+	"github.com/grokify/simplego/net/urlutil"
 )
 
 func SpecDeleteProperties(spec *oas3.Swagger, md SpecMetadata) {

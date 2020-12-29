@@ -5,7 +5,7 @@ import (
 	"log"
 	"regexp"
 
-	"github.com/grokify/gotilla/io/ioutilmore"
+	"github.com/grokify/simplego/io/ioutilmore"
 	csv "github.com/grokify/swaggman/swagger2/tocsv"
 	"github.com/jessevdk/go-flags"
 )

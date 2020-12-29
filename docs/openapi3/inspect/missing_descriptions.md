@@ -10,7 +10,7 @@ Swaggman provides an ability to list operation parameters and schema properties 
 specmore := openapi3.SpecMore{Spec: spec}
 
 // OperationPropertiesDescriptionStatus returns a
-// map[string]map[string]int as a `gotilla/maputil.MapStringMapStringInt`
+// map[string]map[string]int as a `simplego/maputil.MapStringMapStringInt`
 // where `1` indicates with desc and `0` indicates without desc.
 status := specmore.OperationPropertiesDescriptionStatus()
 
@@ -26,7 +26,7 @@ err := specmore.OperationParametersWithoutDescriptionsWriteFile(
 specmore := openapi3.SpecMore{Spec: spec}
 
 // SchemaPropertiesDescriptionStatus returns a
-// map[string]map[string]int as a `gotilla/maputil.MapStringMapStringInt`
+// map[string]map[string]int as a `simplego/maputil.MapStringMapStringInt`
 // where `1` indicates with desc and `0` indicates without desc.
 status := specmore.SchemaPropertiesDescriptionStatus()
 

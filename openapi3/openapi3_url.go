@@ -3,7 +3,7 @@ package openapi3
 import (
 	"strings"
 
-	"github.com/grokify/gotilla/net/urlutil"
+	"github.com/grokify/simplego/net/urlutil"
 )
 
 func BuildApiUrlOAS(specServerURL, overrideServerURL, specPath string) string {

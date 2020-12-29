@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/grokify/gocharts/data/histogram"
-	"github.com/grokify/gotilla/encoding/csvutil"
-	"github.com/grokify/gotilla/type/stringsutil"
+	"github.com/grokify/simplego/encoding/csvutil"
+	"github.com/grokify/simplego/type/stringsutil"
 )
 
 func CountEndpointsByTag(spec Specification, tags []string) histogram.HistogramSet {
