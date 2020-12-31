@@ -114,7 +114,7 @@ To set your environment variables, use the Settings Gear icon and then click "Ma
  [build-status-link]: https://github.com/grokify/swaggman/actions
  [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/swaggman
  [goreport-link]: https://goreportcard.com/report/github.com/grokify/swaggman
- [docs-godoc-svg]: https://img.shields.io/badge/docs-godoc-blue.svg
- [docs-godoc-link]: https://godoc.org/github.com/grokify/swaggman
+ [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/swaggman
+ [docs-godoc-link]: https://pkg.go.dev/github.com/grokify/swaggman
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
  [license-link]: https://github.com/grokify/swaggman/blob/master/LICENSE.md
