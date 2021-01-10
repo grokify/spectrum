@@ -5,7 +5,7 @@ go 1.15
 require (
 	github.com/bronze1man/yaml2json v0.0.0-20200315134851-744b8844d0e0 // indirect
 	github.com/buger/jsonparser v1.1.0
-	github.com/getkin/kin-openapi v0.32.0
+	github.com/getkin/kin-openapi v0.35.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-openapi/spec v0.19.9
 	github.com/google/go-querystring v1.0.0
