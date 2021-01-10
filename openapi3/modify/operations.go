@@ -1,6 +1,7 @@
 package modify
 
 import (
+	"net/http"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
@@ -13,6 +14,25 @@ func SpecOperationsCount(spec *oas3.Swagger) uint {
 		count++
 	})
 	return count
+}
+
+func SpecSetOperation(spec *oas3.Swagger, path, method string, op oas3.Operation) {
+	pathItem, ok := spec.Paths[path]
+	if !ok {
+		pathItem = &oas3.PathItem{}
+	}
+	method = strings.ToUpper(strings.TrimSpace(method))
+	switch method {
+	case http.MethodGet:
+		pathItem.Get = &op
+	case http.MethodPost:
+		pathItem.Post = &op
+	case http.MethodPut:
+		pathItem.Put = &op
+	case http.MethodPatch:
+		pathItem.Patch = &op
+	}
+
 }
 
 func SpecOperationIds(spec *oas3.Swagger) map[string]int {

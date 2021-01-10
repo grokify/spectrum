@@ -1,6 +1,7 @@
 package openapi3
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -180,6 +181,36 @@ func (sm *SpecMore) OperationsCount() int {
 		return -1
 	}
 	return len(sm.OperationMetas())
+}
+
+func (sm *SpecMore) OperationsIDs() []string {
+	ids := []string{}
+	VisitOperations(sm.Spec, func(thisPath, thisMethod string, thisOp *oas3.Operation) {
+		if thisOp == nil {
+			return
+		}
+		ids = append(ids, thisOp.OperationID)
+	})
+	ids = stringsutil.SliceCondenseSpace(ids, false, true)
+	return ids
+}
+
+func (sm *SpecMore) OperationByID(wantOperationID string) (path, method string, op *oas3.Operation, err error) {
+	wantOperationID = strings.TrimSpace(wantOperationID)
+	VisitOperations(sm.Spec, func(thisPath, thisMethod string, thisOp *oas3.Operation) {
+		if thisOp == nil {
+			return
+		}
+		if wantOperationID == strings.TrimSpace(thisOp.OperationID) {
+			path = thisPath
+			method = thisMethod
+			op = thisOp
+		}
+	})
+	if len(strings.TrimSpace(method)) == 0 {
+		err = fmt.Errorf("operation_not_found [%s]", wantOperationID)
+	}
+	return path, method, op, err
 }
 
 func (sm *SpecMore) SchemaNames() []string {
