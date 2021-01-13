@@ -2,11 +2,10 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/grokify/swaggman/openapi3"
 	"github.com/jessevdk/go-flags"
-
-	log "github.com/sirupsen/logrus"
 )
 
 type Options struct {
@@ -25,7 +24,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	} else {
-		log.Infof("S_SPEC_VALID File [%s] Title [%s]", opts.SpecFileOAS3, spec.Info.Title)
+		log.Printf(
+			"S_SPEC_VALID File [%s] Title [%s]", opts.SpecFileOAS3, spec.Info.Title)
 	}
 
 	fmt.Println("DONE")
