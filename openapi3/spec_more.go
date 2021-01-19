@@ -213,6 +213,25 @@ func (sm *SpecMore) OperationByID(wantOperationID string) (path, method string, 
 	return path, method, op, err
 }
 
+func (sm *SpecMore) SetOperation(path, method string, op *oas3.Operation) {
+	path = strings.TrimSpace(path)
+	if strings.Index(path, "/") != 0 {
+		path = "/" + path
+	}
+	if sm.Spec.Paths == nil {
+		sm.Spec.Paths = map[string]*oas3.PathItem{}
+	}
+	pathItem, ok := sm.Spec.Paths[path]
+	if !ok {
+		pathItem = &oas3.PathItem{}
+	}
+	method = strings.ToUpper(strings.TrimSpace(method))
+	if method == http.MethodPost {
+		pathItem.Post = op
+	}
+	sm.Spec.Paths[path] = pathItem
+}
+
 func (sm *SpecMore) SchemaNames() []string {
 	schemaNames := []string{}
 	for schemaName := range sm.Spec.Components.Schemas {
@@ -241,6 +260,31 @@ func (sm *SpecMore) SchemaNameExists(schemaName string, includeNil bool) bool {
 		}
 	}
 	return false
+}
+
+func (sm *SpecMore) SchemaRef(schemaName string) *oas3.SchemaRef {
+	for schemaNameTry, schemaRef := range sm.Spec.Components.Schemas {
+		if schemaName == schemaNameTry {
+			return schemaRef
+		}
+	}
+	return nil
+}
+
+func (sm *SpecMore) SetSchemaRef(schemaName string, schemaRef *oas3.SchemaRef) error {
+	schemaName = strings.TrimSpace(schemaName)
+	if schemaRef != nil {
+		if sm.Spec.Components.Schemas == nil {
+			sm.Spec.Components.Schemas = map[string]*oas3.SchemaRef{}
+		}
+		if schemaRef.Value != nil {
+			if 1 == 0 && len(schemaRef.Value.Description) == 0 {
+				return fmt.Errorf("no description for schema component [%s]", schemaName)
+			}
+		}
+	}
+	sm.Spec.Components.Schemas[schemaName] = schemaRef
+	return nil
 }
 
 // ServerURL returns the OAS3 Spec URL for the index
@@ -319,17 +363,34 @@ func (sm *SpecMore) Stats() SpecStats {
 	}
 }
 
-func (sm *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, indent string) error {
-	jsonData, err := sm.Spec.MarshalJSON()
+func (sm *SpecMore) MarshalJSON(prefix, indent string) ([]byte, error) {
+	bytes, err := sm.Spec.MarshalJSON()
 	if err != nil {
-		return err
+		return bytes, err
 	}
 	pretty := false
 	if len(prefix) > 0 || len(indent) > 0 {
 		pretty = true
 	}
 	if pretty {
-		jsonData = jsonutil.PrettyPrint(jsonData, "", "  ")
+		bytes = jsonutil.PrettyPrint(bytes, "", "  ")
+	}
+	return bytes, nil
+}
+
+func (sm *SpecMore) PrintJSON(prefix, indent string) error {
+	bytes, err := sm.MarshalJSON(prefix, indent)
+	if err != nil {
+		return err
+	}
+	_, err = fmt.Println(string(bytes))
+	return err
+}
+
+func (sm *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, indent string) error {
+	jsonData, err := sm.MarshalJSON(prefix, indent)
+	if err != nil {
+		return err
 	}
 	return ioutil.WriteFile(filename, jsonData, perm)
 }
