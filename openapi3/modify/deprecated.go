@@ -29,6 +29,14 @@ func SpecOperationsSetDeprecated(spec *oas3.Swagger, newDeprecated bool) {
 var rxDeprecated = regexp.MustCompile(`(?i)\bdeprecated\b`)
 
 func SpecSetDeprecatedImplicit(spec *oas3.Swagger) {
+	openapi3.VisitOperations(
+		spec,
+		func(path, method string, op *oas3.Operation) {
+			if op != nil && rxDeprecated.MatchString(op.Description) {
+				op.Deprecated = true
+			}
+		},
+	)
 	for _, schemaRef := range spec.Components.Schemas {
 		if len(schemaRef.Ref) == 0 && schemaRef.Value != nil {
 			if rxDeprecated.MatchString(schemaRef.Value.Description) {
