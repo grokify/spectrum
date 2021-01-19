@@ -1,6 +1,8 @@
 package modify
 
 import (
+	"regexp"
+
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/swaggman/openapi3"
 )
@@ -22,4 +24,23 @@ func SpecOperationsSetDeprecated(spec *oas3.Swagger, newDeprecated bool) {
 			}
 		},
 	)
+}
+
+var rxDeprecated = regexp.MustCompile(`(?i)\bdeprecated\b`)
+
+func SpecSetDeprecatedImplicit(spec *oas3.Swagger) {
+	for _, schemaRef := range spec.Components.Schemas {
+		if len(schemaRef.Ref) == 0 && schemaRef.Value != nil {
+			if rxDeprecated.MatchString(schemaRef.Value.Description) {
+				schemaRef.Value.Deprecated = true
+			}
+			for _, propRef := range schemaRef.Value.Properties {
+				if len(propRef.Ref) == 0 && propRef.Value != nil {
+					if rxDeprecated.MatchString(propRef.Value.Description) {
+						propRef.Value.Deprecated = true
+					}
+				}
+			}
+		}
+	}
 }
