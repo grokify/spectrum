@@ -7,7 +7,18 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 )
 
-// GetExtensionPropString converts extension prop value from `json.RawMessage` to `string`.
+type ExtensionPropsParent interface{}
+
+// GetOperationExtensionPropStringOrEmpty converts extension prop value from `json.RawMessage` to `string`.
+func GetOperationExtensionPropStringOrEmpty(op oas3.Operation, key string) string {
+	str, err := GetExtensionPropString(op.ExtensionProps, key)
+	if err != nil {
+		return ""
+	}
+	return str
+}
+
+// GetExtensionPropStringOrEmpty converts extension prop value from `json.RawMessage` to `string`.
 func GetExtensionPropStringOrEmpty(xprops oas3.ExtensionProps, key string) string {
 	str, err := GetExtensionPropString(xprops, key)
 	if err != nil {
