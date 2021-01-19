@@ -8,19 +8,28 @@ import (
 	"github.com/grokify/simplego/io/ioutilmore"
 )
 
-const OASVersionLatest = "3.0.3"
+const (
+	OASVersionLatest  = "3.0.3"
+	apiVersionDefault = "0.0.1"
+)
 
 // NewSpec returns a new OpenAPI 3 spec that will validate.
-// Specifically, it includes an OAS version and sets `info`
-// to be an empty object instead of null.
-func NewSpec(oasVersion string) *oas3.Swagger {
+// Specifically, it includes an OAS version, sets `info` to
+// be an empty object instead of null and sets apiVersion.
+func NewSpec(oasVersion, apiTitle, apiVersion string) *oas3.Swagger {
 	oasVersion = strings.TrimSpace(oasVersion)
 	if len(oasVersion) == 0 {
 		oasVersion = OASVersionLatest
 	}
+	apiVersion = strings.TrimSpace(apiVersion)
+	if len(apiVersion) == 0 {
+		apiVersion = apiVersionDefault
+	}
 	return &oas3.Swagger{
 		OpenAPI: oasVersion,
-		Info:    &oas3.Info{}}
+		Info: &oas3.Info{
+			Title:   strings.TrimSpace(apiTitle),
+			Version: apiVersion}}
 }
 
 type SpecMetas struct {
