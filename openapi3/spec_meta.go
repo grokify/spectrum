@@ -4,8 +4,24 @@ import (
 	"regexp"
 	"strings"
 
+	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/io/ioutilmore"
 )
+
+const OASVersionLatest = "3.0.3"
+
+// NewSpec returns a new OpenAPI 3 spec that will validate.
+// Specifically, it includes an OAS version and sets `info`
+// to be an empty object instead of null.
+func NewSpec(oasVersion string) *oas3.Swagger {
+	oasVersion = strings.TrimSpace(oasVersion)
+	if len(oasVersion) == 0 {
+		oasVersion = OASVersionLatest
+	}
+	return &oas3.Swagger{
+		OpenAPI: oasVersion,
+		Info:    &oas3.Info{}}
+}
 
 type SpecMetas struct {
 	Metas []SpecMeta
