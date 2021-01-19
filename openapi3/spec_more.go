@@ -225,9 +225,27 @@ func (sm *SpecMore) SetOperation(path, method string, op *oas3.Operation) {
 	if !ok {
 		pathItem = &oas3.PathItem{}
 	}
+
 	method = strings.ToUpper(strings.TrimSpace(method))
-	if method == http.MethodPost {
+	switch method {
+	case http.MethodConnect:
+		pathItem.Connect = op
+	case http.MethodDelete:
+		pathItem.Delete = op
+	case http.MethodGet:
+		pathItem.Get = op
+	case http.MethodHead:
+		pathItem.Head = op
+	case http.MethodOptions:
+		pathItem.Options = op
+	case http.MethodPatch:
+		pathItem.Patch = op
+	case http.MethodPost:
 		pathItem.Post = op
+	case http.MethodPut:
+		pathItem.Put = op
+	case http.MethodTrace:
+		pathItem.Trace = op
 	}
 	sm.Spec.Paths[path] = pathItem
 }
