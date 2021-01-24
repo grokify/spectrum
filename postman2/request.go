@@ -26,34 +26,3 @@ type URLEncodedParam struct {
 	Type    string `json:"type,omitempty"`
 	Enabled bool   `json:"enabled,omitempty"`
 }
-
-/*
-	"request": {
-		"method": "POST",
-		"header": [
-			{
-				"key": "Content-Type",
-				"value": "application/json"
-			},
-			{
-				"key": "Accept",
-				"value": "application/json"
-			}
-		],
-		"body": {
-			"mode": "raw",
-			"raw": "{\n\t\"account\": \"r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59\",\n\t\"account_index\": 0,\n\t\"ledger_index\": \"validated\",\n\t\"strict\": true\n}"
-		},
-		"url": {
-			"raw": "{{WECOINS_RIPPLE_BASE_URL}}/api/v1/account_currencies",
-			"host": [
-				"{{WECOINS_RIPPLE_BASE_URL}}"
-			],
-			"path": [
-				"api",
-				"v1",
-				"account_currencies"
-			]
-		}
-	},
-*/
