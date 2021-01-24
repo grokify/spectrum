@@ -41,7 +41,7 @@ func main() {
 	if merge && len(opts.PostmanBase) > 0 {
 		err = conv.MergeConvert(opts.Swagger, opts.PostmanBase, opts.Postman)
 	} else {
-		err = conv.Convert(opts.Swagger, opts.Postman)
+		err = conv.ConvertFile(opts.Swagger, opts.Postman)
 	}
 
 	if err != nil {
