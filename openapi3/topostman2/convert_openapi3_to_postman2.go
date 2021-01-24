@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/simplego/net/urlutil"
 	"github.com/grokify/swaggman/openapi3"
 	"github.com/grokify/swaggman/postman2"
 	"github.com/grokify/swaggman/postman2/simple"
@@ -16,17 +17,6 @@ import (
 
 //const DefaultContentTypePreferences string = `multipart/form-data,application/json,application/x-www-form-urlencoded,application/xml,text/plain`
 //var defaultContentTypePreferencesSlice = strings.Split(DefaultContentTypePreferences, ",")
-
-// Configuration is a Swaggman configuration that holds information on how
-// to create the Postman 2.0 collection including overriding Swagger 2.0
-// spec values.
-type Configuration struct {
-	PostmanServerURLBasePath string            `json:"postmanServerUrlApiBasePath,omitempty"`
-	PostmanServerURL         string            `json:"postmanServerUrl,omitempty"`
-	PostmanURLHostname       string            `json:"postmanURLHostname,omitempty"`
-	PostmanHeaders           []postman2.Header `json:"postmanHeaders,omitempty"`
-	UseXTagGroups            bool              `json:"useXTagGroups,omitempty"`
-}
 
 // Converter is the struct that manages the conversion.
 type Converter struct {
@@ -40,7 +30,7 @@ func NewConverter(cfg Configuration) Converter {
 }
 
 // MergeConvert builds a Postman 2.0 spec using a base Postman 2.0 collection
-// and a Swagger 2.0 spec.
+// and a OpenAPI 3.0 spec.
 func (conv *Converter) MergeConvert(openapiFilepath string, pmanBaseFilepath string, pmanSpecFilepath string) error {
 	/*oas3Loader := oas3.NewSwaggerLoader()
 	oas3spec, err := oas3Loader.LoadSwaggerFromFile(openapiFilepath)
@@ -70,18 +60,18 @@ func (conv *Converter) MergeConvert(openapiFilepath string, pmanBaseFilepath str
 		}
 		return ioutil.WriteFile(pmanSpecFilepath, bytes, 0644)
 	}
-	return conv.Convert(openapiFilepath, pmanSpecFilepath)
+	return conv.ConvertFile(openapiFilepath, pmanSpecFilepath)
 }
 
-// Convert builds a Postman 2.0 spec using a Swagger 2.0 spec.
-func (conv *Converter) Convert(openapiFilepath string, pmanSpecFilepath string) error {
+// ConvertFile builds a Postman 2.0 spec using an OpenAPI 3.0 spec.
+func (conv *Converter) ConvertFile(openapiFilepath string, pmanSpecFilepath string) error {
 	//swag, err := swagger2.ReadSwagger2Spec(openapiFilepath)
 	oas3Loader := oas3.NewSwaggerLoader()
 	oas3spec, err := oas3Loader.LoadSwaggerFromFile(openapiFilepath)
 	if err != nil {
 		return err
 	}
-	pm, err := Convert(conv.Configuration, oas3spec)
+	pm, err := ConvertSpec(conv.Configuration, oas3spec)
 	if err != nil {
 		return err
 	}
@@ -93,8 +83,8 @@ func (conv *Converter) Convert(openapiFilepath string, pmanSpecFilepath string) 
 	return ioutil.WriteFile(pmanSpecFilepath, bytes, 0644)
 }
 
-// Convert creates a Postman 2.0 collection from a configuration and Swagger 2.0 spec
-func Convert(cfg Configuration, oas3spec *oas3.Swagger) (postman2.Collection, error) {
+// ConvertSpec creates a Postman 2.0 collection from a configuration and Swagger 2.0 spec
+func ConvertSpec(cfg Configuration, oas3spec *oas3.Swagger) (postman2.Collection, error) {
 	return Merge(cfg, postman2.Collection{}, oas3spec)
 }
 
@@ -132,6 +122,11 @@ func Merge(cfg Configuration, pman postman2.Collection, oas3spec *oas3.Swagger) 
 	for _, url := range urls {
 		path := oas3spec.Paths[url] // *PathItem
 
+		if path.Delete != nil {
+			pman = postmanAddItemToFolders(pman,
+				Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodDelete, path.Delete),
+				path.Delete.Tags, tagGroupSet)
+		}
 		if path.Get != nil {
 			pman = postmanAddItemToFolders(pman,
 				Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodGet, path.Get),
@@ -152,11 +147,7 @@ func Merge(cfg Configuration, pman postman2.Collection, oas3spec *oas3.Swagger) 
 				Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodPut, path.Put),
 				path.Put.Tags, tagGroupSet)
 		}
-		if path.Delete != nil {
-			pman = postmanAddItemToFolders(pman,
-				Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodDelete, path.Delete),
-				path.Delete.Tags, tagGroupSet)
-		}
+
 	}
 
 	return pman, nil
@@ -206,8 +197,8 @@ func postmanAddItemToFolder(pman postman2.Collection, pmItem *postman2.Item, pmF
 	return pman
 }
 
-func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *oas3.Swagger, url string, method string, operation *oas3.Operation) *postman2.Item {
-	pmUrl := BuildPostmanURL(cfg, oas3spec, url, operation)
+func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *oas3.Swagger, oasUrl string, method string, operation *oas3.Operation) *postman2.Item {
+	pmUrl := BuildPostmanURL(cfg, oas3spec, oasUrl, operation)
 	item := &postman2.Item{
 		Name: operation.Summary,
 		Request: &postman2.Request{
@@ -234,13 +225,32 @@ func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *oas3.Swagge
 		item.Request.URL.Variable = params.Variable
 	}
 
+	if cfg.RequestBodyFunc != nil {
+		bodyString := strings.TrimSpace(cfg.RequestBodyFunc(oasUrl))
+		if len(bodyString) > 0 {
+			item.Request.Body = &postman2.RequestBody{
+				Mode: "raw",
+				Raw:  bodyString}
+		}
+	}
+
 	return item
 }
 
 func BuildPostmanURL(cfg Configuration, spec *oas3.Swagger, specPath string, operation *oas3.Operation) postman2.URL {
 	specMore := openapi3.SpecMore{Spec: spec}
 	specServerURL := specMore.ServerURL(0)
-	overrideServerURL := cfg.PostmanServerURL
+	partsOverrideURL := []string{}
+	cfg.PostmanServerURL = strings.TrimSpace(cfg.PostmanServerURL)
+	if len(cfg.PostmanServerURL) > 0 {
+		partsOverrideURL = append(partsOverrideURL, cfg.PostmanServerURL)
+	}
+	cfg.PostmanServerURLBasePath = strings.TrimSpace(cfg.PostmanServerURLBasePath)
+	if len(cfg.PostmanServerURLBasePath) > 0 {
+		partsOverrideURL = append(partsOverrideURL, cfg.PostmanServerURLBasePath)
+	}
+	overrideServerURL := urlutil.JoinAbsolute(partsOverrideURL...)
+
 	specURLString := openapi3.BuildApiUrlOAS(specServerURL, overrideServerURL, specPath)
 	pmanURLString := postman2.ApiUrlOasToPostman(specURLString)
 	pmanURL := postman2.NewURL(pmanURLString)
