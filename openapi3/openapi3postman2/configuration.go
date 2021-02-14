@@ -1,6 +1,11 @@
 package topostman2
 
 import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"strings"
+
 	"github.com/grokify/swaggman/postman2"
 )
 
@@ -19,4 +24,18 @@ type Configuration struct {
 	PostmanHeaders           []postman2.Header `json:"postmanHeaders,omitempty"`
 	UseXTagGroups            bool              `json:"useXTagGroups,omitempty"`
 	RequestBodyFunc          func(urlPath string) string
+}
+
+func ConfigurationReadFile(filename string) (Configuration, error) {
+	filename = strings.TrimSpace(filename)
+	cfg := Configuration{}
+	if len(filename) == 0 {
+		return cfg, fmt.Errorf("empty file provided [%s]", filename)
+	}
+	bytes, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return cfg, err
+	}
+	err = json.Unmarshal(bytes, &cfg)
+	return cfg, err
 }

@@ -15,13 +15,10 @@ import (
 	"github.com/grokify/swaggman/postman2/simple"
 )
 
-//const DefaultContentTypePreferences string = `multipart/form-data,application/json,application/x-www-form-urlencoded,application/xml,text/plain`
-//var defaultContentTypePreferencesSlice = strings.Split(DefaultContentTypePreferences, ",")
-
 // Converter is the struct that manages the conversion.
 type Converter struct {
 	Configuration Configuration
-	Swagger       *oas3.Swagger
+	OpenAPISpec   *oas3.Swagger
 }
 
 // NewConverter instantiates a new converter.
@@ -32,11 +29,6 @@ func NewConverter(cfg Configuration) Converter {
 // MergeConvert builds a Postman 2.0 spec using a base Postman 2.0 collection
 // and a OpenAPI 3.0 spec.
 func (conv *Converter) MergeConvert(openapiFilepath string, pmanBaseFilepath string, pmanSpecFilepath string) error {
-	/*oas3Loader := oas3.NewSwaggerLoader()
-	oas3spec, err := oas3Loader.LoadSwaggerFromFile(openapiFilepath)
-	if err != nil {
-		return err
-	}*/
 	oas3spec, err := openapi3.ReadFile(openapiFilepath, true)
 	if err != nil {
 		return err
@@ -65,7 +57,6 @@ func (conv *Converter) MergeConvert(openapiFilepath string, pmanBaseFilepath str
 
 // ConvertFile builds a Postman 2.0 spec using an OpenAPI 3.0 spec.
 func (conv *Converter) ConvertFile(openapiFilepath string, pmanSpecFilepath string) error {
-	//swag, err := swagger2.ReadSwagger2Spec(openapiFilepath)
 	oas3Loader := oas3.NewSwaggerLoader()
 	oas3spec, err := oas3Loader.LoadSwaggerFromFile(openapiFilepath)
 	if err != nil {
