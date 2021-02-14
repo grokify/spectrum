@@ -1,4 +1,4 @@
-package swaggman
+package openapi2postman2
 
 import (
 	"encoding/json"

@@ -1,6 +1,6 @@
-// toopenapi3 relies on `swagger2openapi` to convert
+// openapi2openapi3 relies on `swagger2openapi` to convert
 // Swagger 2.0 specs to OpenAPI 3.0 specs.
-package toopenapi3
+package openapi2openapi3
 
 import (
 	"errors"

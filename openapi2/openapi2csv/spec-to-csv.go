@@ -1,4 +1,4 @@
-package csv
+package openapi2csv
 
 import (
 	"net/http"
