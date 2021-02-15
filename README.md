@@ -42,6 +42,14 @@ These are all used in the included example discussed below.
 * Postman 2.0 spec supports polymorphism and doesn't have a canonical schema. For example, the `request.url` property can be populated by a URL string or a URL object. Swaggman uses the URL object since it is more flexible. The function `simple.NewCanonicalCollectionFromBytes(bytes)` can be used to read either a simple or object based spec into a canonical object spec.
 * This has only been used on the RingCentral Swagger spec to date but will be used for more in the future. Please feel free to use and contribute. Examples are located in the `examples` folder.
 
+# Installation
+
+The following command will install the executable binary `swaggman` into the `~/go/bin` directory.
+
+```bash
+$ go get github.com/grokify/swaggman
+```
+
 # Usage
 
 ## Simple Usage
