@@ -19,17 +19,18 @@ func NewCollectionFromBytes(data []byte) (Collection, error) {
 }
 
 func NewCanonicalCollectionFromBytes(data []byte) (postman2.Collection, error) {
-	cPman, err := postman2.NewCollectionFromBytes(data)
+	collection, err := postman2.NewCollectionFromBytes(data)
 	if err == nil {
-		cPman.InflateRawURLs()
-		return cPman, nil
+		collection.Inflate()
+		return collection, nil
 	}
-	sPman, err := NewCollectionFromBytes(data)
+	simpleCollection, err := NewCollectionFromBytes(data)
 	if err != nil {
-		return cPman, err
+		return collection, err
 	}
-	cPman = sPman.ToCanonical()
-	return cPman, nil
+	collection = simpleCollection.ToCanonical()
+	collection.Inflate()
+	return collection, nil
 }
 
 //noinspection ALL

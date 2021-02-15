@@ -5,6 +5,11 @@ import (
 	"strings"
 )
 
+const (
+	SchemaURL210 = "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	SchemaURL200 = "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+)
+
 type Collection struct {
 	Info  CollectionInfo `json:"info"`
 	Item  []*Item        `json:"item"`
@@ -12,9 +17,13 @@ type Collection struct {
 }
 
 func NewCollectionFromBytes(data []byte) (Collection, error) {
-	pman := Collection{}
-	err := json.Unmarshal(data, &pman)
-	return pman, err
+	col := Collection{}
+	err := json.Unmarshal(data, &col)
+	if err != nil {
+		return col, err
+	}
+	col.Inflate()
+	return col, nil
 }
 
 func (col *Collection) GetOrNewFolder(folderName string) *Item {
@@ -39,6 +48,14 @@ func (col *Collection) SetFolder(newFolder *Item) {
 		}
 	}
 	col.Item = append(col.Item, newFolder)
+}
+
+func (col *Collection) Inflate() {
+	col.Info.Schema = strings.TrimSpace(col.Info.Schema)
+	if len(col.Info.Schema) == 0 {
+		col.Info.Schema = SchemaURL210
+	}
+	col.InflateRawURLs()
 }
 
 func (col *Collection) InflateRawURLs() {
