@@ -2,7 +2,7 @@
 // See https://github.com/valyala/quicktemplate for details.
 
 //line page.qtpl:1
-package tohtml
+package openapi3html
 
 //line page.qtpl:1
 import (

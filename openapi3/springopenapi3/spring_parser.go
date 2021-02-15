@@ -1,4 +1,4 @@
-package fromspring
+package springopenapi3
 
 import (
 	"fmt"

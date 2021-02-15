@@ -7,7 +7,7 @@ import (
 
 	"github.com/grokify/simplego/text"
 	"github.com/grokify/swaggman/openapi3"
-	"github.com/grokify/swaggman/openapi3/tohtml"
+	"github.com/grokify/swaggman/openapi3/openapi3html"
 )
 
 func main() {
@@ -18,13 +18,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	pageParams := tohtml.PageParams{
+	pageParams := openapi3html.PageParams{
 		PageTitle:  spec.Info.Title,
 		PageLink:   "https://developers.ringcentral.com",
 		TableDomID: "apitable"}
 	pageParams.AddSpec(spec, ColumnTexts())
 
-	pageHTML := tohtml.SwaggmanUIPage(pageParams)
+	pageHTML := openapi3html.SwaggmanUIPage(pageParams)
 
 	filename := "api-regisry.html"
 	err = ioutil.WriteFile(filename, []byte(pageHTML), 0644)

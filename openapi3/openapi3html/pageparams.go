@@ -1,4 +1,4 @@
-package tohtml
+package openapi3html
 
 import (
 	"encoding/json"
