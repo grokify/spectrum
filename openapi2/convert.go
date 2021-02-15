@@ -1,21 +1,21 @@
-package swagger2
+package openapi2
 
 import (
 	"encoding/json"
 	"io/ioutil"
 	"os"
 
-	"github.com/getkin/kin-openapi/openapi2"
+	oas2 "github.com/getkin/kin-openapi/openapi2"
 	"github.com/getkin/kin-openapi/openapi2conv"
 	"gopkg.in/yaml.v2"
 )
 
-func ConvertSwaggmanOAS2ToKinOAS2(smSpec *Specification) (*openapi2.Swagger, error) {
+func ConvertSwaggmanOAS2ToKinOAS2(smSpec *Specification) (*oas2.Swagger, error) {
 	bytes, err := json.Marshal(smSpec)
 	if err != nil {
 		return nil, err
 	}
-	var kinSpec openapi2.Swagger
+	var kinSpec oas2.Swagger
 	err = json.Unmarshal(bytes, &kinSpec)
 	return &kinSpec, err
 }

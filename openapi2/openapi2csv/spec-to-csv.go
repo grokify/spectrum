@@ -6,7 +6,7 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi2"
 	"github.com/grokify/gocharts/data/table"
-	"github.com/grokify/swaggman/swagger2"
+	oas2 "github.com/grokify/swaggman/openapi2"
 )
 
 func TableFromSpecFiles(files []string, includeFilename bool) (*table.Table, error) {
@@ -18,7 +18,7 @@ func TableFromSpecFiles(files []string, includeFilename bool) (*table.Table, err
 	}
 	tbl.Columns = append(tbl.Columns, []string{"Path", "Method", "OperationID", "Summary", "Description"}...)
 	for _, file := range files {
-		spec, err := swagger2.ReadOpenAPI2KinSpecFile(file)
+		spec, err := oas2.ReadOpenAPI2KinSpecFile(file)
 		if err != nil {
 			return tblp, err
 		}

@@ -1,4 +1,4 @@
-package swagger2
+package openapi2
 
 import (
 	"net/http"

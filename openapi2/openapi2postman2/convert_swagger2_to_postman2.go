@@ -10,9 +10,9 @@ import (
 	"strings"
 
 	"github.com/grokify/simplego/net/httputilmore"
+	"github.com/grokify/swaggman/openapi2"
 	"github.com/grokify/swaggman/postman2"
 	"github.com/grokify/swaggman/postman2/simple"
-	"github.com/grokify/swaggman/swagger2"
 )
 
 // Configuration is a Swaggman configuration that holds information on how
@@ -27,7 +27,7 @@ type Configuration struct {
 // Converter is the struct that manages the conversion.
 type Converter struct {
 	Configuration Configuration
-	Swagger       swagger2.Specification
+	Swagger       openapi2.Specification
 }
 
 // NewConverter instantiates a new converter.
@@ -38,7 +38,7 @@ func NewConverter(cfg Configuration) Converter {
 // MergeConvert builds a Postman 2.0 spec using a base Postman 2.0 collection
 // and a Swagger 2.0 spec.
 func (conv *Converter) MergeConvert(swaggerFilepath string, pmanBaseFilepath string, pmanSpecFilepath string) error {
-	swag, err := swagger2.ReadSwagger2SpecFile(swaggerFilepath)
+	swag, err := openapi2.ReadSwagger2SpecFile(swaggerFilepath)
 	if err != nil {
 		return err
 	}
@@ -58,7 +58,7 @@ func (conv *Converter) MergeConvert(swaggerFilepath string, pmanBaseFilepath str
 
 // Convert builds a Postman 2.0 spec using a Swagger 2.0 spec.
 func (conv *Converter) Convert(swaggerFilepath string, pmanSpecFilepath string) error {
-	swag, err := swagger2.ReadSwagger2SpecFile(swaggerFilepath)
+	swag, err := openapi2.ReadSwagger2SpecFile(swaggerFilepath)
 	if err != nil {
 		return err
 	}
@@ -72,13 +72,13 @@ func (conv *Converter) Convert(swaggerFilepath string, pmanSpecFilepath string) 
 }
 
 // Convert creates a Postman 2.0 collection from a configuration and Swagger 2.0 spec
-func Convert(cfg Configuration, swag swagger2.Specification) postman2.Collection {
+func Convert(cfg Configuration, swag openapi2.Specification) postman2.Collection {
 	return Merge(cfg, postman2.Collection{}, swag)
 }
 
 // Merge creates a Postman 2.0 collection from a configuration, base Postman
 // 2.0 collection and Swagger 2.0 spec
-func Merge(cfg Configuration, pman postman2.Collection, swag swagger2.Specification) postman2.Collection {
+func Merge(cfg Configuration, pman postman2.Collection, swag openapi2.Specification) postman2.Collection {
 	if len(pman.Info.Name) == 0 {
 		pman.Info.Name = strings.TrimSpace(swag.Info.Title)
 	}
@@ -139,7 +139,7 @@ func postmanAddItemToFolder(pman postman2.Collection, pmItem *postman2.Item, pmF
 
 // Swagger2PathToPostman2APIItem converts a Swagger 2.0 path to a
 // Postman 2.0 API item
-func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specification, url string, method string, endpoint *swagger2.Endpoint) *postman2.Item {
+func Swagger2PathToPostman2APIItem(cfg Configuration, swag openapi2.Specification, url string, method string, endpoint *openapi2.Endpoint) *postman2.Item {
 	pmUrl := BuildPostmanURL(cfg, swag, url, endpoint)
 	item := &postman2.Item{
 		Name: endpoint.Summary,
@@ -169,7 +169,7 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 	indexAppJson := strings.Index(
 		strings.ToLower(requestContentType), jsonCT)
 	if indexAppJson > -1 {
-		jsonExample, err := swagger2.GetJsonBodyParameterExampleForKey(
+		jsonExample, err := openapi2.GetJsonBodyParameterExampleForKey(
 			endpoint.Parameters, jsonCT)
 		if err == nil {
 			jsonExample = strings.TrimSpace(jsonExample)
@@ -183,7 +183,7 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag swagger2.Specificatio
 }
 
 // BuildPostmanURL creates a Postman 2.0 spec URL from a Swagger URL
-func BuildPostmanURL(cfg Configuration, swag swagger2.Specification, swaggerURL string, endpoint *swagger2.Endpoint) postman2.URL {
+func BuildPostmanURL(cfg Configuration, swag openapi2.Specification, swaggerURL string, endpoint *openapi2.Endpoint) postman2.URL {
 	goUrl := url.URL{}
 
 	//URLParts := []string{}

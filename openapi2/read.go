@@ -1,4 +1,4 @@
-package swagger2
+package openapi2
 
 import (
 	"encoding/json"
@@ -6,7 +6,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/getkin/kin-openapi/openapi2"
+	oas2 "github.com/getkin/kin-openapi/openapi2"
 	"github.com/ghodss/yaml"
 )
 
@@ -42,8 +42,8 @@ func ReadOpenAPI2SpecFileDirect(filename string) (Specification, error) {
 	return NewSpecificationFromBytes(bytes)
 }*/
 
-func ReadOpenAPI2KinSpecFile(filename string) (*openapi2.Swagger, error) {
-	var swag openapi2.Swagger
+func ReadOpenAPI2KinSpecFile(filename string) (*oas2.Swagger, error) {
+	var swag oas2.Swagger
 	bytes, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return &swag, err
