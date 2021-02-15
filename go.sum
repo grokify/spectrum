@@ -38,8 +38,8 @@ github.com/emersion/go-textwrapper v0.0.0-20160606182133-d0e65e56babe/go.mod h1:
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
 github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5/go.mod h1:a2zkGnVExMxdzMo3M0Hi/3sEU+cWnZpSni0O6/Yb/P0=
-github.com/getkin/kin-openapi v0.36.0 h1:pV0uzfC/WF6fWx7w58Mz0HbbiNiSqldJXYmt3lyFpmU=
-github.com/getkin/kin-openapi v0.36.0/go.mod h1:ZJSfy1PxJv2QQvH9EdBj3nupRTVvV42mkW6zKUlRBwk=
+github.com/getkin/kin-openapi v0.39.0 h1:Dy0xS0Vct2bmAIXsGq/ioagVQStca9QUBD3/4XpAORA=
+github.com/getkin/kin-openapi v0.39.0/go.mod h1:ZJSfy1PxJv2QQvH9EdBj3nupRTVvV42mkW6zKUlRBwk=
 github.com/ghodss/yaml v1.0.0 h1:wQHKEahhL6wmXdzwWG11gIVCkOv05bNOh+Rxn0yngAk=
 github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
 github.com/go-openapi/jsonpointer v0.19.5 h1:gZr+CIYByUqjcgeLXnQu2gHYQC9o73G2XUeOFYEICuY=
@@ -77,8 +77,8 @@ github.com/grokify/elastirad-go v0.0.2/go.mod h1:2ed3kWLx0R8B7G4Q7ZAWR6dRcnqs96k
 github.com/grokify/gocharts v0.0.2 h1:yoAAxYLgKdx4QOqHrpdjnTt9nnGH2/5cYBhpm+9WygQ=
 github.com/grokify/gocharts v0.0.2/go.mod h1:0pHqKBjaLzwLUm5WPPcdU0UKdeP/30rtZuYcFhnW1UE=
 github.com/grokify/simplego v0.0.3/go.mod h1:mOeVoV0XRtBVrkTxFdN4e9u7yeiRurhCtxsk+CA7gO4=
-github.com/grokify/simplego v0.0.5 h1:O7YSNzBiLD33WQ2UNpgHjvGTfw3oBhzSxG2yN+CGPJY=
-github.com/grokify/simplego v0.0.5/go.mod h1:5rSQ+/aEV5uE7tAnNZ3h0iu2LMoqaoYB7ifmc5wp7Fk=
+github.com/grokify/simplego v0.0.10 h1:EPsxjNv8mKmlZnrLIYaUwJe9Wjv2lPz6Xb3RYxi57Zw=
+github.com/grokify/simplego v0.0.10/go.mod h1:5rSQ+/aEV5uE7tAnNZ3h0iu2LMoqaoYB7ifmc5wp7Fk=
 github.com/huandu/xstrings v1.3.2 h1:L18LIDzqlW6xN2rEkpdV8+oL/IXWJ1APd+vsdYy4Wdw=
 github.com/huandu/xstrings v1.3.2/go.mod h1:y5/lhBue+AyNmUVz9RLU9xbLR0o4KIIExikq4ovT0aE=
 github.com/itchyny/base58-go v0.1.0/go.mod h1:SrMWPE3DFuJJp1M/RUhu4fccp/y9AlB8AL3o3duPToU=
