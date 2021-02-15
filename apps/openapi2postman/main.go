@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/grokify/swaggman"
+	"github.com/grokify/swaggman/openapi2/openapi2postman2"
 	"github.com/grokify/swaggman/postman2"
 	"github.com/jessevdk/go-flags"
 )
@@ -24,13 +24,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	cfg := swaggman.Configuration{
+	cfg := openapi2postman2.Configuration{
 		PostmanURLHostname: "{{RINGCENTRAL_SERVER_HOSTNAME}}",
 		PostmanHeaders: []postman2.Header{{
 			Key:   "Authorization",
 			Value: "Bearer {{my_access_token}}"}}}
 
-	conv := swaggman.NewConverter(cfg)
+	conv := openapi2postman2.NewConverter(cfg)
 	err = conv.MergeConvert(opts.Swagger, opts.PostmanBase, opts.Postman)
 
 	if err != nil {

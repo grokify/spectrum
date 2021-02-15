@@ -1,0 +1,11 @@
+{
+    "useXTagGroups": true , 
+    "postmanServerUrlApiBasePath": "1.0",
+    "postmanServerUrl":         "{{RINGCENTRAL_ENGAGE_SERVER_URL}}",
+    "postmanHeaders": [
+        {
+            "key":   "Authorization",
+            "value": "Bearer {{RINGCENTRAL_ENGAGE_ACCESS_TOKEN}}" 
+        }
+    ]
+}

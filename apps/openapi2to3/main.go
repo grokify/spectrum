@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/grokify/simplego/io/ioutilmore"
-	"github.com/grokify/swaggman/swagger2"
+	"github.com/grokify/swaggman/openapi2"
 	"github.com/jessevdk/go-flags"
 )
 
@@ -38,7 +38,7 @@ func main() {
 		wantPretty = true
 	}
 
-	err = swagger2.ConvertOAS2FileToOAS3File(opts.OAS2File, opts.OAS3File, 0644, wantPretty)
+	err = openapi2.ConvertOAS2FileToOAS3File(opts.OAS2File, opts.OAS3File, 0644, wantPretty)
 	if err != nil {
 		log.Fatal(err)
 	}

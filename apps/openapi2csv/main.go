@@ -6,7 +6,7 @@ import (
 	"regexp"
 
 	"github.com/grokify/simplego/io/ioutilmore"
-	csv "github.com/grokify/swaggman/swagger2/tocsv"
+	csv "github.com/grokify/swaggman/openapi2/openapi2csv"
 	"github.com/jessevdk/go-flags"
 )
 
