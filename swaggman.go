@@ -13,10 +13,10 @@ import (
 // Convert yaml2json: https://github.com/bronze1man/yaml2json ... yaml2json_darwin_amd64
 
 type Options struct {
-	Config      string `short:"c" long:"config" description:"Swaggman Config File"`
-	PostmanBase string `short:"b" long:"base" description:"Basic Postman File"`
-	Postman     string `short:"p" long:"postman" description:"Output Postman File" required:"true"`
-	OpenAPIFile string `short:"o" long:"openapi" description:"Input Swagger File" required:"true"`
+	Config      string `short:"C" long:"config" description:"Swaggman Config File"`
+	PostmanBase string `short:"B" long:"basePostmanFile" description:"Basic Postman File"`
+	Postman     string `short:"P" long:"postmanFile" description:"Output Postman File" required:"true"`
+	OpenAPIFile string `short:"O" long:"openapiFile" description:"Input Swagger File" required:"true"`
 }
 
 func (opts *Options) TrimSpace() {
