@@ -16,7 +16,7 @@ type Options struct {
 	Config      string `short:"c" long:"config" description:"Swaggman Config File"`
 	PostmanBase string `short:"b" long:"base" description:"Basic Postman File"`
 	Postman     string `short:"p" long:"postman" description:"Output Postman File" required:"true"`
-	OpenAPIFile string `short:"" long:"openapi" description:"Input Swagger File" required:"true"`
+	OpenAPIFile string `short:"o" long:"openapi" description:"Input Swagger File" required:"true"`
 }
 
 func (opts *Options) TrimSpace() {
