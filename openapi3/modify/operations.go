@@ -1,6 +1,7 @@
 package modify
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -67,6 +68,21 @@ func SpecAddCustomProperties(spec *oas3.Swagger, custom map[string]interface{}, 
 			}
 		}
 	}
+}
+
+func SpecOperationIdsFromSummaries(spec *oas3.Swagger, errorOnEmpty bool) error {
+	empty := []string{}
+	openapi3.VisitOperations(spec, func(path, method string, op *oas3.Operation) {
+		op.Summary = strings.Join(strings.Split(op.Summary, " "), " ")
+		op.OperationID = op.Summary
+		if len(op.OperationID) == 0 {
+			empty = append(empty, path+" "+method)
+		}
+	})
+	if errorOnEmpty && len(empty) > 0 {
+		return fmt.Errorf("no_opid: [%s]", strings.Join(empty, ", "))
+	}
+	return nil
 }
 
 type OperationMoreSet struct {
