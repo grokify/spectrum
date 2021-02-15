@@ -1,4 +1,4 @@
-package topostman2
+package openapi3postman2
 
 import (
 	"encoding/json"
