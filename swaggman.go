@@ -59,6 +59,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("wrote Postman collection [%s]", opts.Postman)
+	fmt.Printf("wrote Postman collection [%s]\n", opts.Postman)
 	fmt.Println("DONE")
 }
