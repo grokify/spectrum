@@ -198,6 +198,10 @@ func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *oas3.Swagge
 		},
 	}
 
+	if len(strings.TrimSpace(operation.Description)) > 0 {
+		item.Request.Description = strings.TrimSpace(operation.Description)
+	}
+
 	headers := cfg.PostmanHeaders
 
 	headers, _, _ = postman2.AddOperationReqResMediaTypeHeaders(
