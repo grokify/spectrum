@@ -3,6 +3,8 @@ package postman2
 import (
 	"encoding/json"
 	"strings"
+
+	"github.com/grokify/simplego/net/httputilmore"
 )
 
 const (
@@ -81,12 +83,12 @@ type CollectionInfo struct {
 
 // Item can represent a folder or an API
 type Item struct {
-	Name        string   `json:"name,omitempty"`                 // Folder,Operation
-	Description string   `json:"description,omitempty"`          // Folder
-	Item        []*Item  `json:"item,omitempty"`                 // Folder
-	IsSubFolder bool     `json:"_postman_isSubFolder,omitempty"` // Folder
-	Event       []Event  `json:"event,omitempty"`                // Operation
-	Request     *Request `json:"request,omitempty"`              // Operation
+	Name        string       `json:"name,omitempty"`                 // Folder,Operation
+	Description *Description `json:"description,omitempty"`          // Folder
+	Item        []*Item      `json:"item,omitempty"`                 // Folder
+	IsSubFolder bool         `json:"_postman_isSubFolder,omitempty"` // Folder
+	Event       []Event      `json:"event,omitempty"`                // Operation
+	Request     *Request     `json:"request,omitempty"`              // Operation
 }
 
 func (item *Item) UpsertSubItem(newItem *Item) {
@@ -101,6 +103,20 @@ func (item *Item) UpsertSubItem(newItem *Item) {
 	}
 	item.Item = append(item.Item, newItem)
 	return
+}
+
+type Description struct {
+	Content string `json:"content,omitempty"`
+	Type    string `json:"type,omitempty"`
+	Version string `json:"version,omitempty"`
+}
+
+func (desc *Description) Inflate() {
+	desc.Content = strings.TrimSpace(desc.Content)
+	desc.Type = strings.TrimSpace(desc.Type)
+	if len(desc.Content) > 0 && len(desc.Type) == 0 {
+		desc.Type = httputilmore.ContentTypeTextPlain
+	}
 }
 
 type Event struct {

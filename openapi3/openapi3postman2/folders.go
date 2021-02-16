@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/simplego/net/httputilmore"
 	"github.com/grokify/swaggman/openapi3"
 	"github.com/grokify/swaggman/postman2"
 )
@@ -41,7 +42,9 @@ func addFoldersFromTagGroups(pman postman2.Collection, tgSet openapi3.TagGroupSe
 			subFolder := &postman2.Item{Name: tagName}
 			tag := tagsMore.Get(tagName)
 			if tag != nil {
-				subFolder.Description = strings.TrimSpace(tag.Description)
+				subFolder.Description = &postman2.Description{
+					Content: strings.TrimSpace(tag.Description),
+					Type:    httputilmore.ContentTypeTextPlain}
 			}
 			topFolder.UpsertSubItem(subFolder)
 		}
@@ -56,8 +59,10 @@ func addFoldersFromTags(pman postman2.Collection, tags oas3.Tags) postman2.Colle
 			continue
 		}
 		folder := &postman2.Item{
-			Name:        strings.TrimSpace(tag.Name),
-			Description: strings.TrimSpace(tag.Description)}
+			Name: strings.TrimSpace(tag.Name),
+			Description: &postman2.Description{
+				Content: strings.TrimSpace(tag.Description),
+				Type:    httputilmore.ContentTypeTextPlain}}
 		if len(folder.Name) == 0 {
 			continue
 		}

@@ -3,7 +3,9 @@ package simple
 import (
 	"encoding/json"
 	"io/ioutil"
+	"strings"
 
+	"github.com/grokify/simplego/net/httputilmore"
 	"github.com/grokify/swaggman/postman2"
 )
 
@@ -63,11 +65,16 @@ type Item struct {
 func (thisItem *Item) ToCanonical() *postman2.Item {
 	canRequest := thisItem.Request.ToCanonical()
 	canItem := &postman2.Item{
-		Name:        thisItem.Name,
-		Description: thisItem.Description,
-		Item:        []*postman2.Item{},
-		Event:       thisItem.Event,
-		Request:     &canRequest}
+		Name:    thisItem.Name,
+		Item:    []*postman2.Item{},
+		Event:   thisItem.Event,
+		Request: &canRequest}
+	thisItem.Description = strings.TrimSpace(thisItem.Description)
+	if len(thisItem.Description) > 0 {
+		canItem.Description = &postman2.Description{
+			Content: thisItem.Description,
+			Type:    httputilmore.ContentTypeTextMarkdown}
+	}
 	for _, subItem := range thisItem.Item {
 		canItem.Item = append(canItem.Item, subItem.ToCanonical())
 	}
