@@ -405,6 +405,14 @@ func (sm *SpecMore) PrintJSON(prefix, indent string) error {
 	return err
 }
 
+func (sm *SpecMore) WriteFileCSV(filename string) error {
+	tbl, err := sm.OperationsTable(nil)
+	if err != nil {
+		return err
+	}
+	return table.WriteCSV(filename, tbl)
+}
+
 func (sm *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, indent string) error {
 	jsonData, err := sm.MarshalJSON(prefix, indent)
 	if err != nil {
