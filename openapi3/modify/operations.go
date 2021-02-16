@@ -9,6 +9,31 @@ import (
 	"github.com/grokify/swaggman/openapi3"
 )
 
+func OperationAddExternalDocs(op *oas3.Operation, url, description string, preserveIfEmpty bool) {
+	if op == nil {
+		return
+	}
+	url = strings.TrimSpace(url)
+	description = strings.TrimSpace(description)
+	if len(url) > 0 || len(description) > 0 {
+		if preserveIfEmpty {
+			if op.ExternalDocs == nil {
+				op.ExternalDocs = &oas3.ExternalDocs{}
+			}
+			if len(url) > 0 {
+				op.ExternalDocs.URL = url
+			}
+			if len(description) > 0 {
+				op.ExternalDocs.Description = description
+			}
+		} else {
+			op.ExternalDocs = &oas3.ExternalDocs{
+				Description: description,
+				URL:         url}
+		}
+	}
+}
+
 func SpecOperationsCount(spec *oas3.Swagger) uint {
 	count := uint(0)
 	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
