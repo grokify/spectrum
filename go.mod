@@ -3,7 +3,7 @@ module github.com/grokify/swaggman
 go 1.15
 
 require (
-	github.com/getkin/kin-openapi v0.39.0
+	github.com/getkin/kin-openapi v0.45.1
 	github.com/ghodss/yaml v1.0.0
 	github.com/grokify/gocharts v0.0.2
 	github.com/grokify/simplego v0.0.11
