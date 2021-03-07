@@ -30,12 +30,30 @@ func ReadFile(oas3file string, validate bool) (*oas3.Swagger, error) {
 			return nil, err
 		}
 	}
-	swag := &oas3.Swagger{}
-	err = swag.UnmarshalJSON(bytes)
+	spec := &oas3.Swagger{}
+	err = spec.UnmarshalJSON(bytes)
 	if err != nil {
-		return nil, errors.Wrap(err, fmt.Sprintf("ReadFile.UnmarshalJSON.Error.Filename [%v]", oas3file))
+		return nil, errors.Wrap(err, fmt.Sprintf("ReadFile.UnmarshalJSON.Error.Filename [%s]", oas3file))
 	}
-	return swag, nil
+	return spec, nil
+}
+
+// Parse will parse a byte array to an `*oas3.Swagger` struct.
+// It will use JSON first. If unsuccessful, it will attempt to
+// parse it as YAML.
+func Parse(oas3Bytes []byte) (*oas3.Swagger, error) {
+	spec := &oas3.Swagger{}
+	err := spec.UnmarshalJSON(oas3Bytes)
+	if err != nil {
+		bytes, err2 := yaml.YAMLToJSON(oas3Bytes)
+		if err2 != nil {
+			return spec, err
+		}
+		spec = &oas3.Swagger{}
+		err3 := spec.UnmarshalJSON(bytes)
+		return spec, err3
+	}
+	return spec, err
 }
 
 func ReadAndValidateFile(oas3file string) (*oas3.Swagger, error) {
