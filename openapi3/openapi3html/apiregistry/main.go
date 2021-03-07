@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/buaazp/fasthttprouter"
-	"github.com/gorilla/mux"
 	"github.com/grokify/simplego/net/anyhttp"
 	"github.com/grokify/simplego/net/http/httpsimple"
 	"github.com/grokify/simplego/net/httputilmore"
@@ -107,10 +106,17 @@ func (svr Server) HttpEngine() string                 { return svr.Engine }
 func (svr Server) RouterFast() *fasthttprouter.Router { return nil }
 
 func (svc Server) Router() http.Handler {
-	mux := mux.NewRouter()
+	/*
+		mux := mux.NewRouter()
+		mux.HandleFunc("/ping", http.HandlerFunc(httpsimple.HandleTestNetHTTP))
+		mux.HandleFunc("/ping/", http.HandlerFunc(httpsimple.HandleTestNetHTTP))
+		mux.HandleFunc("/", http.HandlerFunc(svc.HandleAPIRegistryNetHTTP))
+		return mux
+	*/
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", http.HandlerFunc(svc.HandleAPIRegistryNetHTTP))
 	mux.HandleFunc("/ping", http.HandlerFunc(httpsimple.HandleTestNetHTTP))
 	mux.HandleFunc("/ping/", http.HandlerFunc(httpsimple.HandleTestNetHTTP))
-	mux.HandleFunc("/", http.HandlerFunc(svc.HandleAPIRegistryNetHTTP))
 	return mux
 }
 
