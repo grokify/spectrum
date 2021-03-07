@@ -10,8 +10,8 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/table"
 	"github.com/grokify/simplego/encoding/jsonutil"
+	"github.com/grokify/simplego/fmt/fmtutil"
 	"github.com/grokify/simplego/net/urlutil"
-	"github.com/grokify/simplego/text"
 	"github.com/grokify/simplego/type/stringsutil"
 )
 
@@ -36,13 +36,13 @@ func (sm *SpecMore) SchemasCount() int {
 	return len(sm.Spec.Components.Schemas)
 }
 
-func (sm *SpecMore) OperationsTable(columns *text.TextSet) (*table.Table, error) {
+func (sm *SpecMore) OperationsTable(columns *table.ColumnSet) (*table.Table, error) {
 	return operationsTable(sm.Spec, columns)
 }
 
-func operationsTable(spec *oas3.Swagger, columns *text.TextSet) (*table.Table, error) {
+func operationsTable(spec *oas3.Swagger, columns *table.ColumnSet) (*table.Table, error) {
 	if columns == nil {
-		columns = &text.TextSet{Texts: OpTableColumnsDefault()}
+		columns = &table.ColumnSet{Columns: OpTableColumnsDefault()}
 	}
 	tbl := table.NewTable()
 	tbl.Name = spec.Info.Title
@@ -56,11 +56,15 @@ func operationsTable(spec *oas3.Swagger, columns *text.TextSet) (*table.Table, e
 		return nil, err
 	}
 
+	fmtutil.PrintJSON(columns)
+
 	VisitOperations(spec, func(path, method string, op *oas3.Operation) {
 		row := []string{}
 
-		for _, text := range columns.Texts {
+		for _, text := range columns.Columns {
 			switch text.Slug {
+			case "tags":
+				row = append(row, strings.Join(op.Tags, ", "))
 			case "method":
 				row = append(row, method)
 			case "path":
@@ -69,8 +73,6 @@ func operationsTable(spec *oas3.Swagger, columns *text.TextSet) (*table.Table, e
 				row = append(row, op.OperationID)
 			case "summary":
 				row = append(row, op.Summary)
-			case "tags":
-				row = append(row, strings.Join(op.Tags, ", "))
 			case "x-tag-groups":
 				row = append(row, strings.Join(
 					tgs.GetTagGroupNamesForTagNames(op.Tags...), ", "))
@@ -84,58 +86,53 @@ func operationsTable(spec *oas3.Swagger, columns *text.TextSet) (*table.Table, e
 	return &tbl, nil
 }
 
-func OpTableColumnsDefault() []text.Text {
-	texts := []text.Text{
-		{
-			Display: "Method",
-			Slug:    "method"},
-		{
-			Display: "Path",
-			Slug:    "path"},
-		{
-			Display: "OperationID",
-			Slug:    "operationId"},
-		{
-			Display: "Summary",
-			Slug:    "summary"},
+func OpTableColumnsDefault() []table.Column {
+	return []table.Column{
 		{
 			Display: "Tags",
-			Slug:    "tags"},
+			Slug:    "tags",
+			Width:   150},
+		{
+			Display: "Method",
+			Slug:    "method",
+			Width:   70},
+		{
+			Display: "Path",
+			Slug:    "path",
+			Width:   800},
+		{
+			Display: "OperationID",
+			Slug:    "operationId",
+			Width:   150},
+		{
+			Display: "Summary",
+			Slug:    "summary",
+			Width:   150},
 	}
-	return texts
 }
 
-func OpTableColumnsRingCentral() *text.TextSet {
-	texts := []text.Text{
-		{
-			Display: "Method",
-			Slug:    "method"},
-		{
-			Display: "Path",
-			Slug:    "path"},
-		{
-			Display: "OperationID",
-			Slug:    "operationId"},
-		{
-			Display: "Summary",
-			Slug:    "summary"},
-		{
-			Display: "Tags",
-			Slug:    "tags"},
+func OpTableColumnsRingCentral() *table.ColumnSet {
+	columns := OpTableColumnsDefault()
+	rcCols := []table.Column{
 		{
 			Display: "API Group",
-			Slug:    "x-api-group"},
+			Slug:    "x-api-group",
+			Width:   150},
 		{
 			Display: "Throttling",
-			Slug:    "x-throttling-group"},
+			Slug:    "x-throttling-group",
+			Width:   150},
 		{
 			Display: "App Permission",
-			Slug:    "x-app-permission"},
+			Slug:    "x-app-permission",
+			Width:   150},
 		{
 			Display: "User Permissions",
-			Slug:    "x-user-permission"},
+			Slug:    "x-user-permission",
+			Width:   150},
 	}
-	return &text.TextSet{Texts: texts}
+	columns = append(columns, rcCols...)
+	return &table.ColumnSet{Columns: columns}
 }
 
 func (sm *SpecMore) OperationMetas() []OperationMeta {

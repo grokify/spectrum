@@ -17,6 +17,8 @@ type PageParams struct {
 	PageTitle  string
 	PageLink   string
 	TableDomID string
+	Spec       *oas3.Swagger
+	ColumnSet  *table.ColumnSet
 	TableJSON  []byte
 }
 
@@ -29,7 +31,7 @@ func (pp *PageParams) PageLinkHTML() string {
 		html.EscapeString(pp.PageTitle))
 }
 
-func (pp *PageParams) AddSpec(spec *oas3.Swagger, columns *text.TextSet) error {
+func (pp *PageParams) AddSpec(spec *oas3.Swagger, columns *table.ColumnSet) error {
 	sm := openapi3.SpecMore{Spec: spec}
 	tbl, err := sm.OperationsTable(columns)
 	if err != nil {
@@ -46,6 +48,26 @@ func (pp *PageParams) AddOperationsTable(tbl *table.Table) error {
 	}
 	pp.TableJSON = jdocs
 	return nil
+}
+
+func (pp *PageParams) TableJSONBytesOrEmpty() []byte {
+	if len(pp.TableJSON) > 0 {
+		return pp.TableJSON
+	}
+	if pp.Spec != nil {
+		pp.AddSpec(pp.Spec, nil)
+		return pp.TableJSON
+	}
+	return []byte("[]")
+}
+
+func (pp *PageParams) TabulatorColumnsJSONBytesOrEmpty() []byte {
+	if pp.ColumnSet == nil || len(pp.ColumnSet.Columns) == 0 {
+		tcols := table.BuildColumnsTabulator(openapi3.OpTableColumnsDefault())
+		return tcols.MustColumnsJSON()
+	}
+	tcols := table.BuildColumnsTabulator(pp.ColumnSet.Columns)
+	return tcols.MustColumnsJSON()
 }
 
 func (pp *PageParams) WriteFile(filename string) error {

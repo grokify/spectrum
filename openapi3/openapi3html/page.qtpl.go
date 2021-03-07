@@ -50,7 +50,7 @@ func StreamSwaggmanUIPage(qw422016 *qt422016.Writer, data PageParams) {
 
     var tabledata = `)
 //line page.qtpl:17
-	qw422016.N().Z(data.TableJSON)
+	qw422016.N().Z(data.TableJSONBytesOrEmpty())
 //line page.qtpl:17
 	qw422016.N().S(`;
 
@@ -139,17 +139,11 @@ var table = new Tabulator("#`)
     //height:"500px",
     layout:"fitColumns",
     data:tabledata, //load initial data into table
-    columns:[
-		{title:"Method", field:"Method", width:70, headerFilter:"input"},
-		{title:"Path", field:"Path", width:400, headerFilter:"input"},
-		{title:"OperationID", field:"OperationID", width:150, headerFilter:"input"},
-		{title:"Summary", field:"Summary", width:150, headerFilter:"input"},
-		{title:"Tags", field:"Tags", width:150, headerFilter:"input"},
-		{title:"API Group", field:"API Group", width:150, headerFilter:"input"},
-		{title:"Throttling", field:"Throttling", width:150, headerFilter:"input"},
-		{title:"App Permission", field:"App Permission", width:150, headerFilter:"input"},
-        {title:"User Permissions", field:"User Permissions", width:150, headerFilter:"input"}
-	],
+    columns: `)
+//line page.qtpl:100
+	qw422016.N().Z(data.TabulatorColumnsJSONBytesOrEmpty())
+//line page.qtpl:100
+	qw422016.N().S(`,
 	rowClick:function(e, row){
 		var data = row.getData();
 		var baseURL = "https://developers.ringcentral.com/api-reference/";
@@ -162,31 +156,31 @@ var table = new Tabulator("#`)
 </body>
 </html>
 `)
-//line page.qtpl:122
+//line page.qtpl:112
 }
 
-//line page.qtpl:122
+//line page.qtpl:112
 func WriteSwaggmanUIPage(qq422016 qtio422016.Writer, data PageParams) {
-//line page.qtpl:122
+//line page.qtpl:112
 	qw422016 := qt422016.AcquireWriter(qq422016)
-//line page.qtpl:122
+//line page.qtpl:112
 	StreamSwaggmanUIPage(qw422016, data)
-//line page.qtpl:122
+//line page.qtpl:112
 	qt422016.ReleaseWriter(qw422016)
-//line page.qtpl:122
+//line page.qtpl:112
 }
 
-//line page.qtpl:122
+//line page.qtpl:112
 func SwaggmanUIPage(data PageParams) string {
-//line page.qtpl:122
+//line page.qtpl:112
 	qb422016 := qt422016.AcquireByteBuffer()
-//line page.qtpl:122
+//line page.qtpl:112
 	WriteSwaggmanUIPage(qb422016, data)
-//line page.qtpl:122
+//line page.qtpl:112
 	qs422016 := string(qb422016.B)
-//line page.qtpl:122
+//line page.qtpl:112
 	qt422016.ReleaseByteBuffer(qb422016)
-//line page.qtpl:122
+//line page.qtpl:112
 	return qs422016
-//line page.qtpl:122
+//line page.qtpl:112
 }

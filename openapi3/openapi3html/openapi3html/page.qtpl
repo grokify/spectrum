@@ -14,7 +14,7 @@
 
 <script>
 
-    var tabledata = {%z= data.TableJSON %};
+    var tabledata = {%z= data.TableJSONBytesOrEmpty() %};
 
     //custom max min header filter
     var minMaxFilterEditor = function(cell, onRendered, success, cancel, editorParams){
@@ -97,17 +97,7 @@ var table = new Tabulator("#{%s data.TableDomID %}", {
     //height:"500px",
     layout:"fitColumns",
     data:tabledata, //load initial data into table
-    columns:[
-		{title:"Method", field:"Method", width:70, headerFilter:"input"},
-		{title:"Path", field:"Path", width:400, headerFilter:"input"},
-		{title:"OperationID", field:"OperationID", width:150, headerFilter:"input"},
-		{title:"Summary", field:"Summary", width:150, headerFilter:"input"},
-		{title:"Tags", field:"Tags", width:150, headerFilter:"input"},
-		{title:"API Group", field:"API Group", width:150, headerFilter:"input"},
-		{title:"Throttling", field:"Throttling", width:150, headerFilter:"input"},
-		{title:"App Permission", field:"App Permission", width:150, headerFilter:"input"},
-        {title:"User Permissions", field:"User Permissions", width:150, headerFilter:"input"}
-	],
+    columns: {%z= data.TabulatorColumnsJSONBytesOrEmpty() %},
 	rowClick:function(e, row){
 		var data = row.getData();
 		var baseURL = "https://developers.ringcentral.com/api-reference/";

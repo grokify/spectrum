@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/grokify/simplego/text"
+	"github.com/grokify/gocharts/data/table"
 	"github.com/grokify/swaggman/openapi3"
 	"github.com/grokify/swaggman/openapi3/openapi3html"
 )
@@ -36,8 +36,8 @@ func main() {
 	fmt.Println("DONE")
 }
 
-func ColumnTexts() *text.TextSet {
-	texts := []text.Text{
+func ColumnTexts() *table.ColumnSet {
+	columns := []table.Column{
 		{
 			Display: "Method",
 			Slug:    "method"},
@@ -69,5 +69,5 @@ func ColumnTexts() *text.TextSet {
 			Display: "Docs Level",
 			Slug:    "x-docs-level"},
 	}
-	return &text.TextSet{Texts: texts}
+	return &table.ColumnSet{Columns: columns}
 }
