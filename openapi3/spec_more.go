@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/gocharts/data/frequency"
 	"github.com/grokify/gocharts/data/table"
 	"github.com/grokify/simplego/encoding/jsonutil"
 	"github.com/grokify/simplego/fmt/fmtutil"
@@ -180,6 +181,14 @@ func (sm *SpecMore) OperationsCount() int {
 	return len(sm.OperationMetas())
 }
 
+// OperationCountsByTag returns a frequency set for operations by tag.
+func (sm *SpecMore) OperationCountsByTag() frequency.FrequencyStats {
+	fstats := frequency.NewFrequencyStats("Operation Counts by Tag")
+	fstats.Items = sm.TagsMap(false, true)
+	fstats.Inflate()
+	return fstats
+}
+
 func (sm *SpecMore) OperationsIDs() []string {
 	ids := []string{}
 	VisitOperations(sm.Spec, func(thisPath, thisMethod string, thisOp *oas3.Operation) {
@@ -335,8 +344,7 @@ func (sm *SpecMore) Tags(inclTop, inclOps bool) []string {
 	return stringsutil.SliceCondenseSpace(tags, true, true)
 }
 
-// TagsMap returns a set of tags present in the current
-// spec.
+// TagsMap returns a set of tags present in the current spec.
 func (sm *SpecMore) TagsMap(inclTop, inclOps bool) map[string]int {
 	tagsMap := map[string]int{}
 	if inclTop {
