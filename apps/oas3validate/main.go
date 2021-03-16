@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/grokify/gocharts/data/frequency"
 	"github.com/grokify/simplego/fmt/fmtutil"
@@ -14,6 +15,7 @@ import (
 
 type Options struct {
 	SpecFileOAS3 string `short:"s" long:"specfile" description:"Input OAS Spec File" required:"true"`
+	XlsxWrite    string `short:"x" long:"xlsxwrite" description:"Output File" required:"false"`
 }
 
 func main() {
@@ -47,6 +49,13 @@ func main() {
 
 	md := ops2a.Markdown("1. Count: ", ", Category: ", true, true)
 	fmt.Println(md)
+	opts.XlsxWrite = strings.TrimSpace(opts.XlsxWrite)
+	if len(opts.XlsxWrite) > 0 {
+		err := sm.WriteFileXLSX(opts.XlsxWrite)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
 
 	fmt.Println("DONE")
 }
