@@ -74,9 +74,13 @@ func operationsTable(spec *oas3.Swagger, columns *table.ColumnSet) (*table.Table
 				row = append(row, op.OperationID)
 			case "summary":
 				row = append(row, op.Summary)
-			case "x-tag-groups":
+			case XTagGroups:
 				row = append(row, strings.Join(
 					tgs.GetTagGroupNamesForTagNames(op.Tags...), ", "))
+			case "securityScopes":
+				row = append(row, OperationSecurityScopes(op, false)...)
+			case XThrottlingGroup:
+				row = append(row, GetExtensionPropStringOrEmpty(op.ExtensionProps, XThrottlingGroup))
 			default:
 				row = append(row, GetExtensionPropStringOrEmpty(op.ExtensionProps, text.Slug))
 			}
@@ -108,6 +112,18 @@ func OpTableColumnsDefault() []table.Column {
 		{
 			Display: "Summary",
 			Slug:    "summary",
+			Width:   150},
+		{
+			Display: "SecurityScopes",
+			Slug:    "securityScopes",
+			Width:   150},
+		{
+			Display: "XThrottlingGroup",
+			Slug:    XThrottlingGroup,
+			Width:   150},
+		{
+			Display: "DocsURL",
+			Slug:    "DocsURL",
 			Width:   150},
 	}
 }
@@ -426,8 +442,8 @@ func (sm *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, ind
 	return ioutil.WriteFile(filename, jsonData, perm)
 }
 
-func (sm *SpecMore) WriteFileXLSX(filename string) error {
-	tbl, err := sm.OperationsTable(nil)
+func (sm *SpecMore) WriteFileXLSX(filename string, columns *table.ColumnSet) error {
+	tbl, err := sm.OperationsTable(columns)
 	if err != nil {
 		return err
 	}
