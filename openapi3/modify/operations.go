@@ -89,7 +89,7 @@ func SpecOperationIdsFromSummaries(spec *oas3.Swagger, errorOnEmpty bool) error 
 }
 
 func SpecAddCustomProperties(spec *oas3.Swagger, custom map[string]interface{}, addToOperations, addToSchemas bool) {
-	if len(custom) == 0 {
+	if spec == nil || len(custom) == 0 {
 		return
 	}
 	if addToOperations {
@@ -108,6 +108,48 @@ func SpecAddCustomProperties(spec *oas3.Swagger, custom map[string]interface{}, 
 			}
 		}
 	}
+}
+
+func SpecAddOperationMetas(spec *oas3.Swagger, metas map[string]openapi3.OperationMeta, overwrite bool) {
+	if spec == nil || len(metas) == 0 {
+		return
+	}
+	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
+		if op == nil {
+			return
+		}
+		opMeta, ok := metas[op.OperationID]
+		if !ok {
+			return
+		}
+		opMeta.TrimSpace()
+		writeDocs := false
+		writeScopes := false
+		writeThrottling := false
+		if overwrite {
+			writeDocs = true
+			writeScopes = true
+			writeThrottling = true
+		}
+		if writeDocs {
+			OperationAddExternalDocs(op, opMeta.DocsURL, opMeta.DocsDescription, true)
+		}
+		if writeScopes {
+			if len(opMeta.SecurityScopes) > 0 {
+				op.Security = &oas3.SecurityRequirements{
+					map[string][]string{"oauth": opMeta.SecurityScopes},
+				}
+			} else {
+				op.Security = nil
+			}
+		}
+		if writeThrottling {
+			if op.ExtensionProps.Extensions == nil {
+				op.ExtensionProps.Extensions = map[string]interface{}{}
+			}
+			op.ExtensionProps.Extensions[openapi3.XThrottlingGroup] = opMeta.XThrottlingGroup
+		}
+	})
 }
 
 type OperationMoreSet struct {

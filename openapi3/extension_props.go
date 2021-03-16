@@ -7,6 +7,11 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 )
 
+const (
+	XTagGroups       = "x-tag-groups"
+	XThrottlingGroup = "x-throttling-group"
+)
+
 type ExtensionPropsParent interface{}
 
 // GetOperationExtensionPropStringOrEmpty converts extension prop value from `json.RawMessage` to `string`.

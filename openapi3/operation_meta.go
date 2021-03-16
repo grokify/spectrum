@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/grokify/simplego/type/stringsutil"
+
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 )
 
@@ -17,13 +19,28 @@ func OperationToMeta(url, method string, op *oas3.Operation) OperationMeta {
 		MetaNotes:   []string{}}
 }
 
+// OperationMeta is used to hold additional information
+// for a spec operation.
 type OperationMeta struct {
-	OperationID string
-	Summary     string
-	Method      string
-	Path        string
-	Tags        []string
-	MetaNotes   []string
+	OperationID      string
+	DocsDescription  string
+	DocsURL          string
+	Method           string
+	Path             string
+	SecurityScopes   []string
+	Summary          string
+	Tags             []string
+	MetaNotes        []string
+	XThrottlingGroup string
+}
+
+func (om *OperationMeta) TrimSpace() {
+	om.OperationID = strings.TrimSpace(om.OperationID)
+	om.DocsURL = strings.TrimSpace(om.DocsURL)
+	om.DocsDescription = strings.TrimSpace(om.DocsDescription)
+	om.SecurityScopes = stringsutil.SliceCondenseSpace(om.SecurityScopes, true, false)
+	om.Tags = stringsutil.SliceCondenseSpace(om.Tags, true, false)
+	om.XThrottlingGroup = strings.TrimSpace(om.XThrottlingGroup)
 }
 
 func OperationSetRequestBodySchemaRef(op *oas3.Operation, mediaType string, schemaRef *oas3.SchemaRef) {
