@@ -51,7 +51,7 @@ func main() {
 	fmt.Println(md)
 	opts.XlsxWrite = strings.TrimSpace(opts.XlsxWrite)
 	if len(opts.XlsxWrite) > 0 {
-		err := sm.WriteFileXLSX(opts.XlsxWrite)
+		err := sm.WriteFileXLSX(opts.XlsxWrite, nil)
 		if err != nil {
 			log.Fatal(err)
 		}
