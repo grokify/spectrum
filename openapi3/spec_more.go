@@ -11,7 +11,6 @@ import (
 	"github.com/grokify/gocharts/data/frequency"
 	"github.com/grokify/gocharts/data/table"
 	"github.com/grokify/simplego/encoding/jsonutil"
-	"github.com/grokify/simplego/fmt/fmtutil"
 	"github.com/grokify/simplego/net/urlutil"
 	"github.com/grokify/simplego/type/stringsutil"
 )
@@ -43,7 +42,7 @@ func (sm *SpecMore) OperationsTable(columns *table.ColumnSet) (*table.Table, err
 
 func operationsTable(spec *oas3.Swagger, columns *table.ColumnSet) (*table.Table, error) {
 	if columns == nil {
-		columns = &table.ColumnSet{Columns: OpTableColumnsDefault()}
+		columns = OpTableColumnsDefault(false)
 	}
 	tbl := table.NewTable()
 	tbl.Name = spec.Info.Title
@@ -51,13 +50,10 @@ func operationsTable(spec *oas3.Swagger, columns *table.ColumnSet) (*table.Table
 
 	specMore := SpecMore{Spec: spec}
 
-	//tgs, err := SpecTagGroups(spec)
 	tgs, err := specMore.TagGroups()
 	if err != nil {
 		return nil, err
 	}
-
-	fmtutil.PrintJSON(columns)
 
 	VisitOperations(spec, func(path, method string, op *oas3.Operation) {
 		row := []string{}
@@ -78,9 +74,13 @@ func operationsTable(spec *oas3.Swagger, columns *table.ColumnSet) (*table.Table
 				row = append(row, strings.Join(
 					tgs.GetTagGroupNamesForTagNames(op.Tags...), ", "))
 			case "securityScopes":
-				row = append(row, OperationSecurityScopes(op, false)...)
+				row = append(row, strings.Join(OperationSecurityScopes(op, false), ", "))
 			case XThrottlingGroup:
 				row = append(row, GetExtensionPropStringOrEmpty(op.ExtensionProps, XThrottlingGroup))
+			case "docsURL":
+				if op.ExternalDocs != nil {
+					row = append(row, op.ExternalDocs.URL)
+				}
 			default:
 				row = append(row, GetExtensionPropStringOrEmpty(op.ExtensionProps, text.Slug))
 			}
@@ -91,8 +91,8 @@ func operationsTable(spec *oas3.Swagger, columns *table.ColumnSet) (*table.Table
 	return &tbl, nil
 }
 
-func OpTableColumnsDefault() []table.Column {
-	return []table.Column{
+func OpTableColumnsDefault(inclDocsURL bool) *table.ColumnSet {
+	cols := []table.Column{
 		{
 			Display: "Tags",
 			Slug:    "tags",
@@ -121,15 +121,18 @@ func OpTableColumnsDefault() []table.Column {
 			Display: "XThrottlingGroup",
 			Slug:    XThrottlingGroup,
 			Width:   150},
-		{
-			Display: "DocsURL",
-			Slug:    "DocsURL",
-			Width:   150},
 	}
+	if inclDocsURL {
+		cols = append(cols, table.Column{
+			Display: "DocsURL",
+			Slug:    "docsURL",
+			Width:   150})
+	}
+	return &table.ColumnSet{Columns: cols}
 }
 
 func OpTableColumnsRingCentral() *table.ColumnSet {
-	columns := OpTableColumnsDefault()
+	columns := OpTableColumnsDefault(false)
 	rcCols := []table.Column{
 		{
 			Display: "API Group",
@@ -148,8 +151,9 @@ func OpTableColumnsRingCentral() *table.ColumnSet {
 			Slug:    "x-user-permission",
 			Width:   150},
 	}
-	columns = append(columns, rcCols...)
-	return &table.ColumnSet{Columns: columns}
+	columns.Columns = append(columns.Columns, rcCols...)
+	return columns
+	//return &table.ColumnSet{Columns: columns}
 }
 
 func (sm *SpecMore) OperationMetas() []OperationMeta {
@@ -443,10 +447,14 @@ func (sm *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, ind
 }
 
 func (sm *SpecMore) WriteFileXLSX(filename string, columns *table.ColumnSet) error {
+	if columns == nil {
+		columns = OpTableColumnsDefault(true)
+	}
 	tbl, err := sm.OperationsTable(columns)
 	if err != nil {
 		return err
 	}
+	tbl.FormatAutoLink = true
 	return table.WriteXLSX(filename, tbl)
 }
 

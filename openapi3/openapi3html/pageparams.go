@@ -63,7 +63,8 @@ func (pp *PageParams) TableJSONBytesOrEmpty() []byte {
 
 func (pp *PageParams) TabulatorColumnsJSONBytesOrEmpty() []byte {
 	if pp.ColumnSet == nil || len(pp.ColumnSet.Columns) == 0 {
-		tcols := table.BuildColumnsTabulator(openapi3.OpTableColumnsDefault())
+		colSet := openapi3.OpTableColumnsDefault(false)
+		tcols := table.BuildColumnsTabulator(colSet.Columns)
 		return tcols.MustColumnsJSON()
 	}
 	tcols := table.BuildColumnsTabulator(pp.ColumnSet.Columns)
