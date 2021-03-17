@@ -1,5 +1,5 @@
-Swaggman - OpenAPI / Swagger Spec Utility and Postman Converter
-===============================================================
+Swaggman - OpenAPI Spec SDK and Postman Converter
+=================================================
 
 [![Build Status][build-status-svg]][build-status-link]
 [![Go Report Card][goreport-svg]][goreport-link]
@@ -8,7 +8,7 @@ Swaggman - OpenAPI / Swagger Spec Utility and Postman Converter
 
 ![](docs/images/logo_swaggman_600x150.png "")
 
-Swaggman is a multi-purpose OpenAPI and Postman utility.
+Swaggman is a multi-purpose OpenAPI Spec SDK that includes enhanced Postman conversion.
 
 **Major Features**
 
