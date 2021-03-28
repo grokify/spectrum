@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/grokify/simplego/net/httputilmore"
+	"github.com/pkg/errors"
 )
 
 const (
@@ -22,6 +23,7 @@ func NewCollectionFromBytes(data []byte) (Collection, error) {
 	col := Collection{}
 	err := json.Unmarshal(data, &col)
 	if err != nil {
+		err = errors.Wrap(err, "swaggman.postman2.NewCollectionFromBytes << json.Unmarshal")
 		return col, err
 	}
 	col.Inflate()

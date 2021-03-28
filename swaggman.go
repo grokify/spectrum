@@ -8,6 +8,7 @@ import (
 	"github.com/grokify/swaggman/openapi3"
 	"github.com/grokify/swaggman/openapi3/openapi3postman2"
 	"github.com/jessevdk/go-flags"
+	"github.com/pkg/errors"
 )
 
 // Convert yaml2json: https://github.com/bronze1man/yaml2json ... yaml2json_darwin_amd64
@@ -38,6 +39,7 @@ func main() {
 	if len(opts.Config) > 0 {
 		cfg3, err = openapi3postman2.ConfigurationReadFile(opts.Config)
 		if err != nil {
+			errors.Wrap(err, "openapi3postman2.ConfigurationReadFile")
 			log.Fatal(err)
 		}
 	}
@@ -56,6 +58,7 @@ func main() {
 		opts.Postman)
 
 	if err != nil {
+		errors.Wrap(err, "swaggman.main << conv.MergeConvert")
 		log.Fatal(err)
 	}
 

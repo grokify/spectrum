@@ -2,6 +2,7 @@ package openapi3postman2
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"regexp"
@@ -13,6 +14,7 @@ import (
 	"github.com/grokify/swaggman/openapi3"
 	"github.com/grokify/swaggman/postman2"
 	"github.com/grokify/swaggman/postman2/simple"
+	"github.com/pkg/errors"
 )
 
 // Converter is the struct that manages the conversion.
@@ -31,6 +33,10 @@ func NewConverter(cfg Configuration) Converter {
 func (conv *Converter) MergeConvert(openapiFilepath string, pmanBaseFilepath string, pmanSpecFilepath string) error {
 	oas3spec, err := openapi3.ReadFile(openapiFilepath, true)
 	if err != nil {
+		errors.Wrap(err,
+			fmt.Sprintf(
+				"cannot read OpenAPI 3 spec [%s] openapi3postman2.Converter.MergeConvert << openapi3.ReadFile",
+				openapiFilepath))
 		return err
 	}
 
@@ -38,6 +44,10 @@ func (conv *Converter) MergeConvert(openapiFilepath string, pmanBaseFilepath str
 	if len(pmanBaseFilepath) > 0 {
 		pman, err := simple.ReadCanonicalCollection(pmanBaseFilepath)
 		if err != nil {
+			err = errors.Wrap(err,
+				fmt.Sprintf(
+					"cannot read Postman Collection [%s] openapi3postman2.Converter.MergeConvert << simple.ReadCanonicalCollection",
+					pmanBaseFilepath))
 			return err
 		}
 
