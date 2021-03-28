@@ -14,6 +14,11 @@ specmore := openapi3.SpecMore{Spec: spec}
 // where `1` indicates with desc and `0` indicates without desc.
 status := specmore.OperationPropertiesDescriptionStatus()
 
+// OperationParametersDescriptionStatusCounts returns
+// counts of operations with, without and all operations.
+countWith, countWithout, countAll :=
+  specmore.OperationParametersDescriptionStatusCounts()
+
 // OperationParametersWithoutDescriptionsWriteFile
 // will write the operationIds and param names to a file
 err := specmore.OperationParametersWithoutDescriptionsWriteFile(
@@ -29,6 +34,11 @@ specmore := openapi3.SpecMore{Spec: spec}
 // map[string]map[string]int as a `simplego/maputil.MapStringMapStringInt`
 // where `1` indicates with desc and `0` indicates without desc.
 status := specmore.SchemaPropertiesDescriptionStatus()
+
+// SchemaPropertiesDescriptionStatusCounts returns counts of
+// schema properties with, without and all operations.
+countWith, countWithout, countAll :=
+  specmore.SchemaPropertiesDescriptionStatusCounts()
 
 // SchemaPropertiesWithoutDescriptionsWriteFile
 // will write the schema names and property names to a file
