@@ -14,5 +14,4 @@ require (
 	github.com/valyala/fasthttp v1.22.0
 	github.com/valyala/quicktemplate v1.6.3
 	gopkg.in/yaml.v2 v2.4.0
-
 )
