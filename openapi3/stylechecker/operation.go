@@ -17,8 +17,8 @@ func SpecCheckOperations(spec *oas3.Swagger, ruleset RuleSet) PolicyViolationsSe
 			if op == nil {
 				return
 			}
-			//opLoc := "#/paths/" + jsonutil.PropertyNameEscape(path) + "/" + strings.ToLower(method)
-			opLoc := PointerSubEscapeAll("#/paths/%s/%s", path, strings.ToLower(method))
+			opLoc := PointerSubEscapeAll(
+				"#/paths/%s/%s", path, strings.ToLower(method))
 			opId := strings.TrimSpace(op.OperationID)
 			if len(opId) == 0 {
 				if ruleset.HasRule(RuleOpIdNonEmpty) {
