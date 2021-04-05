@@ -1,4 +1,4 @@
-package stylechecker
+package styleguide
 
 import (
 	"strconv"
@@ -21,8 +21,8 @@ func SpecCheckOperations(spec *oas3.Swagger, ruleset RuleSet) PolicyViolationsSe
 				"#/paths/%s/%s", path, strings.ToLower(method))
 			opId := strings.TrimSpace(op.OperationID)
 			if len(opId) == 0 {
-				if ruleset.HasRule(RuleOpIdNonEmpty) {
-					vsets.AddSimple(RuleOpIdNonEmpty, opLoc, "")
+				if ruleset.HasRule(RuleOpIdNotEmpty) {
+					vsets.AddSimple(RuleOpIdNotEmpty, opLoc, "")
 				}
 			} else {
 				if ruleset.HasRule(RuleOpIdStyleCamelCase) &&
@@ -33,17 +33,38 @@ func SpecCheckOperations(spec *oas3.Swagger, ruleset RuleSet) PolicyViolationsSe
 						opId)
 				}
 			}
+			if ruleset.HasRule(RuleOpSummaryNotEmpty) {
+				summaryCondensed := strings.TrimSpace(op.Summary)
+				if len(summaryCondensed) == 0 {
+					vsets.AddSimple(
+						RuleOpSummaryNotEmpty,
+						opLoc+"/summary",
+						"")
+				}
+			}
+			if ruleset.HasRule(RuleOpSummaryCaseFirstCapitalized) {
+				if !stringcase.IsFirstAlphaUpper(op.Summary) {
+					vsets.AddSimple(
+						RuleOpSummaryCaseFirstCapitalized,
+						opLoc+"/summary",
+						op.Summary)
+				}
+			}
 			// Check Parameters
-			vsets.UpsertSets(
+			err := vsets.UpsertSets(
 				ParametersCheck(
 					op.Parameters,
 					opLoc+"/parameters",
 					ruleset))
-			if ruleset.HasRule(RuleTagCaseFirstAlphaUpper) {
+			if err != nil {
+				vsets.AddSimple(RuleInternalError, opLoc, err.Error())
+			}
+			// Check Tags
+			if ruleset.HasRule(RuleTagCaseFirstCapitalized) {
 				for i, tag := range op.Tags {
 					if !stringcase.IsFirstAlphaUpper(tag) {
 						vsets.AddSimple(
-							RuleTagCaseFirstAlphaUpper,
+							RuleTagCaseFirstCapitalized,
 							opLoc+"/tags/"+strconv.Itoa(i),
 							tag)
 					}

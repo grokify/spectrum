@@ -1,4 +1,4 @@
-package stylechecker
+package styleguide
 
 import (
 	"errors"
@@ -52,17 +52,22 @@ func (sets *PolicyViolationsSets) AddSimple(ruleName, location, value string) {
 }
 
 func (sets *PolicyViolationsSets) UpsertSet(upsertSet PolicyViolationsSet) error {
-	if len(upsertSet.RuleName) == 0 {
-		return errors.New("set to add has no RuleName")
-	}
-	existingSet, ok := sets.ByRule[upsertSet.RuleName]
-	if !ok {
-		sets.ByRule[upsertSet.RuleName] = upsertSet
-	} else {
-		existingSet.Violations = append(
-			existingSet.Violations,
-			upsertSet.Violations...)
-		sets.ByRule[existingSet.RuleName] = existingSet
+	for _, vio := range upsertSet.Violations {
+		ruleName := vio.RuleName
+		if len(ruleName) == 0 {
+			ruleName = upsertSet.RuleName
+		}
+		if len(ruleName) == 0 {
+			return errors.New("violation & violationSet have no RuleName")
+		}
+		existingSet, ok := sets.ByRule[upsertSet.RuleName]
+		if !ok {
+			sets.ByRule[upsertSet.RuleName] = upsertSet
+		} else {
+			existingSet.Violations = append(
+				existingSet.Violations, vio)
+			sets.ByRule[ruleName] = existingSet
+		}
 	}
 	return nil
 }
@@ -96,8 +101,10 @@ func (sets *PolicyViolationsSets) LocationsByRule() ViolationLocationsByRuleSet 
 			locs[ruleName] = append(locs[ruleName], vioLocation)
 		}
 	}
-	return ViolationLocationsByRuleSet{
+	vlrs := ViolationLocationsByRuleSet{
 		ViolationLocationsByRule: locs}
+	vlrs.Condense()
+	return vlrs
 }
 
 type PolicyRule struct {
@@ -147,4 +154,11 @@ type PolicyViolation struct {
 
 type ViolationLocationsByRuleSet struct {
 	ViolationLocationsByRule map[string][]string
+}
+
+func (vlrs *ViolationLocationsByRuleSet) Condense() {
+	for k, vals := range vlrs.ViolationLocationsByRule {
+		vlrs.ViolationLocationsByRule[k] =
+			stringsutil.SliceCondenseSpace(vals, true, true)
+	}
 }

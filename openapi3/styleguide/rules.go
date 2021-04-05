@@ -1,4 +1,4 @@
-package stylechecker
+package styleguide
 
 import (
 	"fmt"
@@ -13,16 +13,18 @@ import (
 
 const (
 	// Optional
-	RuleOpDescNonEmpty                = "operation.description.non_empty"
-	RuleOpIdNonEmpty                  = "operation.operationid.non_empty"
+	RuleOpDescNotEmpty                = "operation.description.not_empty"
+	RuleOpIdNotEmpty                  = "operation.operationid.not_empty"
 	RuleOpIdStyleCamelCase            = "operation.operationid.style.camelcase"
-	RuleOpTagsCount1                  = "operation.tags.count.1"
-	RulePathParamNameNonEmpty         = "path.param.name.non-empty"
+	RuleOpSummaryNotEmpty             = "operation.summary.not_empty"
+	RuleOpSummaryCaseFirstCapitalized = "operation.summary.case.first.capitalized"
+	RuleOpTagsCountOneOnly            = "operation.tags.count.one_only"
+	RulePathParamNameNonEmpty         = "path.param.name.not_empty"
 	RulePathParamStyleCamelCase       = "path.param.style.camelcase"
 	RuleSchemaPropEnumStylePascalCase = "schema.property.enum.style.pascalcase"
-	RuleSchemaPropDescNonEmpty        = "schema.property.description.non-empty"
+	RuleSchemaPropDescNotEmpty        = "schema.property.description.not_empty"
 	RuleSchemaObjectPropsExist        = "schema.object.properties.exists"
-	RuleTagCaseFirstAlphaUpper        = "tag.case.first.alpha.upper"
+	RuleTagCaseFirstCapitalized       = "tag.case.first.capitalized"
 
 	// Mandatory
 	RuleOpParameterNameNonEmpty = "operation.parameter.name.non-empty"
@@ -30,6 +32,11 @@ const (
 	// Prefixes
 	PrefixPathParam          = "path.param."
 	PrefixSchemaPropertyEnum = "schema.property.enum.style."
+
+	RuleInternalError = "internal.error"
+
+	LocationPaths   = "#/paths"
+	LocationSchemas = "#/components/schemas"
 )
 
 func RuleToCaseStyle(s string) string {

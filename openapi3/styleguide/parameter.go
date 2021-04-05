@@ -1,4 +1,4 @@
-package stylechecker
+package styleguide
 
 import (
 	"strconv"

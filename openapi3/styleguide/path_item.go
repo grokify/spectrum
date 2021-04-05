@@ -1,4 +1,4 @@
-package stylechecker
+package styleguide
 
 import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
@@ -16,8 +16,11 @@ func SpecCheckPathItems(spec *oas3.Swagger, rules RuleSet) PolicyViolationsSets 
 			continue
 		}
 		jsPointer := "#/paths/" + jsonutil.PropertyNameEscape(path)
-		vsets.UpsertSets(
+		err := vsets.UpsertSets(
 			ParametersCheck(pathItemRef.Parameters, jsPointer, rules))
+		if err != nil {
+			vsets.AddSimple(RuleInternalError, LocationPaths, err.Error())
+		}
 	}
 
 	return vsets

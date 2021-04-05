@@ -6,7 +6,7 @@ import (
 
 	"github.com/grokify/simplego/fmt/fmtutil"
 	"github.com/grokify/swaggman/openapi3"
-	"github.com/grokify/swaggman/openapi3/stylechecker"
+	"github.com/grokify/swaggman/openapi3/styleguide"
 	"github.com/jessevdk/go-flags"
 )
 
@@ -29,15 +29,17 @@ func main() {
 	fmtutil.PrintJSON(sm.Stats())
 
 	rules := []string{
-		stylechecker.RuleOpIdStyleCamelCase,
-		stylechecker.RulePathParamStyleCamelCase,
-		stylechecker.RuleSchemaObjectPropsExist,
-		stylechecker.RuleSchemaPropEnumStylePascalCase,
-		stylechecker.RuleTagCaseFirstAlphaUpper,
+		styleguide.RuleOpIdStyleCamelCase,
+		styleguide.RuleOpSummaryNotEmpty,
+		styleguide.RuleOpSummaryCaseFirstCapitalized,
+		styleguide.RulePathParamStyleCamelCase,
+		styleguide.RuleSchemaObjectPropsExist,
+		styleguide.RuleSchemaPropEnumStylePascalCase,
+		styleguide.RuleTagCaseFirstCapitalized,
 	}
-	ruleset := stylechecker.NewRuleSet(rules)
+	ruleset := styleguide.NewRuleSet(rules)
 
-	vios, err := stylechecker.SpecCheckViolations(spec, ruleset)
+	vios, err := styleguide.SpecCheckViolations(spec, ruleset)
 	if err != nil {
 		log.Fatal(err)
 	}

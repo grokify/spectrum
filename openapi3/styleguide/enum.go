@@ -1,4 +1,4 @@
-package stylechecker
+package styleguide
 
 import (
 	"fmt"
@@ -14,12 +14,18 @@ func SpecCheckSchemas(spec *oas3.Swagger, rules RuleSet) PolicyViolationsSets {
 	enumRules := rules.RulesWithPrefix(PrefixSchemaPropertyEnum)
 
 	for _, enumRule := range enumRules {
-		vsets.UpsertSets(SpecCheckSchemaPropertyEnumCaseStyle(
+		err := vsets.UpsertSets(SpecCheckSchemaPropertyEnumCaseStyle(
 			spec, enumRule))
+		if err != nil {
+			vsets.AddSimple(RuleInternalError, LocationSchemas, err.Error())
+		}
 	}
 	if rules.HasRule(RuleSchemaObjectPropsExist) {
-		vsets.UpsertSets(SpecCheckSchemaObjectPropsExist(
+		err := vsets.UpsertSets(SpecCheckSchemaObjectPropsExist(
 			spec))
+		if err != nil {
+			vsets.AddSimple(RuleInternalError, LocationSchemas, err.Error())
+		}
 	}
 
 	return vsets
