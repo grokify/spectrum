@@ -67,7 +67,6 @@ github.com/google/go-cmp v0.3.0/go.mod h1:8QqcDgzrUqlUb/G2PQTWiueGozuR1884gddMyw
 github.com/google/go-cmp v0.3.1/go.mod h1:8QqcDgzrUqlUb/G2PQTWiueGozuR1884gddMywk6iLU=
 github.com/google/go-cmp v0.4.0/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.5.0/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
-github.com/google/go-querystring v1.0.0 h1:Xkwi/a1rcvNg1PPYe5vI8GbeBY/jrVuDX5ASuANWTrk=
 github.com/google/go-querystring v1.0.0/go.mod h1:odCYkC5MyYFN7vkCjXpyrEuKhc/BUO6wN/zVPAxq5ck=
 github.com/google/gofuzz v1.0.0/go.mod h1:dBl0BpW6vV/+mYPU4Po3pmUjxk6FQPldtuIdl/M65Eg=
 github.com/gorilla/css v1.0.0/go.mod h1:Dn721qIggHpt4+EFCcTLTU/vk5ySda2ReITrtgBl60c=
@@ -80,8 +79,9 @@ github.com/grokify/elastirad-go v0.0.2/go.mod h1:2ed3kWLx0R8B7G4Q7ZAWR6dRcnqs96k
 github.com/grokify/gocharts v0.0.6 h1:2+ak4415lQfTrDCgwSfq3NQd7YomA1jWY/NqJXB0wTY=
 github.com/grokify/gocharts v0.0.6/go.mod h1:1YGDi7OhpdQ3sTqj3OHwx03L+zXXmmglt6osmALNpzE=
 github.com/grokify/simplego v0.0.3/go.mod h1:mOeVoV0XRtBVrkTxFdN4e9u7yeiRurhCtxsk+CA7gO4=
-github.com/grokify/simplego v0.0.14 h1:neoGFsokH58cz/zuSG7aNOveq3Tx9q86rb/wckVxEr0=
 github.com/grokify/simplego v0.0.14/go.mod h1:8BYycDukEZvM7jyu8mfG9On4/pG6fEhPYlE3TBsB/Xw=
+github.com/grokify/simplego v0.0.17 h1:WFOv8sK/+5iJ3PgIPNs91rh5406OVah0I6tyc7mlQrs=
+github.com/grokify/simplego v0.0.17/go.mod h1:8BYycDukEZvM7jyu8mfG9On4/pG6fEhPYlE3TBsB/Xw=
 github.com/huandu/xstrings v1.3.2 h1:L18LIDzqlW6xN2rEkpdV8+oL/IXWJ1APd+vsdYy4Wdw=
 github.com/huandu/xstrings v1.3.2/go.mod h1:y5/lhBue+AyNmUVz9RLU9xbLR0o4KIIExikq4ovT0aE=
 github.com/itchyny/base58-go v0.1.0/go.mod h1:SrMWPE3DFuJJp1M/RUhu4fccp/y9AlB8AL3o3duPToU=
