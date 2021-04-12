@@ -57,8 +57,8 @@ func NewPolicySimple(rules []string) Policy {
 	for i, rule := range rules {
 		rules[i] = strings.ToLower(rule)
 		pol.rulesMap[rule] = Rule{
-			Name:   rule,
-			Status: RuleStatusError}
+			Name:     rule,
+			Severity: SeverityError}
 	}
 	return pol
 }

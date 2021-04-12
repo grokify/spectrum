@@ -9,15 +9,15 @@ type Policy struct {
 */
 
 const (
-	RuleStatusDisabled    = "disabled"
-	RuleStatusError       = "error"
-	RuleStatusHint        = "hint"
-	RuleStatusInformation = "information"
-	RuleStatusWarning     = "warning"
+	SeverityDisabled    = "disabled"
+	SeverityError       = "error"
+	SeverityHint        = "hint"
+	SeverityInformation = "information"
+	SeverityWarning     = "warning"
 )
 
 type Rule struct {
-	Name   string
-	Status string
-	Func   func(spec *oas3.Swagger, ruleset Policy) PolicyViolationsSets
+	Name     string
+	Severity string
+	Func     func(spec *oas3.Swagger, ruleset Policy) PolicyViolationsSets
 }
