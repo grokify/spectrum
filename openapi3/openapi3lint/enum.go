@@ -1,4 +1,4 @@
-package styleguide
+package openapi3lint
 
 import (
 	"fmt"

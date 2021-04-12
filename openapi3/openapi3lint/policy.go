@@ -1,4 +1,4 @@
-package styleguide
+package openapi3lint
 
 import oas3 "github.com/getkin/kin-openapi/openapi3"
 

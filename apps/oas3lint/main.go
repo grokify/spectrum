@@ -6,7 +6,7 @@ import (
 
 	"github.com/grokify/simplego/fmt/fmtutil"
 	"github.com/grokify/swaggman/openapi3"
-	"github.com/grokify/swaggman/openapi3/styleguide"
+	"github.com/grokify/swaggman/openapi3/openapi3lint"
 	"github.com/jessevdk/go-flags"
 )
 
@@ -29,17 +29,17 @@ func main() {
 	fmtutil.PrintJSON(sm.Stats())
 
 	rules := []string{
-		styleguide.RuleOpIdStyleCamelCase,
-		styleguide.RuleOpSummaryNotEmpty,
-		styleguide.RuleOpSummaryCaseFirstCapitalized,
-		styleguide.RulePathParamStyleCamelCase,
-		styleguide.RuleSchemaObjectPropsExist,
-		styleguide.RuleSchemaPropEnumStylePascalCase,
-		styleguide.RuleTagCaseFirstCapitalized,
+		openapi3lint.RuleOpIdStyleCamelCase,
+		openapi3lint.RuleOpSummaryNotEmpty,
+		openapi3lint.RuleOpSummaryCaseFirstCapitalized,
+		openapi3lint.RulePathParamStyleCamelCase,
+		openapi3lint.RuleSchemaObjectPropsExist,
+		openapi3lint.RuleSchemaPropEnumStylePascalCase,
+		openapi3lint.RuleTagCaseFirstCapitalized,
 	}
-	ruleset := styleguide.NewPolicySimple(rules)
+	ruleset := openapi3lint.NewPolicySimple(rules)
 
-	vios, err := styleguide.SpecCheckViolations(spec, ruleset)
+	vios, err := openapi3lint.SpecCheckViolations(spec, ruleset)
 	if err != nil {
 		log.Fatal(err)
 	}
