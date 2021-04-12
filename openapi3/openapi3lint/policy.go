@@ -22,24 +22,24 @@ func NewPolicySimple(rules []string) Policy {
 	return pol
 }
 
-func (set *Policy) HasRule(rule string) bool {
+func (pol *Policy) HasRule(rule string) bool {
 	rule = strings.ToLower(strings.TrimSpace(rule))
-	if _, ok := set.rulesMap[rule]; ok {
+	if _, ok := pol.rulesMap[rule]; ok {
 		return true
 	}
 	return false
 }
 
-func (set *Policy) HasPathItemRules() bool {
-	return set.HasRulePrefix(PrefixPathParam)
+func (pol *Policy) HasPathItemRules() bool {
+	return pol.HasRulePrefix(PrefixPathParam)
 }
 
-func (set *Policy) HasSchemaEnumStyleRules() bool {
-	return set.HasRulePrefix(PrefixSchemaPropertyEnum)
+func (pol *Policy) HasSchemaEnumStyleRules() bool {
+	return pol.HasRulePrefix(PrefixSchemaPropertyEnum)
 }
 
-func (set *Policy) HasRulePrefix(prefix string) bool {
-	for rule := range set.rulesMap {
+func (pol *Policy) HasRulePrefix(prefix string) bool {
+	for rule := range pol.rulesMap {
 		if strings.Index(rule, prefix) == 0 {
 			return true
 		}
@@ -47,9 +47,9 @@ func (set *Policy) HasRulePrefix(prefix string) bool {
 	return false
 }
 
-func (set *Policy) RulesWithPrefix(prefix string) []string {
+func (pol *Policy) RulesWithPrefix(prefix string) []string {
 	rules := []string{}
-	for rule := range set.rulesMap {
+	for rule := range pol.rulesMap {
 		if strings.Index(rule, prefix) == 0 {
 			rules = append(rules, rule)
 		}
