@@ -9,7 +9,7 @@ import (
 	"github.com/grokify/swaggman/openapi3"
 )
 
-func SpecCheckOperations(spec *oas3.Swagger, ruleset RuleSet) PolicyViolationsSets {
+func SpecCheckOperations(spec *oas3.Swagger, ruleset Policy) PolicyViolationsSets {
 	vsets := NewPolicyViolationsSets()
 
 	openapi3.VisitOperations(spec,
@@ -33,6 +33,7 @@ func SpecCheckOperations(spec *oas3.Swagger, ruleset RuleSet) PolicyViolationsSe
 						opId)
 				}
 			}
+			requiredSummaryEmpty := false
 			if ruleset.HasRule(RuleOpSummaryNotEmpty) {
 				summaryCondensed := strings.TrimSpace(op.Summary)
 				if len(summaryCondensed) == 0 {
@@ -40,9 +41,11 @@ func SpecCheckOperations(spec *oas3.Swagger, ruleset RuleSet) PolicyViolationsSe
 						RuleOpSummaryNotEmpty,
 						opLoc+"/summary",
 						"")
+					requiredSummaryEmpty = true
 				}
 			}
-			if ruleset.HasRule(RuleOpSummaryCaseFirstCapitalized) {
+			if ruleset.HasRule(RuleOpSummaryCaseFirstCapitalized) &&
+				!requiredSummaryEmpty {
 				if !stringcase.IsFirstAlphaUpper(op.Summary) {
 					vsets.AddSimple(
 						RuleOpSummaryCaseFirstCapitalized,

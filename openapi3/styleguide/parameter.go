@@ -8,7 +8,7 @@ import (
 	"github.com/grokify/simplego/text/stringcase"
 )
 
-func ParametersCheck(params oas3.Parameters, jsPointerParameters string, rules RuleSet) PolicyViolationsSets {
+func ParametersCheck(params oas3.Parameters, jsPointerParameters string, rules Policy) PolicyViolationsSets {
 	vsets := NewPolicyViolationsSets()
 
 	for i, paramRef := range params {

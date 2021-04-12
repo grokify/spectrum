@@ -5,7 +5,7 @@ import (
 	"github.com/grokify/simplego/encoding/jsonutil"
 )
 
-func SpecCheckPathItems(spec *oas3.Swagger, rules RuleSet) PolicyViolationsSets {
+func SpecCheckPathItems(spec *oas3.Swagger, rules Policy) PolicyViolationsSets {
 	vsets := NewPolicyViolationsSets()
 	if !rules.HasPathItemRules() {
 		return vsets

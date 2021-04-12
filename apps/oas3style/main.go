@@ -37,7 +37,7 @@ func main() {
 		styleguide.RuleSchemaPropEnumStylePascalCase,
 		styleguide.RuleTagCaseFirstCapitalized,
 	}
-	ruleset := styleguide.NewRuleSet(rules)
+	ruleset := styleguide.NewPolicySimple(rules)
 
 	vios, err := styleguide.SpecCheckViolations(spec, ruleset)
 	if err != nil {
@@ -45,6 +45,8 @@ func main() {
 	}
 
 	fmtutil.PrintJSON(vios.LocationsByRule())
+
+	fmtutil.PrintJSON(sm.Stats())
 
 	fmt.Println("DONE")
 }

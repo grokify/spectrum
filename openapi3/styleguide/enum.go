@@ -8,7 +8,7 @@ import (
 	"github.com/grokify/simplego/text/stringcase"
 )
 
-func SpecCheckSchemas(spec *oas3.Swagger, rules RuleSet) PolicyViolationsSets {
+func SpecCheckSchemas(spec *oas3.Swagger, rules Policy) PolicyViolationsSets {
 	vsets := NewPolicyViolationsSets()
 
 	enumRules := rules.RulesWithPrefix(PrefixSchemaPropertyEnum)

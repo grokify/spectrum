@@ -8,9 +8,9 @@ import (
 	"github.com/grokify/simplego/type/stringsutil"
 )
 
-type SpecCheckViolationsFunc func(spec *oas3.Swagger, rules RuleSet) PolicyViolationsSets
+type SpecCheckViolationsFunc func(spec *oas3.Swagger, rules Policy) PolicyViolationsSets
 
-func SpecCheckViolations(spec *oas3.Swagger, rules RuleSet) (PolicyViolationsSets, error) {
+func SpecCheckViolations(spec *oas3.Swagger, rules Policy) (PolicyViolationsSets, error) {
 	vsets := NewPolicyViolationsSets()
 
 	vioFuncs := []SpecCheckViolationsFunc{

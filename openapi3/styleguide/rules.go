@@ -7,7 +7,6 @@ import (
 
 	"github.com/grokify/simplego/encoding/jsonutil"
 	"github.com/grokify/simplego/text/stringcase"
-	"github.com/grokify/simplego/type/maputil"
 	"github.com/grokify/simplego/type/stringsutil"
 )
 
@@ -48,20 +47,23 @@ func RuleToCaseStyle(s string) string {
 	return ""
 }
 
-type RuleSet struct {
-	rulesMap map[string]int
+type Policy struct {
+	rulesMap map[string]Rule
 }
 
-func NewRuleSet(rules []string) RuleSet {
+func NewPolicySimple(rules []string) Policy {
+	pol := Policy{rulesMap: map[string]Rule{}}
 	rules = stringsutil.SliceCondenseSpace(rules, true, true)
 	for i, rule := range rules {
 		rules[i] = strings.ToLower(rule)
+		pol.rulesMap[rule] = Rule{
+			Name:   rule,
+			Status: RuleStatusError}
 	}
-	msi := maputil.NewMapStringIntSlice(rules)
-	return RuleSet{rulesMap: msi}
+	return pol
 }
 
-func (set *RuleSet) HasRule(rule string) bool {
+func (set *Policy) HasRule(rule string) bool {
 	rule = strings.ToLower(strings.TrimSpace(rule))
 	if _, ok := set.rulesMap[rule]; ok {
 		return true
@@ -69,15 +71,15 @@ func (set *RuleSet) HasRule(rule string) bool {
 	return false
 }
 
-func (set *RuleSet) HasPathItemRules() bool {
+func (set *Policy) HasPathItemRules() bool {
 	return set.HasRulePrefix(PrefixPathParam)
 }
 
-func (set *RuleSet) HasSchemaEnumStyleRules() bool {
+func (set *Policy) HasSchemaEnumStyleRules() bool {
 	return set.HasRulePrefix(PrefixSchemaPropertyEnum)
 }
 
-func (set *RuleSet) HasRulePrefix(prefix string) bool {
+func (set *Policy) HasRulePrefix(prefix string) bool {
 	for rule := range set.rulesMap {
 		if strings.Index(rule, prefix) == 0 {
 			return true
@@ -86,7 +88,7 @@ func (set *RuleSet) HasRulePrefix(prefix string) bool {
 	return false
 }
 
-func (set *RuleSet) RulesWithPrefix(prefix string) []string {
+func (set *Policy) RulesWithPrefix(prefix string) []string {
 	rules := []string{}
 	for rule := range set.rulesMap {
 		if strings.Index(rule, prefix) == 0 {
