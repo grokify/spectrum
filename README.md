@@ -12,7 +12,7 @@ Swaggman is a multi-purpose OpenAPI Spec SDK that includes enhanced Postman conv
 
 ## Major Features
 
-1. OpenAPI 3
+### OpenAPI 3
   1. Merging of multiple specs
   1. Output of spec to tabular format to HTML (API Registry), CSV, XLSX. HTML API Registry has a bonus feature that makes each line clickable. Click any line here: http://ringcentral.github.io/api-registry/
   1. Programmatic API to modify OpenAPI specs using rules
@@ -21,10 +21,10 @@ Swaggman is a multi-purpose OpenAPI Spec SDK that includes enhanced Postman conv
   1. Statistics: Counts operations, schemas, properties & parameters (with and without descriptions), etc.
   1. Postman 2 Collection conversion
   1. Ability to merge in Postman request body examples into Postman 2 Collection
-1. OpenAPI 2
+### OpenAPI 2
   1. Merging of multiple specs
   1. Postman 2 Collection conversion
-1. Postman 2
+### Postman 2
   1. CLI and library to Convert OpenAPI Specs to Postman Collection
   1. Add Postman environment variables to URLs, e.g. Server URLs like `https://{{HOSTNAME}}/restapi`
   1. Add headers, such as environment variable based Authorization headers, such as `Authorization: Bearer {{myAccessToken}}`
