@@ -25,6 +25,7 @@ The following article provides an overview of OpenAPI spec to Postman conversion
   1. Statistics: Counts operations, schemas, properties & parameters (with and without descriptions), etc.
   1. Postman 2 Collection conversion
   1. Ability to merge in Postman request body examples into Postman 2 Collection
+  1. Functionality is built on *kin-openapi*: https://github.com/getkin/kin-openapi
 ### OpenAPI 2
   1. Merging of multiple specs
   1. Postman 2 Collection conversion
