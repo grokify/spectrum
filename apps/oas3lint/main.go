@@ -30,7 +30,7 @@ func main() {
 
 	rules := []string{
 		openapi3lint.RuleOpIdStyleCamelCase,
-		openapi3lint.RuleOpSummaryNotEmpty,
+		openapi3lint.RuleOpSummaryExist,
 		openapi3lint.RuleOpSummaryCaseFirstCapitalized,
 		openapi3lint.RulePathParamStyleCamelCase,
 		openapi3lint.RuleSchemaObjectPropsExist,

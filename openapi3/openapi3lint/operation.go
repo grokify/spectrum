@@ -21,8 +21,8 @@ func SpecCheckOperations(spec *oas3.Swagger, ruleset Policy) PolicyViolationsSet
 				"#/paths/%s/%s", path, strings.ToLower(method))
 			opId := strings.TrimSpace(op.OperationID)
 			if len(opId) == 0 {
-				if ruleset.HasRule(RuleOpIdNotEmpty) {
-					vsets.AddSimple(RuleOpIdNotEmpty, opLoc, "")
+				if ruleset.HasRule(RuleOpIdExist) {
+					vsets.AddSimple(RuleOpIdExist, opLoc, "")
 				}
 			} else {
 				if ruleset.HasRule(RuleOpIdStyleCamelCase) &&
@@ -34,11 +34,11 @@ func SpecCheckOperations(spec *oas3.Swagger, ruleset Policy) PolicyViolationsSet
 				}
 			}
 			requiredSummaryEmpty := false
-			if ruleset.HasRule(RuleOpSummaryNotEmpty) {
+			if ruleset.HasRule(RuleOpSummaryExist) {
 				summaryCondensed := strings.TrimSpace(op.Summary)
 				if len(summaryCondensed) == 0 {
 					vsets.AddSimple(
-						RuleOpSummaryNotEmpty,
+						RuleOpSummaryExist,
 						opLoc+"/summary",
 						"")
 					requiredSummaryEmpty = true

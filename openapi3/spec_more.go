@@ -36,11 +36,11 @@ func (sm *SpecMore) SchemasCount() int {
 	return len(sm.Spec.Components.Schemas)
 }
 
-func (sm *SpecMore) OperationsTable(columns *table.ColumnSet) (*table.Table, error) {
-	return operationsTable(sm.Spec, columns)
+func (sm *SpecMore) OperationsTable(columns *table.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) (*table.Table, error) {
+	return operationsTable(sm.Spec, columns, nil)
 }
 
-func operationsTable(spec *oas3.Swagger, columns *table.ColumnSet) (*table.Table, error) {
+func operationsTable(spec *oas3.Swagger, columns *table.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) (*table.Table, error) {
 	if columns == nil {
 		columns = OpTableColumnsDefault(false)
 	}
@@ -56,6 +56,10 @@ func operationsTable(spec *oas3.Swagger, columns *table.ColumnSet) (*table.Table
 	}
 
 	VisitOperations(spec, func(path, method string, op *oas3.Operation) {
+		if filterFunc != nil &&
+			!filterFunc(path, method, op) {
+			return
+		}
 		row := []string{}
 
 		for _, text := range columns.Columns {
@@ -431,7 +435,7 @@ func (sm *SpecMore) PrintJSON(prefix, indent string) error {
 }
 
 func (sm *SpecMore) WriteFileCSV(filename string) error {
-	tbl, err := sm.OperationsTable(nil)
+	tbl, err := sm.OperationsTable(nil, nil)
 	if err != nil {
 		return err
 	}
@@ -450,7 +454,7 @@ func (sm *SpecMore) WriteFileXLSX(filename string, columns *table.ColumnSet) err
 	if columns == nil {
 		columns = OpTableColumnsDefault(true)
 	}
-	tbl, err := sm.OperationsTable(columns)
+	tbl, err := sm.OperationsTable(columns, nil)
 	if err != nil {
 		return err
 	}

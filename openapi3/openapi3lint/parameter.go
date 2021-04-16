@@ -19,7 +19,7 @@ func ParametersCheck(params oas3.Parameters, jsPointerParameters string, rules P
 					"/parameters/" + strconv.Itoa(i) + "/name")
 				if len(paramName) == 0 {
 					vsets.AddSimple(
-						RulePathParamNameNonEmpty,
+						RulePathParamNameExist,
 						jsPointerPath, paramName)
 				} else {
 					if rules.HasRule(RulePathParamStyleCamelCase) &&

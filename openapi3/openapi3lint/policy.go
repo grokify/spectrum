@@ -22,6 +22,18 @@ func NewPolicySimple(rules []string) Policy {
 	return pol
 }
 
+func (pol *Policy) Validate() error {
+	for ruleName, rule := range pol.rulesMap {
+		if ruleName != rule.Name {
+			if len(rule.Name) == 0 {
+				rule.Name = ruleName
+				pol.rulesMap[ruleName] = rule
+			}
+		}
+	}
+	return nil
+}
+
 func (pol *Policy) HasRule(rule string) bool {
 	rule = strings.ToLower(strings.TrimSpace(rule))
 	if _, ok := pol.rulesMap[rule]; ok {

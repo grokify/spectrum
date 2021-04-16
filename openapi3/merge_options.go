@@ -3,6 +3,9 @@ package openapi3
 import (
 	"reflect"
 	"regexp"
+
+	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/gocharts/data/table"
 )
 
 type CollisionCheckResult int
@@ -20,6 +23,8 @@ type MergeOptions struct {
 	CollisionCheckResult CollisionCheckResult
 	ValidateEach         bool
 	ValidateFinal        bool
+	TableColumns         *table.ColumnSet
+	TableOpFilterFunc    func(path, method string, op *oas3.Operation) bool
 }
 
 func NewMergeOptionsSkip() *MergeOptions {
