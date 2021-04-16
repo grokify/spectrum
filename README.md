@@ -8,23 +8,28 @@ Swaggman - OpenAPI Spec SDK and Postman Converter
 
 ![](docs/images/logo_swaggman_600x150.png "")
 
-Swaggman is a multi-purpose OpenAPI Spec SDK that includes enhanced Postman conversion.
+Swaggman is a multi-purpose OpenAPI Spec SDK that includes enhanced Postman conversion. Most of the OpenAPI Spec SDK is designed to support OAS3. Some functionality for OAS2 exists.
 
-**Major Features**
+## Major Features
 
-* CLI and library to Convert OpenAPI Specs to Postman Collection
-  * Add Postman environment variables to URLs, e.g. Server URLs like `https://{{HOSTNAME}}/restapi`
-  * Add headers, such as environment variable based Authorization headers, such as `Authorization: Bearer {{myAccessToken}}`
-  * Utilize baseline Postman collection to add Postman-specific functionality including Postman `prerequest` scripts.
-  * Add example request bodies, e.g. JSON bodies with example parameter values.
-* OpenAPI 3 Spec SDK
-  * Merge Multiple OAS3 Specs
-  * Validate OAS3 Specs
-  * Programmatically examine and modify OAS3 Specs
-  * [Programmatically auto-correct OAS3 Specs](docs/openapi3_fix.md)
-* OpenAPI 2 Spec SDK
-  * Convert OpenAPI v2 to Postman Collection v2
-  * Merge Multiple OAS2 Specs
+1. OpenAPI 3
+  1. Merging of multiple specs
+  1. Output of spec to tabular format to HTML (API Registry), CSV, XLSX. HTML API Registry has a bonus feature that makes each line clickable. Click any line here: http://ringcentral.github.io/api-registry/
+  1. Programmatic API to modify OpenAPI specs using rules
+  1. [Programmatic ability to "fix" spec, e.g. change response Content Type to match output (needed for Engage Voice)](docs/openapi3_fix.md)
+  1. [OpenAPI 3 linter](openapi3/openapi3lint)
+  1. Statistics: Counts operations, schemas, properties & parameters (with and without descriptions), etc.
+  1. Postman 2 Collection conversion
+  1. Ability to merge in Postman request body examples into Postman 2 Collection
+1. OpenAPI 2
+  1. Merging of multiple specs
+  1. Postman 2 Collection conversion
+1. Postman 2
+  1. CLI and library to Convert OpenAPI Specs to Postman Collection
+  1. Add Postman environment variables to URLs, e.g. Server URLs like `https://{{HOSTNAME}}/restapi`
+  1. Add headers, such as environment variable based Authorization headers, such as `Authorization: Bearer {{myAccessToken}}`
+  1. Utilize baseline Postman collection to add Postman-specific functionality including Postman `prerequest` scripts.
+  1. Add example request bodies, e.g. JSON bodies with example parameter values.
 
 # Features
 
@@ -32,13 +37,13 @@ These are all used in the included example discussed below.
 
 [Additional discussion is available on Medium](https://medium.com/ringcentral-developers/using-postman-with-swagger-and-the-ringcentral-api-523712f792a0).
 
-# Notes
+## Notes
 
 * Postman 4.10.7 does not natively support JSON requests so request bodies need to be entered using the raw body editor. A future task is to add Swagger request examples as default Postman request bodies.
 * Postman 2.0 spec supports polymorphism and doesn't have a canonical schema. For example, the `request.url` property can be populated by a URL string or a URL object. Swaggman uses the URL object since it is more flexible. The function `simple.NewCanonicalCollectionFromBytes(bytes)` can be used to read either a simple or object based spec into a canonical object spec.
 * This has only been used on the RingCentral Swagger spec to date but will be used for more in the future. Please feel free to use and contribute. Examples are located in the `examples` folder.
 
-# Installation
+## Installation
 
 The following command will install the executable binary `swaggman` into the `~/go/bin` directory.
 
@@ -46,9 +51,9 @@ The following command will install the executable binary `swaggman` into the `~/
 $ go get github.com/grokify/swaggman
 ```
 
-# Usage
+## Usage
 
-## Simple Usage
+### Simple Usage
 
 ```
 // Instantiate a converter with default configuration
@@ -58,7 +63,7 @@ conv := swaggman.NewConverter(swaggman.Configuration{})
 err := conv.Convert("path/to/swagger.json", "path/to/pman.out.json")
 ```
 
-## Usage with Features
+### Usage with Features
 
 The following can be added which are especially useful to use with environment variables.
 
@@ -82,7 +87,7 @@ conv = swaggman.NewConverter(cfg)
 err := conv.MergeConvert("path/to/swagger.json", "path/to/pman.base.json", "path/to/pman.out.json")
 ```
 
-## Example
+### Example
 
 An example conversion is included, [`examples/ringcentral/convert.go`](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/convert.go) which creates a Postman 2.0 spec for the [RingCentral REST API](https://developers.ringcentral.com) using a base Postman 2.0 spec and the RingCentral basic Swagger 2.0 spec.
 
@@ -109,7 +114,7 @@ For multiple apps or users, simply create a different Postman environment for ea
 
 To set your environment variables, use the Settings Gear icon and then click "Manage Environments"
 
-# Articles and Links
+## Articles and Links
 
 * Medium: [Using Postman, Swagger and the RingCentral API](https://medium.com/ringcentral-developers/using-postman-with-swagger-and-the-ringcentral-api-523712f792a0)
 * YouTube: [Getting Started with RingCentral APIs using Postman ](https://youtu.be/5kE4UPXJ-5Q)
