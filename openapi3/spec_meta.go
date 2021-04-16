@@ -59,7 +59,7 @@ type SpecMeta struct {
 
 func ReadSpecMetasDir(dir string, rx *regexp.Regexp) (SpecMetas, error) {
 	metas := SpecMetas{Metas: []SpecMeta{}}
-	_, files, err := ioutilmore.ReadDirRx(dir, rx, true)
+	_, files, err := ioutilmore.ReadDirMore(dir, rx, true, true)
 
 	if err != nil {
 		return metas, err

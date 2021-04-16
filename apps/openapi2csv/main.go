@@ -23,8 +23,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	_, filepaths, err := ioutilmore.ReadDirRx(
-		opts.Directory, regexp.MustCompile(opts.Regexp), true)
+	_, filepaths, err := ioutilmore.ReadDirMore(
+		opts.Directory, regexp.MustCompile(opts.Regexp), true, true)
 
 	tbl, err := csv.TableFromSpecFiles(filepaths, true)
 	if err != nil {
