@@ -10,6 +10,10 @@ Swaggman - OpenAPI Spec SDK and Postman Converter
 
 Swaggman is a multi-purpose OpenAPI Spec SDK that includes enhanced Postman conversion. Most of the OpenAPI Spec SDK is designed to support OAS3. Some functionality for OAS2 exists.
 
+The following article provides an overview of OpenAPI spec to Postman conversion:
+
+1. [Blog Introduction](https://medium.com/ringcentral-developers/using-postman-with-swagger-and-the-ringcentral-api-523712f792a0)
+
 ## Major Features
 
 ### OpenAPI 3
@@ -30,12 +34,6 @@ Swaggman is a multi-purpose OpenAPI Spec SDK that includes enhanced Postman conv
   1. Add headers, such as environment variable based Authorization headers, such as `Authorization: Bearer {{myAccessToken}}`
   1. Utilize baseline Postman collection to add Postman-specific functionality including Postman `prerequest` scripts.
   1. Add example request bodies, e.g. JSON bodies with example parameter values.
-
-# Features
-
-These are all used in the included example discussed below.
-
-[Additional discussion is available on Medium](https://medium.com/ringcentral-developers/using-postman-with-swagger-and-the-ringcentral-api-523712f792a0).
 
 ## Notes
 
