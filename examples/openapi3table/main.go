@@ -22,7 +22,7 @@ func main() {
 		PageTitle:  spec.Info.Title,
 		PageLink:   "https://developers.ringcentral.com",
 		TableDomID: "apitable"}
-	pageParams.AddSpec(spec, ColumnTexts())
+	pageParams.AddSpec(spec, ColumnTexts(), nil)
 
 	pageHTML := openapi3html.SwaggmanUIPage(pageParams)
 
