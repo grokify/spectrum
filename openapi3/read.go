@@ -3,6 +3,7 @@ package openapi3
 import (
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"regexp"
 	"strings"
 
@@ -13,6 +14,18 @@ import (
 )
 
 var rxYamlExtension = regexp.MustCompile(`(?i)\.ya?ml\s*$`)
+
+func ReadURL(oas3url string) (*oas3.Swagger, error) {
+	resp, err := http.Get(oas3url)
+	if err != nil {
+		return nil, err
+	}
+	bytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	return Parse(bytes)
+}
 
 // ReadFile does optional validation which is useful when
 // merging incomplete spec files.
