@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"regexp"
 	"strings"
 
+	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/frequency"
 	"github.com/grokify/simplego/fmt/fmtutil"
 	"github.com/grokify/simplego/type/maputil"
@@ -18,6 +20,18 @@ type Options struct {
 	XlsxWrite    string `short:"x" long:"xlsxwrite" description:"Output File" required:"false"`
 }
 
+var (
+	rxHttp        = regexp.MustCompile(`^(?i)http://`)
+	rxHttpOrHttps = regexp.MustCompile(`^(?i)https?://`)
+)
+
+func isHttp(uri string, orHttps bool) bool {
+	if orHttps {
+		return rxHttpOrHttps.MatchString(uri)
+	}
+	return rxHttp.MatchString(uri)
+}
+
 func main() {
 	var opts Options
 	_, err := flags.Parse(&opts)
@@ -25,7 +39,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	spec, err := openapi3.ReadAndValidateFile(opts.SpecFileOAS3)
+	spec := &oas3.Swagger{}
+
+	if isHttp(opts.SpecFileOAS3, true) {
+		spec, err = openapi3.ReadURL(opts.SpecFileOAS3)
+	} else {
+		spec, err = openapi3.ReadAndValidateFile(opts.SpecFileOAS3)
+	}
 
 	if err != nil {
 		log.Fatal(err)
@@ -51,7 +71,7 @@ func main() {
 	fmt.Println(md)
 	opts.XlsxWrite = strings.TrimSpace(opts.XlsxWrite)
 	if len(opts.XlsxWrite) > 0 {
-		err := sm.WriteFileXLSX(opts.XlsxWrite, nil)
+		err := sm.WriteFileXLSX(opts.XlsxWrite, nil, nil)
 		if err != nil {
 			log.Fatal(err)
 		}
