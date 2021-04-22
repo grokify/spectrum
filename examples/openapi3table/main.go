@@ -21,8 +21,9 @@ func main() {
 	pageParams := openapi3html.PageParams{
 		PageTitle:  spec.Info.Title,
 		PageLink:   "https://developers.ringcentral.com",
-		TableDomID: "apitable"}
-	pageParams.AddSpec(spec, ColumnTexts(), nil)
+		TableDomID: "apitable",
+		ColumnSet:  ColumnTexts()}
+	pageParams.AddSpec(spec)
 
 	pageHTML := openapi3html.SwaggmanUIPage(pageParams)
 
