@@ -37,7 +37,7 @@ func (sm *SpecMore) SchemasCount() int {
 }
 
 func (sm *SpecMore) OperationsTable(columns *table.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) (*table.Table, error) {
-	return operationsTable(sm.Spec, columns, nil)
+	return operationsTable(sm.Spec, columns, filterFunc)
 }
 
 func operationsTable(spec *oas3.Swagger, columns *table.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) (*table.Table, error) {
@@ -450,11 +450,11 @@ func (sm *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, ind
 	return ioutil.WriteFile(filename, jsonData, perm)
 }
 
-func (sm *SpecMore) WriteFileXLSX(filename string, columns *table.ColumnSet) error {
+func (sm *SpecMore) WriteFileXLSX(filename string, columns *table.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) error {
 	if columns == nil {
 		columns = OpTableColumnsDefault(true)
 	}
-	tbl, err := sm.OperationsTable(columns, nil)
+	tbl, err := sm.OperationsTable(columns, filterFunc)
 	if err != nil {
 		return err
 	}
