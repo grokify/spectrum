@@ -29,7 +29,8 @@ type MergeOptions struct {
 
 func NewMergeOptionsSkip() *MergeOptions {
 	return &MergeOptions{
-		SchemaFunc: SchemaCheckCollisionSkip}
+		CollisionCheckResult: CollisionCheckSkip,
+		SchemaFunc:           SchemaCheckCollisionSkip}
 }
 
 func (mo *MergeOptions) CheckSchemaCollision(schemaName string, sch1, sch2 interface{}, hint2 string) CollisionCheckResult {
