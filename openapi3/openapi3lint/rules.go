@@ -11,18 +11,19 @@ import (
 
 const (
 	// Optional
-	RuleOpDescExist                   = "operation-description-exist"
-	RuleOpIdExist                     = "operation-operationid-exist"
-	RuleOpIdStyleCamelCase            = "operation-operationid-style-camelcase"
-	RuleOpSummaryExist                = "operation-summary-exist"
-	RuleOpSummaryCaseFirstCapitalized = "operation-summary-first-letter-capitalized"
-	RuleOpTagsCountOneOnly            = "operation-tags-count-one"
-	RulePathParamNameExist            = "path-param-name-exist"
-	RulePathParamStyleCamelCase       = "path-param-style-camelcase"
-	RuleSchemaPropEnumStylePascalCase = "property-enum-style-pascalcase"
-	RuleSchemaPropDescExist           = "property-description-exist"
-	RuleSchemaObjectPropsExist        = "schema-object-properties-exist"
-	RuleTagCaseFirstCapitalized       = "tag-case-first-capitalized"
+	RuleDatatypeIntFormatIsInt32OrInt64 = "datatype-int-format-int32-int64"
+	RuleOpDescExist                     = "operation-description-exist"
+	RuleOpIdExist                       = "operation-operationid-exist"
+	RuleOpIdStyleCamelCase              = "operation-operationid-style-camelcase"
+	RuleOpSummaryExist                  = "operation-summary-exist"
+	RuleOpSummaryCaseFirstCapitalized   = "operation-summary-first-letter-capitalized"
+	RuleOpTagsCountOneOnly              = "operation-tags-count-one"
+	RulePathParamNameExist              = "path-param-name-exist"
+	RulePathParamStyleCamelCase         = "path-param-style-camelcase"
+	RuleSchemaPropEnumStylePascalCase   = "property-enum-style-pascalcase"
+	RuleSchemaPropDescExist             = "property-description-exist"
+	RuleSchemaObjectPropsExist          = "schema-object-properties-exist"
+	RuleTagCaseFirstCapitalized         = "tag-case-first-capitalized"
 
 	// Mandatory
 	RuleOpParameterNameNonEmpty = "operation-parameter-name-non-empty"

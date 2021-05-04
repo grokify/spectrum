@@ -17,6 +17,7 @@ func SpecCheckViolations(spec *oas3.Swagger, rules Policy) (PolicyViolationsSets
 		SpecCheckOperations,
 		SpecCheckPathItems,
 		SpecCheckSchemas,
+		SpecCheckDataTypesFormats,
 	}
 
 	for _, vioFunc := range vioFuncs {
