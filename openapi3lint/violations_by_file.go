@@ -26,3 +26,11 @@ func (byFile *PolicyViolationsSetsByFile) LocationsByRule(filenameOnly, skipEmpt
 	}
 	return res
 }
+
+func (byFile *PolicyViolationsSetsByFile) Count() uint {
+	count := uint(0)
+	for _, vsets := range byFile.Sets {
+		count += vsets.Count()
+	}
+	return count
+}

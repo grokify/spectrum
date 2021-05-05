@@ -56,7 +56,7 @@ func main() {
 
 	}
 	fmtutil.PrintJSON(vsetsByFile.LocationsByRule(true, true))
-
+	fmt.Printf("violations [%d]\n", vsetsByFile.Count())
 	fmt.Println("DONE")
 }
 

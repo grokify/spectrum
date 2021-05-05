@@ -108,6 +108,14 @@ func (sets *PolicyViolationsSets) LocationsByRule() ViolationLocationsByRuleSet 
 	return vlrs
 }
 
+func (sets *PolicyViolationsSets) Count() uint {
+	count := uint(0)
+	for _, set := range sets.ByRule {
+		count += set.Count()
+	}
+	return count
+}
+
 type PolicyRule struct {
 	Name         string
 	StringFormat string
@@ -133,6 +141,10 @@ func (set *PolicyViolationsSet) Locations() PolicyViolationLocations {
 	}
 	locations.Finalize()
 	return locations
+}
+
+func (set *PolicyViolationsSet) Count() uint {
+	return uint(len(set.Violations))
 }
 
 type PolicyViolationLocations struct {
