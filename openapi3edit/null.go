@@ -1,4 +1,4 @@
-package modify
+package openapi3edit
 
 import oas3 "github.com/getkin/kin-openapi/openapi3"
 

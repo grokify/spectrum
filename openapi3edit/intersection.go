@@ -1,4 +1,4 @@
-package modify
+package openapi3edit
 
 import (
 	"sort"

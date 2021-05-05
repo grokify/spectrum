@@ -1,6 +1,6 @@
 # Swaggman OpenAPI 3 Inspect, Modify & Compare
 
-Swaggman `modify` is a library to assist in inspecting and modifying OpenAPI specs.
+Swaggman `openapi3edit` is a library to assist in inspecting and modifying OpenAPI specs.
 
 OpenAPI specifications can be large and have many endpoints which can make it difficult to manage. Additionally, some services may consist of many specs created by different people, teams and software, so some ability to make various specs consistent is desirable, especially when the individual specs need to be merged into a master spec.
 
@@ -27,11 +27,11 @@ to inspect and modify mulitple files.
 
 ### Compare
 
-Use `modify.SpecsIntersection()`
+Use `openapi3edit.SpecsIntersection()`
 
 ```
 // spec1 and spec2 are *github.com/getkin/kin-openapi/openapi3.Swagger
-intersectionData := modify.SpecsIntersection(spec1, spec2)
+intersectionData := openapi3edit.SpecsIntersection(spec1, spec2)
 intersectionData.Sort()
 ```
 
@@ -51,7 +51,7 @@ This is useful when merging to specs with an overlap. To check for cleanliness o
 ### Add Bearer Token Auth
 
 ```go
-modify.SecuritySchemeAddBearertoken(
+openapi3edit.SecuritySchemeAddBearertoken(
     spec, "", "",
     []string{},
     []string{
