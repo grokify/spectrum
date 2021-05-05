@@ -163,3 +163,11 @@ func (vlrs *ViolationLocationsByRuleSet) Condense() {
 			stringsutil.SliceCondenseSpace(vals, true, true)
 	}
 }
+
+func (vlrs *ViolationLocationsByRuleSet) Count() uint {
+	count := 0
+	for _, vals := range vlrs.ViolationLocationsByRule {
+		count += len(vals)
+	}
+	return uint(count)
+}
