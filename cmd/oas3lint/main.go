@@ -8,7 +8,7 @@ import (
 	"github.com/grokify/simplego/fmt/fmtutil"
 	"github.com/grokify/simplego/io/ioutilmore"
 	"github.com/grokify/swaggman/openapi3"
-	"github.com/grokify/swaggman/openapi3/openapi3lint"
+	"github.com/grokify/swaggman/openapi3lint"
 	"github.com/jessevdk/go-flags"
 )
 
