@@ -1,0 +1,10 @@
+{
+    "rules":{
+        "datatype-int-format-int32-int64": {
+            "severity": "off"
+        },
+        "operation-operationid-style-camelcase":{
+            "severity": "error"
+        }
+    }
+}

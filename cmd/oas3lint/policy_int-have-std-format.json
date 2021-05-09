@@ -1,0 +1,7 @@
+{
+    "rules":{
+        "datatype-int-format-int32-int64": {
+            "severity": "error"
+        }
+    }
+}
