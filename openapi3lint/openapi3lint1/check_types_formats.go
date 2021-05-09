@@ -1,4 +1,4 @@
-package openapi3lint
+package openapi3lint1
 
 import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"

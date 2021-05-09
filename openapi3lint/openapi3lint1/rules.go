@@ -1,4 +1,4 @@
-package openapi3lint
+package openapi3lint1
 
 import (
 	"fmt"
@@ -48,7 +48,7 @@ const (
 
 func RuleToCaseStyle(s string) string {
 	infoMap := map[string]string{
-		RuleSchemaPropEnumStylePascalCase: stringcase.CasePascal}
+		RuleSchemaPropEnumStylePascalCase: stringcase.PascalCase}
 	if caseStyle, ok := infoMap[s]; ok {
 		return caseStyle
 	}

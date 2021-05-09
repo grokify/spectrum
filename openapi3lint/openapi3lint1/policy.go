@@ -1,4 +1,4 @@
-package openapi3lint
+package openapi3lint1
 
 import (
 	"strings"
