@@ -42,6 +42,19 @@ The following article provides an overview of OpenAPI spec to Postman conversion
 * Postman 2.0 spec supports polymorphism and doesn't have a canonical schema. For example, the `request.url` property can be populated by a URL string or a URL object. Swaggman uses the URL object since it is more flexible. The function `simple.NewCanonicalCollectionFromBytes(bytes)` can be used to read either a simple or object based spec into a canonical object spec.
 * This has only been used on the RingCentral Swagger spec to date but will be used for more in the future. Please feel free to use and contribute. Examples are located in the `examples` folder.
 
+## Structure
+
+* openapi2 ([godoc](https://pkg.go.dev/github.com/grokify/swaggman/openapi2))
+  * Support for OpenAPI 2 files, including serialization, deserialization, and validation.
+* openapi3 ([godoc](https://pkg.go.dev/github.com/grokify/swaggman/openapi3))
+  * Support for OpenAPI 3 files, including serialization, deserialization, and validation.
+* openapi3edit ([godoc](https://pkg.go.dev/github.com/grokify/swaggman/openapi3edit))
+  * Programmatic SDK-based editor for OAS3 specifications.
+* openapi3lint ([godoc](https://pkg.go.dev/github.com/grokify/swaggman/openapi3lint))
+  * Extensible linter for OAS3 specifications.
+* postman2 ([godoc](https://pkg.go.dev/github.com/grokify/swaggman/postman2))
+  * upport for Postman 2 Collection files, including serialization and deserialization.
+
 ## Installation
 
 The following command will install the executable binary `swaggman` into the `~/go/bin` directory.
