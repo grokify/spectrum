@@ -94,6 +94,10 @@ The following standard rules are built into the `openapi3lint` More are coming s
 
 Custom rules are created using the `Rule` interface. After implementing aa custom rule, load it into a `Policy` to execute.
 
+Use `Policy.AddRule(rule Rule, errorOnCollision bool)` to add a rule.
+
+### Rule Interface
+
 A rule has the following interface:
 
 ```go
