@@ -16,8 +16,9 @@ import (
 )
 
 type Options struct {
-	SpecFileOAS3 string `short:"s" long:"specfile" description:"Input OAS Spec File" required:"true"`
-	PolicyFile   string `short:"p" long:"policyfile" description:"Policy File" required:"true"`
+	InputFileOAS3 string `short:"i" long:"inputspec" description:"Input OAS Spec File or Dir" required:"true"`
+	PolicyFile    string `short:"p" long:"policyfile" description:"Policy File" required:"true"`
+	Severity      string `short:"s" long:"severity" description:"Severity level"`
 }
 
 func main() {
@@ -27,16 +28,19 @@ func main() {
 		log.Fatal(err)
 	}
 
-	files := []string{}
-	isDir, err := ioutilmore.IsDir(opts.SpecFileOAS3)
+	var files []string
+	isDir, err := ioutilmore.IsDir(opts.InputFileOAS3)
 	if err != nil {
 		log.Fatal(err)
 	}
 	if isDir {
-		_, files, err = ioutilmore.ReadDirMore(opts.SpecFileOAS3,
-			regexp.MustCompile(`\.(yaml|yml|json)$`), true, true)
+		_, files, err = ioutilmore.ReadDirMore(opts.InputFileOAS3,
+			regexp.MustCompile(`(?i)\.(json|yaml|yml)$`), true, true)
+		if err != nil {
+			log.Fatal(err)
+		}
 	} else {
-		files = []string{opts.SpecFileOAS3}
+		files = []string{opts.InputFileOAS3}
 	}
 
 	fmtutil.PrintJSON(files)
@@ -52,14 +56,22 @@ func main() {
 	}
 	fmtutil.PrintJSON(pol)
 
+	severityLevel := severity.SeverityError
+	if len(opts.Severity) > 0 {
+		severityTry, err := severity.Parse(opts.Severity)
+		if err != nil {
+			log.Fatal(err)
+		}
+		severityLevel = severityTry
+	}
+
 	vsets := lintutil.NewPolicyViolationsSets()
 	for _, file := range files {
-
 		spec, err := openapi3.ReadFile(file, false)
 		if err != nil {
 			log.Fatal(err)
 		}
-		vsetsRule, err := pol.ValidateSpec(spec, filepathutil.FilepathLeaf(file), severity.SeverityWarning)
+		vsetsRule, err := pol.ValidateSpec(spec, filepathutil.FilepathLeaf(file), severityLevel)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -92,12 +104,6 @@ func main() {
 	fmt.Println("DONE")
 }
 
-/*
-func FilepathLeaf(s string) string {
-	_, file := filepath.Split(s)
-	return file
-}
-*/
 /*
 func getPolicyConfig() openapi3lint.PolicyConfig {
 	return openapi3lint.PolicyConfig{
