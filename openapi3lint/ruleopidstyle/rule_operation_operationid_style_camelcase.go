@@ -63,12 +63,10 @@ func (rule RuleOperationOperationIdStyle) ProcessOperation(spec *oas3.Swagger, o
 	vio := lintutil.PolicyViolation{
 		RuleName: rule.Name(),
 		Location: urlutil.JoinAbsolute(opPointer, "operationId"),
-	}
+		Value:    op.OperationID}
 	if err != nil {
 		vio.Data = map[string]string{
 			"error": err.Error()}
-	} else if !isWantCase {
-		vio.Value = op.OperationID
 	}
 	return []lintutil.PolicyViolation{vio}
 }
@@ -76,23 +74,3 @@ func (rule RuleOperationOperationIdStyle) ProcessOperation(spec *oas3.Swagger, o
 func (rule RuleOperationOperationIdStyle) ProcessSpec(spec *oas3.Swagger, pointerBase string) *lintutil.PolicyViolationsSets {
 	return nil
 }
-
-/*
-func (rule RuleOperationOperationIdStyle) ProcessSpecOld(spec *oas3.Swagger, pointerBase string) *PolicyViolationsSets {
-	vsets := NewPolicyViolationsSets()
-	openapi3.VisitTypesFormats(
-		spec,
-		func(jsonPointerRoot, oasType, oasFormat string) {
-			if oasType == openapi3.TypeInteger &&
-				oasFormat != openapi3.FormatInt32 &&
-				oasFormat != openapi3.FormatInt64 {
-				vsets.AddSimple(
-					rule.Name(),
-					urlutil.JoinAbsolute(pointerBase+jsonPointerRoot, "format"),
-					oasFormat)
-			}
-		},
-	)
-	return vsets
-}
-*/
