@@ -16,8 +16,9 @@ It is designed to scale to a large set of APIs split across many files.
 
 Standard rules can be executed through the `cmd/oas3lint` CLI program. It takes two parameters:
 
-* `-s` for the OAS3 specifictio file or diectory. If a directory, it will ead in all JSON/YAML/YML extension files.
-* `-c` for the linter Policy config file.
+* `-i` for the OAS3 specifictio file or diectory. If a directory, it will ead in all JSON/YAML/YML extension files.
+* `-p` for the linter Policy config file.
+* `-s` is optional aand used to select the severity level used. If none is selected, `error` is used.
 
 ### Policy File Format
 
