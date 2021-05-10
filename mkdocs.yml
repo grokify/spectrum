@@ -1,5 +1,5 @@
 site_name: Swaggman
-repo_url: https://github.com/grokify/swagggman
+repo_url: https://github.com/grokify/swaggman
 edit_uri: tree/master/docs
 docs_dir: docs
 theme: readthedocs
