@@ -10,5 +10,7 @@ markdown_extensions:
 
 nav:
     - Home: index.md
-    - Inspect:
+    - OpenAPI3Lint:
+        - Missing Descriptions: openapi3lint.md
+    - OpenAPI 3 Inspect:
         - Missing Descriptions: openapi3/inspect/missing_descriptions.md
