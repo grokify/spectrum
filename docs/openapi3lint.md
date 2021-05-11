@@ -5,10 +5,10 @@
 Features include:
 
 * Standard and custom rules
-* Violation locations by JSON pointer, including file/URL roots
+* Violation locations by JSON Schema pointer, including file/URL roots
 * Violation locations grouped by rule
 
-It is designed to scale to a large set of APIs split across many files.
+It is designed to scale to a large set of APIs split across many files and support asynchronous resolution, e.g. the results will still be valid if the files change.
 
 ## Standard Rules
 
@@ -16,9 +16,9 @@ It is designed to scale to a large set of APIs split across many files.
 
 Standard rules can be executed through the `cmd/oas3lint` CLI program. It takes two parameters:
 
-* `-i` for the OAS3 specifictio file or diectory. If a directory, it will ead in all JSON/YAML/YML extension files.
+* `-i` for the OAS3 specification file or diectory. If a directory, it will ead in all JSON/YAML/YML extension files.
 * `-p` for the linter Policy config file.
-* `-s` is optional aand used to select the severity level used. If none is selected, `error` is used.
+* `-s` is optional and used to select the severity level used. If none is selected, `error` is used.
 
 ### Policy File Format
 
@@ -83,7 +83,7 @@ var mapStringSeverity = map[string]string{
 
 ### Standard Rules List
 
-The following standard rules are built into the `openapi3lint` More are coming soon and this is under active development, including refactoring.
+The following standard rules are built into the `openapi3lint`. More are coming soon and this is under active development. Existing proof-of-concept rules are being refactored to use the new interface.
 
 * `datatype-int-format-int32-int64`: reports if `type: integer` doesn't have a standard `format` set to `int32` or `int64`
 * `operation-operationid-style-camelcase`: reports if `operationId` is not camel case
@@ -114,7 +114,7 @@ type Rule interface {
 Functions:
 
 * `Name()` should return the name of a rule in kebab case.
-* `Scope()` should return the type of object / property operated on. This affects the processing function provided. As of now, `operration` and `specfication` are supported.
+* `Scope()` should return the type of object / property operated on. This affects the processing function provided. As of now, `operation` and `specfication` are supported.
 * `Severity()` should return a syslog like severity level supported by `github.com/grokify/simplego/log/severity`. This should be updated for the `Policy` used.
 * `ProcessSpec(spec *oas3.Swagger, pointerBase string)` is a function to process a rule at the top specfication level. `pointerBase` is used to provide JSON Pointer info before the `#`. This is executed when `Scope()` is set to `specification`.
 * `ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string)` is executed when `Scope()` is set to `operation`.
