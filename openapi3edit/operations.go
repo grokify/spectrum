@@ -9,14 +9,14 @@ import (
 	"github.com/grokify/swaggman/openapi3"
 )
 
-func OperationAddExternalDocs(op *oas3.Operation, url, description string, preserveIfEmpty bool) {
+func OperationAddExternalDocs(op *oas3.Operation, url, description string, preserveIfReqEmpty bool) {
 	if op == nil {
 		return
 	}
 	url = strings.TrimSpace(url)
 	description = strings.TrimSpace(description)
 	if len(url) > 0 || len(description) > 0 {
-		if preserveIfEmpty {
+		if preserveIfReqEmpty {
 			if op.ExternalDocs == nil {
 				op.ExternalDocs = &oas3.ExternalDocs{}
 			}
