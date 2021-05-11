@@ -15,15 +15,15 @@ import (
 	"github.com/pkg/errors"
 )
 
-var jsonFileRx = regexp.MustCompile(`(?i)\.json\s*$`)
+var jsonFileRx = regexp.MustCompile(`(?i)\.(json|yaml|yml)\s*$`)
 
 func MergeDirectory(dir string, mergeOpts *MergeOptions) (*oas3.Swagger, int, error) {
 	var filePaths []string
 	var err error
 	if mergeOpts != nil && mergeOpts.FileRx != nil {
-		filePaths, err = ioutilmore.DirEntriesRxSizeGt0Filepaths(dir, ioutilmore.File, mergeOpts.FileRx)
+		_, filePaths, err = ioutilmore.ReadDirMore(dir, mergeOpts.FileRx, true, true)
 	} else {
-		filePaths, err = ioutilmore.DirEntriesRxSizeGt0Filepaths(dir, ioutilmore.File, jsonFileRx)
+		_, filePaths, err = ioutilmore.ReadDirMore(dir, jsonFileRx, true, true)
 	}
 
 	if err != nil {
