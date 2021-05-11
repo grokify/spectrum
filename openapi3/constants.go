@@ -1,13 +1,13 @@
 package openapi3
 
 const (
-	TypeArray      string = "array"
-	TypeBoolean    string = "boolean"
-	TypeInteger    string = "integer"
-	TypeObject     string = "object"
-	TypeString     string = "string"
-	FormatDate     string = "date"
-	FormatDateTime string = "date-time"
-	FormatInt32    string = "int32"
-	FormatInt64    string = "int64"
+	TypeArray      = "array"
+	TypeBoolean    = "boolean"
+	TypeInteger    = "integer"
+	TypeObject     = "object"
+	TypeString     = "string"
+	FormatDate     = "date"
+	FormatDateTime = "date-time"
+	FormatInt32    = "int32"
+	FormatInt64    = "int64"
 )
