@@ -8,17 +8,18 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/type/stringsutil"
+	"github.com/grokify/swaggman/openapi3"
 )
 
 const (
-	TypeArray            string = "array"
-	TypeBoolean          string = "boolean"
-	TypeInteger          string = "integer"
-	TypeObject           string = "object"
-	TypeString           string = "string"
-	FormatStringDate     string = "date"
-	FormatStringDateTime string = "date-time"
-	FormatIntegerInt64   string = "int64"
+	TypeArray            = openapi3.TypeArray
+	TypeBoolean          = openapi3.TypeBoolean
+	TypeInteger          = openapi3.TypeInteger
+	TypeObject           = openapi3.TypeObject
+	TypeString           = openapi3.TypeString
+	FormatStringDate     = openapi3.FormatDate
+	FormatStringDateTime = openapi3.FormatDateTime
+	FormatIntegerInt64   = openapi3.FormatInt64
 )
 
 var (
