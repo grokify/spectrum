@@ -5,6 +5,7 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/type/stringsutil"
+	"github.com/grokify/swaggman/openapi3"
 )
 
 type SpecMetadata struct {
@@ -23,7 +24,8 @@ func NewSpecMetadata(spec *oas3.Swagger) SpecMetadata {
 			md.OperationIDs = append(md.OperationIDs, key)
 		}
 		md.Endpoints = SpecEndpoints(spec, true)
-		md.SchemaNames = SpecSchemaNames(spec)
+		sm := openapi3.SpecMore{Spec: spec}
+		md.SchemaNames = sm.SchemaNames()
 	}
 	return md
 }
