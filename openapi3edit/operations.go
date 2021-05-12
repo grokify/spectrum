@@ -9,29 +9,101 @@ import (
 	"github.com/grokify/swaggman/openapi3"
 )
 
-func OperationAddExternalDocs(op *oas3.Operation, url, description string, preserveIfReqEmpty bool) {
+type OperationEditor struct {
+	Operation *oas3.Operation
+}
+
+func (oedit *OperationEditor) AddExternalDocs(docURL, docDescription string, preserveIfReqEmpty bool) {
+	operationAddExternalDocs(oedit.Operation, docURL, docDescription, preserveIfReqEmpty)
+}
+
+func (oedit *OperationEditor) AddRequestBodySchemaRef(description string, required bool, contentType string, schemaRef *oas3.SchemaRef) error {
+	return operationAddRequestBodySchemaRef(oedit.Operation, description, required, contentType, schemaRef)
+}
+
+func (oedit *OperationEditor) AddResponseBodySchemaRef(statusCode, description, contentType string, schemaRef *oas3.SchemaRef) error {
+	return operationAddResponseBodySchemaRef(oedit.Operation, statusCode, description, contentType, schemaRef)
+}
+
+func operationAddRequestBodySchemaRef(op *oas3.Operation, description string, required bool, contentType string, schemaRef *oas3.SchemaRef) error {
 	if op == nil {
-		return
+		return fmt.Errorf("operation to edit is nil")
 	}
-	url = strings.TrimSpace(url)
+	if op.RequestBody == nil {
+		op.RequestBody = &oas3.RequestBodyRef{}
+	}
 	description = strings.TrimSpace(description)
-	if len(url) > 0 || len(description) > 0 {
+	contentType = strings.ToLower(strings.TrimSpace(contentType))
+	if len(contentType) == 0 {
+		return fmt.Errorf("content type [%s] is empty", contentType)
+	}
+	if len(op.RequestBody.Ref) > 0 {
+		return fmt.Errorf("request body is reference for operationId [%s]", op.OperationID)
+	}
+	op.RequestBody.Value.Description = description
+	op.RequestBody.Value.Required = required
+	if op.RequestBody.Value.Content == nil {
+		op.RequestBody.Value.Content = oas3.NewContent()
+	}
+	op.RequestBody.Value.Content[contentType] = oas3.NewMediaType().WithSchemaRef(schemaRef)
+	return nil
+}
+
+func operationAddResponseBodySchemaRef(op *oas3.Operation, statusCode, description, contentType string, schemaRef *oas3.SchemaRef) error {
+	if op == nil {
+		return fmt.Errorf("operation to edit is nil")
+	}
+	if schemaRef == nil {
+		return fmt.Errorf("operation response to body to add is nil")
+	}
+	statusCode = strings.TrimSpace(statusCode)
+	description = strings.TrimSpace(description)
+	contentType = strings.ToLower(strings.TrimSpace(contentType))
+	if statusCode == "" || contentType == "" {
+		return fmt.Errorf("status code [%s] or content type [%s] is empty", statusCode, contentType)
+	}
+	if op.Responses[statusCode] == nil {
+		op.Responses[statusCode] = &oas3.ResponseRef{}
+	}
+	if len(op.Responses[statusCode].Ref) > 0 {
+		return fmt.Errorf("response is a reference and not actual")
+	}
+	if op.Responses[statusCode].Value == nil {
+		op.Responses[statusCode].Value = &oas3.Response{
+			Description: &description,
+		}
+	}
+	if op.Responses[statusCode].Value.Content == nil {
+		op.Responses[statusCode].Value.Content = oas3.NewContent()
+	}
+	op.Responses[statusCode].Value.Content[contentType] = oas3.NewMediaType().WithSchemaRef(schemaRef)
+	return nil
+}
+
+func operationAddExternalDocs(op *oas3.Operation, docURL, docDescription string, preserveIfReqEmpty bool) error {
+	if op == nil {
+		return fmt.Errorf("operation to edit is nil")
+	}
+	docURL = strings.TrimSpace(docURL)
+	docDescription = strings.TrimSpace(docDescription)
+	if len(docURL) > 0 || len(docDescription) > 0 {
 		if preserveIfReqEmpty {
 			if op.ExternalDocs == nil {
 				op.ExternalDocs = &oas3.ExternalDocs{}
 			}
-			if len(url) > 0 {
-				op.ExternalDocs.URL = url
+			if len(docURL) > 0 {
+				op.ExternalDocs.URL = docURL
 			}
-			if len(description) > 0 {
-				op.ExternalDocs.Description = description
+			if len(docDescription) > 0 {
+				op.ExternalDocs.Description = docDescription
 			}
 		} else {
 			op.ExternalDocs = &oas3.ExternalDocs{
-				Description: description,
-				URL:         url}
+				Description: docDescription,
+				URL:         docURL}
 		}
 	}
+	return nil
 }
 
 func SpecOperationsCount(spec *oas3.Swagger) uint {
@@ -132,7 +204,7 @@ func SpecAddOperationMetas(spec *oas3.Swagger, metas map[string]openapi3.Operati
 			writeThrottling = true
 		}
 		if writeDocs {
-			OperationAddExternalDocs(op, opMeta.DocsURL, opMeta.DocsDescription, true)
+			operationAddExternalDocs(op, opMeta.DocsURL, opMeta.DocsDescription, true)
 		}
 		if writeScopes {
 			if len(opMeta.SecurityScopes) > 0 {
