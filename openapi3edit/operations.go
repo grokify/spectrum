@@ -9,8 +9,10 @@ import (
 	"github.com/grokify/swaggman/openapi3"
 )
 
+// OperationMore is used frow two purposes: (a) to store path and method information with the operation and
+// (b) to provide a container to organize operation related functions.
 type OperationMore struct {
-	UrlPath   string
+	Path      string
 	Method    string
 	Operation *oas3.Operation
 }
@@ -259,7 +261,7 @@ func QueryOperationsByTags(spec *oas3.Swagger, tags []string) *OperationMoreSet 
 	}
 	opmSet := &OperationMoreSet{OperationMores: []OperationMore{}}
 	// for path, pathInfo := range spec.Paths {
-	openapi3.VisitOperations(spec, func(url, method string, op *oas3.Operation) {
+	openapi3.VisitOperations(spec, func(path, method string, op *oas3.Operation) {
 		if op == nil {
 			return
 		}
@@ -267,7 +269,7 @@ func QueryOperationsByTags(spec *oas3.Swagger, tags []string) *OperationMoreSet 
 			if _, ok := tagsWantMatch[tagTry]; ok {
 				opmSet.OperationMores = append(opmSet.OperationMores,
 					OperationMore{
-						UrlPath:   url,
+						Path:      path,
 						Method:    method,
 						Operation: op})
 				return
