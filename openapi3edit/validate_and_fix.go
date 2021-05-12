@@ -32,6 +32,7 @@ func ParsePathParametersParens(urlPath string) []string {
 	return paramNames
 }
 
+/*
 func OperationHasParameter(paramNameWant string, op *oas3.Operation) bool {
 	paramNameWantLc := strings.ToLower(strings.TrimSpace(paramNameWant))
 	for _, paramRef := range op.Parameters {
@@ -47,7 +48,7 @@ func OperationHasParameter(paramNameWant string, op *oas3.Operation) bool {
 	}
 	return false
 }
-
+*/
 // SortParameters sorts parameters according to an input name list.
 // This used to resort parameters inline with path path parameters
 // so they line up properly when rendered.
@@ -96,8 +97,9 @@ func ValidateFixOperationPathParameters(spec *oas3.Swagger, fix bool) ([]*openap
 			}
 			varNamesMissing := []string{}
 			fixed := false
+			opm := OperationMore{Operation: op}
 			for _, varName := range varNamesPath {
-				if !OperationHasParameter(varName, op) {
+				if !opm.HasParameter(varName) {
 					if fix {
 						newParamRef := &oas3.ParameterRef{
 							Value: &oas3.Parameter{

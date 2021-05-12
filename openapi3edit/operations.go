@@ -9,20 +9,38 @@ import (
 	"github.com/grokify/swaggman/openapi3"
 )
 
-type OperationEditor struct {
+type OperationMore struct {
+	UrlPath   string
+	Method    string
 	Operation *oas3.Operation
 }
 
-func (oedit *OperationEditor) AddExternalDocs(docURL, docDescription string, preserveIfReqEmpty bool) {
-	operationAddExternalDocs(oedit.Operation, docURL, docDescription, preserveIfReqEmpty)
+func (opm *OperationMore) AddExternalDocs(docURL, docDescription string, preserveIfReqEmpty bool) {
+	operationAddExternalDocs(opm.Operation, docURL, docDescription, preserveIfReqEmpty)
 }
 
-func (oedit *OperationEditor) AddRequestBodySchemaRef(description string, required bool, contentType string, schemaRef *oas3.SchemaRef) error {
-	return operationAddRequestBodySchemaRef(oedit.Operation, description, required, contentType, schemaRef)
+func (opm *OperationMore) AddRequestBodySchemaRef(description string, required bool, contentType string, schemaRef *oas3.SchemaRef) error {
+	return operationAddRequestBodySchemaRef(opm.Operation, description, required, contentType, schemaRef)
 }
 
-func (oedit *OperationEditor) AddResponseBodySchemaRef(statusCode, description, contentType string, schemaRef *oas3.SchemaRef) error {
-	return operationAddResponseBodySchemaRef(oedit.Operation, statusCode, description, contentType, schemaRef)
+func (opm *OperationMore) AddResponseBodySchemaRef(statusCode, description, contentType string, schemaRef *oas3.SchemaRef) error {
+	return operationAddResponseBodySchemaRef(opm.Operation, statusCode, description, contentType, schemaRef)
+}
+
+func (opm *OperationMore) HasParameter(paramNameWant string) bool {
+	paramNameWantLc := strings.TrimSpace(paramNameWant)
+	for _, paramRef := range opm.Operation.Parameters {
+		if paramRef.Value == nil {
+			continue
+		}
+		param := paramRef.Value
+		param.Name = strings.TrimSpace(param.Name)
+		paramNameTryLc := strings.ToLower(param.Name)
+		if paramNameWantLc == paramNameTryLc {
+			return true
+		}
+	}
+	return false
 }
 
 func operationAddRequestBodySchemaRef(op *oas3.Operation, description string, required bool, contentType string, schemaRef *oas3.SchemaRef) error {
@@ -232,12 +250,6 @@ func SpecAddOperationMetas(spec *oas3.Swagger, metas map[string]openapi3.Operati
 
 type OperationMoreSet struct {
 	OperationMores []OperationMore
-}
-
-type OperationMore struct {
-	UrlPath   string
-	Method    string
-	Operation *oas3.Operation
 }
 
 func QueryOperationsByTags(spec *oas3.Swagger, tags []string) *OperationMoreSet {

@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/simplego/type/stringsutil"
+	"github.com/grokify/simplego/type/maputil"
 	"github.com/grokify/swaggman/openapi3"
 )
 
@@ -132,13 +132,14 @@ func SecuritySchemeApikeyAddOperations(spec *oas3.Swagger, tags []string, keyNam
 		tagsMap[tagName] = 1
 	}
 	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
-		if !MapSliceIntersectionExists(tagsMap, op.Tags) {
+		if !maputil.MapSliceIntersectionExists(tagsMap, op.Tags) {
 			return
 		}
 		SecuritySchemeAddOperation(op, keyName, []string{})
 	})
 }
 
+/*
 func MapSliceIntersection(haystack map[string]int, needles []string, unique bool) []string {
 	if unique {
 		needles = stringsutil.SliceCondenseSpace(needles, true, false)
@@ -151,6 +152,7 @@ func MapSliceIntersection(haystack map[string]int, needles []string, unique bool
 	}
 	return matches
 }
+*/
 
 func MapSliceIntersectionExists(haystack map[string]int, needles []string) bool {
 	for _, needle := range needles {
