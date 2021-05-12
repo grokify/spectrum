@@ -140,23 +140,39 @@ func SpecOperationsCount(spec *oas3.Swagger) uint {
 	return count
 }
 
-func SpecSetOperation(spec *oas3.Swagger, path, method string, op oas3.Operation) {
+// SpecSetOperation sets an operation in a OpenAPI Specification.
+func SpecSetOperation(spec *oas3.Swagger, path, method string, op oas3.Operation) error {
+	if spec == nil {
+		return fmt.Errorf("spec to add operation to is nil for path[%s] method [%s]", path, method)
+	}
 	pathItem, ok := spec.Paths[path]
 	if !ok {
 		pathItem = &oas3.PathItem{}
 	}
-	method = strings.ToUpper(strings.TrimSpace(method))
-	switch method {
+	switch strings.ToUpper(strings.TrimSpace(method)) {
+	case http.MethodConnect:
+		pathItem.Connect = &op
+	case http.MethodDelete:
+		pathItem.Delete = &op
 	case http.MethodGet:
 		pathItem.Get = &op
+	case http.MethodHead:
+		pathItem.Head = &op
+	case http.MethodOptions:
+		pathItem.Options = &op
+	case http.MethodPatch:
+		pathItem.Patch = &op
 	case http.MethodPost:
 		pathItem.Post = &op
 	case http.MethodPut:
 		pathItem.Put = &op
-	case http.MethodPatch:
-		pathItem.Patch = &op
+	case http.MethodTrace:
+		pathItem.Trace = &op
+	default:
+		return fmt.Errorf("spec operation method to set not found path[%s] method[%s]", path, method)
 	}
-
+	spec.Paths[path] = pathItem
+	return nil
 }
 
 func SpecOperationIds(spec *oas3.Swagger) map[string]int {
