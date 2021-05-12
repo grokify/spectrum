@@ -65,6 +65,9 @@ func operationAddResponseBodySchemaRef(op *oas3.Operation, statusCode, descripti
 	if statusCode == "" || contentType == "" {
 		return fmt.Errorf("status code [%s] or content type [%s] is empty", statusCode, contentType)
 	}
+	if op.Responses == nil {
+		op.Responses = oas3.Responses{}
+	}
 	if op.Responses[statusCode] == nil {
 		op.Responses[statusCode] = &oas3.ResponseRef{}
 	}
