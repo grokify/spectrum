@@ -9,7 +9,7 @@ import (
 	"github.com/grokify/swaggman/openapi3"
 )
 
-// OperationMore is used frow two purposes: (a) to store path and method information with the operation and
+// OperationMore is used for two purposes: (a) to store path and method information with the operation and
 // (b) to provide a container to organize operation related functions.
 type OperationMore struct {
 	Path      string
