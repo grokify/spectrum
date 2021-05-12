@@ -40,6 +40,9 @@ func operationAddRequestBodySchemaRef(op *oas3.Operation, description string, re
 	if len(op.RequestBody.Ref) > 0 {
 		return fmt.Errorf("request body is reference for operationId [%s]", op.OperationID)
 	}
+	if op.RequestBody.Value == nil {
+		op.RequestBody.Value = &oas3.RequestBody{}
+	}
 	op.RequestBody.Value.Description = description
 	op.RequestBody.Value.Required = required
 	if op.RequestBody.Value.Content == nil {
