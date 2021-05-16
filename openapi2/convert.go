@@ -10,7 +10,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-func ConvertSwaggmanOAS2ToKinOAS2(smSpec *Specification) (*oas2.Swagger, error) {
+func ConvertSpectrumOAS2ToKinOAS2(smSpec *Specification) (*oas2.Swagger, error) {
 	bytes, err := json.Marshal(smSpec)
 	if err != nil {
 		return nil, err

@@ -18,7 +18,7 @@ var (
 )
 
 //line page.qtpl:1
-func StreamSwaggmanUIPage(qw422016 *qt422016.Writer, data PageParams) {
+func StreamSpectrumUIPage(qw422016 *qt422016.Writer, data PageParams) {
 //line page.qtpl:1
 	qw422016.N().S(`<!DOCTYPE html>
 <html>
@@ -160,22 +160,22 @@ var table = new Tabulator("#`)
 }
 
 //line page.qtpl:112
-func WriteSwaggmanUIPage(qq422016 qtio422016.Writer, data PageParams) {
+func WriteSpectrumUIPage(qq422016 qtio422016.Writer, data PageParams) {
 //line page.qtpl:112
 	qw422016 := qt422016.AcquireWriter(qq422016)
 //line page.qtpl:112
-	StreamSwaggmanUIPage(qw422016, data)
+	StreamSpectrumUIPage(qw422016, data)
 //line page.qtpl:112
 	qt422016.ReleaseWriter(qw422016)
 //line page.qtpl:112
 }
 
 //line page.qtpl:112
-func SwaggmanUIPage(data PageParams) string {
+func SpectrumUIPage(data PageParams) string {
 //line page.qtpl:112
 	qb422016 := qt422016.AcquireByteBuffer()
 //line page.qtpl:112
-	WriteSwaggmanUIPage(qb422016, data)
+	WriteSpectrumUIPage(qb422016, data)
 //line page.qtpl:112
 	qs422016 := string(qb422016.B)
 //line page.qtpl:112

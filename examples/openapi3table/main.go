@@ -25,7 +25,7 @@ func main() {
 		ColumnSet:  ColumnTexts()}
 	pageParams.AddSpec(spec)
 
-	pageHTML := openapi3html.SwaggmanUIPage(pageParams)
+	pageHTML := openapi3html.SpectrumUIPage(pageParams)
 
 	filename := "api-regisry.html"
 	err = ioutil.WriteFile(filename, []byte(pageHTML), 0644)

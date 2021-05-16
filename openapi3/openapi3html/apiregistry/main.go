@@ -81,7 +81,7 @@ func (svc *Server) HandleAPIRegistryAnyEngine(aRes anyhttp.Response, aReq anyhtt
 		TableDomID: "specTable",
 		Spec:       spec}
 
-	oas3PageHtml := openapi3html.SwaggmanUIPage(oas3HtmlParams)
+	oas3PageHtml := openapi3html.SpectrumUIPage(oas3HtmlParams)
 
 	aRes.SetHeader(httputilmore.HeaderContentType, httputilmore.ContentTypeTextHtmlUtf8)
 	aRes.SetBodyBytes([]byte(oas3PageHtml))

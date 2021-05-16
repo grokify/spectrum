@@ -78,7 +78,7 @@ func (pp *PageParams) WriteFile(filename string) error {
 		return err
 	}
 	defer f.Close()
-	WriteSwaggmanUIPage(f, *pp)
+	WriteSpectrumUIPage(f, *pp)
 	return nil
 }
 

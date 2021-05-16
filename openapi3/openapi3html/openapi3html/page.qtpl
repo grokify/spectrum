@@ -1,4 +1,4 @@
-{% func SwaggmanUIPage(data PageParams) %}<!DOCTYPE html>
+{% func SpectrumUIPage(data PageParams) %}<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
