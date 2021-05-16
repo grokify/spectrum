@@ -13,10 +13,10 @@ import (
 	"github.com/grokify/simplego/log/severity"
 	"github.com/grokify/simplego/text/stringcase"
 	"github.com/grokify/simplego/type/stringsutil"
-	"github.com/grokify/swaggman/openapi3"
-	"github.com/grokify/swaggman/openapi3lint/lintutil"
-	"github.com/grokify/swaggman/openapi3lint/ruleintstdformat"
-	"github.com/grokify/swaggman/openapi3lint/ruleopidstyle"
+	"github.com/grokify/spectrum/openapi3"
+	"github.com/grokify/spectrum/openapi3lint/lintutil"
+	"github.com/grokify/spectrum/openapi3lint/ruleintstdformat"
+	"github.com/grokify/spectrum/openapi3lint/ruleopidstyle"
 )
 
 type PolicyConfig struct {

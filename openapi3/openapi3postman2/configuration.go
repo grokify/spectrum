@@ -6,13 +6,13 @@ import (
 	"io/ioutil"
 	"strings"
 
-	"github.com/grokify/swaggman/postman2"
+	"github.com/grokify/spectrum/postman2"
 )
 
 //const DefaultContentTypePreferences string = `multipart/form-data,application/json,application/x-www-form-urlencoded,application/xml,text/plain`
 //var defaultContentTypePreferencesSlice = strings.Split(DefaultContentTypePreferences, ",")
 
-// Configuration is a Swaggman configuration that holds information on how
+// Configuration is a Spectrum configuration that holds information on how
 // to create the Postman 2.0 collection including overriding Swagger 2.0
 // spec values.
 type Configuration struct {

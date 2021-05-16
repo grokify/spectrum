@@ -10,7 +10,7 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/table"
 	"github.com/grokify/simplego/text"
-	"github.com/grokify/swaggman/openapi3"
+	"github.com/grokify/spectrum/openapi3"
 )
 
 type PageParams struct {

@@ -2,7 +2,7 @@
 
 Descriptions are important to aid understanding of various objects in the OpenAPI spec.
 
-Swaggman provides an ability to list operation parameters and schema properties with missing descriptions.
+Spectrum provides an ability to list operation parameters and schema properties with missing descriptions.
 
 ## Missing Operation Parameter Descriptions
 

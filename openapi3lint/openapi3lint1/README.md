@@ -2,7 +2,7 @@
 
 This is a Go-based OpenAPI 3 spec linter.
 
-## Why Swaggman Linter?
+## Why Spectrum Linter?
 
 There are a few linters available.
 
@@ -14,7 +14,7 @@ The reasons this exists are:
 
 ## Other Linters
 
-There are other linters available. To date, Swaggman Linter hasn't beeen inspired by any of them, though there is a desire and effort to align on rule names and potentially rule definitions to achieve similar behavior.
+There are other linters available. To date, Spectrum Linter hasn't beeen inspired by any of them, though there is a desire and effort to align on rule names and potentially rule definitions to achieve similar behavior.
 
 1. Mermade OAS-Kit - https://github.com/mermade/oas-kit
   1. https://mermade.github.io/oas-kit/default-rules.html

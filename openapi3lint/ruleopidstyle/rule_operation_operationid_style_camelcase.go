@@ -6,7 +6,7 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/net/urlutil"
 	"github.com/grokify/simplego/text/stringcase"
-	"github.com/grokify/swaggman/openapi3lint/lintutil"
+	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )
 
 type RuleOperationOperationIdStyle struct {

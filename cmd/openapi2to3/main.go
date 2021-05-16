@@ -6,11 +6,11 @@ import (
 	"strings"
 
 	"github.com/grokify/simplego/io/ioutilmore"
-	"github.com/grokify/swaggman/openapi2"
+	"github.com/grokify/spectrum/openapi2"
 	"github.com/jessevdk/go-flags"
 )
 
-// install: go get github.com/grokify/swaggman/apps/openapi2to3
+// install: go get github.com/grokify/spectrum/apps/openapi2to3
 
 type Options struct {
 	OAS2File string `short:"i" long:"input" description:"Input filepath" required:"true"`

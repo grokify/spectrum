@@ -1,7 +1,7 @@
 # OpenAPI 3 Specs Auto-Fixer
 
 In addition to enabling introspection and programmatic modification of
-OpenAPI 3 specifications, Sswaggman can automatically fix/update some
+OpenAPI 3 specifications, Spectrum can automatically fix/update some
 issues with specs.
 
 ## Path Parameters - Examination and Resolution

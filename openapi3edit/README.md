@@ -1,8 +1,8 @@
-# Swaggman OpenAPI 3 Inspect, Modify & Compare
+# Spectrum OpenAPI 3 Inspect, Modify & Compare
 
 [![Docs][docs-godoc-svg]][docs-godoc-link]
 
-Swaggman `openapi3edit` is a library to assist in inspecting and modifying OpenAPI specs.
+Spectrum `openapi3edit` is a library to assist in inspecting and modifying OpenAPI specs.
 
 OpenAPI specifications can be large and have many endpoints which can make it difficult to manage. Additionally, some services may consist of many specs created by different people, teams and software, so some ability to make various specs consistent is desirable, especially when the individual specs need to be merged into a master spec.
 
@@ -62,5 +62,5 @@ openapi3edit.SecuritySchemeAddBearertoken(
 )
 ```
 
- [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/swaggman
- [docs-godoc-link]: https://pkg.go.dev/github.com/grokify/swaggman/openapi3edit
+ [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/spectrum
+ [docs-godoc-link]: https://pkg.go.dev/github.com/grokify/spectrum/openapi3edit

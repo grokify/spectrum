@@ -5,7 +5,7 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/type/stringsutil"
-	"github.com/grokify/swaggman/openapi3"
+	"github.com/grokify/spectrum/openapi3"
 )
 
 type SpecMetadata struct {

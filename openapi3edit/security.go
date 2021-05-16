@@ -7,7 +7,7 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/type/maputil"
-	"github.com/grokify/swaggman/openapi3"
+	"github.com/grokify/spectrum/openapi3"
 )
 
 const (

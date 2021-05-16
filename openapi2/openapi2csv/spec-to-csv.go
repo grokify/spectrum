@@ -6,7 +6,7 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi2"
 	"github.com/grokify/gocharts/data/table"
-	oas2 "github.com/grokify/swaggman/openapi2"
+	oas2 "github.com/grokify/spectrum/openapi2"
 )
 
 func TableFromSpecFiles(files []string, includeFilename bool) (*table.Table, error) {

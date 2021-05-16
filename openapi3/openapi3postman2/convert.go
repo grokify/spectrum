@@ -11,9 +11,9 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/net/urlutil"
-	"github.com/grokify/swaggman/openapi3"
-	"github.com/grokify/swaggman/postman2"
-	"github.com/grokify/swaggman/postman2/simple"
+	"github.com/grokify/spectrum/openapi3"
+	"github.com/grokify/spectrum/postman2"
+	"github.com/grokify/spectrum/postman2/simple"
 	"github.com/pkg/errors"
 )
 

@@ -9,9 +9,9 @@ import (
 	"github.com/grokify/simplego/io/ioutilmore"
 	"github.com/grokify/simplego/log/severity"
 	"github.com/grokify/simplego/path/filepathutil"
-	"github.com/grokify/swaggman/openapi3"
-	"github.com/grokify/swaggman/openapi3lint"
-	"github.com/grokify/swaggman/openapi3lint/lintutil"
+	"github.com/grokify/spectrum/openapi3"
+	"github.com/grokify/spectrum/openapi3lint"
+	"github.com/grokify/spectrum/openapi3lint/lintutil"
 	"github.com/jessevdk/go-flags"
 )
 

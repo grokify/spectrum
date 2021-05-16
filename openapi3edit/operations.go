@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/swaggman/openapi3"
+	"github.com/grokify/spectrum/openapi3"
 )
 
 // OperationMore is used for two purposes: (a) to store path and method information with the operation and

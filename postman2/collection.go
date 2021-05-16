@@ -23,7 +23,7 @@ func NewCollectionFromBytes(data []byte) (Collection, error) {
 	col := Collection{}
 	err := json.Unmarshal(data, &col)
 	if err != nil {
-		err = errors.Wrap(err, "swaggman.postman2.NewCollectionFromBytes << json.Unmarshal")
+		err = errors.Wrap(err, "spectrum.postman2.NewCollectionFromBytes << json.Unmarshal")
 		return col, err
 	}
 	col.Inflate()

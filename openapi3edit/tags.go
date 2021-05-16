@@ -7,7 +7,7 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/type/stringsutil"
-	"github.com/grokify/swaggman/openapi3"
+	"github.com/grokify/spectrum/openapi3"
 )
 
 func SpecTagsModify(spec *oas3.Swagger, changeTagsRaw map[string]string) {
@@ -84,7 +84,7 @@ func TagsOrder(curTags oas3.Tags, explicitSortedTagNames []string) (oas3.Tags, e
 			delete(tagMap, tagName)
 			// } else {
 			// skip
-			// return newTags, fmt.Errorf("swaggman/openapi3/smodify.TagsOrder.Explicit.E_EXPLICIT_TAG_NAME_NOT_FOUND [%v]", tagName)
+			// return newTags, fmt.Errorf("spectrum/openapi3/smodify.TagsOrder.Explicit.E_EXPLICIT_TAG_NAME_NOT_FOUND [%v]", tagName)
 		}
 	}
 	remainingSorted := []string{}
@@ -96,7 +96,7 @@ func TagsOrder(curTags oas3.Tags, explicitSortedTagNames []string) (oas3.Tags, e
 		if tag, ok := tagMap[tagName]; ok {
 			newTags = append(newTags, tag)
 		} else {
-			return newTags, fmt.Errorf("swaggman/openapi3/modify.TagsOrder.Remaining.sE_EXPLICIT_TAG_NAME_NOT_FOUND [%v]", tagName)
+			return newTags, fmt.Errorf("spectrum/openapi3/modify.TagsOrder.Remaining.sE_EXPLICIT_TAG_NAME_NOT_FOUND [%v]", tagName)
 		}
 	}
 	return newTags, nil

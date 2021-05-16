@@ -6,8 +6,8 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/net/httputilmore"
-	"github.com/grokify/swaggman/openapi3"
-	"github.com/grokify/swaggman/postman2"
+	"github.com/grokify/spectrum/openapi3"
+	"github.com/grokify/spectrum/postman2"
 )
 
 func CreateTagsAndTagGroups(pman postman2.Collection, spec *oas3.Swagger) (postman2.Collection, error) {

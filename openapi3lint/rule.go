@@ -8,7 +8,7 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/log/severity"
 	"github.com/grokify/simplego/type/stringsutil"
-	"github.com/grokify/swaggman/openapi3lint/lintutil"
+	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )
 
 type Rule interface {

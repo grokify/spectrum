@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/grokify/swaggman/openapi3/openapi3postman2"
-	"github.com/grokify/swaggman/postman2"
+	"github.com/grokify/spectrum/openapi3/openapi3postman2"
+	"github.com/grokify/spectrum/postman2"
 	"github.com/jessevdk/go-flags"
 )
 
@@ -15,7 +15,7 @@ import (
 type Options struct {
 	PostmanBase string `short:"b" long:"base" description:"Basic Postman File"`
 	Postman     string `short:"p" long:"postman" description:"Output Postman File" required:"true"`
-	Swagger     string `short:"s" long:"swagger" description:"Input Swagger File" required:"true"`
+	OpenAPISpec string `short:"s" long:"openapispec" description:"Input OpenAPI Spec File" required:"true"`
 }
 
 func main() {
@@ -38,9 +38,9 @@ func main() {
 	merge := true
 
 	if merge && len(opts.PostmanBase) > 0 {
-		err = conv.MergeConvert(opts.Swagger, opts.PostmanBase, opts.Postman)
+		err = conv.MergeConvert(opts.OpenAPISpec, opts.PostmanBase, opts.Postman)
 	} else {
-		err = conv.ConvertFile(opts.Swagger, opts.Postman)
+		err = conv.ConvertFile(opts.OpenAPISpec, opts.Postman)
 	}
 
 	if err != nil {

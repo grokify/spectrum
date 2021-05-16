@@ -11,7 +11,7 @@ import (
 	"github.com/grokify/simplego/fmt/fmtutil"
 	"github.com/grokify/simplego/net/urlutil"
 	"github.com/grokify/simplego/type/maputil"
-	"github.com/grokify/swaggman/openapi3"
+	"github.com/grokify/spectrum/openapi3"
 	"github.com/jessevdk/go-flags"
 )
 

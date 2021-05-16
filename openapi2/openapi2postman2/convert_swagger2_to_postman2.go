@@ -10,12 +10,12 @@ import (
 	"strings"
 
 	"github.com/grokify/simplego/net/httputilmore"
-	"github.com/grokify/swaggman/openapi2"
-	"github.com/grokify/swaggman/postman2"
-	"github.com/grokify/swaggman/postman2/simple"
+	"github.com/grokify/spectrum/openapi2"
+	"github.com/grokify/spectrum/postman2"
+	"github.com/grokify/spectrum/postman2/simple"
 )
 
-// Configuration is a Swaggman configuration that holds information on how
+// Configuration is a Spectrum configuration that holds information on how
 // to create the Postman 2.0 collection including overriding Swagger 2.0
 // spec values.
 type Configuration struct {

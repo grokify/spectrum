@@ -3,8 +3,8 @@ package ruleintstdformat
 import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/net/urlutil"
-	"github.com/grokify/swaggman/openapi3"
-	"github.com/grokify/swaggman/openapi3lint/lintutil"
+	"github.com/grokify/spectrum/openapi3"
+	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )
 
 type RuleDatatypeIntFormatIsInt32OrInt64 struct {

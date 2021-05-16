@@ -1,6 +1,6 @@
-# Swaggman - OpenAPI Spec Utility
+# Spectrum - OpenAPI Spec Utility
 
-Swaggman is a multi-purpose OpenAPI speec utility.
+Spectrum is a multi-purpose OpenAPI speec utility.
 
 It can perform the following:
 

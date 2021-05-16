@@ -6,8 +6,8 @@ import (
 	"log"
 
 	"github.com/grokify/gocharts/data/table"
-	"github.com/grokify/swaggman/openapi3"
-	"github.com/grokify/swaggman/openapi3/openapi3html"
+	"github.com/grokify/spectrum/openapi3"
+	"github.com/grokify/spectrum/openapi3/openapi3html"
 )
 
 func main() {

@@ -5,8 +5,8 @@ import (
 	"log"
 	"strings"
 
-	"github.com/grokify/swaggman/openapi3"
-	"github.com/grokify/swaggman/openapi3/openapi3postman2"
+	"github.com/grokify/spectrum/openapi3"
+	"github.com/grokify/spectrum/openapi3/openapi3postman2"
 	"github.com/jessevdk/go-flags"
 	"github.com/pkg/errors"
 )
@@ -15,7 +15,7 @@ import (
 
 type Options struct {
 	OpenAPIFile string `short:"O" long:"openapiFile" description:"Input Swagger File" required:"true"`
-	Config      string `short:"C" long:"config" description:"Swaggman Config File"`
+	Config      string `short:"C" long:"config" description:"Spectrum Config File"`
 	PostmanBase string `short:"B" long:"basePostmanFile" description:"Basic Postman File"`
 	Postman     string `short:"P" long:"postmanFile" description:"Output Postman File"`
 	XLSXFile    string `short:"X" long:"xlsxFile" description:"Output XLSX File"`
@@ -61,7 +61,7 @@ func main() {
 			opts.Postman)
 
 		if err != nil {
-			errors.Wrap(err, "swaggman.main << conv.MergeConvert")
+			errors.Wrap(err, "spectrum.main << conv.MergeConvert")
 			log.Fatal(err)
 		}
 

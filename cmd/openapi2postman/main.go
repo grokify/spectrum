@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/grokify/swaggman/openapi2/openapi2postman2"
-	"github.com/grokify/swaggman/postman2"
+	"github.com/grokify/spectrum/openapi2/openapi2postman2"
+	"github.com/grokify/spectrum/postman2"
 	"github.com/jessevdk/go-flags"
 )
 

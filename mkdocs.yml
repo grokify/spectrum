@@ -1,5 +1,5 @@
-site_name: Swaggman
-repo_url: https://github.com/grokify/swaggman
+site_name: Spectrum
+repo_url: https://github.com/grokify/spectrum
 edit_uri: tree/master/docs
 docs_dir: docs
 theme: readthedocs

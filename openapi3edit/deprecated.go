@@ -4,7 +4,7 @@ import (
 	"regexp"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/swaggman/openapi3"
+	"github.com/grokify/spectrum/openapi3"
 )
 
 func SpecSchemasSetDeprecated(spec *oas3.Swagger, newDeprecated bool) {

@@ -1,4 +1,4 @@
-Swaggman - OpenAPI Spec SDK and Postman Converter
+Spectrum - OpenAPI Spec SDK and Postman Converter
 =================================================
 
 [![Build Status][build-status-svg]][build-status-link]
@@ -6,9 +6,7 @@ Swaggman - OpenAPI Spec SDK and Postman Converter
 [![Docs][docs-godoc-svg]][docs-godoc-link]
 [![License][license-svg]][license-link]
 
-![](docs/images/logo_swaggman_600x150.png "")
-
-Swaggman is a multi-purpose OpenAPI Spec SDK that includes enhanced Postman conversion. Most of the OpenAPI Spec SDK is designed to support OAS3. Some functionality for OAS2 exists.
+Spectrum is a multi-purpose OpenAPI Spec SDK that includes enhanced Postman conversion. Most of the OpenAPI Spec SDK is designed to support OAS3. Some functionality for OAS2 exists.
 
 The following article provides an overview of OpenAPI spec to Postman conversion:
 
@@ -39,28 +37,28 @@ The following article provides an overview of OpenAPI spec to Postman conversion
 ## Notes
 
 * Postman 4.10.7 does not natively support JSON requests so request bodies need to be entered using the raw body editor. A future task is to add Swagger request examples as default Postman request bodies.
-* Postman 2.0 spec supports polymorphism and doesn't have a canonical schema. For example, the `request.url` property can be populated by a URL string or a URL object. Swaggman uses the URL object since it is more flexible. The function `simple.NewCanonicalCollectionFromBytes(bytes)` can be used to read either a simple or object based spec into a canonical object spec.
+* Postman 2.0 spec supports polymorphism and doesn't have a canonical schema. For example, the `request.url` property can be populated by a URL string or a URL object. Spectrum uses the URL object since it is more flexible. The function `simple.NewCanonicalCollectionFromBytes(bytes)` can be used to read either a simple or object based spec into a canonical object spec.
 * This has only been used on the RingCentral Swagger spec to date but will be used for more in the future. Please feel free to use and contribute. Examples are located in the `examples` folder.
 
 ## Structure
 
-* openapi2 ([godoc](https://pkg.go.dev/github.com/grokify/swaggman/openapi2))
+* openapi2 ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi2))
   * Support for OpenAPI 2 files, including serialization, deserialization, and validation.
-* openapi3 ([godoc](https://pkg.go.dev/github.com/grokify/swaggman/openapi3))
+* openapi3 ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi3))
   * Support for OpenAPI 3 files, including serialization, deserialization, and validation.
-* openapi3edit ([godoc](https://pkg.go.dev/github.com/grokify/swaggman/openapi3edit))
+* openapi3edit ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi3edit))
   * Programmatic SDK-based editor for OAS3 specifications.
-* openapi3lint ([godoc](https://pkg.go.dev/github.com/grokify/swaggman/openapi3lint))
+* openapi3lint ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi3lint))
   * Extensible linter for OAS3 specifications.
-* postman2 ([godoc](https://pkg.go.dev/github.com/grokify/swaggman/postman2))
+* postman2 ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/postman2))
   * upport for Postman 2 Collection files, including serialization and deserialization.
 
 ## Installation
 
-The following command will install the executable binary `swaggman` into the `~/go/bin` directory.
+The following command will install the executable binary `spectrum` into the `~/go/bin` directory.
 
 ```bash
-$ go get github.com/grokify/swaggman
+$ go get github.com/grokify/spectrum
 ```
 
 ## Usage
@@ -69,7 +67,7 @@ $ go get github.com/grokify/swaggman
 
 ```
 // Instantiate a converter with default configuration
-conv := swaggman.NewConverter(swaggman.Configuration{})
+conv := spectrum.NewConverter(spectrum.Configuration{})
 
 // Convert a Swagger spec
 err := conv.Convert("path/to/swagger.json", "path/to/pman.out.json")
@@ -84,7 +82,7 @@ The following can be added which are especially useful to use with environment v
 
 ```
 // Instantiate a converter with overrides (using Postman environment variables)
-cfg := swaggman.Configuration{
+cfg := spectrum.Configuration{
 	PostmanURLBase: "{{RINGCENTRAL_SERVER_URL}}",
 	PostmanHeaders: []postman2.Header{
 		{
@@ -93,7 +91,7 @@ cfg := swaggman.Configuration{
 		},
 	},
 }
-conv = swaggman.NewConverter(cfg)
+conv = spectrum.NewConverter(cfg)
 
 // Convert a Swagger spec with a default Postman spec
 err := conv.MergeConvert("path/to/swagger.json", "path/to/pman.base.json", "path/to/pman.out.json")
@@ -101,15 +99,15 @@ err := conv.MergeConvert("path/to/swagger.json", "path/to/pman.base.json", "path
 
 ### Example
 
-An example conversion is included, [`examples/ringcentral/convert.go`](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/convert.go) which creates a Postman 2.0 spec for the [RingCentral REST API](https://developers.ringcentral.com) using a base Postman 2.0 spec and the RingCentral basic Swagger 2.0 spec.
+An example conversion is included, [`examples/ringcentral/convert.go`](https://github.com/grokify/spectrum/blob/master/examples/ringcentral/convert.go) which creates a Postman 2.0 spec for the [RingCentral REST API](https://developers.ringcentral.com) using a base Postman 2.0 spec and the RingCentral basic Swagger 2.0 spec.
 
 [A video of importing the resulting Postman collection is available on YouTube](https://youtu.be/5kE4UPXJ-5Q).
 
 Example files include:
 
-* [RingCentral Swagger 2.0 spec](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/ringcentral.spec.swagger2.2019110220191017-1140.json)
-* [RingCentral Postman 2.0 base](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/ringcentral.postman2.base.json)
-* [RingCentral Postman 2.0 spec](https://github.com/grokify/swaggman/blob/master/examples/ringcentral/ringcentral.spec.postman2.2019110220191017-1140.json) - Import this into Postman
+* [RingCentral Swagger 2.0 spec](https://github.com/grokify/spectrum/blob/master/examples/ringcentral/ringcentral.spec.swagger2.2019110220191017-1140.json)
+* [RingCentral Postman 2.0 base](https://github.com/grokify/spectrum/blob/master/examples/ringcentral/ringcentral.postman2.base.json)
+* [RingCentral Postman 2.0 spec](https://github.com/grokify/spectrum/blob/master/examples/ringcentral/ringcentral.spec.postman2.2019110220191017-1140.json) - Import this into Postman
 
 The RingCentral spec uses the following environment variables. The following is the Postman bulk edit format:
 
@@ -131,11 +129,11 @@ To set your environment variables, use the Settings Gear icon and then click "Ma
 * Medium: [Using Postman, Swagger and the RingCentral API](https://medium.com/ringcentral-developers/using-postman-with-swagger-and-the-ringcentral-api-523712f792a0)
 * YouTube: [Getting Started with RingCentral APIs using Postman ](https://youtu.be/5kE4UPXJ-5Q)
 
- [build-status-svg]: https://github.com/grokify/swaggman/workflows/go%20build/badge.svg
- [build-status-link]: https://github.com/grokify/swaggman/actions
- [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/swaggman
- [goreport-link]: https://goreportcard.com/report/github.com/grokify/swaggman
- [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/swaggman
- [docs-godoc-link]: https://pkg.go.dev/github.com/grokify/swaggman
+ [build-status-svg]: https://github.com/grokify/spectrum/workflows/go%20build/badge.svg
+ [build-status-link]: https://github.com/grokify/spectrum/actions
+ [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/spectrum
+ [goreport-link]: https://goreportcard.com/report/github.com/grokify/spectrum
+ [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/spectrum
+ [docs-godoc-link]: https://pkg.go.dev/github.com/grokify/spectrum
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-link]: https://github.com/grokify/swaggman/blob/master/LICENSE.md
+ [license-link]: https://github.com/grokify/spectrum/blob/master/LICENSE.md
