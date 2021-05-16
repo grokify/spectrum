@@ -136,4 +136,4 @@ To set your environment variables, use the Settings Gear icon and then click "Ma
  [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/spectrum
  [docs-godoc-link]: https://pkg.go.dev/github.com/grokify/spectrum
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-link]: https://github.com/grokify/spectrum/blob/master/LICENSE.md
+ [license-link]: https://github.com/grokify/spectrum/blob/master/LICENSE
