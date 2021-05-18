@@ -29,9 +29,9 @@ The following rules are built into Spectral.
 There are other linters available. To date, Spectrum Linter hasn't beeen inspired by any of them, though there is a desire and effort to align on rule names and potentially rule definitions to achieve similar behavior.
 
 1. Mermade OAS-Kit - https://github.com/mermade/oas-kit
-  1. https://mermade.github.io/oas-kit/default-rules.html
-  1. https://mermade.github.io/oas-kit/linter-rules.html
+    1. https://mermade.github.io/oas-kit/default-rules.html
+    1. https://mermade.github.io/oas-kit/linter-rules.html
 1. Spectral - https://github.com/stoplightio/spectral
-  1. Inspired by Speccy
+    1. Inspired by Speccy
 1. Speccy - https://github.com/wework/speccy
-  1. Inspired by OAS-Kit
+    1. Inspired by OAS-Kit
