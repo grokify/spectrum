@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"regexp"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
@@ -286,6 +287,37 @@ func (sm *SpecMore) SchemaNames() []string {
 		schemaNames = append(schemaNames, schemaName)
 	}
 	return stringsutil.SliceCondenseSpace(schemaNames, true, true)
+}
+
+var rxSchemas = regexp.MustCompile(`"([^"]*#/components/schemas/([^"]+))"`)
+
+func (sm *SpecMore) SchemaPointers(dedupe bool) ([]string, []string, error) {
+	bytes, err := sm.MarshalJSON("", "")
+	if err != nil {
+		return []string{}, []string{}, err
+	}
+	pointers := []string{}
+	names := []string{}
+	m := rxSchemas.FindAllStringSubmatch(string(bytes), -1)
+	for _, mx := range m {
+		if len(mx) == 3 {
+			pointers = append(pointers, mx[1])
+			names = append(names, mx[2])
+		}
+	}
+	return stringsutil.SliceCondenseSpace(pointers, dedupe, true),
+		stringsutil.SliceCondenseSpace(names, dedupe, true),
+		nil
+}
+
+func (sm *SpecMore) SchemaNamesStatus() (schemaNoReference, both, referenceNoSchema []string, err error) {
+	haveNames := sm.SchemaNames()
+	_, havePointers, err := sm.SchemaPointers(true)
+	if err != nil {
+		return
+	}
+	schemaNoReference, both, referenceNoSchema = stringsutil.SlicesCompare(haveNames, havePointers)
+	return
 }
 
 func (sm *SpecMore) SchemaNameExists(schemaName string, includeNil bool) bool {
