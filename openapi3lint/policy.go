@@ -50,57 +50,33 @@ func (cfg *PolicyConfig) StandardPolicy() (Policy, error) {
 				return pol, err
 			}
 		case lintutil.RulenameOpIdStyleCamelCase:
-			rule, err := ruleopidstyle.NewRuleOperationOperationIdStyle(
-				ruleCfg.Severity, stringcase.CamelCase)
-			if err != nil {
-				return pol, err
-			}
-			if err := pol.AddRule(rule, true); err != nil {
+			if err := pol.addRuleWithPriorError(ruleopidstyle.NewRuleOperationOperationIdStyle(
+				ruleCfg.Severity, stringcase.CamelCase)); err != nil {
 				return pol, err
 			}
 		case lintutil.RulenameOpIdStyleKebabCase:
-			rule, err := ruleopidstyle.NewRuleOperationOperationIdStyle(
-				ruleCfg.Severity, stringcase.KebabCase)
-			if err != nil {
-				return pol, err
-			}
-			if err := pol.AddRule(rule, true); err != nil {
+			if err := pol.addRuleWithPriorError(ruleopidstyle.NewRuleOperationOperationIdStyle(
+				ruleCfg.Severity, stringcase.KebabCase)); err != nil {
 				return pol, err
 			}
 		case lintutil.RulenameOpIdStylePascalCase:
-			rule, err := ruleopidstyle.NewRuleOperationOperationIdStyle(
-				ruleCfg.Severity, stringcase.PascalCase)
-			if err != nil {
-				return pol, err
-			}
-			if err := pol.AddRule(rule, true); err != nil {
+			if err := pol.addRuleWithPriorError(ruleopidstyle.NewRuleOperationOperationIdStyle(
+				ruleCfg.Severity, stringcase.PascalCase)); err != nil {
 				return pol, err
 			}
 		case lintutil.RulenameOpIdStyleSnakeCase:
-			rule, err := ruleopidstyle.NewRuleOperationOperationIdStyle(
-				ruleCfg.Severity, stringcase.SnakeCase)
-			if err != nil {
-				return pol, err
-			}
-			if err := pol.AddRule(rule, true); err != nil {
+			if err := pol.addRuleWithPriorError(ruleopidstyle.NewRuleOperationOperationIdStyle(
+				ruleCfg.Severity, stringcase.SnakeCase)); err != nil {
 				return pol, err
 			}
 		case lintutil.RulenameSchemaWithoutReference:
-			rule, err := ruleschemareferences.NewRuleSchemaReferences(
-				ruleCfg.Severity, lintutil.RulenameSchemaWithoutReference)
-			if err != nil {
-				return pol, err
-			}
-			if err := pol.AddRule(rule, true); err != nil {
+			if err := pol.addRuleWithPriorError(ruleschemareferences.NewRuleSchemaReferences(
+				ruleCfg.Severity, lintutil.RulenameSchemaWithoutReference)); err != nil {
 				return pol, err
 			}
 		case lintutil.RulenameSchemaReferenceWithoutSchema:
-			rule, err := ruleschemareferences.NewRuleSchemaReferences(
-				ruleCfg.Severity, lintutil.RulenameSchemaReferenceWithoutSchema)
-			if err != nil {
-				return pol, err
-			}
-			if err := pol.AddRule(rule, true); err != nil {
+			if err := pol.addRuleWithPriorError(ruleschemareferences.NewRuleSchemaReferences(
+				ruleCfg.Severity, lintutil.RulenameSchemaReferenceWithoutSchema)); err != nil {
 				return pol, err
 			}
 		}
@@ -110,6 +86,13 @@ func (cfg *PolicyConfig) StandardPolicy() (Policy, error) {
 
 type Policy struct {
 	rules map[string]Rule
+}
+
+func (pol *Policy) addRuleWithPriorError(rule Rule, err error) error {
+	if err != nil {
+		return err
+	}
+	return pol.AddRule(rule, true)
 }
 
 func (pol *Policy) AddRule(rule Rule, errorOnCollision bool) error {
