@@ -15,11 +15,10 @@ import (
 type Options struct {
 	PostmanBase string `short:"b" long:"base" description:"Basic Postman File"`
 	Postman     string `short:"p" long:"postman" description:"Output Postman File" required:"true"`
-	Swagger     string `short:"s" long:"swagger" description:"Input Swagger File" required:"true"`
+	OpenAPISpec string `short:"s" long:"openapispec" description:"Input OpenAPI Spec File" required:"true"`
 }
 
 func main() {
-
 	var opts Options
 	_, err := flags.Parse(&opts)
 	if err != nil {
@@ -27,7 +26,7 @@ func main() {
 	}
 
 	if 1 == 1 {
-		spec, err := openapi3.ReadFile(opts.Swagger, true)
+		spec, err := openapi3.ReadFile(opts.OpenAPISpec, true)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -55,7 +54,7 @@ func main() {
 			Value: "Bearer {{my_access_token}}"}}}
 
 	conv := openapi2postman2.NewConverter(cfg)
-	err = conv.MergeConvert(opts.Swagger, opts.PostmanBase, opts.Postman)
+	err = conv.MergeConvert(opts.OpenAPISpec, opts.PostmanBase, opts.Postman)
 
 	if err != nil {
 		log.Fatal(err)
