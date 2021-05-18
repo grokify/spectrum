@@ -69,14 +69,14 @@ func (cfg *PolicyConfig) StandardPolicy() (Policy, error) {
 				ruleCfg.Severity, stringcase.SnakeCase)); err != nil {
 				return pol, err
 			}
-		case lintutil.RulenameSchemaWithoutReference:
+		case lintutil.RulenameSchemaHasReference:
 			if err := pol.addRuleWithPriorError(ruleschemareferences.NewRuleSchemaReferences(
-				ruleCfg.Severity, lintutil.RulenameSchemaWithoutReference)); err != nil {
+				ruleCfg.Severity, lintutil.RulenameSchemaHasReference)); err != nil {
 				return pol, err
 			}
-		case lintutil.RulenameSchemaReferenceWithoutSchema:
+		case lintutil.RulenameSchemaReferenceHasSchema:
 			if err := pol.addRuleWithPriorError(ruleschemareferences.NewRuleSchemaReferences(
-				ruleCfg.Severity, lintutil.RulenameSchemaReferenceWithoutSchema)); err != nil {
+				ruleCfg.Severity, lintutil.RulenameSchemaReferenceHasSchema)); err != nil {
 				return pol, err
 			}
 		}

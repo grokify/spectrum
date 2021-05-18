@@ -12,9 +12,9 @@ const (
 	RulenameOpIdStylePascalCase = "operation-operationid-style-pascalcase"
 	RulenameOpIdStyleSnakeCase  = "operation-operationid-style-snakecase"
 
-	RulenameSchemaNameStylePascalCase    = "schema-name-style-pascalcase"
-	RulenameSchemaWithoutReference       = "schema-without-reference"
-	RulenameSchemaReferenceWithoutSchema = "schema-reference-without-schema"
+	RulenameSchemaNameStylePascalCase = "schema-name-style-pascalcase"
+	RulenameSchemaHasReference        = "schema-has-reference"
+	RulenameSchemaReferenceHasSchema  = "schema-reference-has-schema"
 
 	RuleOpSummaryExist                = "operation-summary-exist"
 	RuleOpSummaryCaseFirstCapitalized = "operation-summary-first-letter-capitalized"

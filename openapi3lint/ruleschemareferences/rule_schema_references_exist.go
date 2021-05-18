@@ -10,10 +10,8 @@ import (
 )
 
 type RuleSchemaReferences struct {
-	name                              string
-	severity                          string
-	checkSchemaWithoutReference       bool
-	checkSchemaReferenceWithoutSchema bool
+	name     string
+	severity string
 }
 
 func NewRuleSchemaReferences(sev, ruleName string) (RuleSchemaReferences, error) {
@@ -21,8 +19,8 @@ func NewRuleSchemaReferences(sev, ruleName string) (RuleSchemaReferences, error)
 	rule := RuleSchemaReferences{
 		name:     ruleNameCanonical,
 		severity: sev}
-	if ruleNameCanonical != lintutil.RulenameSchemaWithoutReference &&
-		ruleNameCanonical != lintutil.RulenameSchemaReferenceWithoutSchema {
+	if ruleNameCanonical != lintutil.RulenameSchemaHasReference &&
+		ruleNameCanonical != lintutil.RulenameSchemaReferenceHasSchema {
 		return rule, fmt.Errorf("rule [%s] not supported", ruleName)
 	}
 	return rule, nil
@@ -52,16 +50,16 @@ func (rule RuleSchemaReferences) ProcessSpec(spec *oas3.Swagger, pointerBase str
 	if err != nil {
 		return violations
 	}
-	if rule.name == lintutil.RulenameSchemaWithoutReference {
+	if rule.name == lintutil.RulenameSchemaHasReference {
 		for _, schemaName := range schemaNoRef {
 			violations = append(violations, lintutil.PolicyViolation{
-				RuleName: lintutil.RulenameSchemaWithoutReference,
+				RuleName: lintutil.RulenameSchemaHasReference,
 				Location: openapi3.SchemaPointerExpand(pointerBase, schemaName)})
 		}
-	} else if rule.name == lintutil.RulenameSchemaReferenceWithoutSchema {
+	} else if rule.name == lintutil.RulenameSchemaReferenceHasSchema {
 		for _, schemaName := range refNoSchema {
 			violations = append(violations, lintutil.PolicyViolation{
-				RuleName: lintutil.RulenameSchemaReferenceWithoutSchema,
+				RuleName: lintutil.RulenameSchemaReferenceHasSchema,
 				Location: openapi3.SchemaPointerExpand(pointerBase, schemaName)})
 		}
 	}
