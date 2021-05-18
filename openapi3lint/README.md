@@ -2,6 +2,8 @@
 
 This is a Go-based OpenAPI 3 spec linter.
 
+Spectrum is designed to support a multi-file, multi-user, async editing process where linting reports need to be resilinent to mutiple changes to the specs occurring between the time the validation is run and resolved.
+
 ## Why Spectrum Linter?
 
 There are a few linters available.
@@ -14,7 +16,7 @@ The reasons this exists are:
 
 ## Standard Rules
 
-The following rules are built into Spectral.
+The following rules are built into Spectrum.
 
 1. `datatype-int-format-int32-int64`: ensures data types of `integer` have a standard format of `int32` or `int64`.
 1. `operation-operationid-style-camelcase`: ensures operationIds use camelCase
