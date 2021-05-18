@@ -8,12 +8,21 @@ import (
 	"github.com/grokify/gocharts/data/table"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3/openapi3html"
+	"github.com/jessevdk/go-flags"
 )
 
-func main() {
-	file := "spec_ringcentral_openapi3.yaml"
+type Options struct {
+	OpenAPISpec string `short:"o" long:"openapispec" description:"Input OpenAPI Spec File" required:"true"`
+}
 
-	spec, err := openapi3.ReadFile(file, true)
+func main() {
+	var opts Options
+	_, err := flags.Parse(&opts)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	spec, err := openapi3.ReadFile(opts.OpenAPISpec, true)
 	if err != nil {
 		log.Fatal(err)
 	}
