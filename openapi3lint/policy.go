@@ -17,6 +17,7 @@ import (
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 	"github.com/grokify/spectrum/openapi3lint/ruleintstdformat"
 	"github.com/grokify/spectrum/openapi3lint/ruleopidstyle"
+	"github.com/grokify/spectrum/openapi3lint/ruleschemareferences"
 )
 
 type PolicyConfig struct {
@@ -78,6 +79,24 @@ func (cfg *PolicyConfig) StandardPolicy() (Policy, error) {
 		case lintutil.RulenameOpIdStyleSnakeCase:
 			rule, err := ruleopidstyle.NewRuleOperationOperationIdStyle(
 				ruleCfg.Severity, stringcase.SnakeCase)
+			if err != nil {
+				return pol, err
+			}
+			if err := pol.AddRule(rule, true); err != nil {
+				return pol, err
+			}
+		case lintutil.RulenameSchemaWithoutReference:
+			rule, err := ruleschemareferences.NewRuleSchemaReferences(
+				ruleCfg.Severity, lintutil.RulenameSchemaWithoutReference)
+			if err != nil {
+				return pol, err
+			}
+			if err := pol.AddRule(rule, true); err != nil {
+				return pol, err
+			}
+		case lintutil.RulenameSchemaReferenceWithoutSchema:
+			rule, err := ruleschemareferences.NewRuleSchemaReferences(
+				ruleCfg.Severity, lintutil.RulenameSchemaReferenceWithoutSchema)
 			if err != nil {
 				return pol, err
 			}
@@ -164,7 +183,7 @@ func (pol *Policy) processRulesSpecification(spec *oas3.Swagger, pointerBase, fi
 		// fmt.Printf("FILTER_SEV [%v] ITEM_SEV [%v] INCL [%v]\n", filterSeverity, rule.Severity(), inclRule)
 		if inclRule {
 			//fmt.Printf("PROC RULE name[%s] scope[%s] sev[%s]\n", rule.Name(), rule.Scope(), rule.Severity())
-			vsets.UpsertSets(rule.ProcessSpec(spec, pointerBase))
+			vsets.AddViolations(rule.ProcessSpec(spec, pointerBase))
 		}
 	}
 	return vsets, nil
