@@ -71,6 +71,6 @@ func (rule RuleOperationOperationIdStyle) ProcessOperation(spec *oas3.Swagger, o
 	return []lintutil.PolicyViolation{vio}
 }
 
-func (rule RuleOperationOperationIdStyle) ProcessSpec(spec *oas3.Swagger, pointerBase string) *lintutil.PolicyViolationsSets {
-	return nil
+func (rule RuleOperationOperationIdStyle) ProcessSpec(spec *oas3.Swagger, pointerBase string) []lintutil.PolicyViolation {
+	return []lintutil.PolicyViolation{}
 }

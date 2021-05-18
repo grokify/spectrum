@@ -34,20 +34,20 @@ func (rule RuleDatatypeIntFormatIsInt32OrInt64) ProcessOperation(spec *oas3.Swag
 	return []lintutil.PolicyViolation{}
 }
 
-func (rule RuleDatatypeIntFormatIsInt32OrInt64) ProcessSpec(spec *oas3.Swagger, pointerBase string) *lintutil.PolicyViolationsSets {
-	vsets := lintutil.NewPolicyViolationsSets()
+func (rule RuleDatatypeIntFormatIsInt32OrInt64) ProcessSpec(spec *oas3.Swagger, pointerBase string) []lintutil.PolicyViolation {
+	vios := []lintutil.PolicyViolation{}
 	openapi3.VisitTypesFormats(
 		spec,
 		func(jsonPointerRoot, oasType, oasFormat string) {
 			if oasType == openapi3.TypeInteger &&
 				oasFormat != openapi3.FormatInt32 &&
 				oasFormat != openapi3.FormatInt64 {
-				vsets.AddSimple(
-					rule.Name(),
-					urlutil.JoinAbsolute(pointerBase+jsonPointerRoot, "format"),
-					oasFormat)
+				vios = append(vios, lintutil.PolicyViolation{
+					RuleName: rule.Name(),
+					Location: urlutil.JoinAbsolute(pointerBase+jsonPointerRoot, "format"),
+					Value:    oasFormat})
 			}
 		},
 	)
-	return vsets
+	return vios
 }
