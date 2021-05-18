@@ -93,8 +93,8 @@ github.com/grokify/gocharts v1.3.0 h1:/M9cUup80jQtXBPb6RoPQJrGpb/90PFI5IZ58t5cJk
 github.com/grokify/gocharts v1.3.0/go.mod h1:uhe0lH04KtJuYRuzreaujjYZ/8x53Numw8JN/sa2/fw=
 github.com/grokify/simplego v0.0.3/go.mod h1:mOeVoV0XRtBVrkTxFdN4e9u7yeiRurhCtxsk+CA7gO4=
 github.com/grokify/simplego v0.0.21/go.mod h1:8BYycDukEZvM7jyu8mfG9On4/pG6fEhPYlE3TBsB/Xw=
-github.com/grokify/simplego v0.26.4 h1:Mnol45NQvYLFpTMlDutekRtyvifdF2Li0HZLR5FtF04=
-github.com/grokify/simplego v0.26.4/go.mod h1:B24I7pmy89MLOQ2ySaigcsrNEe+DXK7opD2LMK2LJeg=
+github.com/grokify/simplego v0.26.5 h1:kKTo9PPVPvQB4yT/ZAYc0mvZRtn5vTfyPW+eU6nA83o=
+github.com/grokify/simplego v0.26.5/go.mod h1:B24I7pmy89MLOQ2ySaigcsrNEe+DXK7opD2LMK2LJeg=
 github.com/hpcloud/tail v1.0.0/go.mod h1:ab1qPbhIpdTxEkNHXyeSf5vhxWSCs/tWer42PpOxQnU=
 github.com/huandu/xstrings v1.3.2 h1:L18LIDzqlW6xN2rEkpdV8+oL/IXWJ1APd+vsdYy4Wdw=
 github.com/huandu/xstrings v1.3.2/go.mod h1:y5/lhBue+AyNmUVz9RLU9xbLR0o4KIIExikq4ovT0aE=
