@@ -14,6 +14,8 @@ The reasons this exists are:
 
 ## Standard Rules
 
+The following rules are built into Spectral.
+
 1. `datatype-int-format-int32-int64`: ensures data types of `integer` have a standard format of `int32` or `int64`.
 1. `operation-operationid-style-camelcase`: ensures operationIds use camelCase
 1. `operation-operationid-style-kebabcase`: ensures operationIds use kebab-case
