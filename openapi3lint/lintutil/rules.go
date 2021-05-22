@@ -1,11 +1,9 @@
 package lintutil
 
-import "sort"
-
 const (
-	RulenameDatatypeIntFormatIsInt32OrInt64 = "datatype-int-format-int32-int64"
-	RuleOpDescExist                         = "operation-description-exist"
-	RuleOpIdExist                           = "operation-operationid-exist"
+	RulenameDatatypeIntFormatStandardExist = "datatype-int-format-standard-exist"
+	RuleOpDescExist                        = "operation-description-exist"
+	RuleOpIdExist                          = "operation-operationid-exist"
 
 	RulenameOpIdStyleCamelCase  = "operation-operationid-style-camelcase"
 	RulenameOpIdStyleKebabCase  = "operation-operationid-style-kebabcase"
@@ -16,24 +14,25 @@ const (
 	RulenameSchemaHasReference        = "schema-has-reference"
 	RulenameSchemaReferenceHasSchema  = "schema-reference-has-schema"
 
-	RuleOpSummaryExist                = "operation-summary-exist"
-	RuleOpSummaryCaseFirstCapitalized = "operation-summary-first-letter-capitalized"
-	RuleOpTagsCountOneOnly            = "operation-tags-count-one"
-	RulePathParamNameExist            = "path-param-name-exist"
-	RulePathParamStyleCamelCase       = "path-param-style-camelcase"
-	RuleSchemaPropEnumStylePascalCase = "property-enum-style-pascalcase"
-	RuleSchemaPropDescExist           = "property-description-exist"
-	RuleSchemaObjectPropsExist        = "schema-object-properties-exist"
-	RuleTagCaseFirstCapitalized       = "tag-case-first-capitalized"
-)
+	RulenameOpSummaryExist               = "operation-summary-exist"
+	RulenameOpSummaryStyleFirstUpperCase = "operation-summary-style-first-uppercase"
 
-func StandardRules() []string {
-	rules := []string{
-		RulenameDatatypeIntFormatIsInt32OrInt64,
-		RulenameOpIdStyleCamelCase,
-		RulenameOpIdStyleKebabCase,
-		RulenameOpIdStylePascalCase,
-		RulenameOpIdStyleSnakeCase}
-	sort.Strings(rules)
-	return rules
-}
+	RuleOpTagsCountOneOnly = "operation-tags-count-one"
+	RulePathParamNameExist = "path-param-name-exist"
+
+	RulenamePathParamStyleCamelCase  = "path-param-style-camelcase"
+	RulenamePathParamStyleKebabCase  = "path-param-style-kebabcase"
+	RulenamePathParamStylePascalCase = "path-param-style-pascalcase"
+	RulenamePathParamStyleSnakeCase  = "path-param-style-snakecase"
+
+	RulenameSchemaPropEnumStyleCamelCase  = "schema-property-enum-style-camelcase"
+	RulenameSchemaPropEnumStyleKebabCase  = "schema-property-enum-style-kebabcase"
+	RulenameSchemaPropEnumStylePascalCase = "schema-property-enum-style-pascalcase"
+	RulenameSchemaPropEnumStyleSnakeCase  = "schema-property-enum-style-snakecase"
+
+	RuleSchemaPropDescExist = "property-description-exist"
+
+	RulenameSchemaObjectPropsExist = "schema-object-properties-exist"
+
+	RulenameTagStyleFirstUpperCase = "tag-style-first-uppercase"
+)

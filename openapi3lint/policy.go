@@ -15,9 +15,6 @@ import (
 	"github.com/grokify/simplego/type/stringsutil"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
-	"github.com/grokify/spectrum/openapi3lint/ruleintstdformat"
-	"github.com/grokify/spectrum/openapi3lint/ruleopidstyle"
-	"github.com/grokify/spectrum/openapi3lint/ruleschemareferences"
 )
 
 type PolicyConfig struct {
@@ -43,42 +40,8 @@ func (cfg *PolicyConfig) StandardPolicy() (Policy, error) {
 		rules: map[string]Rule{}}
 	//stdRules := map[string]Rule{}
 	for ruleName, ruleCfg := range cfg.Rules {
-		ruleName = strings.ToLower(strings.TrimSpace(ruleName))
-		switch ruleName {
-		case lintutil.RulenameDatatypeIntFormatIsInt32OrInt64:
-			if err := pol.AddRule(ruleintstdformat.NewRuleDatatypeIntFormatIsInt32OrInt64(ruleCfg.Severity), true); err != nil {
-				return pol, err
-			}
-		case lintutil.RulenameOpIdStyleCamelCase:
-			if err := pol.addRuleWithPriorError(ruleopidstyle.NewRuleOperationOperationIdStyle(
-				ruleCfg.Severity, stringcase.CamelCase)); err != nil {
-				return pol, err
-			}
-		case lintutil.RulenameOpIdStyleKebabCase:
-			if err := pol.addRuleWithPriorError(ruleopidstyle.NewRuleOperationOperationIdStyle(
-				ruleCfg.Severity, stringcase.KebabCase)); err != nil {
-				return pol, err
-			}
-		case lintutil.RulenameOpIdStylePascalCase:
-			if err := pol.addRuleWithPriorError(ruleopidstyle.NewRuleOperationOperationIdStyle(
-				ruleCfg.Severity, stringcase.PascalCase)); err != nil {
-				return pol, err
-			}
-		case lintutil.RulenameOpIdStyleSnakeCase:
-			if err := pol.addRuleWithPriorError(ruleopidstyle.NewRuleOperationOperationIdStyle(
-				ruleCfg.Severity, stringcase.SnakeCase)); err != nil {
-				return pol, err
-			}
-		case lintutil.RulenameSchemaHasReference:
-			if err := pol.addRuleWithPriorError(ruleschemareferences.NewRuleSchemaReferences(
-				ruleCfg.Severity, lintutil.RulenameSchemaHasReference)); err != nil {
-				return pol, err
-			}
-		case lintutil.RulenameSchemaReferenceHasSchema:
-			if err := pol.addRuleWithPriorError(ruleschemareferences.NewRuleSchemaReferences(
-				ruleCfg.Severity, lintutil.RulenameSchemaReferenceHasSchema)); err != nil {
-				return pol, err
-			}
+		if err := pol.addRuleWithPriorError(NewStandardRule(ruleName, ruleCfg.Severity)); err != nil {
+			return pol, err
 		}
 	}
 	return pol, nil

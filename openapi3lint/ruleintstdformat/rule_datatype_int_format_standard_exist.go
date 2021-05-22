@@ -7,34 +7,34 @@ import (
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )
 
-type RuleDatatypeIntFormatIsInt32OrInt64 struct {
+type RuleDatatypeIntFormatStandardExist struct {
 	name     string
 	severity string
 }
 
-func NewRuleDatatypeIntFormatIsInt32OrInt64(sev string) RuleDatatypeIntFormatIsInt32OrInt64 {
-	return RuleDatatypeIntFormatIsInt32OrInt64{
-		name:     lintutil.RulenameDatatypeIntFormatIsInt32OrInt64,
+func NewRule(sev string) RuleDatatypeIntFormatStandardExist {
+	return RuleDatatypeIntFormatStandardExist{
+		name:     lintutil.RulenameDatatypeIntFormatStandardExist,
 		severity: sev}
 }
 
-func (rule RuleDatatypeIntFormatIsInt32OrInt64) Name() string {
+func (rule RuleDatatypeIntFormatStandardExist) Name() string {
 	return rule.name
 }
 
-func (rule RuleDatatypeIntFormatIsInt32OrInt64) Severity() string {
+func (rule RuleDatatypeIntFormatStandardExist) Severity() string {
 	return rule.severity
 }
 
-func (rule RuleDatatypeIntFormatIsInt32OrInt64) Scope() string {
+func (rule RuleDatatypeIntFormatStandardExist) Scope() string {
 	return lintutil.ScopeSpecification
 }
 
-func (rule RuleDatatypeIntFormatIsInt32OrInt64) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
+func (rule RuleDatatypeIntFormatStandardExist) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
 	return []lintutil.PolicyViolation{}
 }
 
-func (rule RuleDatatypeIntFormatIsInt32OrInt64) ProcessSpec(spec *oas3.Swagger, pointerBase string) []lintutil.PolicyViolation {
+func (rule RuleDatatypeIntFormatStandardExist) ProcessSpec(spec *oas3.Swagger, pointerBase string) []lintutil.PolicyViolation {
 	vios := []lintutil.PolicyViolation{}
 	openapi3.VisitTypesFormats(
 		spec,

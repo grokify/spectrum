@@ -15,14 +15,13 @@ type RuleOperationOperationIdStyle struct {
 	severity   string
 }
 
-func NewRuleOperationOperationIdStyle(sev, requiredStringCase string) (RuleOperationOperationIdStyle, error) {
+func NewRule(sev, requiredStringCase string) (RuleOperationOperationIdStyle, error) {
 	canonicalCase, err := stringcase.Parse(requiredStringCase)
 	if err != nil {
 		return RuleOperationOperationIdStyle{},
 			fmt.Errorf("invalid string case [%s]", requiredStringCase)
 	}
 	rule := RuleOperationOperationIdStyle{
-		name:       lintutil.RulenameDatatypeIntFormatIsInt32OrInt64,
 		stringCase: canonicalCase,
 		severity:   sev}
 	switch canonicalCase {

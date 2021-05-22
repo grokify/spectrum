@@ -10,4 +10,6 @@ const (
 	FormatDateTime = "date-time"
 	FormatInt32    = "int32"
 	FormatInt64    = "int64"
+
+	PropertySummary = "summary"
 )

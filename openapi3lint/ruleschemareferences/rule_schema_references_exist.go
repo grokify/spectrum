@@ -14,7 +14,7 @@ type RuleSchemaReferences struct {
 	severity string
 }
 
-func NewRuleSchemaReferences(sev, ruleName string) (RuleSchemaReferences, error) {
+func NewRule(sev, ruleName string) (RuleSchemaReferences, error) {
 	ruleNameCanonical := strings.ToLower(strings.TrimSpace(ruleName))
 	rule := RuleSchemaReferences{
 		name:     ruleNameCanonical,

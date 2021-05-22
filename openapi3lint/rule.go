@@ -7,8 +7,18 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/log/severity"
+	"github.com/grokify/simplego/text/stringcase"
 	"github.com/grokify/simplego/type/stringsutil"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
+	"github.com/grokify/spectrum/openapi3lint/ruleintstdformat"
+	"github.com/grokify/spectrum/openapi3lint/ruleopidstyle"
+	"github.com/grokify/spectrum/openapi3lint/ruleopsummaryexist"
+	"github.com/grokify/spectrum/openapi3lint/ruleopsummarystylefirstuppercase"
+	"github.com/grokify/spectrum/openapi3lint/rulepathparamstyle"
+	"github.com/grokify/spectrum/openapi3lint/ruleschemaobjectpropsexist"
+	"github.com/grokify/spectrum/openapi3lint/ruleschemapropenumstyle"
+	"github.com/grokify/spectrum/openapi3lint/ruleschemareferences"
+	"github.com/grokify/spectrum/openapi3lint/ruletagstylefirstuppercase"
 )
 
 type Rule interface {
@@ -38,4 +48,94 @@ func ValidateRules(rules map[string]Rule) error {
 			strings.Join(severity.Severities(), ","))
 	}
 	return nil
+}
+
+type EmptyRule struct{}
+
+func (rule EmptyRule) Name() string     { return "" }
+func (rule EmptyRule) Scope() string    { return "" }
+func (rule EmptyRule) Severity() string { return "" }
+func (rule EmptyRule) ProcessSpec(spec *oas3.Swagger, pointerBase string) []lintutil.PolicyViolation {
+	return []lintutil.PolicyViolation{}
+}
+func (rule EmptyRule) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
+	return []lintutil.PolicyViolation{}
+}
+
+func StandardRuleNames() []string {
+	rulenames := []string{
+		lintutil.RulenameDatatypeIntFormatStandardExist,
+		lintutil.RulenameOpIdStyleCamelCase,
+		lintutil.RulenameOpIdStyleKebabCase,
+		lintutil.RulenameOpIdStylePascalCase,
+		lintutil.RulenameOpIdStyleSnakeCase,
+		lintutil.RulenameOpSummaryExist,
+		lintutil.RulenameOpSummaryStyleFirstUpperCase,
+		lintutil.RulenamePathParamStyleCamelCase,
+		lintutil.RulenamePathParamStyleKebabCase,
+		lintutil.RulenamePathParamStylePascalCase,
+		lintutil.RulenamePathParamStyleSnakeCase,
+		lintutil.RulenameSchemaHasReference,
+		lintutil.RulenameSchemaReferenceHasSchema,
+		lintutil.RulenameSchemaObjectPropsExist,
+		lintutil.RulenameSchemaPropEnumStyleCamelCase,
+		lintutil.RulenameSchemaPropEnumStyleKebabCase,
+		lintutil.RulenameSchemaPropEnumStylePascalCase,
+		lintutil.RulenameSchemaPropEnumStyleSnakeCase,
+		lintutil.RulenameTagStyleFirstUpperCase,
+	}
+	sort.Strings(rulenames)
+	return rulenames
+}
+
+func NewStandardRule(name, sev string) (Rule, error) {
+	name = strings.ToLower(strings.TrimSpace(name))
+	switch name {
+	case lintutil.RulenameDatatypeIntFormatStandardExist:
+		return ruleintstdformat.NewRule(sev), nil
+
+	case lintutil.RulenameOpIdStyleCamelCase:
+		return ruleopidstyle.NewRule(sev, stringcase.CamelCase)
+	case lintutil.RulenameOpIdStyleKebabCase:
+		return ruleopidstyle.NewRule(sev, stringcase.KebabCase)
+	case lintutil.RulenameOpIdStylePascalCase:
+		return ruleopidstyle.NewRule(sev, stringcase.PascalCase)
+	case lintutil.RulenameOpIdStyleSnakeCase:
+		return ruleopidstyle.NewRule(sev, stringcase.SnakeCase)
+
+	case lintutil.RulenameOpSummaryExist:
+		return ruleopsummaryexist.NewRule(sev), nil
+	case lintutil.RulenameOpSummaryStyleFirstUpperCase:
+		return ruleopsummarystylefirstuppercase.NewRule(sev), nil
+
+	case lintutil.RulenamePathParamStyleCamelCase:
+		return rulepathparamstyle.NewRule(sev, stringcase.CamelCase)
+	case lintutil.RulenamePathParamStyleKebabCase:
+		return rulepathparamstyle.NewRule(sev, stringcase.KebabCase)
+	case lintutil.RulenamePathParamStylePascalCase:
+		return rulepathparamstyle.NewRule(sev, stringcase.PascalCase)
+	case lintutil.RulenamePathParamStyleSnakeCase:
+		return rulepathparamstyle.NewRule(sev, stringcase.SnakeCase)
+
+	case lintutil.RulenameSchemaHasReference:
+		return ruleschemareferences.NewRule(sev, lintutil.RulenameSchemaHasReference)
+	case lintutil.RulenameSchemaReferenceHasSchema:
+		return ruleschemareferences.NewRule(sev, lintutil.RulenameSchemaReferenceHasSchema)
+
+	case lintutil.RulenameSchemaObjectPropsExist:
+		return ruleschemaobjectpropsexist.NewRule(sev), nil
+
+	case lintutil.RulenameSchemaPropEnumStyleCamelCase:
+		ruleschemapropenumstyle.NewRule(sev, stringcase.CamelCase)
+	case lintutil.RulenameSchemaPropEnumStyleKebabCase:
+		ruleschemapropenumstyle.NewRule(sev, stringcase.KebabCase)
+	case lintutil.RulenameSchemaPropEnumStylePascalCase:
+		ruleschemapropenumstyle.NewRule(sev, stringcase.PascalCase)
+	case lintutil.RulenameSchemaPropEnumStyleSnakeCase:
+		ruleschemapropenumstyle.NewRule(sev, stringcase.SnakeCase)
+
+	case lintutil.RulenameTagStyleFirstUpperCase:
+		return ruletagstylefirstuppercase.NewRule(sev), nil
+	}
+	return EmptyRule{}, fmt.Errorf("rule [%s] not found", name)
 }
