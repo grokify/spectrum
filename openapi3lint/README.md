@@ -18,13 +18,25 @@ The reasons this exists are:
 
 The following rules are built into Spectrum.
 
-1. `datatype-int-format-int32-int64`: ensures data types of `integer` have a standard format of `int32` or `int64`.
+1. `datatype-int-format-standard-exist`: ensures data types of `integer` have a standard format (`int32` or `int64`)
 1. `operation-operationid-style-camelcase`: ensures operationIds use camelCase
 1. `operation-operationid-style-kebabcase`: ensures operationIds use kebab-case
 1. `operation-operationid-style-pascalcase`: ensures operationIds use PascalCase
 1. `operation-operationid-style-snakecase`: ensures operationIds use snake_case
+1. `operation-summary-exist` ensures a summary exists.
+1. `operation-summary-style-first-uppercase`: ensures summary starts with capitalized first character
+1. `path-param-style-camelcase`: path parms are camel case
+1. `path-param-style-kebabcase`: path parms are kebab case
+1. `path-param-style-pascalcase`: path parms are Pascal case
+1. `path-param-style-snakecase`: path parms are snake case
 1. `schema-has-reference`: ensures schemas have references
+1. `schema-object-properties-exist`: schema of type `object` have `properties` or `additionalProperties` defined
+1. `schema-property-enum-style-camelcase`: schema property enums are camel case
+1. `schema-property-enum-style-kebabcase`: schema property enums are kebab case
+1. `schema-property-enum-style-pascalcase`: schema property enums are Pascal case
+1. `schema-property-enum-style-snakecase`: schema property enums are snake case
 1. `schema-reference-has-schema`: ensures schma JSON pointers reference existing schemas
+1. `tag-style-first-uppercase`: Tag names have capitalized first character
 
 ## Other Linters
 
