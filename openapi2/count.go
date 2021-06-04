@@ -11,9 +11,9 @@ import (
 	"github.com/grokify/simplego/type/stringsutil"
 )
 
-func CountEndpointsByTag(spec Specification, tags []string) histogram.HistogramSet {
+func CountEndpointsByTag(spec Specification, tags []string) *histogram.HistogramSet {
 	tags = stringsutil.SliceTrimSpace(tags, true)
-	hist := histogram.NewHistogramSet()
+	hist := histogram.NewHistogramSet("endpoints by tag")
 	for url, path := range spec.Paths {
 		hist = countEndpointByTag(hist, tags, url, http.MethodGet, path.Get)
 		hist = countEndpointByTag(hist, tags, url, http.MethodPatch, path.Patch)
@@ -24,7 +24,7 @@ func CountEndpointsByTag(spec Specification, tags []string) histogram.HistogramS
 	return hist
 }
 
-func countEndpointByTag(hist histogram.HistogramSet, tags []string, url string, method string, ep *Endpoint) histogram.HistogramSet {
+func countEndpointByTag(hist *histogram.HistogramSet, tags []string, url string, method string, ep *Endpoint) *histogram.HistogramSet {
 	if ep == nil {
 		return hist
 	}
@@ -49,7 +49,6 @@ func countEndpointByTag(hist histogram.HistogramSet, tags []string, url string, 
 			hist.Add(tag, endpoint, 1)
 		}
 	}
-	hist.Inflate()
 	return hist
 }
 
@@ -67,12 +66,12 @@ func WriteEndpointCountCSV(filename string, hset histogram.HistogramSet) error {
 	}
 	for tagName, hist := range hset.HistogramMap {
 		hist.Inflate()
-		for endpoint := range hist.BinsFrequency {
+		for endpoint := range hist.Bins {
 			parts := strings.Split(endpoint, " ")
 			if len(parts) >= 2 {
 				row := []string{
 					tagName,
-					strconv.Itoa(hist.BinCount),
+					strconv.Itoa(int(hist.BinCount)),
 					strings.ToUpper(parts[0]),
 					strings.Join(parts[1:], " ")}
 				err := writer.Write(row)

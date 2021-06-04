@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/gocharts/data/frequency"
+	"github.com/grokify/gocharts/data/histogram"
 	"github.com/grokify/simplego/fmt/fmtutil"
 	"github.com/grokify/simplego/net/urlutil"
 	"github.com/grokify/simplego/type/maputil"
@@ -45,7 +45,7 @@ func main() {
 		"S_SPEC_VALID File [%s] Title [%s] Op Count [%d]",
 		opts.SpecFileOAS3, spec.Info.Title, sm.OperationsCount())
 
-	sortBy := frequency.SortValueDesc
+	sortBy := histogram.SortValueDesc
 	ops := sm.OperationCountsByTag()
 	ops.WriteTableASCII(os.Stdout,
 		[]string{"Tag", "Operation Count"}, sortBy, true)
