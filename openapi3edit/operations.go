@@ -30,8 +30,7 @@ func (opm *OperationMore) AddResponseBodySchemaRef(statusCode, description, cont
 }
 
 func (opm *OperationMore) HasParameter(paramNameWant string) bool {
-	paramNameWantTrimmed := strings.TrimSpace(paramNameWant)
-	paramNameWantLc := strings.ToLower(paramNameWantTrimmed)
+	paramNameWantLc := strings.ToLower(strings.TrimSpace(paramNameWant))
 	for _, paramRef := range opm.Operation.Parameters {
 		if paramRef.Value == nil {
 			continue
