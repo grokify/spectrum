@@ -25,7 +25,9 @@ func main() {
 
 	_, filepaths, err := ioutilmore.ReadDirMore(
 		opts.Directory, regexp.MustCompile(opts.Regexp), true, true)
-
+	if err != nil {
+		log.Fatal(err)
+	}
 	tbl, err := csv.TableFromSpecFiles(filepaths, true)
 	if err != nil {
 		log.Fatal(fmt.Sprintf("TableFromSpecFiles [%v]\n", err.Error()))

@@ -23,7 +23,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	files := []string{}
+	var files []string
 	isDir, err := ioutilmore.IsDir(opts.SpecFileOAS3)
 	if err != nil {
 		log.Fatal(err)
@@ -31,6 +31,9 @@ func main() {
 	if isDir {
 		_, files, err = ioutilmore.ReadDirMore(opts.SpecFileOAS3,
 			regexp.MustCompile(`\.(yaml|yml|json)$`), true, true)
+		if err != nil {
+			log.Fatal(err)
+		}
 	} else {
 		files = []string{opts.SpecFileOAS3}
 	}

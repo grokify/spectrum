@@ -182,7 +182,7 @@ func ParseSpringLinesToMapStringSchemaRefs(lines, explicitCustomTypes []string) 
 // attempts to extract a property name, type, format and default
 // value.
 func ParseSpringLineToSchemaRef(line string, explicitCustomTypes []string) (string, *oas3.SchemaRef, error) {
-	sch := oas3.Schema{}
+	var sch oas3.Schema
 	line = strings.Trim(line, " \t")
 
 	name, sch, err := lineToStringDef(line)
@@ -256,7 +256,7 @@ func schemaPath(object string) string {
 // attempts to extract a property name, type, format and default
 // value. DEPRECATED
 func ParseSpringLineToSchema(line string) (string, *oas3.Schema, error) {
-	sch := oas3.Schema{}
+	var sch oas3.Schema
 	line = strings.Trim(line, " \t")
 
 	name, sch, err := lineToStringDef(line)
