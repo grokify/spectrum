@@ -1,9 +1,30 @@
 {
+    "name": "RingCentral Policy",
+    "version": "v0.1.0",
+    "lastUpdated": "2021-06-10T00:00:00Z",
     "rules":{
-        "datatype-int-format-int32-int64": {
-            "severity": "off"
+        "datatype-int-format-standard-exist": {
+            "severity": "error"
         },
         "operation-operationid-style-camelcase":{
+            "severity": "error"
+        },
+        "operation-summary-exist":{
+            "severity": "error"
+        },
+        "operation-summary-style-first-uppercase":{
+            "severity": "error"
+        },
+        "path-param-style-camelcase":{
+            "severity": "error"
+        },
+        "schema-object-properties-exist":{
+            "severity": "error"
+        },
+        "schema-property-enum-style-pascalcase":{
+            "severity": "error"
+        },
+        "tag-style-first-uppercase":{
             "severity": "error"
         }
     }

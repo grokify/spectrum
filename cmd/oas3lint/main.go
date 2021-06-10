@@ -16,8 +16,8 @@ import (
 )
 
 type Options struct {
-	InputFileOAS3 string `short:"i" long:"inputspec" description:"Input OAS Spec File or Dir" required:"true"`
 	PolicyFile    string `short:"p" long:"policyfile" description:"Policy File" required:"true"`
+	InputFileOAS3 string `short:"i" long:"inputspec" description:"Input OAS Spec File or Dir" required:"false"`
 	Severity      string `short:"s" long:"severity" description:"Severity level"`
 }
 
@@ -29,27 +29,33 @@ func main() {
 	}
 
 	var files []string
-	isDir, err := ioutilmore.IsDir(opts.InputFileOAS3)
-	if err != nil {
-		log.Fatal(err)
-	}
-	if isDir {
-		_, files, err = ioutilmore.ReadDirMore(opts.InputFileOAS3,
-			regexp.MustCompile(`(?i)\.(json|yaml|yml)$`), true, true)
+	if len(opts.InputFileOAS3) > 0 {
+		isDir, err := ioutilmore.IsDir(opts.InputFileOAS3)
 		if err != nil {
 			log.Fatal(err)
 		}
-	} else {
-		files = []string{opts.InputFileOAS3}
+		if isDir {
+			_, files, err = ioutilmore.ReadDirMore(opts.InputFileOAS3,
+				regexp.MustCompile(`(?i)\.(json|yaml|yml)$`), true, true)
+			if err != nil {
+				log.Fatal(err)
+			}
+		} else {
+			files = []string{opts.InputFileOAS3}
+		}
+		fmtutil.PrintJSON(files)
 	}
-
-	fmtutil.PrintJSON(files)
 
 	polCfg, err := openapi3lint.NewPolicyConfigFile(opts.PolicyFile)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmtutil.PrintJSON(polCfg)
+	all, std, cus := polCfg.RuleNames()
+	fmtutil.PrintJSON(all)
+	fmtutil.PrintJSON(std)
+	fmtutil.PrintJSON(cus)
+
 	pol, err := polCfg.StandardPolicy()
 	if err != nil {
 		log.Fatal(err)
