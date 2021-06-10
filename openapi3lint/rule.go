@@ -62,7 +62,32 @@ func (rule EmptyRule) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, o
 	return []lintutil.PolicyViolation{}
 }
 
-func StandardRuleNames() []string {
+type StandardRuleNames struct {
+	ruleNames map[string]int
+}
+
+func NewStandardRuleNames() *StandardRuleNames {
+	srn := &StandardRuleNames{
+		ruleNames: map[string]int{}}
+	names := standardRuleNamesList()
+	for _, name := range names {
+		srn.ruleNames[name] = 1
+	}
+	return srn
+}
+
+func (srn *StandardRuleNames) Slice() []string {
+	return standardRuleNamesList()
+}
+
+func (srn *StandardRuleNames) Exists(ruleName string) bool {
+	if _, ok := srn.ruleNames[ruleName]; ok {
+		return true
+	}
+	return false
+}
+
+func standardRuleNamesList() []string {
 	rulenames := []string{
 		lintutil.RulenameDatatypeIntFormatStandardExist,
 		lintutil.RulenameOpIdStyleCamelCase,
@@ -126,16 +151,16 @@ func NewStandardRule(name, sev string) (Rule, error) {
 		return ruleschemaobjectpropsexist.NewRule(sev), nil
 
 	case lintutil.RulenameSchemaPropEnumStyleCamelCase:
-		ruleschemapropenumstyle.NewRule(sev, stringcase.CamelCase)
+		return ruleschemapropenumstyle.NewRule(sev, stringcase.CamelCase)
 	case lintutil.RulenameSchemaPropEnumStyleKebabCase:
-		ruleschemapropenumstyle.NewRule(sev, stringcase.KebabCase)
+		return ruleschemapropenumstyle.NewRule(sev, stringcase.KebabCase)
 	case lintutil.RulenameSchemaPropEnumStylePascalCase:
-		ruleschemapropenumstyle.NewRule(sev, stringcase.PascalCase)
+		return ruleschemapropenumstyle.NewRule(sev, stringcase.PascalCase)
 	case lintutil.RulenameSchemaPropEnumStyleSnakeCase:
-		ruleschemapropenumstyle.NewRule(sev, stringcase.SnakeCase)
+		return ruleschemapropenumstyle.NewRule(sev, stringcase.SnakeCase)
 
 	case lintutil.RulenameTagStyleFirstUpperCase:
 		return ruletagstylefirstuppercase.NewRule(sev), nil
 	}
-	return EmptyRule{}, fmt.Errorf("rule [%s] not found", name)
+	return EmptyRule{}, fmt.Errorf("NewStandardRule: rule [%s] not found", name)
 }

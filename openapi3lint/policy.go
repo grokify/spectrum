@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"sort"
 	"strings"
+	"time"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/encoding/jsonutil"
@@ -18,7 +19,11 @@ import (
 )
 
 type PolicyConfig struct {
-	Rules map[string]RuleConfig `json:"rules,omitempty"`
+	Name             string                `json:"name"`
+	Version          string                `json:"version"`
+	LastUpdated      time.Time             `json:"lastUpdated,omitempty"`
+	Rules            map[string]RuleConfig `json:"rules,omitempty"`
+	NonStandardRules []string              `json:"nonStandardRules,omitempty"`
 }
 
 func NewPolicyConfigFile(filename string) (PolicyConfig, error) {
@@ -31,14 +36,30 @@ func NewPolicyConfigFile(filename string) (PolicyConfig, error) {
 	return pol, err
 }
 
+func (polCfg *PolicyConfig) RuleNames() ([]string, []string, []string) {
+	stdRuleNames := NewStandardRuleNames()
+	all := []string{}
+	standard := []string{}
+	custom := []string{}
+	for ruleName := range polCfg.Rules {
+		all = append(all, ruleName)
+		if stdRuleNames.Exists(ruleName) {
+			standard = append(standard, ruleName)
+		} else {
+			custom = append(custom, ruleName)
+		}
+	}
+	return stringsutil.SliceCondenseSpace(all, true, true),
+		stringsutil.SliceCondenseSpace(standard, true, true),
+		stringsutil.SliceCondenseSpace(custom, true, true)
+}
+
 type RuleConfig struct {
 	Severity string `json:"severity"`
 }
 
 func (cfg *PolicyConfig) StandardPolicy() (Policy, error) {
-	pol := Policy{
-		rules: map[string]Rule{}}
-	//stdRules := map[string]Rule{}
+	pol := Policy{rules: map[string]Rule{}}
 	for ruleName, ruleCfg := range cfg.Rules {
 		if err := pol.addRuleWithPriorError(NewStandardRule(ruleName, ruleCfg.Severity)); err != nil {
 			return pol, err
