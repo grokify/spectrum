@@ -91,7 +91,7 @@ func operationsTable(spec *oas3.Swagger, columns *table.ColumnSet, filterFunc fu
 			}
 		}
 
-		tbl.Records = append(tbl.Records, row)
+		tbl.Rows = append(tbl.Rows, row)
 	})
 	return &tbl, nil
 }
@@ -471,7 +471,7 @@ func (sm *SpecMore) WriteFileCSV(filename string) error {
 	if err != nil {
 		return err
 	}
-	return table.WriteCSV(filename, tbl)
+	return tbl.WriteCSV(filename)
 }
 
 func (sm *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, indent string) error {

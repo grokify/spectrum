@@ -42,7 +42,7 @@ func (pp *PageParams) AddSpec(spec *oas3.Swagger) error {
 }
 
 func (pp *PageParams) AddOperationsTable(tbl *table.Table) error {
-	docs := table.ToDocuments(tbl)
+	docs := tbl.ToDocuments()
 	jdocs, err := json.Marshal(docs)
 	if err != nil {
 		return err
