@@ -1,10 +1,10 @@
 Spectrum - OpenAPI Spec SDK and Postman Converter
 =================================================
 
-[![Build Status][build-status-svg]][build-status-link]
-[![Go Report Card][goreport-svg]][goreport-link]
-[![Docs][docs-godoc-svg]][docs-godoc-link]
-[![License][license-svg]][license-link]
+[![Build Status][build-status-svg]][build-status-url]
+[![Go Report Card][goreport-svg]][goreport-url]
+[![Docs][docs-godoc-svg]][docs-godoc-url]
+[![License][license-svg]][license-url]
 
 Spectrum is a multi-purpose OpenAPI Spec SDK that includes enhanced Postman conversion. Most of the OpenAPI Spec SDK is designed to support OAS3. Some functionality for OAS2 exists.
 
@@ -124,10 +124,10 @@ To set your environment variables, use the Settings Gear icon and then click "Ma
 * YouTube: [Getting Started with RingCentral APIs using Postman](https://youtu.be/5kE4UPXJ-5Q)
 
  [build-status-svg]: https://github.com/grokify/spectrum/workflows/go%20build/badge.svg
- [build-status-link]: https://github.com/grokify/spectrum/actions
+ [build-status-url]: https://github.com/grokify/spectrum/actions
  [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/spectrum
- [goreport-link]: https://goreportcard.com/report/github.com/grokify/spectrum
+ [goreport-url]: https://goreportcard.com/report/github.com/grokify/spectrum
  [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/spectrum
- [docs-godoc-link]: https://pkg.go.dev/github.com/grokify/spectrum
+ [docs-godoc-url]: https://pkg.go.dev/github.com/grokify/spectrum
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-link]: https://github.com/grokify/spectrum/blob/master/LICENSE
+ [license-url]: https://github.com/grokify/spectrum/blob/master/LICENSE
