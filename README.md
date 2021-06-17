@@ -12,9 +12,14 @@ The following article provides an overview of OpenAPI spec to Postman conversion
 
 1. [Blog Introduction](https://medium.com/ringcentral-developers/using-postman-with-swagger-and-the-ringcentral-api-523712f792a0)
 
-## Major Features
+## Packages and Major Features
 
-### OpenAPI 3
+* openapi2 ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi2))
+  1. Support for OpenAPI 2 files, including serialization, deserialization, and validation.
+  1. Merging of multiple specs
+  1. Postman 2 Collection conversion
+* openapi3 ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi3))
+  1. Support for OpenAPI 3 files, including serialization, deserialization, and validation.
   1. Merging of multiple specs
   1. Output of spec to tabular format to HTML (API Registry), CSV, XLSX. HTML API Registry has a bonus feature that makes each line clickable. Click any line here: http://ringcentral.github.io/api-registry/
   1. Programmatic API to modify OpenAPI specs using rules
@@ -24,10 +29,12 @@ The following article provides an overview of OpenAPI spec to Postman conversion
   1. Postman 2 Collection conversion
   1. Ability to merge in Postman request body examples into Postman 2 Collection
   1. Functionality is built on *kin-openapi*: https://github.com/getkin/kin-openapi
-### OpenAPI 2
-  1. Merging of multiple specs
-  1. Postman 2 Collection conversion
-### Postman 2
+* openapi3edit ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi3edit))
+  * Programmatic SDK-based editor for OAS3 specifications.
+* openapi3lint ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi3lint))
+  * Extensible linter for OAS3 specifications.
+* postman2 ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/postman2))
+  1. upport for Postman 2 Collection files, including serialization and deserialization.
   1. CLI and library to Convert OpenAPI Specs to Postman Collection
   1. Add Postman environment variables to URLs, e.g. Server URLs like `https://{{HOSTNAME}}/restapi`
   1. Add headers, such as environment variable based Authorization headers, such as `Authorization: Bearer {{myAccessToken}}`
@@ -39,19 +46,6 @@ The following article provides an overview of OpenAPI spec to Postman conversion
 * Postman 4.10.7 does not natively support JSON requests so request bodies need to be entered using the raw body editor. A future task is to add Swagger request examples as default Postman request bodies.
 * Postman 2.0 spec supports polymorphism and doesn't have a canonical schema. For example, the `request.url` property can be populated by a URL string or a URL object. Spectrum uses the URL object since it is more flexible. The function `simple.NewCanonicalCollectionFromBytes(bytes)` can be used to read either a simple or object based spec into a canonical object spec.
 * This has only been used on the RingCentral Swagger spec to date but will be used for more in the future. Please feel free to use and contribute. Examples are located in the `examples` folder.
-
-## Structure
-
-* openapi2 ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi2))
-  * Support for OpenAPI 2 files, including serialization, deserialization, and validation.
-* openapi3 ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi3))
-  * Support for OpenAPI 3 files, including serialization, deserialization, and validation.
-* openapi3edit ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi3edit))
-  * Programmatic SDK-based editor for OAS3 specifications.
-* openapi3lint ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi3lint))
-  * Extensible linter for OAS3 specifications.
-* postman2 ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/postman2))
-  * upport for Postman 2 Collection files, including serialization and deserialization.
 
 ## Installation
 
