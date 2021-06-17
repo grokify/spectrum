@@ -30,9 +30,9 @@ The following article provides an overview of OpenAPI spec to Postman conversion
   1. Ability to merge in Postman request body examples into Postman 2 Collection
   1. Functionality is built on *kin-openapi*: https://github.com/getkin/kin-openapi
 * openapi3edit ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi3edit))
-  * Programmatic SDK-based editor for OAS3 specifications.
+  1. Programmatic SDK-based editor for OAS3 specifications.
 * openapi3lint ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi3lint))
-  * Extensible linter for OAS3 specifications.
+  1. Extensible linter for OAS3 specifications.
 * postman2 ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/postman2))
   1. upport for Postman 2 Collection files, including serialization and deserialization.
   1. CLI and library to Convert OpenAPI Specs to Postman Collection
