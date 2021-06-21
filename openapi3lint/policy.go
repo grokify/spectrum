@@ -16,13 +16,13 @@ import (
 )
 
 type Policy struct {
-	rules       map[string]Rule
+	//rules       map[string]Rule
 	policyRules map[string]PolicyRule
 }
 
 func NewPolicy() Policy {
 	return Policy{
-		rules:       map[string]Rule{},
+		//rules:       map[string]Rule{},
 		policyRules: map[string]PolicyRule{}}
 }
 
@@ -81,7 +81,7 @@ func (pol *Policy) AddRule(rule Rule, errorOnCollision bool) error {
 
 func (pol *Policy) RuleNames() []string {
 	ruleNames := []string{}
-	for rn := range pol.rules {
+	for rn := range pol.policyRules {
 		ruleNames = append(ruleNames, rn)
 	}
 	sort.Strings(ruleNames)
@@ -92,10 +92,10 @@ func (pol *Policy) ValidateSpec(spec *oas3.Swagger, pointerBase, filterSeverity 
 	vsets := lintutil.NewPolicyViolationsSets()
 
 	unknownScopes := []string{}
-	for _, rule := range pol.rules {
-		_, err := lintutil.ParseScope(rule.Scope())
+	for _, policyRule := range pol.policyRules {
+		_, err := lintutil.ParseScope(policyRule.Rule.Scope())
 		if err != nil {
-			unknownScopes = append(unknownScopes, rule.Scope())
+			unknownScopes = append(unknownScopes, policyRule.Rule.Scope())
 		}
 	}
 	if len(unknownScopes) > 0 {
