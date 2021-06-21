@@ -10,15 +10,13 @@ import (
 )
 
 type RuleSchemaReferences struct {
-	name     string
-	severity string
+	name string
 }
 
-func NewRule(sev, ruleName string) (RuleSchemaReferences, error) {
+func NewRule(ruleName string) (RuleSchemaReferences, error) {
 	ruleNameCanonical := strings.ToLower(strings.TrimSpace(ruleName))
 	rule := RuleSchemaReferences{
-		name:     ruleNameCanonical,
-		severity: sev}
+		name: ruleNameCanonical}
 	if ruleNameCanonical != lintutil.RulenameSchemaHasReference &&
 		ruleNameCanonical != lintutil.RulenameSchemaReferenceHasSchema {
 		return rule, fmt.Errorf("rule [%s] not supported", ruleName)
@@ -32,10 +30,6 @@ func (rule RuleSchemaReferences) Name() string {
 
 func (rule RuleSchemaReferences) Scope() string {
 	return lintutil.ScopeSpecification
-}
-
-func (rule RuleSchemaReferences) Severity() string {
-	return rule.severity
 }
 
 func (rule RuleSchemaReferences) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
@@ -63,6 +57,5 @@ func (rule RuleSchemaReferences) ProcessSpec(spec *oas3.Swagger, pointerBase str
 				Location: openapi3.SchemaPointerExpand(pointerBase, schemaName)})
 		}
 	}
-
 	return violations
 }

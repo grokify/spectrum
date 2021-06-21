@@ -44,12 +44,11 @@ func (std RuleCollectionExtensions) RuleNames() []string {
 	return rulenames
 }
 
-func (std RuleCollectionExtensions) Rule(name, severity string) (openapi3lint.Rule, error) {
-	sev := severity
+func (std RuleCollectionExtensions) Rule(name string) (openapi3lint.Rule, error) {
 	name = strings.ToLower(strings.TrimSpace(name))
 	switch name {
 	case ruletaggroupexist.RuleName:
-		return ruletaggroupexist.NewRule(sev), nil
+		return ruletaggroupexist.NewRule(), nil
 	}
 
 	return openapi3lint.EmptyRule{}, fmt.Errorf("NewExtensionRule: rule [%s] not found", name)

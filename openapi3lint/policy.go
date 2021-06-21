@@ -16,16 +16,52 @@ import (
 )
 
 type Policy struct {
-	rules map[string]Rule
+	rules       map[string]Rule
+	policyRules map[string]PolicyRule
 }
 
-func (pol *Policy) addRuleWithPriorError(rule Rule, err error) error {
+func NewPolicy() Policy {
+	return Policy{
+		rules:       map[string]Rule{},
+		policyRules: map[string]PolicyRule{}}
+}
+
+func (pol *Policy) AddRule(rule Rule, sev string, errorOnCollision bool) error {
+	ruleName := rule.Name()
+	if len(strings.TrimSpace(ruleName)) == 0 {
+		return errors.New("rule has no name Policy.AddRule()")
+	}
+	if !stringcase.IsKebabCase(ruleName) {
+		return fmt.Errorf("rule to add name must be in in kebab-case format [%s]", ruleName)
+	}
+	if errorOnCollision {
+		if _, ok := pol.policyRules[ruleName]; ok {
+			return fmt.Errorf("duplicate rule [%s] Policy.AddRule()", ruleName)
+		}
+	}
+	canonicalSeverity := severity.SeverityError
+	if len(strings.TrimSpace(sev)) > 0 {
+		canonicalSeverityTry, err := severity.Parse(sev)
+		if err != nil {
+			return fmt.Errorf("severity not found [%s] Policy.AddRule()", sev)
+		}
+		canonicalSeverity = canonicalSeverityTry
+	}
+	pol.policyRules[ruleName] = PolicyRule{
+		Rule:     rule,
+		Severity: canonicalSeverity}
+	return nil
+}
+
+/*
+func (pol *Policy) addRuleWithPriorError(rule Rule, sev string, err error) error {
 	if err != nil {
 		return err
 	}
-	return pol.AddRule(rule, false)
+	return pol.AddRule(rule, sev, true)
 }
-
+*/
+/*
 func (pol *Policy) AddRule(rule Rule, errorOnCollision bool) error {
 	if len(rule.Name()) == 0 {
 		return errors.New("rule to add must have non-empty name")
@@ -41,6 +77,7 @@ func (pol *Policy) AddRule(rule Rule, errorOnCollision bool) error {
 	pol.rules[rule.Name()] = rule
 	return nil
 }
+*/
 
 func (pol *Policy) RuleNames() []string {
 	ruleNames := []string{}
@@ -87,18 +124,18 @@ func (pol *Policy) processRulesSpecification(spec *oas3.Swagger, pointerBase, fi
 	}
 	vsets := lintutil.NewPolicyViolationsSets()
 
-	for _, rule := range pol.rules {
-		if !lintutil.ScopeMatch(lintutil.ScopeSpecification, rule.Scope()) {
+	for _, policyRule := range pol.policyRules {
+		if !lintutil.ScopeMatch(lintutil.ScopeSpecification, policyRule.Rule.Scope()) {
 			continue
 		}
-		inclRule, err := severity.SeverityInclude(filterSeverity, rule.Severity())
+		inclRule, err := severity.SeverityInclude(filterSeverity, policyRule.Severity)
 		if err != nil {
 			return vsets, err
 		}
 		// fmt.Printf("FILTER_SEV [%v] ITEM_SEV [%v] INCL [%v]\n", filterSeverity, rule.Severity(), inclRule)
 		if inclRule {
 			//fmt.Printf("PROC RULE name[%s] scope[%s] sev[%s]\n", rule.Name(), rule.Scope(), rule.Severity())
-			vsets.AddViolations(rule.ProcessSpec(spec, pointerBase))
+			vsets.AddViolations(policyRule.Rule.ProcessSpec(spec, pointerBase))
 		}
 	}
 	return vsets, nil
@@ -117,18 +154,18 @@ func (pol *Policy) processRulesOperation(spec *oas3.Swagger, pointerBase, filter
 			}
 			opPointer := jsonutil.PointerSubEscapeAll(
 				"%s#/paths/%s/%s", pointerBase, path, strings.ToLower(method))
-			for _, rule := range pol.rules {
-				if !lintutil.ScopeMatch(lintutil.ScopeOperation, rule.Scope()) {
+			for _, policyRule := range pol.policyRules {
+				if !lintutil.ScopeMatch(lintutil.ScopeOperation, policyRule.Rule.Scope()) {
 					continue
 				}
 				//fmt.Printf("HERE [%s] RULE [%s] Scope [%s]\n", path, rule.Name(), rule.Scope())
-				inclRule, err := severity.SeverityInclude(filterSeverity, rule.Severity())
+				inclRule, err := severity.SeverityInclude(filterSeverity, policyRule.Severity)
 				//fmt.Printf("INCL_RULE? [%v] RULE [%s]\n", inclRule, rule.Name())
 				if err != nil {
-					severityErrorRules = append(severityErrorRules, rule.Name())
-					unknownSeverities = append(unknownSeverities, rule.Severity())
+					severityErrorRules = append(severityErrorRules, policyRule.Rule.Name())
+					unknownSeverities = append(unknownSeverities, policyRule.Severity)
 				} else if inclRule {
-					vsets.AddViolations(rule.ProcessOperation(spec, op, opPointer, path, method))
+					vsets.AddViolations(policyRule.Rule.ProcessOperation(spec, op, opPointer, path, method))
 				}
 			}
 		},

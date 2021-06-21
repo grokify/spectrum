@@ -8,22 +8,16 @@ import (
 )
 
 type RuleDatatypeIntFormatStandardExist struct {
-	name     string
-	severity string
+	name string
 }
 
-func NewRule(sev string) RuleDatatypeIntFormatStandardExist {
+func NewRule() RuleDatatypeIntFormatStandardExist {
 	return RuleDatatypeIntFormatStandardExist{
-		name:     lintutil.RulenameDatatypeIntFormatStandardExist,
-		severity: sev}
+		name: lintutil.RulenameDatatypeIntFormatStandardExist}
 }
 
 func (rule RuleDatatypeIntFormatStandardExist) Name() string {
 	return rule.name
-}
-
-func (rule RuleDatatypeIntFormatStandardExist) Severity() string {
-	return rule.severity
 }
 
 func (rule RuleDatatypeIntFormatStandardExist) Scope() string {

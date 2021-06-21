@@ -8,14 +8,12 @@ import (
 )
 
 type RuleSchemaObjectPropsExist struct {
-	name     string
-	severity string
+	name string
 }
 
-func NewRule(sev string) RuleSchemaObjectPropsExist {
+func NewRule() RuleSchemaObjectPropsExist {
 	return RuleSchemaObjectPropsExist{
-		name:     lintutil.RulenameSchemaObjectPropsExist,
-		severity: sev}
+		name: lintutil.RulenameSchemaObjectPropsExist}
 }
 
 func (rule RuleSchemaObjectPropsExist) Name() string {
@@ -24,10 +22,6 @@ func (rule RuleSchemaObjectPropsExist) Name() string {
 
 func (rule RuleSchemaObjectPropsExist) Scope() string {
 	return lintutil.ScopeSpecification
-}
-
-func (rule RuleSchemaObjectPropsExist) Severity() string {
-	return rule.severity
 }
 
 func (rule RuleSchemaObjectPropsExist) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {

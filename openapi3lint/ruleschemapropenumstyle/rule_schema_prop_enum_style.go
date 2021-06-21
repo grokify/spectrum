@@ -13,18 +13,16 @@ import (
 type RuleSchemaPropEnumStyle struct {
 	name       string
 	stringCase string
-	severity   string
 }
 
-func NewRule(sev, requiredStringCase string) (RuleSchemaPropEnumStyle, error) {
+func NewRule(requiredStringCase string) (RuleSchemaPropEnumStyle, error) {
 	canonicalCase, err := stringcase.Parse(requiredStringCase)
 	if err != nil {
 		return RuleSchemaPropEnumStyle{},
 			fmt.Errorf("invalid string case [%s]", requiredStringCase)
 	}
 	rule := RuleSchemaPropEnumStyle{
-		stringCase: canonicalCase,
-		severity:   sev}
+		stringCase: canonicalCase}
 	switch canonicalCase {
 	case stringcase.CamelCase:
 		rule.name = lintutil.RulenameSchemaPropEnumStyleCamelCase
@@ -46,10 +44,6 @@ func (rule RuleSchemaPropEnumStyle) Name() string {
 
 func (rule RuleSchemaPropEnumStyle) Scope() string {
 	return lintutil.ScopeSpecification
-}
-
-func (rule RuleSchemaPropEnumStyle) Severity() string {
-	return rule.severity
 }
 
 func (rule RuleSchemaPropEnumStyle) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {

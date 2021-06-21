@@ -15,18 +15,16 @@ import (
 type RulePathParamStyle struct {
 	name       string
 	stringCase string
-	severity   string
 }
 
-func NewRule(sev, requiredStringCase string) (RulePathParamStyle, error) {
+func NewRule(requiredStringCase string) (RulePathParamStyle, error) {
 	canonicalCase, err := stringcase.Parse(requiredStringCase)
 	if err != nil {
 		return RulePathParamStyle{},
 			fmt.Errorf("invalid string case [%s]", requiredStringCase)
 	}
 	rule := RulePathParamStyle{
-		stringCase: canonicalCase,
-		severity:   sev}
+		stringCase: canonicalCase}
 	switch canonicalCase {
 	case stringcase.CamelCase:
 		rule.name = lintutil.RulenamePathParamStyleCamelCase
@@ -48,10 +46,6 @@ func (rule RulePathParamStyle) Name() string {
 
 func (rule RulePathParamStyle) Scope() string {
 	return lintutil.ScopeOperation
-}
-
-func (rule RulePathParamStyle) Severity() string {
-	return rule.severity
 }
 
 func (rule RulePathParamStyle) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {

@@ -14,14 +14,12 @@ const (
 )
 
 type RuleTagHasGroup struct {
-	name     string
-	severity string
+	name string
 }
 
-func NewRule(sev string) RuleTagHasGroup {
+func NewRule() RuleTagHasGroup {
 	return RuleTagHasGroup{
-		name:     RuleName,
-		severity: sev}
+		name: RuleName}
 }
 
 func (rule RuleTagHasGroup) Name() string {
@@ -30,10 +28,6 @@ func (rule RuleTagHasGroup) Name() string {
 
 func (rule RuleTagHasGroup) Scope() string {
 	return lintutil.ScopeOperation
-}
-
-func (rule RuleTagHasGroup) Severity() string {
-	return rule.severity
 }
 
 func (rule RuleTagHasGroup) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {

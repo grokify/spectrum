@@ -11,14 +11,12 @@ import (
 )
 
 type RuleOperationSummaryStyleFirstUpperCase struct {
-	name     string
-	severity string
+	name string
 }
 
-func NewRule(sev string) RuleOperationSummaryStyleFirstUpperCase {
+func NewRule() RuleOperationSummaryStyleFirstUpperCase {
 	return RuleOperationSummaryStyleFirstUpperCase{
-		name:     lintutil.RulenameOpSummaryStyleFirstUpperCase,
-		severity: sev}
+		name: lintutil.RulenameOpSummaryStyleFirstUpperCase}
 }
 
 func (rule RuleOperationSummaryStyleFirstUpperCase) Name() string {
@@ -27,10 +25,6 @@ func (rule RuleOperationSummaryStyleFirstUpperCase) Name() string {
 
 func (rule RuleOperationSummaryStyleFirstUpperCase) Scope() string {
 	return lintutil.ScopeOperation
-}
-
-func (rule RuleOperationSummaryStyleFirstUpperCase) Severity() string {
-	return rule.severity
 }
 
 func (rule RuleOperationSummaryStyleFirstUpperCase) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {

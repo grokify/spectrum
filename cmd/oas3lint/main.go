@@ -87,6 +87,8 @@ func main() {
 
 	fmtutil.PrintJSON(vsets.LocationsByRule())
 
+	fmtutil.PrintJSON(vsets.CountsByRule())
+
 	fmt.Println("DONE")
 }
 

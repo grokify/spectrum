@@ -10,14 +10,12 @@ import (
 )
 
 type RuleOperationSummaryExist struct {
-	name     string
-	severity string
+	name string
 }
 
-func NewRule(sev string) RuleOperationSummaryExist {
+func NewRule() RuleOperationSummaryExist {
 	return RuleOperationSummaryExist{
-		name:     lintutil.RulenameOpSummaryExist,
-		severity: sev}
+		name: lintutil.RulenameOpSummaryExist}
 }
 
 func (rule RuleOperationSummaryExist) Name() string {
@@ -26,10 +24,6 @@ func (rule RuleOperationSummaryExist) Name() string {
 
 func (rule RuleOperationSummaryExist) Scope() string {
 	return lintutil.ScopeOperation
-}
-
-func (rule RuleOperationSummaryExist) Severity() string {
-	return rule.severity
 }
 
 func (rule RuleOperationSummaryExist) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {

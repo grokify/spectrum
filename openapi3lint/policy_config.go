@@ -91,7 +91,7 @@ type RuleConfig struct {
 }
 
 func (cfg *PolicyConfig) Policy() (Policy, error) {
-	pol := Policy{rules: map[string]Rule{}}
+	pol := NewPolicy()
 	stdRules := NewRuleCollectionStandard()
 	ruleCollectionsMap := map[string][]string{}
 
@@ -102,9 +102,17 @@ func (cfg *PolicyConfig) Policy() (Policy, error) {
 					ruleCollectionsMap[ruleName] = []string{}
 				}
 				ruleCollectionsMap[ruleName] = append(ruleCollectionsMap[ruleName], stdRules.Name())
-				if err := pol.addRuleWithPriorError(stdRules.Rule(ruleName, ruleCfg.Severity)); err != nil {
-					return pol, errors.Wrap(err, fmt.Sprintf("pol.addRuleWithPriorError [%s]", ruleName))
+				rule, err := stdRules.Rule(ruleName)
+				if err != nil {
+					return pol, errors.Wrap(err, "standard error not found. PolicyConfig.Policy()")
 				}
+				if err = pol.AddRule(rule, ruleCfg.Severity, true); err != nil {
+					return pol, errors.Wrap(err, fmt.Sprintf("Policy.AddRule() [%s]", ruleName))
+				}
+				/*
+					if err := pol.addRuleWithPriorError(stdRules.Rule(ruleName, ruleCfg.Severity)); err != nil {
+						return pol, errors.Wrap(err, fmt.Sprintf("pol.addRuleWithPriorError [%s]", ruleName))
+					}*/
 			}
 		}
 		for _, collection := range cfg.xRuleCollections {
@@ -113,9 +121,16 @@ func (cfg *PolicyConfig) Policy() (Policy, error) {
 					ruleCollectionsMap[ruleName] = []string{}
 				}
 				ruleCollectionsMap[ruleName] = append(ruleCollectionsMap[ruleName], collection.Name())
-				if err := pol.addRuleWithPriorError(collection.Rule(ruleName, ruleCfg.Severity)); err != nil {
-					return pol, errors.Wrap(err, fmt.Sprintf("pol.addRuleWithPriorError [%s]", ruleName))
+				rule, err := collection.Rule(ruleName)
+				if err != nil {
+					return pol, errors.Wrap(err, "collection rule exists but not found. PolicyConfig.Policy()")
 				}
+				if err = pol.AddRule(rule, ruleCfg.Severity, true); err != nil {
+					return pol, errors.Wrap(err, fmt.Sprintf("Policy.AddRule() [%s]", ruleName))
+				}
+				/*if err := pol.addRuleWithPriorError(collection.Rule(ruleName, ruleCfg.Severity)); err != nil {
+					return pol, errors.Wrap(err, fmt.Sprintf("pol.addRuleWithPriorError [%s]", ruleName))
+				}*/
 			}
 		}
 	}

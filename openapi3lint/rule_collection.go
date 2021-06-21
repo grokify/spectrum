@@ -24,7 +24,7 @@ type RuleCollection interface {
 	Name() string
 	RuleNames() []string
 	RuleExists(ruleName string) bool
-	Rule(ruleName, wantSeverity string) (Rule, error)
+	Rule(ruleName string) (Rule, error)
 }
 
 type RuleCollectionStandard struct {
@@ -80,55 +80,54 @@ func (std RuleCollectionStandard) RuleNames() []string {
 	return rulenames
 }
 
-func (std RuleCollectionStandard) Rule(name, severity string) (Rule, error) {
-	sev := severity
+func (std RuleCollectionStandard) Rule(name string) (Rule, error) {
 	name = strings.ToLower(strings.TrimSpace(name))
 	switch name {
 	case lintutil.RulenameDatatypeIntFormatStandardExist:
-		return ruleintstdformat.NewRule(severity), nil
+		return ruleintstdformat.NewRule(), nil
 
 	case lintutil.RulenameOpIdStyleCamelCase:
-		return ruleopidstyle.NewRule(sev, stringcase.CamelCase)
+		return ruleopidstyle.NewRule(stringcase.CamelCase)
 	case lintutil.RulenameOpIdStyleKebabCase:
-		return ruleopidstyle.NewRule(sev, stringcase.KebabCase)
+		return ruleopidstyle.NewRule(stringcase.KebabCase)
 	case lintutil.RulenameOpIdStylePascalCase:
-		return ruleopidstyle.NewRule(sev, stringcase.PascalCase)
+		return ruleopidstyle.NewRule(stringcase.PascalCase)
 	case lintutil.RulenameOpIdStyleSnakeCase:
-		return ruleopidstyle.NewRule(sev, stringcase.SnakeCase)
+		return ruleopidstyle.NewRule(stringcase.SnakeCase)
 
 	case lintutil.RulenameOpSummaryExist:
-		return ruleopsummaryexist.NewRule(sev), nil
+		return ruleopsummaryexist.NewRule(), nil
 	case lintutil.RulenameOpSummaryStyleFirstUpperCase:
-		return ruleopsummarystylefirstuppercase.NewRule(sev), nil
+		return ruleopsummarystylefirstuppercase.NewRule(), nil
 
 	case lintutil.RulenamePathParamStyleCamelCase:
-		return rulepathparamstyle.NewRule(sev, stringcase.CamelCase)
+		return rulepathparamstyle.NewRule(stringcase.CamelCase)
 	case lintutil.RulenamePathParamStyleKebabCase:
-		return rulepathparamstyle.NewRule(sev, stringcase.KebabCase)
+		return rulepathparamstyle.NewRule(stringcase.KebabCase)
 	case lintutil.RulenamePathParamStylePascalCase:
-		return rulepathparamstyle.NewRule(sev, stringcase.PascalCase)
+		return rulepathparamstyle.NewRule(stringcase.PascalCase)
 	case lintutil.RulenamePathParamStyleSnakeCase:
-		return rulepathparamstyle.NewRule(sev, stringcase.SnakeCase)
+		return rulepathparamstyle.NewRule(stringcase.SnakeCase)
 
 	case lintutil.RulenameSchemaHasReference:
-		return ruleschemareferences.NewRule(sev, lintutil.RulenameSchemaHasReference)
+		return ruleschemareferences.NewRule(lintutil.RulenameSchemaHasReference)
 	case lintutil.RulenameSchemaReferenceHasSchema:
-		return ruleschemareferences.NewRule(sev, lintutil.RulenameSchemaReferenceHasSchema)
+		return ruleschemareferences.NewRule(lintutil.RulenameSchemaReferenceHasSchema)
 
 	case lintutil.RulenameSchemaObjectPropsExist:
-		return ruleschemaobjectpropsexist.NewRule(sev), nil
+		return ruleschemaobjectpropsexist.NewRule(), nil
 
 	case lintutil.RulenameSchemaPropEnumStyleCamelCase:
-		return ruleschemapropenumstyle.NewRule(sev, stringcase.CamelCase)
+		return ruleschemapropenumstyle.NewRule(stringcase.CamelCase)
 	case lintutil.RulenameSchemaPropEnumStyleKebabCase:
-		return ruleschemapropenumstyle.NewRule(sev, stringcase.KebabCase)
+		return ruleschemapropenumstyle.NewRule(stringcase.KebabCase)
 	case lintutil.RulenameSchemaPropEnumStylePascalCase:
-		return ruleschemapropenumstyle.NewRule(sev, stringcase.PascalCase)
+		return ruleschemapropenumstyle.NewRule(stringcase.PascalCase)
 	case lintutil.RulenameSchemaPropEnumStyleSnakeCase:
-		return ruleschemapropenumstyle.NewRule(sev, stringcase.SnakeCase)
+		return ruleschemapropenumstyle.NewRule(stringcase.SnakeCase)
 
 	case lintutil.RulenameTagStyleFirstUpperCase:
-		return ruletagstylefirstuppercase.NewRule(sev), nil
+		return ruletagstylefirstuppercase.NewRule(), nil
 	}
 	return EmptyRule{}, fmt.Errorf("NewStandardRule: rule [%s] not found", name)
 }
