@@ -111,6 +111,14 @@ func (sets *PolicyViolationsSets) Count() uint {
 	return count
 }
 
+func (sets *PolicyViolationsSets) CountsByRule() map[string]uint {
+	counts := map[string]uint{}
+	for _, set := range sets.ByRule {
+		counts[set.RuleName] = uint(set.Count())
+	}
+	return counts
+}
+
 type PolicyRule struct {
 	Name         string
 	StringFormat string
