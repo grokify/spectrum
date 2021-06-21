@@ -6,6 +6,7 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/net/urlutil"
 	"github.com/grokify/simplego/text/stringcase"
+	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )
 
@@ -61,7 +62,7 @@ func (rule RuleOperationOperationIdStyle) ProcessOperation(spec *oas3.Swagger, o
 	}
 	vio := lintutil.PolicyViolation{
 		RuleName: rule.Name(),
-		Location: urlutil.JoinAbsolute(opPointer, "operationId"),
+		Location: urlutil.JoinAbsolute(opPointer, openapi3.PropertyOperationID),
 		Value:    op.OperationID}
 	if err != nil {
 		vio.Data = map[string]string{

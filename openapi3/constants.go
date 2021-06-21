@@ -11,5 +11,7 @@ const (
 	FormatInt32    = "int32"
 	FormatInt64    = "int64"
 
-	PropertySummary = "summary"
+	PropertyOperationID = "operationId"
+	PropertySummary     = "summary"
+	PropertyTags        = "tags"
 )
