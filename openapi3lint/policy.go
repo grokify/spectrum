@@ -1,13 +1,10 @@
 package openapi3lint
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"sort"
 	"strings"
-	"time"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/encoding/jsonutil"
@@ -18,56 +15,6 @@ import (
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )
 
-type PolicyConfig struct {
-	Name             string                `json:"name"`
-	Version          string                `json:"version"`
-	LastUpdated      time.Time             `json:"lastUpdated,omitempty"`
-	Rules            map[string]RuleConfig `json:"rules,omitempty"`
-	NonStandardRules []string              `json:"nonStandardRules,omitempty"`
-}
-
-func NewPolicyConfigFile(filename string) (PolicyConfig, error) {
-	pol := PolicyConfig{}
-	bytes, err := ioutil.ReadFile(filename)
-	if err != nil {
-		return pol, err
-	}
-	err = json.Unmarshal(bytes, &pol)
-	return pol, err
-}
-
-func (polCfg *PolicyConfig) RuleNames() ([]string, []string, []string) {
-	stdRuleNames := NewStandardRuleNames()
-	all := []string{}
-	standard := []string{}
-	custom := []string{}
-	for ruleName := range polCfg.Rules {
-		all = append(all, ruleName)
-		if stdRuleNames.Exists(ruleName) {
-			standard = append(standard, ruleName)
-		} else {
-			custom = append(custom, ruleName)
-		}
-	}
-	return stringsutil.SliceCondenseSpace(all, true, true),
-		stringsutil.SliceCondenseSpace(standard, true, true),
-		stringsutil.SliceCondenseSpace(custom, true, true)
-}
-
-type RuleConfig struct {
-	Severity string `json:"severity"`
-}
-
-func (cfg *PolicyConfig) StandardPolicy() (Policy, error) {
-	pol := Policy{rules: map[string]Rule{}}
-	for ruleName, ruleCfg := range cfg.Rules {
-		if err := pol.addRuleWithPriorError(NewStandardRule(ruleName, ruleCfg.Severity)); err != nil {
-			return pol, err
-		}
-	}
-	return pol, nil
-}
-
 type Policy struct {
 	rules map[string]Rule
 }
@@ -76,7 +23,7 @@ func (pol *Policy) addRuleWithPriorError(rule Rule, err error) error {
 	if err != nil {
 		return err
 	}
-	return pol.AddRule(rule, true)
+	return pol.AddRule(rule, false)
 }
 
 func (pol *Policy) AddRule(rule Rule, errorOnCollision bool) error {
@@ -100,6 +47,7 @@ func (pol *Policy) RuleNames() []string {
 	for rn := range pol.rules {
 		ruleNames = append(ruleNames, rn)
 	}
+	sort.Strings(ruleNames)
 	return ruleNames
 }
 
