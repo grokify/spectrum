@@ -7,18 +7,8 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/log/severity"
-	"github.com/grokify/simplego/text/stringcase"
 	"github.com/grokify/simplego/type/stringsutil"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
-	"github.com/grokify/spectrum/openapi3lint/ruleintstdformat"
-	"github.com/grokify/spectrum/openapi3lint/ruleopidstyle"
-	"github.com/grokify/spectrum/openapi3lint/ruleopsummaryexist"
-	"github.com/grokify/spectrum/openapi3lint/ruleopsummarystylefirstuppercase"
-	"github.com/grokify/spectrum/openapi3lint/rulepathparamstyle"
-	"github.com/grokify/spectrum/openapi3lint/ruleschemaobjectpropsexist"
-	"github.com/grokify/spectrum/openapi3lint/ruleschemapropenumstyle"
-	"github.com/grokify/spectrum/openapi3lint/ruleschemareferences"
-	"github.com/grokify/spectrum/openapi3lint/ruletagstylefirstuppercase"
 )
 
 type Rule interface {
@@ -54,6 +44,7 @@ func ValidateRules(policyRules map[string]PolicyRule) error {
 	return nil
 }
 
+/*
 type StandardRuleNames struct {
 	ruleNames map[string]int
 }
@@ -156,3 +147,4 @@ func NewStandardRule(name string) (Rule, error) {
 	}
 	return EmptyRule{}, fmt.Errorf("NewStandardRule: rule [%s] not found", name)
 }
+*/
