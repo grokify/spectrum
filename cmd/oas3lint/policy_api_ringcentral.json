@@ -2,6 +2,7 @@
     "name": "RingCentral Policy",
     "version": "v0.1.0",
     "lastUpdated": "2021-06-10T00:00:00Z",
+    "includeStandardRules": true,
     "rules":{
         "datatype-int-format-standard-exist": {
             "severity": "error"
@@ -25,6 +26,9 @@
             "severity": "error"
         },
         "tag-style-first-uppercase":{
+            "severity": "error"
+        },
+        "x-tag-has-group":{
             "severity": "error"
         }
     }

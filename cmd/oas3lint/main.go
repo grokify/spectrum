@@ -11,8 +11,10 @@ import (
 	"github.com/grokify/simplego/path/filepathutil"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint"
+	"github.com/grokify/spectrum/openapi3lint/extensions"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 	"github.com/jessevdk/go-flags"
+	"github.com/pkg/errors"
 )
 
 type Options struct {
@@ -50,17 +52,16 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	polCfg.AddRuleCollection(extensions.NewRuleCollectionExtensions())
 	fmtutil.PrintJSON(polCfg)
-	all, std, cus := polCfg.RuleNames()
-	fmtutil.PrintJSON(all)
-	fmtutil.PrintJSON(std)
-	fmtutil.PrintJSON(cus)
+	fmtutil.PrintJSON(polCfg.RuleNames())
 
-	pol, err := polCfg.StandardPolicy()
+	pol, err := polCfg.Policy()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(errors.Wrap(err, "polCfg.Policy()"))
 	}
 	fmtutil.PrintJSON(pol)
+	fmtutil.PrintJSON(pol.RuleNames())
 
 	severityLevel := severity.SeverityError
 	if len(opts.Severity) > 0 {
@@ -85,28 +86,7 @@ func main() {
 	}
 
 	fmtutil.PrintJSON(vsets.LocationsByRule())
-	/*
-		policies := openapi3lint.NewPolicySimple([]string{
-			openapi3lint.RuleDatatypeIntFormatIsInt32OrInt64})
 
-		vsetsByFile := openapi3lint.NewPolicyViolationsSetsByFile()
-
-		for _, file := range files {
-			spec, err := openapi3.ReadFile(file, false)
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			vsetSpec, err := openapi3lint.SpecCheckViolations(spec, policies)
-			if err != nil {
-				log.Fatal(err)
-			}
-			vsetsByFile.Sets[file] = vsetSpec
-
-		}
-		fmtutil.PrintJSON(vsetsByFile.LocationsByRule(true, true))
-		fmt.Printf("violations [%d]\n", vsetsByFile.Count())
-	*/
 	fmt.Println("DONE")
 }
 
