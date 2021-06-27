@@ -9,7 +9,6 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/table"
-	"github.com/grokify/simplego/text"
 	"github.com/grokify/spectrum/openapi3"
 )
 
@@ -82,8 +81,9 @@ func (pp *PageParams) WriteFile(filename string) error {
 	return nil
 }
 
-func DefaultColumns() text.TextSet {
-	texts := []text.Text{
+/*
+func DefaultColumns() text.Texts {
+	return text.Texts{
 		{
 			Display: "Method",
 			Slug:    "method"},
@@ -100,5 +100,5 @@ func DefaultColumns() text.TextSet {
 			Display: "Tags",
 			Slug:    "tags"},
 	}
-	return text.TextSet{Texts: texts}
 }
+*/
