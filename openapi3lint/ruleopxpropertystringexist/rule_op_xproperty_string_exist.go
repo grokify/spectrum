@@ -10,10 +10,6 @@ import (
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )
 
-const (
-	RuleName = "x-operation-x-api-group-exist"
-)
-
 type RuleOperationXPropertyStringExist struct {
 	name          string
 	xPropertyName string
