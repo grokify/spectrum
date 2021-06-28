@@ -13,9 +13,11 @@ import (
 type RuleOperationXPropertyStringExist struct {
 	name          string
 	xPropertyName string
+	inclSpec      bool
+	inclPathItem  bool
 }
 
-func NewRule(ruleName, xPropertyName string) (RuleOperationXPropertyStringExist, error) {
+func NewRule(ruleName, xPropertyName string, inclSpec, inclPathItem bool) (RuleOperationXPropertyStringExist, error) {
 	ruleName = strings.ToLower(strings.TrimSpace(ruleName))
 	xPropertyName = strings.TrimSpace(xPropertyName)
 
@@ -30,7 +32,9 @@ func NewRule(ruleName, xPropertyName string) (RuleOperationXPropertyStringExist,
 
 	rule := RuleOperationXPropertyStringExist{
 		name:          ruleName,
-		xPropertyName: xPropertyName}
+		xPropertyName: xPropertyName,
+		inclSpec:      inclSpec,
+		inclPathItem:  inclPathItem}
 	return rule, nil
 }
 
@@ -43,43 +47,32 @@ func (rule RuleOperationXPropertyStringExist) Scope() string {
 }
 
 func (rule RuleOperationXPropertyStringExist) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
-	/*
-		if spec == nil || op == nil || len(op.OperationID) == 0 {
-			return nil
-		}
-		prop := strings.TrimSpace(
-			openapi3.GetOperationExtensionPropStringOrEmpty(*op, rule.xPropertyName))
-		if len(prop) > 0 {
-			return nil
-		}
-		vio := lintutil.PolicyViolation{
-			RuleName: rule.Name(),
-			Location: urlutil.JoinAbsolute(opPointer, "operationId"),
-			Value:    op.OperationID}
-	*/
 	return []lintutil.PolicyViolation{}
 }
 
 func (rule RuleOperationXPropertyStringExist) ProcessSpec(spec *oas3.Swagger, pointerBase string) []lintutil.PolicyViolation {
 	vios := []lintutil.PolicyViolation{}
 	if spec == nil {
-		return []lintutil.PolicyViolation{}
+		return vios
 	}
-	propVal := strings.TrimSpace(openapi3.GetExtensionPropStringOrEmpty(
-		spec.ExtensionProps, rule.xPropertyName))
-	if len(propVal) > 0 {
-		return []lintutil.PolicyViolation{}
+	if rule.inclSpec {
+		propVal := strings.TrimSpace(openapi3.GetExtensionPropStringOrEmpty(
+			spec.ExtensionProps, rule.xPropertyName))
+		if len(propVal) > 0 {
+			return vios
+		}
 	}
 	for pathURL, pathItem := range spec.Paths {
 		if pathItem == nil {
 			continue
 		}
-		propVal := strings.TrimSpace(openapi3.GetExtensionPropStringOrEmpty(
-			pathItem.ExtensionProps, rule.xPropertyName))
-		if len(propVal) > 0 {
-			continue
+		if rule.inclPathItem {
+			propVal := strings.TrimSpace(openapi3.GetExtensionPropStringOrEmpty(
+				pathItem.ExtensionProps, rule.xPropertyName))
+			if len(propVal) > 0 {
+				continue
+			}
 		}
-
 		openapi3.VisitOperationsPathItem(pathURL, pathItem,
 			func(path, method string, op *oas3.Operation) {
 				if op == nil {
