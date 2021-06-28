@@ -34,7 +34,7 @@ The following article provides an overview of OpenAPI spec to Postman conversion
 * openapi3lint ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi3lint))
   1. Extensible linter for OAS3 specifications.
 * postman2 ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/postman2))
-  1. upport for Postman 2 Collection files, including serialization and deserialization.
+  1. Support for Postman 2 Collection files, including serialization and deserialization.
   1. CLI and library to Convert OpenAPI Specs to Postman Collection
   1. Add Postman environment variables to URLs, e.g. Server URLs like `https://{{HOSTNAME}}/restapi`
   1. Add headers, such as environment variable based Authorization headers, such as `Authorization: Bearer {{myAccessToken}}`
