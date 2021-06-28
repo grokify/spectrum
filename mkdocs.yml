@@ -14,4 +14,4 @@ nav:
         - Missing Descriptions: openapi3/inspect/missing_descriptions.md
     - OpenAPI3Lint:
         - Overview: openapi3lint.md
-        - Creating Custom Rules: openapi3lint/custom_rules.md
+        - Custom Rules: openapi3lint/custom_rules.md
