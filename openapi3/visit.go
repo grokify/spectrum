@@ -63,7 +63,8 @@ func VisitTypesFormats(spec *oas3.Swagger, visitTypeFormat func(jsonPointerRoot,
 	)
 }
 
-func VisitOperationsPathItem(pathURL string, pathItem *oas3.PathItem, visitOp func(path, method string, op *oas3.Operation)) {
+func VisitOperationsPathItem(path string, pathItem *oas3.PathItem, visitOp func(path, method string, op *oas3.Operation)) {
+	pathURL := path
 	if pathItem == nil {
 		return
 	}
