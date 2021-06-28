@@ -6,7 +6,11 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+
+	oas2 "github.com/getkin/kin-openapi/openapi2"
 )
+
+type Spec = oas2.T
 
 // Specification represents a Swagger 2.0 specification.
 type Specification struct {

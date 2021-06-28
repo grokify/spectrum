@@ -10,7 +10,7 @@ import (
 	"github.com/grokify/spectrum/postman2"
 )
 
-func CreateTagsAndTagGroups(pman postman2.Collection, spec *oas3.Swagger) (postman2.Collection, error) {
+func CreateTagsAndTagGroups(pman postman2.Collection, spec *openapi3.Spec) (postman2.Collection, error) {
 	oas3specMore := openapi3.SpecMore{Spec: spec}
 	tagGroupSet, err := oas3specMore.TagGroups()
 	// tagGroupSet, err := openapi3.SpecTagGroups(spec)

@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/getkin/kin-openapi/openapi2"
+	oas2 "github.com/getkin/kin-openapi/openapi2"
 	"github.com/grokify/gocharts/data/table"
-	oas2 "github.com/grokify/spectrum/openapi2"
+	"github.com/grokify/spectrum/openapi2"
 )
 
 func TableFromSpecFiles(files []string, includeFilename bool) (*table.Table, error) {
@@ -18,7 +18,7 @@ func TableFromSpecFiles(files []string, includeFilename bool) (*table.Table, err
 	}
 	tbl.Columns = append(tbl.Columns, []string{"Path", "Method", "OperationID", "Summary", "Description"}...)
 	for _, file := range files {
-		spec, err := oas2.ReadOpenAPI2KinSpecFile(file)
+		spec, err := openapi2.ReadOpenAPI2KinSpecFile(file)
 		if err != nil {
 			return tblp, err
 		}
@@ -32,7 +32,7 @@ func TableFromSpecFiles(files []string, includeFilename bool) (*table.Table, err
 	return tblp, nil
 }
 
-func TableAddOpenAPI2Spec(tbl *table.Table, spec *openapi2.Swagger, prefix []string) *table.Table {
+func TableAddOpenAPI2Spec(tbl *table.Table, spec *openapi2.Spec, prefix []string) *table.Table {
 	for url, path := range spec.Paths {
 		tbl = TableAddOpenAPI2Path(tbl, path, append(prefix, url))
 	}
@@ -40,7 +40,7 @@ func TableAddOpenAPI2Spec(tbl *table.Table, spec *openapi2.Swagger, prefix []str
 }
 
 // prefix can be `filename`,`path`
-func TableAddOpenAPI2Path(tbl *table.Table, path *openapi2.PathItem, prefix []string) *table.Table {
+func TableAddOpenAPI2Path(tbl *table.Table, path *oas2.PathItem, prefix []string) *table.Table {
 	if path.Delete != nil {
 		tbl.Rows = append(tbl.Rows, pathOpenApi2ToRow(prefix, path.Delete, http.MethodDelete))
 	}
@@ -65,7 +65,7 @@ func TableAddOpenAPI2Path(tbl *table.Table, path *openapi2.PathItem, prefix []st
 	return tbl
 }
 
-func pathOpenApi2ToRow(prefix []string, op *openapi2.Operation, method string) []string {
+func pathOpenApi2ToRow(prefix []string, op *oas2.Operation, method string) []string {
 	row := prefix
 	row = append(row, method, op.OperationID, op.Summary, op.Description)
 	return row

@@ -26,7 +26,7 @@ func (rule RuleOperationSummaryExist) Scope() string {
 	return lintutil.ScopeOperation
 }
 
-func (rule RuleOperationSummaryExist) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
+func (rule RuleOperationSummaryExist) ProcessOperation(spec *openapi3.Spec, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
 	vios := []lintutil.PolicyViolation{}
 	if spec == nil || op == nil {
 		return vios
@@ -43,6 +43,6 @@ func (rule RuleOperationSummaryExist) ProcessOperation(spec *oas3.Swagger, op *o
 		Value:    op.Summary}}
 }
 
-func (rule RuleOperationSummaryExist) ProcessSpec(spec *oas3.Swagger, pointerBase string) []lintutil.PolicyViolation {
+func (rule RuleOperationSummaryExist) ProcessSpec(spec *openapi3.Spec, pointerBase string) []lintutil.PolicyViolation {
 	return []lintutil.PolicyViolation{}
 }

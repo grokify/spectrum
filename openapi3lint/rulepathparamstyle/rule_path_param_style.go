@@ -48,13 +48,13 @@ func (rule RulePathParamStyle) Scope() string {
 	return lintutil.ScopeOperation
 }
 
-func (rule RulePathParamStyle) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
+func (rule RulePathParamStyle) ProcessOperation(spec *openapi3.Spec, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
 	return nil
 }
 
 var rxParams = regexp.MustCompile(`{([^/]*)}`)
 
-func (rule RulePathParamStyle) ProcessSpec(spec *oas3.Swagger, pointerBase string) []lintutil.PolicyViolation {
+func (rule RulePathParamStyle) ProcessSpec(spec *openapi3.Spec, pointerBase string) []lintutil.PolicyViolation {
 	vios := []lintutil.PolicyViolation{}
 
 	for pathUrl := range spec.Paths {

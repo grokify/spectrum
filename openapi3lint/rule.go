@@ -8,14 +8,15 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/log/severity"
 	"github.com/grokify/simplego/type/stringsutil"
+	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )
 
 type Rule interface {
 	Name() string
 	Scope() string
-	ProcessSpec(spec *oas3.Swagger, pointerBase string) []lintutil.PolicyViolation
-	ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation
+	ProcessSpec(spec *openapi3.Spec, pointerBase string) []lintutil.PolicyViolation
+	ProcessOperation(spec *openapi3.Spec, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation
 }
 
 type PolicyRule struct {

@@ -6,7 +6,6 @@ import (
 	"regexp"
 	"strings"
 
-	oas2 "github.com/getkin/kin-openapi/openapi2"
 	"github.com/ghodss/yaml"
 )
 
@@ -42,8 +41,8 @@ func ReadOpenAPI2SpecFileDirect(filename string) (Specification, error) {
 	return NewSpecificationFromBytes(bytes)
 }*/
 
-func ReadOpenAPI2KinSpecFile(filename string) (*oas2.Swagger, error) {
-	var swag oas2.Swagger
+func ReadOpenAPI2KinSpecFile(filename string) (*Spec, error) {
+	var swag Spec
 	bytes, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return &swag, err

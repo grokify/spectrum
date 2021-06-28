@@ -16,7 +16,7 @@ type PageParams struct {
 	PageTitle     string
 	PageLink      string
 	TableDomID    string
-	Spec          *oas3.Swagger
+	Spec          *openapi3.Spec
 	ColumnSet     *table.ColumnSet
 	OpsFilterFunc func(path, method string, op *oas3.Operation) bool
 	TableJSON     []byte
@@ -31,7 +31,7 @@ func (pp *PageParams) PageLinkHTML() string {
 		html.EscapeString(pp.PageTitle))
 }
 
-func (pp *PageParams) AddSpec(spec *oas3.Swagger) error {
+func (pp *PageParams) AddSpec(spec *openapi3.Spec) error {
 	sm := openapi3.SpecMore{Spec: spec}
 	tbl, err := sm.OperationsTable(pp.ColumnSet, pp.OpsFilterFunc)
 	if err != nil {

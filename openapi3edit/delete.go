@@ -5,9 +5,10 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/net/urlutil"
+	"github.com/grokify/spectrum/openapi3"
 )
 
-func SpecDeleteProperties(spec *oas3.Swagger, md SpecMetadata) {
+func SpecDeleteProperties(spec *openapi3.Spec, md SpecMetadata) {
 	for _, opID := range md.OperationIDs {
 		SpecDeleteOperations(spec,
 			func(urlpath, method string, op *oas3.Operation) bool {
@@ -39,7 +40,7 @@ func SpecDeleteProperties(spec *oas3.Swagger, md SpecMetadata) {
 	}
 }
 
-func SpecDeleteOperations(spec *oas3.Swagger, delThis func(urlpath, method string, op *oas3.Operation) bool) {
+func SpecDeleteOperations(spec *openapi3.Spec, delThis func(urlpath, method string, op *oas3.Operation) bool) {
 	newPaths := oas3.Paths{}
 
 	for urlpath, pathItem := range spec.Paths {

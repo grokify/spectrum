@@ -30,7 +30,7 @@ func (rule RuleTagHasGroup) Scope() string {
 	return lintutil.ScopeOperation
 }
 
-func (rule RuleTagHasGroup) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
+func (rule RuleTagHasGroup) ProcessOperation(spec *openapi3.Spec, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
 	if spec == nil || op == nil || len(op.Tags) == 0 {
 		return nil
 	}
@@ -56,6 +56,6 @@ func (rule RuleTagHasGroup) ProcessOperation(spec *oas3.Swagger, op *oas3.Operat
 	return vios
 }
 
-func (rule RuleTagHasGroup) ProcessSpec(spec *oas3.Swagger, pointerBase string) []lintutil.PolicyViolation {
+func (rule RuleTagHasGroup) ProcessSpec(spec *openapi3.Spec, pointerBase string) []lintutil.PolicyViolation {
 	return []lintutil.PolicyViolation{}
 }

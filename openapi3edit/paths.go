@@ -7,6 +7,7 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/net/urlutil"
+	"github.com/grokify/spectrum/openapi3"
 )
 
 type SpecPaths struct {
@@ -14,7 +15,7 @@ type SpecPaths struct {
 	Paths   []PathMeta
 }
 
-func InspectPaths(spec *oas3.Swagger) SpecPaths {
+func InspectPaths(spec *openapi3.Spec) SpecPaths {
 	specPaths := SpecPaths{
 		Servers: spec.Servers,
 		Paths:   []PathMeta{}}
@@ -39,7 +40,7 @@ type SpecPathsModifyOpts struct {
 	OpPathRenameFuncExec    bool
 }
 
-func SpecPathsModify(spec *oas3.Swagger, opts SpecPathsModifyOpts) error {
+func SpecPathsModify(spec *openapi3.Spec, opts SpecPathsModifyOpts) error {
 	if opts.ServerPathExec {
 		opts.ServerPathNew = strings.TrimSpace(opts.ServerPathNew)
 		for i, svr := range spec.Servers {
@@ -86,7 +87,7 @@ func SpecPathsModify(spec *oas3.Swagger, opts SpecPathsModifyOpts) error {
 	return nil
 }
 
-func SpecEndpoints(spec *oas3.Swagger, generic bool) []string {
+func SpecEndpoints(spec *openapi3.Spec, generic bool) []string {
 	endpoints := []string{}
 	for url, pathItem := range spec.Paths {
 		if generic {

@@ -15,7 +15,7 @@ const (
 	jPtrSchemaPropertyFormat = "#/components/schemas/%s/properties/%s"
 )
 
-func VisitTypesFormats(spec *oas3.Swagger, visitTypeFormat func(jsonPointerRoot, oasType, oasFormat string)) {
+func VisitTypesFormats(spec *Spec, visitTypeFormat func(jsonPointerRoot, oasType, oasFormat string)) {
 	for schemaName, schemaRef := range spec.Components.Schemas {
 		if schemaRef.Value == nil {
 			continue
@@ -97,7 +97,7 @@ func VisitOperationsPathItem(path string, pathItem *oas3.PathItem, visitOp func(
 	}
 }
 
-func VisitOperations(spec *oas3.Swagger, visitOp func(path, method string, op *oas3.Operation)) {
+func VisitOperations(spec *Spec, visitOp func(path, method string, op *oas3.Operation)) {
 	for path, pathItem := range spec.Paths {
 		VisitOperationsPathItem(path, pathItem, visitOp)
 		/*

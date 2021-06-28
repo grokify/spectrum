@@ -46,7 +46,7 @@ func (rule RuleOperationOperationIdStyle) Scope() string {
 	return lintutil.ScopeOperation
 }
 
-func (rule RuleOperationOperationIdStyle) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
+func (rule RuleOperationOperationIdStyle) ProcessOperation(spec *openapi3.Spec, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
 	if spec == nil || op == nil || len(op.OperationID) == 0 {
 		return nil
 	}
@@ -65,6 +65,6 @@ func (rule RuleOperationOperationIdStyle) ProcessOperation(spec *oas3.Swagger, o
 	return []lintutil.PolicyViolation{vio}
 }
 
-func (rule RuleOperationOperationIdStyle) ProcessSpec(spec *oas3.Swagger, pointerBase string) []lintutil.PolicyViolation {
+func (rule RuleOperationOperationIdStyle) ProcessSpec(spec *openapi3.Spec, pointerBase string) []lintutil.PolicyViolation {
 	return []lintutil.PolicyViolation{}
 }

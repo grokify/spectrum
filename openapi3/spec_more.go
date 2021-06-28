@@ -16,8 +16,10 @@ import (
 	"github.com/grokify/simplego/type/stringsutil"
 )
 
+type Spec = oas3.T
+
 type SpecMore struct {
-	Spec *oas3.Swagger
+	Spec *Spec
 }
 
 func ReadSpecMore(path string, validate bool) (*SpecMore, error) {
@@ -41,7 +43,7 @@ func (sm *SpecMore) OperationsTable(columns *table.ColumnSet, filterFunc func(pa
 	return operationsTable(sm.Spec, columns, filterFunc)
 }
 
-func operationsTable(spec *oas3.Swagger, columns *table.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) (*table.Table, error) {
+func operationsTable(spec *Spec, columns *table.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) (*table.Table, error) {
 	if columns == nil {
 		columns = OpTableColumnsDefault(false)
 	}

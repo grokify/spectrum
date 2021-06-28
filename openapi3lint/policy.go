@@ -88,7 +88,7 @@ func (pol *Policy) RuleNames() []string {
 	return ruleNames
 }
 
-func (pol *Policy) ValidateSpec(spec *oas3.Swagger, pointerBase, filterSeverity string) (*lintutil.PolicyViolationsSets, error) {
+func (pol *Policy) ValidateSpec(spec *openapi3.Spec, pointerBase, filterSeverity string) (*lintutil.PolicyViolationsSets, error) {
 	vsets := lintutil.NewPolicyViolationsSets()
 
 	unknownScopes := []string{}
@@ -118,7 +118,7 @@ func (pol *Policy) ValidateSpec(spec *oas3.Swagger, pointerBase, filterSeverity 
 	return vsets, nil
 }
 
-func (pol *Policy) processRulesSpecification(spec *oas3.Swagger, pointerBase, filterSeverity string) (*lintutil.PolicyViolationsSets, error) {
+func (pol *Policy) processRulesSpecification(spec *openapi3.Spec, pointerBase, filterSeverity string) (*lintutil.PolicyViolationsSets, error) {
 	if spec == nil {
 		return nil, errors.New("cannot process nil spec")
 	}
@@ -141,7 +141,7 @@ func (pol *Policy) processRulesSpecification(spec *oas3.Swagger, pointerBase, fi
 	return vsets, nil
 }
 
-func (pol *Policy) processRulesOperation(spec *oas3.Swagger, pointerBase, filterSeverity string) (*lintutil.PolicyViolationsSets, error) {
+func (pol *Policy) processRulesOperation(spec *openapi3.Spec, pointerBase, filterSeverity string) (*lintutil.PolicyViolationsSets, error) {
 	vsets := lintutil.NewPolicyViolationsSets()
 
 	severityErrorRules := []string{}

@@ -3,7 +3,6 @@ package openapi3edit
 import (
 	"sort"
 
-	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/type/stringsutil"
 	"github.com/grokify/spectrum/openapi3"
 )
@@ -14,7 +13,7 @@ type SpecMetadata struct {
 	SchemaNames  []string
 }
 
-func NewSpecMetadata(spec *oas3.Swagger) SpecMetadata {
+func NewSpecMetadata(spec *openapi3.Spec) SpecMetadata {
 	md := SpecMetadata{
 		OperationIDs: []string{},
 		Endpoints:    []string{}}
@@ -72,7 +71,7 @@ func NewIntersectionData() IntersectionData {
 		Intersection: NewSpecMetadata(nil)}
 }
 
-func SpecsIntersection(spec1, spec2 *oas3.Swagger) IntersectionData {
+func SpecsIntersection(spec1, spec2 *openapi3.Spec) IntersectionData {
 	idata := IntersectionData{
 		Spec1: NewSpecMetadata(spec1),
 		Spec2: NewSpecMetadata(spec2)}

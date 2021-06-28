@@ -4,13 +4,12 @@ import (
 	"regexp"
 
 	"github.com/grokify/simplego/type/stringsutil"
-
-	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/spectrum/openapi3"
 )
 
 var rxOptionalDefault = regexp.MustCompile(`(?i)\boptional\b`)
 
-func SpecSetSchemaPropertiesOptional(spec *oas3.Swagger, rxOptional *regexp.Regexp) {
+func SpecSetSchemaPropertiesOptional(spec *openapi3.Spec, rxOptional *regexp.Regexp) {
 	if rxOptional == nil {
 		return
 	}

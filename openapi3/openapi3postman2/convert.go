@@ -20,7 +20,7 @@ import (
 // Converter is the struct that manages the conversion.
 type Converter struct {
 	Configuration Configuration
-	OpenAPISpec   *oas3.Swagger
+	OpenAPISpec   *openapi3.Spec
 }
 
 // NewConverter instantiates a new converter.
@@ -67,8 +67,8 @@ func (conv *Converter) MergeConvert(openapiFilepath string, pmanBaseFilepath str
 
 // ConvertFile builds a Postman 2.0 spec using an OpenAPI 3.0 spec.
 func (conv *Converter) ConvertFile(openapiFilepath string, pmanSpecFilepath string) error {
-	oas3Loader := oas3.NewSwaggerLoader()
-	oas3spec, err := oas3Loader.LoadSwaggerFromFile(openapiFilepath)
+	oas3Loader := oas3.NewLoader()
+	oas3spec, err := oas3Loader.LoadFromFile(openapiFilepath)
 	if err != nil {
 		return err
 	}
@@ -85,13 +85,13 @@ func (conv *Converter) ConvertFile(openapiFilepath string, pmanSpecFilepath stri
 }
 
 // ConvertSpec creates a Postman 2.0 collection from a configuration and Swagger 2.0 spec
-func ConvertSpec(cfg Configuration, oas3spec *oas3.Swagger) (postman2.Collection, error) {
+func ConvertSpec(cfg Configuration, oas3spec *openapi3.Spec) (postman2.Collection, error) {
 	return Merge(cfg, postman2.Collection{}, oas3spec)
 }
 
 // Merge creates a Postman 2.0 collection from a configuration, base Postman
 // 2.0 collection and Swagger 2.0 spec
-func Merge(cfg Configuration, pman postman2.Collection, oas3spec *oas3.Swagger) (postman2.Collection, error) {
+func Merge(cfg Configuration, pman postman2.Collection, oas3spec *openapi3.Spec) (postman2.Collection, error) {
 	if len(pman.Info.Name) == 0 {
 		pman.Info.Name = strings.TrimSpace(oas3spec.Info.Title)
 	}
@@ -198,7 +198,7 @@ func postmanAddItemToFolder(pman postman2.Collection, pmItem *postman2.Item, pmF
 	return pman
 }
 
-func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *oas3.Swagger, oasUrl string, method string, operation *oas3.Operation) *postman2.Item {
+func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *openapi3.Spec, oasUrl string, method string, operation *oas3.Operation) *postman2.Item {
 	pmUrl := BuildPostmanURL(cfg, oas3spec, oasUrl, operation)
 	item := &postman2.Item{
 		Name: operation.Summary,
@@ -242,7 +242,7 @@ func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *oas3.Swagge
 	return item
 }
 
-func BuildPostmanURL(cfg Configuration, spec *oas3.Swagger, specPath string, operation *oas3.Operation) postman2.URL {
+func BuildPostmanURL(cfg Configuration, spec *openapi3.Spec, specPath string, operation *oas3.Operation) postman2.URL {
 	specMore := openapi3.SpecMore{Spec: spec}
 	specServerURL := specMore.ServerURL(0)
 	partsOverrideURL := []string{}

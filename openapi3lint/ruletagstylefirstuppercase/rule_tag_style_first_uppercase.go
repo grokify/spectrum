@@ -27,11 +27,11 @@ func (rule RuleTagStyleFirstUpperCase) Scope() string {
 	return lintutil.ScopeOperation
 }
 
-func (rule RuleTagStyleFirstUpperCase) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
+func (rule RuleTagStyleFirstUpperCase) ProcessOperation(spec *openapi3.Spec, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
 	return nil
 }
 
-func (rule RuleTagStyleFirstUpperCase) ProcessSpec(spec *oas3.Swagger, pointerBase string) []lintutil.PolicyViolation {
+func (rule RuleTagStyleFirstUpperCase) ProcessSpec(spec *openapi3.Spec, pointerBase string) []lintutil.PolicyViolation {
 	vios := []lintutil.PolicyViolation{}
 	openapi3.VisitOperations(spec, func(path, method string, op *oas3.Operation) {
 		if op == nil {

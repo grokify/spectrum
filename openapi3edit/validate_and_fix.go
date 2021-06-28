@@ -83,7 +83,7 @@ func SortParameters(sourceParams oas3.Parameters, sortOrder []string) oas3.Param
 // ValidateFixOperationPathParameters will add missing path parameters
 // and re-sort parameters so required path parameters are on top and
 // sorted by their position in the path.
-func ValidateFixOperationPathParameters(spec *oas3.Swagger, fix bool) ([]*openapi3.OperationMeta, error) {
+func ValidateFixOperationPathParameters(spec *openapi3.Spec, fix bool) ([]*openapi3.OperationMeta, error) {
 	errorOperations := []*openapi3.OperationMeta{}
 	openapi3.VisitOperations(
 		spec,
@@ -147,7 +147,7 @@ func ValidateFixOperationPathParameters(spec *oas3.Swagger, fix bool) ([]*openap
 
 // MoveRequestBodies moves `requestBody` `$ref` to the operation
 // which appears to be supported by more tools.
-func MoveRequestBodies(spec *oas3.Swagger, move bool) ([]*openapi3.OperationMeta, error) {
+func MoveRequestBodies(spec *openapi3.Spec, move bool) ([]*openapi3.OperationMeta, error) {
 	errorOperations := []*openapi3.OperationMeta{}
 	specMore := openapi3.SpecMore{Spec: spec}
 	openapi3.VisitOperations(
@@ -180,7 +180,7 @@ func MoveRequestBodies(spec *oas3.Swagger, move bool) ([]*openapi3.OperationMeta
 // ValidateFixOperationResponseTypes looks for `application/json` responses
 // with response schema types that are not `array` or `object`. If the responses
 // is a string or integer, it will reset the response mime type to `text/plain`.
-func ValidateFixOperationResponseTypes(spec *oas3.Swagger, fix bool) ([]*openapi3.OperationMeta, error) {
+func ValidateFixOperationResponseTypes(spec *openapi3.Spec, fix bool) ([]*openapi3.OperationMeta, error) {
 	errorOperations := []*openapi3.OperationMeta{}
 	openapi3.VisitOperations(
 		spec,

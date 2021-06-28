@@ -7,7 +7,7 @@ import (
 	"github.com/grokify/spectrum/openapi3"
 )
 
-func SpecSchemasSetDeprecated(spec *oas3.Swagger, newDeprecated bool) {
+func SpecSchemasSetDeprecated(spec *openapi3.Spec, newDeprecated bool) {
 	for _, schemaRef := range spec.Components.Schemas {
 		if len(schemaRef.Ref) == 0 && schemaRef.Value != nil {
 			schemaRef.Value.Deprecated = newDeprecated
@@ -15,7 +15,7 @@ func SpecSchemasSetDeprecated(spec *oas3.Swagger, newDeprecated bool) {
 	}
 }
 
-func SpecOperationsSetDeprecated(spec *oas3.Swagger, newDeprecated bool) {
+func SpecOperationsSetDeprecated(spec *openapi3.Spec, newDeprecated bool) {
 	openapi3.VisitOperations(
 		spec,
 		func(path, method string, op *oas3.Operation) {
@@ -28,7 +28,7 @@ func SpecOperationsSetDeprecated(spec *oas3.Swagger, newDeprecated bool) {
 
 var rxDeprecated = regexp.MustCompile(`(?i)\bdeprecated\b`)
 
-func SpecSetDeprecatedImplicit(spec *oas3.Swagger) {
+func SpecSetDeprecatedImplicit(spec *openapi3.Spec) {
 	openapi3.VisitOperations(
 		spec,
 		func(path, method string, op *oas3.Operation) {

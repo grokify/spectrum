@@ -6,7 +6,6 @@ import (
 	"reflect"
 	"strings"
 
-	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/type/stringsutil"
 )
 
@@ -45,7 +44,7 @@ func (set *TagGroupSet) GetTagGroupNamesForTagNames(wantTagNames ...string) []st
 	return stringsutil.SliceCondenseSpace(tagGroupNames, true, true)
 }
 
-func (set *TagGroupSet) AddToSpec(spec *oas3.Swagger) error {
+func (set *TagGroupSet) AddToSpec(spec *Spec) error {
 	if len(set.TagGroups) == 0 {
 		return nil
 	}
@@ -82,7 +81,7 @@ func (sm *SpecMore) TagsWithoutGroups() ([]string, []string, []string, error) {
 }
 */
 
-func TagsWithoutGroups(spec *oas3.Swagger, tagGroupSet TagGroupSet) []string {
+func TagsWithoutGroups(spec *Spec, tagGroupSet TagGroupSet) []string {
 	missing := []string{}
 	for _, tag := range spec.Tags {
 		if !tagGroupSet.Exists(tag.Name) {

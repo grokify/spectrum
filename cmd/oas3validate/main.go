@@ -6,7 +6,6 @@ import (
 	"os"
 	"strings"
 
-	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/histogram"
 	"github.com/grokify/simplego/fmt/fmtutil"
 	"github.com/grokify/simplego/net/urlutil"
@@ -27,7 +26,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	spec := &oas3.Swagger{}
+	spec := &openapi3.Spec{}
 
 	if urlutil.IsHttp(opts.SpecFileOAS3, true, true) {
 		spec, err = openapi3.ReadURL(opts.SpecFileOAS3)

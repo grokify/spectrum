@@ -24,11 +24,11 @@ func (rule RuleDatatypeIntFormatStandardExist) Scope() string {
 	return lintutil.ScopeSpecification
 }
 
-func (rule RuleDatatypeIntFormatStandardExist) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
+func (rule RuleDatatypeIntFormatStandardExist) ProcessOperation(spec *openapi3.Spec, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
 	return []lintutil.PolicyViolation{}
 }
 
-func (rule RuleDatatypeIntFormatStandardExist) ProcessSpec(spec *oas3.Swagger, pointerBase string) []lintutil.PolicyViolation {
+func (rule RuleDatatypeIntFormatStandardExist) ProcessSpec(spec *openapi3.Spec, pointerBase string) []lintutil.PolicyViolation {
 	vios := []lintutil.PolicyViolation{}
 	openapi3.VisitTypesFormats(
 		spec,

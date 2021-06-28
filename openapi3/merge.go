@@ -17,7 +17,7 @@ import (
 
 var jsonFileRx = regexp.MustCompile(`(?i)\.(json|yaml|yml)\s*$`)
 
-func MergeDirectory(dir string, mergeOpts *MergeOptions) (*oas3.Swagger, int, error) {
+func MergeDirectory(dir string, mergeOpts *MergeOptions) (*Spec, int, error) {
 	var filePaths []string
 	var err error
 	if mergeOpts != nil && mergeOpts.FileRx != nil {
@@ -34,7 +34,7 @@ func MergeDirectory(dir string, mergeOpts *MergeOptions) (*oas3.Swagger, int, er
 	return spec, len(filePaths), err
 }
 
-func MergeFiles(filepaths []string, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
+func MergeFiles(filepaths []string, mergeOpts *MergeOptions) (*Spec, error) {
 	sort.Strings(filepaths)
 	validateEach := false
 	validateFinal := true
@@ -42,7 +42,7 @@ func MergeFiles(filepaths []string, mergeOpts *MergeOptions) (*oas3.Swagger, err
 		validateEach = mergeOpts.ValidateEach
 		validateFinal = mergeOpts.ValidateFinal
 	}
-	var specMaster *oas3.Swagger
+	var specMaster *Spec
 	for i, fpath := range filepaths {
 		thisSpec, err := ReadFile(fpath, validateEach)
 		if err != nil {
@@ -63,7 +63,7 @@ func MergeFiles(filepaths []string, mergeOpts *MergeOptions) (*oas3.Swagger, err
 		if err != nil {
 			return specMaster, err
 		}
-		newSpec, err := oas3.NewSwaggerLoader().LoadSwaggerFromData(bytes)
+		newSpec, err := oas3.NewLoader().LoadFromData(bytes)
 		if err != nil {
 			return newSpec, errors.Wrap(err, "Loader.LoadSwaggerFromData (MergeFiles().ValidateFinal)")
 		}
@@ -72,7 +72,7 @@ func MergeFiles(filepaths []string, mergeOpts *MergeOptions) (*oas3.Swagger, err
 	return specMaster, nil
 }
 
-func Merge(specMaster, specExtra *oas3.Swagger, specExtraNote string, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
+func Merge(specMaster, specExtra *Spec, specExtraNote string, mergeOpts *MergeOptions) (*Spec, error) {
 	specMaster = MergeTags(specMaster, specExtra)
 	specMaster, err := MergeParameters(specMaster, specExtra, specExtraNote, mergeOpts)
 	if err != nil {
@@ -93,7 +93,7 @@ func Merge(specMaster, specExtra *oas3.Swagger, specExtraNote string, mergeOpts 
 	return MergeRequestBodies(specMaster, specExtra, specExtraNote)
 }
 
-func MergeTags(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
+func MergeTags(specMaster, specExtra *Spec) *Spec {
 	tagsMap := map[string]int{}
 	for _, tag := range specMaster.Tags {
 		tagsMap[tag.Name] = 1
@@ -110,7 +110,7 @@ func MergeTags(specMaster, specExtra *oas3.Swagger) *oas3.Swagger {
 // MergeWithTables performs a spec merge and returns comparison
 // tables. This is useful to combine with github.com/grokify/gocharts/data/table
 // WriteXLSX() to write out comparison tables for debugging.
-func MergeWithTables(spec1, spec2 *oas3.Swagger, specExtraNote string, mergeOpts *MergeOptions) (*oas3.Swagger, []*table.Table, error) {
+func MergeWithTables(spec1, spec2 *Spec, specExtraNote string, mergeOpts *MergeOptions) (*Spec, []*table.Table, error) {
 	tbls := []*table.Table{}
 	sm1 := SpecMore{Spec: spec1}
 	sm2 := SpecMore{Spec: spec2}
@@ -141,7 +141,7 @@ func MergeWithTables(spec1, spec2 *oas3.Swagger, specExtraNote string, mergeOpts
 	return specf, tbls, nil
 }
 
-func MergePaths(specMaster, specExtra *oas3.Swagger) (*oas3.Swagger, error) {
+func MergePaths(specMaster, specExtra *Spec) (*Spec, error) {
 	for url, pathItem := range specExtra.Paths {
 		if pathInfoMaster, ok := specMaster.Paths[url]; !ok || pathInfoMaster == nil {
 			specMaster.Paths[url] = &oas3.PathItem{}
@@ -213,7 +213,7 @@ func MergePaths(specMaster, specExtra *oas3.Swagger) (*oas3.Swagger, error) {
 	return specMaster, nil
 }
 
-func MergeParameters(specMaster, specExtra *oas3.Swagger, specExtraNote string, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
+func MergeParameters(specMaster, specExtra *Spec, specExtraNote string, mergeOpts *MergeOptions) (*Spec, error) {
 	if specMaster.Components.Parameters == nil {
 		specMaster.Components.Parameters = map[string]*oas3.ParameterRef{}
 	}
@@ -244,7 +244,7 @@ func MergeParameters(specMaster, specExtra *oas3.Swagger, specExtraNote string, 
 	return specMaster, nil
 }
 
-func MergeResponses(specMaster, specExtra *oas3.Swagger, specExtraNote string, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
+func MergeResponses(specMaster, specExtra *Spec, specExtraNote string, mergeOpts *MergeOptions) (*Spec, error) {
 	if specMaster.Components.Responses == nil {
 		specMaster.Components.Responses = map[string]*oas3.ResponseRef{}
 	}
@@ -273,7 +273,7 @@ func MergeResponses(specMaster, specExtra *oas3.Swagger, specExtraNote string, m
 	return specMaster, nil
 }
 
-func MergeSchemas(specMaster, specExtra *oas3.Swagger, specExtraNote string, mergeOpts *MergeOptions) (*oas3.Swagger, error) {
+func MergeSchemas(specMaster, specExtra *Spec, specExtraNote string, mergeOpts *MergeOptions) (*Spec, error) {
 	for schemaName, schemaExtra := range specExtra.Components.Schemas {
 		if schemaExtra == nil {
 			continue
@@ -307,7 +307,7 @@ func MergeSchemas(specMaster, specExtra *oas3.Swagger, specExtraNote string, mer
 	return specMaster, nil
 }
 
-func MergeRequestBodies(specMaster, specExtra *oas3.Swagger, specExtraNote string) (*oas3.Swagger, error) {
+func MergeRequestBodies(specMaster, specExtra *Spec, specExtraNote string) (*Spec, error) {
 	for rbName, rbExtra := range specExtra.Components.RequestBodies {
 		if rbExtra == nil {
 			continue

@@ -10,7 +10,7 @@ import (
 	"github.com/grokify/spectrum/openapi3"
 )
 
-func SpecTagsModify(spec *oas3.Swagger, changeTagsRaw map[string]string) {
+func SpecTagsModify(spec *openapi3.Spec, changeTagsRaw map[string]string) {
 	changeTags := map[string]string{}
 	for old, new := range changeTagsRaw {
 		changeTags[strings.TrimSpace(old)] = strings.TrimSpace(new)
@@ -49,7 +49,7 @@ TAG:
 // SpecTagsOrder sorts a specs tags based on an input set
 // and explitcit sort order. The remaining tags are sorted
 // alphabetically.
-func SpecTagsOrder(spec *oas3.Swagger, explicitSortedTagNames []string) error {
+func SpecTagsOrder(spec *openapi3.Spec, explicitSortedTagNames []string) error {
 	curTags := spec.Tags
 
 	sm := openapi3.SpecMore{Spec: spec}
@@ -105,7 +105,7 @@ func TagsOrder(curTags oas3.Tags, explicitSortedTagNames []string) (oas3.Tags, e
 // SpecTagsCondense removes unused tags from the top
 // level specification by comparing with tags used
 // in operations.
-func SpecTagsCondense(spec *oas3.Swagger) {
+func SpecTagsCondense(spec *openapi3.Spec) {
 	sm := openapi3.SpecMore{Spec: spec}
 	opTags := sm.TagsMap(false, true)
 	newTags := oas3.Tags{}

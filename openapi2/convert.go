@@ -5,17 +5,16 @@ import (
 	"io/ioutil"
 	"os"
 
-	oas2 "github.com/getkin/kin-openapi/openapi2"
 	"github.com/getkin/kin-openapi/openapi2conv"
 	"gopkg.in/yaml.v2"
 )
 
-func ConvertSpectrumOAS2ToKinOAS2(smSpec *Specification) (*oas2.Swagger, error) {
+func ConvertSpectrumOAS2ToKinOAS2(smSpec *Specification) (*Spec, error) {
 	bytes, err := json.Marshal(smSpec)
 	if err != nil {
 		return nil, err
 	}
-	var kinSpec oas2.Swagger
+	var kinSpec Spec
 	err = json.Unmarshal(bytes, &kinSpec)
 	return &kinSpec, err
 }
@@ -25,7 +24,7 @@ func ConvertOAS2FileToOAS3File(oas2file, oas3file string, perm os.FileMode, pret
 	if err != nil {
 		return err
 	}
-	oas3, err := openapi2conv.ToV3Swagger(oas2)
+	oas3, err := openapi2conv.ToV3(oas2)
 	if err != nil {
 		return err
 	}

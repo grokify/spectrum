@@ -32,11 +32,11 @@ func (rule RuleSchemaReferences) Scope() string {
 	return lintutil.ScopeSpecification
 }
 
-func (rule RuleSchemaReferences) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
+func (rule RuleSchemaReferences) ProcessOperation(spec *openapi3.Spec, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
 	return []lintutil.PolicyViolation{}
 }
 
-func (rule RuleSchemaReferences) ProcessSpec(spec *oas3.Swagger, pointerBase string) []lintutil.PolicyViolation {
+func (rule RuleSchemaReferences) ProcessSpec(spec *openapi3.Spec, pointerBase string) []lintutil.PolicyViolation {
 	violations := []lintutil.PolicyViolation{}
 
 	sm := openapi3.SpecMore{Spec: spec}

@@ -132,7 +132,7 @@ func operationAddExternalDocs(op *oas3.Operation, docURL, docDescription string,
 	return nil
 }
 
-func SpecOperationsCount(spec *oas3.Swagger) uint {
+func SpecOperationsCount(spec *openapi3.Spec) uint {
 	count := uint(0)
 	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 		count++
@@ -141,7 +141,7 @@ func SpecOperationsCount(spec *oas3.Swagger) uint {
 }
 
 // SpecSetOperation sets an operation in a OpenAPI Specification.
-func SpecSetOperation(spec *oas3.Swagger, path, method string, op oas3.Operation) error {
+func SpecSetOperation(spec *openapi3.Spec, path, method string, op oas3.Operation) error {
 	if spec == nil {
 		return fmt.Errorf("spec to add operation to is nil for path[%s] method [%s]", path, method)
 	}
@@ -175,7 +175,7 @@ func SpecSetOperation(spec *oas3.Swagger, path, method string, op oas3.Operation
 	return nil
 }
 
-func SpecOperationIds(spec *oas3.Swagger) map[string]int {
+func SpecOperationIds(spec *openapi3.Spec) map[string]int {
 	msi := map[string]int{}
 	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 		op.OperationID = strings.TrimSpace(op.OperationID)
@@ -187,7 +187,7 @@ func SpecOperationIds(spec *oas3.Swagger) map[string]int {
 	return msi
 }
 
-func SpecOperationIdsFromSummaries(spec *oas3.Swagger, errorOnEmpty bool) error {
+func SpecOperationIdsFromSummaries(spec *openapi3.Spec, errorOnEmpty bool) error {
 	empty := []string{}
 	openapi3.VisitOperations(spec, func(path, method string, op *oas3.Operation) {
 		op.Summary = strings.Join(strings.Split(op.Summary, " "), " ")
@@ -202,7 +202,7 @@ func SpecOperationIdsFromSummaries(spec *oas3.Swagger, errorOnEmpty bool) error 
 	return nil
 }
 
-func SpecAddCustomProperties(spec *oas3.Swagger, custom map[string]interface{}, addToOperations, addToSchemas bool) {
+func SpecAddCustomProperties(spec *openapi3.Spec, custom map[string]interface{}, addToOperations, addToSchemas bool) {
 	if spec == nil || len(custom) == 0 {
 		return
 	}
@@ -224,7 +224,7 @@ func SpecAddCustomProperties(spec *oas3.Swagger, custom map[string]interface{}, 
 	}
 }
 
-func SpecAddOperationMetas(spec *oas3.Swagger, metas map[string]openapi3.OperationMeta, overwrite bool) {
+func SpecAddOperationMetas(spec *openapi3.Spec, metas map[string]openapi3.OperationMeta, overwrite bool) {
 	if spec == nil || len(metas) == 0 {
 		return
 	}
@@ -270,7 +270,7 @@ type OperationMoreSet struct {
 	OperationMores []OperationMore
 }
 
-func QueryOperationsByTags(spec *oas3.Swagger, tags []string) *OperationMoreSet {
+func QueryOperationsByTags(spec *openapi3.Spec, tags []string) *OperationMoreSet {
 	tagsWantMatch := map[string]int{}
 	for _, tag := range tags {
 		tagsWantMatch[tag] = 1

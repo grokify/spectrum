@@ -19,7 +19,7 @@ const (
 
 // SecuritySchemeAddBearertoken adds bearer token auth
 // to spec and operations.
-func SecuritySchemeAddBearertoken(spec *oas3.Swagger, schemeName, bearerFormat string, inclTags, skipTags []string) {
+func SecuritySchemeAddBearertoken(spec *openapi3.Spec, schemeName, bearerFormat string, inclTags, skipTags []string) {
 	schemeName = strings.TrimSpace(schemeName)
 	if len(schemeName) == 0 {
 		schemeName = SecuritySchemeBearertokenDefaultName
@@ -28,7 +28,7 @@ func SecuritySchemeAddBearertoken(spec *oas3.Swagger, schemeName, bearerFormat s
 	SecuritySchemeBearertokenAddOperationsByTags(spec, schemeName, inclTags, skipTags)
 }
 
-func SecuritySchemeBearertokenAddOperationsByTags(spec *oas3.Swagger, schemeName string, inclTags, skipTags []string) {
+func SecuritySchemeBearertokenAddOperationsByTags(spec *openapi3.Spec, schemeName string, inclTags, skipTags []string) {
 	inclTagsMap := map[string]int{}
 	for _, tag := range inclTags {
 		tag = strings.ToLower(strings.TrimSpace(tag))
@@ -75,7 +75,7 @@ func SecuritySchemeAddOperation(op *oas3.Operation, schemeName string, schemeVal
 				schemeName: schemeValue}))
 }
 
-func SecuritySchemeBearertokenAddDefinition(spec *oas3.Swagger, schemeName, bearerFormat string) {
+func SecuritySchemeBearertokenAddDefinition(spec *openapi3.Spec, schemeName, bearerFormat string) {
 	schemeName = strings.TrimSpace(schemeName)
 	bearerFormat = strings.TrimSpace(bearerFormat)
 	if len(schemeName) == 0 {
@@ -93,7 +93,7 @@ func SecuritySchemeBearertokenAddDefinition(spec *oas3.Swagger, schemeName, bear
 
 // AddAPIKey adds an API Key definition to the spec.
 // https://swagger.io/docs/specification/authentication/api-keys/
-func SecuritySchemeApikeyAddDefinition(spec *oas3.Swagger, schemeName, location, name string) error {
+func SecuritySchemeApikeyAddDefinition(spec *openapi3.Spec, schemeName, location, name string) error {
 	schemeName = strings.TrimSpace(schemeName)
 	location = strings.TrimSpace(location)
 	name = strings.TrimSpace(name)
@@ -121,7 +121,7 @@ func SecuritySchemeApikeyAddDefinition(spec *oas3.Swagger, schemeName, location,
 	return nil
 }
 
-func SecuritySchemeApikeyAddOperations(spec *oas3.Swagger, tags []string, keyName string) {
+func SecuritySchemeApikeyAddOperations(spec *openapi3.Spec, tags []string, keyName string) {
 	keyName = strings.TrimSpace(keyName)
 	if len(keyName) == 0 {
 		keyName = SecuritySchemeApikeyDefaultName
@@ -167,7 +167,7 @@ func MapSliceIntersectionExists(haystack map[string]int, needles []string) bool 
 // for all operations. It is useful when building a spec
 // to get individual specs to validate before setting the
 // correct security property.
-func RemoveOperationsSecurity(spec *oas3.Swagger) {
+func RemoveOperationsSecurity(spec *openapi3.Spec) {
 	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 		op.Security = &oas3.SecurityRequirements{}
 	})

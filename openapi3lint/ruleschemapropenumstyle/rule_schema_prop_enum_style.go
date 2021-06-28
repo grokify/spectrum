@@ -46,11 +46,11 @@ func (rule RuleSchemaPropEnumStyle) Scope() string {
 	return lintutil.ScopeSpecification
 }
 
-func (rule RuleSchemaPropEnumStyle) ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
+func (rule RuleSchemaPropEnumStyle) ProcessOperation(spec *openapi3.Spec, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
 	return nil
 }
 
-func (rule RuleSchemaPropEnumStyle) ProcessSpec(spec *oas3.Swagger, pointerBase string) []lintutil.PolicyViolation {
+func (rule RuleSchemaPropEnumStyle) ProcessSpec(spec *openapi3.Spec, pointerBase string) []lintutil.PolicyViolation {
 	vios := []lintutil.PolicyViolation{}
 
 	for schName, schRef := range spec.Components.Schemas {

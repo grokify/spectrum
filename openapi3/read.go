@@ -15,7 +15,7 @@ import (
 
 var rxYamlExtension = regexp.MustCompile(`(?i)\.ya?ml\s*$`)
 
-func ReadURL(oas3url string) (*oas3.Swagger, error) {
+func ReadURL(oas3url string) (*Spec, error) {
 	resp, err := http.Get(oas3url)
 	if err != nil {
 		return nil, err
@@ -29,7 +29,7 @@ func ReadURL(oas3url string) (*oas3.Swagger, error) {
 
 // ReadFile does optional validation which is useful when
 // merging incomplete spec files.
-func ReadFile(oas3file string, validate bool) (*oas3.Swagger, error) {
+func ReadFile(oas3file string, validate bool) (*Spec, error) {
 	if validate {
 		return ReadAndValidateFile(oas3file)
 	}
@@ -43,7 +43,7 @@ func ReadFile(oas3file string, validate bool) (*oas3.Swagger, error) {
 			return nil, err
 		}
 	}
-	spec := &oas3.Swagger{}
+	spec := &Spec{}
 	err = spec.UnmarshalJSON(bytes)
 	if err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("ReadFile.UnmarshalJSON.Error.Filename [%s]", oas3file))
@@ -54,27 +54,27 @@ func ReadFile(oas3file string, validate bool) (*oas3.Swagger, error) {
 // Parse will parse a byte array to an `*oas3.Swagger` struct.
 // It will use JSON first. If unsuccessful, it will attempt to
 // parse it as YAML.
-func Parse(oas3Bytes []byte) (*oas3.Swagger, error) {
-	spec := &oas3.Swagger{}
+func Parse(oas3Bytes []byte) (*Spec, error) {
+	spec := &Spec{}
 	err := spec.UnmarshalJSON(oas3Bytes)
 	if err != nil {
 		bytes, err2 := yaml.YAMLToJSON(oas3Bytes)
 		if err2 != nil {
 			return spec, err
 		}
-		spec = &oas3.Swagger{}
+		spec = &Spec{}
 		err3 := spec.UnmarshalJSON(bytes)
 		return spec, err3
 	}
 	return spec, err
 }
 
-func ReadAndValidateFile(oas3file string) (*oas3.Swagger, error) {
+func ReadAndValidateFile(oas3file string) (*Spec, error) {
 	bytes, err := ioutil.ReadFile(oas3file)
 	if err != nil {
 		return nil, errors.Wrap(err, "E_READ_FILE_ERROR")
 	}
-	spec, err := oas3.NewSwaggerLoader().LoadSwaggerFromData(bytes)
+	spec, err := oas3.NewLoader().LoadFromData(bytes)
 	if err != nil {
 		return spec, errors.Wrap(err, fmt.Sprintf("E_OPENAPI3_SPEC_LOAD_VALIDATE_ERROR [%s]", oas3file))
 	}
@@ -101,7 +101,7 @@ context: "#/info"
 openapi: 3.0.0
 */
 
-func ValidateMore(spec *oas3.Swagger) (ValidationStatus, error) {
+func ValidateMore(spec *Spec) (ValidationStatus, error) {
 	vs := ValidationStatus{OpenAPI: "3.0.0"}
 	version := strings.TrimSpace(spec.Info.Version)
 	if len(version) == 0 {
@@ -119,11 +119,11 @@ func ValidateMore(spec *oas3.Swagger) (ValidationStatus, error) {
 	return vs, nil
 }
 
-func Copy(spec *oas3.Swagger) (*oas3.Swagger, error) {
+func Copy(spec *Spec) (*Spec, error) {
 	bytes, err := spec.MarshalJSON()
 	if err != nil {
 		return nil, err
 	}
-	loader := oas3.NewSwaggerLoader()
-	return loader.LoadSwaggerFromData(bytes)
+	loader := oas3.NewLoader()
+	return loader.LoadFromData(bytes)
 }
