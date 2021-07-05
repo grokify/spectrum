@@ -18,6 +18,8 @@ import (
 
 type Spec = oas3.T
 
+type Operation = oas3.Operation
+
 type SpecMore struct {
 	Spec *Spec
 }

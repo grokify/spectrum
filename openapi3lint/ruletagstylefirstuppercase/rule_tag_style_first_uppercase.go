@@ -3,7 +3,6 @@ package ruletagstylefirstuppercase
 import (
 	"strconv"
 
-	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/simplego/encoding/jsonutil"
 	"github.com/grokify/simplego/text/stringcase"
 	"github.com/grokify/spectrum/openapi3"
@@ -27,13 +26,13 @@ func (rule RuleTagStyleFirstUpperCase) Scope() string {
 	return lintutil.ScopeOperation
 }
 
-func (rule RuleTagStyleFirstUpperCase) ProcessOperation(spec *openapi3.Spec, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
+func (rule RuleTagStyleFirstUpperCase) ProcessOperation(spec *openapi3.Spec, op *openapi3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
 	return nil
 }
 
 func (rule RuleTagStyleFirstUpperCase) ProcessSpec(spec *openapi3.Spec, pointerBase string) []lintutil.PolicyViolation {
 	vios := []lintutil.PolicyViolation{}
-	openapi3.VisitOperations(spec, func(path, method string, op *oas3.Operation) {
+	openapi3.VisitOperations(spec, func(path, method string, op *openapi3.Operation) {
 		if op == nil {
 			return
 		}
