@@ -8,22 +8,24 @@ import (
 	"strings"
 
 	"github.com/grokify/simplego/io/ioutilmore"
+	"github.com/grokify/simplego/os/osutil"
 	"github.com/pkg/errors"
 )
 
 var jsonFileRx = regexp.MustCompile(`(?i)\.json\s*$`)
 
 func MergeDirectory(dir string) (Specification, error) {
-	fileInfos, err := ioutilmore.DirEntriesRxSizeGt0(dir, ioutilmore.File, jsonFileRx)
+	//fileInfos, err := ioutilmore.DirEntriesRxSizeGt0(dir, ioutilmore.File, jsonFileRx)
+	entries, err := osutil.ReadDirMore(dir, jsonFileRx, false, true, false)
 	if err != nil {
 		return Specification{}, err
 	}
-	if len(fileInfos) == 0 {
-		return Specification{}, fmt.Errorf("No JSON files found in directory [%s]", dir)
+	if len(entries) == 0 {
+		return Specification{}, fmt.Errorf("no JSON files found in directory [%s]", dir)
 	}
 	var specMaster Specification
-	for i, fi := range fileInfos {
-		thisSpecFilepath := filepath.Join(dir, fi.Name())
+	for i, entry := range entries {
+		thisSpecFilepath := filepath.Join(dir, entry.Name())
 		thisSpec, err := ReadOpenAPI2SpecFileDirect(thisSpecFilepath)
 		if err != nil {
 			return specMaster, err

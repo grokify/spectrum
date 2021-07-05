@@ -5,7 +5,7 @@ import (
 	"log"
 	"regexp"
 
-	"github.com/grokify/simplego/io/ioutilmore"
+	"github.com/grokify/simplego/os/osutil"
 	csv "github.com/grokify/spectrum/openapi2/openapi2csv"
 	"github.com/jessevdk/go-flags"
 )
@@ -23,11 +23,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	_, filepaths, err := ioutilmore.ReadDirMore(
-		opts.Directory, regexp.MustCompile(opts.Regexp), true, true)
+	entries, err := osutil.ReadDirMore(
+		opts.Directory, regexp.MustCompile(opts.Regexp), false, true, false)
 	if err != nil {
 		log.Fatal(err)
 	}
+	filepaths := osutil.DirEntrySlice(entries).Names(opts.Directory, true)
 	tbl, err := csv.TableFromSpecFiles(filepaths, true)
 	if err != nil {
 		log.Fatal(fmt.Sprintf("TableFromSpecFiles [%v]\n", err.Error()))

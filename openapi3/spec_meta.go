@@ -5,11 +5,11 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/simplego/io/ioutilmore"
+	"github.com/grokify/simplego/os/osutil"
 )
 
 const (
-	OASVersionLatest  = "3.0.3"
+	OASVersionLatest  = "3.1.0"
 	apiVersionDefault = "0.0.1"
 )
 
@@ -59,13 +59,13 @@ type SpecMeta struct {
 
 func ReadSpecMetasDir(dir string, rx *regexp.Regexp) (SpecMetas, error) {
 	metas := SpecMetas{Metas: []SpecMeta{}}
-	_, files, err := ioutilmore.ReadDirMore(dir, rx, true, true)
+	entries, err := osutil.ReadDirMore(dir, rx, false, true, false)
 
 	if err != nil {
 		return metas, err
 	}
 
-	return ReadSpecMetasFiles(files)
+	return ReadSpecMetasFiles(osutil.DirEntrySlice(entries).Names(dir, true))
 }
 
 func ReadSpecMetasFiles(files []string) (SpecMetas, error) {

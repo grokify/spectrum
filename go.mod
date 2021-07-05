@@ -7,7 +7,7 @@ require (
 	github.com/getkin/kin-openapi v0.65.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/grokify/gocharts v1.9.0
-	github.com/grokify/simplego v0.26.10
+	github.com/grokify/simplego v0.27.2
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/pkg/errors v0.9.1
 	github.com/rs/zerolog v1.23.0

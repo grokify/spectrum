@@ -204,8 +204,8 @@ github.com/grokify/elastirad-go v0.1.1/go.mod h1:Zmb82d9GAyzakccUFhY9Ojf3QjkmPyJ
 github.com/grokify/gocharts v1.9.0 h1:pBlWd1NPethRBJ0WO17WkY5ezMo/BXfBj5dJj6aH5Ls=
 github.com/grokify/gocharts v1.9.0/go.mod h1:L69qGvVjBaWFgxT6Wpjb/oJURmzEGnVQ+M4hJ+ndQDQ=
 github.com/grokify/simplego v0.26.8/go.mod h1:UKobvO2/X3aFy5fwNUxaW6YFK8A3IKCoIRqtVNhsdZU=
-github.com/grokify/simplego v0.26.10 h1:CZugzr9b6mpxb/MaI3aAFWYGBgbZDFIMt7uZKDYe1p8=
-github.com/grokify/simplego v0.26.10/go.mod h1:UKobvO2/X3aFy5fwNUxaW6YFK8A3IKCoIRqtVNhsdZU=
+github.com/grokify/simplego v0.27.2 h1:Njc9k/yZNOco3vWpJNCoMDL6mTrjnbKzRvaLHJxlZf8=
+github.com/grokify/simplego v0.27.2/go.mod h1:UKobvO2/X3aFy5fwNUxaW6YFK8A3IKCoIRqtVNhsdZU=
 github.com/grpc-ecosystem/go-grpc-middleware v1.0.0/go.mod h1:FiyG127CGDf3tlThmgyCl78X/SZQqEOJBCDaAfeWzPs=
 github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0/go.mod h1:8NvIoxWQoOIhqOTXgfV/d3M/q6VIi02HzZEHgUlZvzk=
 github.com/grpc-ecosystem/grpc-gateway v1.9.0/go.mod h1:vNeuVxBJEsws4ogUvrchl83t/GYV9WGTSLVdBhOQFDY=

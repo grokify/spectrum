@@ -11,27 +11,35 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/table"
-	"github.com/grokify/simplego/io/ioutilmore"
+	"github.com/grokify/simplego/os/osutil"
 	"github.com/pkg/errors"
 )
 
 var jsonFileRx = regexp.MustCompile(`(?i)\.(json|yaml|yml)\s*$`)
 
 func MergeDirectory(dir string, mergeOpts *MergeOptions) (*Spec, int, error) {
-	var filePaths []string
+	var filenames []string
 	var err error
 	if mergeOpts != nil && mergeOpts.FileRx != nil {
-		_, filePaths, err = ioutilmore.ReadDirMore(dir, mergeOpts.FileRx, true, true)
+		entries, err := osutil.ReadDirMore(dir, mergeOpts.FileRx, false, true, false)
+		if err != nil {
+			filenames = osutil.DirEntrySlice(entries).Names(dir, true)
+		}
+		//_, filenames, err = ioutilmore.ReadDirMore(dir, mergeOpts.FileRx, true, true)
 	} else {
-		_, filePaths, err = ioutilmore.ReadDirMore(dir, jsonFileRx, true, true)
+		entries, err := osutil.ReadDirMore(dir, jsonFileRx, false, true, false)
+		if err != nil {
+			filenames = osutil.DirEntrySlice(entries).Names(dir, true)
+		}
+		//_, filenames, err = ioutilmore.ReadDirMore(dir, jsonFileRx, true, true)
 	}
 
 	if err != nil {
-		return nil, len(filePaths), err
+		return nil, len(filenames), err
 	}
 
-	spec, err := MergeFiles(filePaths, mergeOpts)
-	return spec, len(filePaths), err
+	spec, err := MergeFiles(filenames, mergeOpts)
+	return spec, len(filenames), err
 }
 
 func MergeFiles(filepaths []string, mergeOpts *MergeOptions) (*Spec, error) {

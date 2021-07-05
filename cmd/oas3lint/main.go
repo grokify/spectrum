@@ -6,8 +6,8 @@ import (
 	"regexp"
 
 	"github.com/grokify/simplego/fmt/fmtutil"
-	"github.com/grokify/simplego/io/ioutilmore"
 	"github.com/grokify/simplego/log/severity"
+	"github.com/grokify/simplego/os/osutil"
 	"github.com/grokify/simplego/path/filepathutil"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint"
@@ -32,16 +32,17 @@ func main() {
 
 	var files []string
 	if len(opts.InputFileOAS3) > 0 {
-		isDir, err := ioutilmore.IsDir(opts.InputFileOAS3)
+		isDir, err := osutil.IsDir(opts.InputFileOAS3)
 		if err != nil {
 			log.Fatal(err)
 		}
 		if isDir {
-			_, files, err = ioutilmore.ReadDirMore(opts.InputFileOAS3,
-				regexp.MustCompile(`(?i)\.(json|yaml|yml)$`), true, true)
+			entries, err := osutil.ReadDirMore(opts.InputFileOAS3,
+				regexp.MustCompile(`(?i)\.(json|yaml|yml)$`), false, true, false)
 			if err != nil {
 				log.Fatal(err)
 			}
+			files = osutil.DirEntrySlice(entries).Names(opts.InputFileOAS3, true)
 		} else {
 			files = []string{opts.InputFileOAS3}
 		}
