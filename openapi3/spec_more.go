@@ -49,8 +49,7 @@ func operationsTable(spec *Spec, columns *table.ColumnSet, filterFunc func(path,
 	if columns == nil {
 		columns = OpTableColumnsDefault(false)
 	}
-	tbl := table.NewTable()
-	tbl.Name = spec.Info.Title
+	tbl := table.NewTable(spec.Info.Title)
 	tbl.Columns = columns.DisplayTexts()
 
 	specMore := SpecMore{Spec: spec}

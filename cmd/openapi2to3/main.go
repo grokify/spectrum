@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/grokify/simplego/io/ioutilmore"
+	"github.com/grokify/simplego/os/osutil"
 	"github.com/grokify/spectrum/openapi2"
 	"github.com/jessevdk/go-flags"
 )
@@ -26,7 +26,7 @@ func main() {
 	}
 	opts.OAS2File = strings.TrimSpace(opts.OAS2File)
 	opts.OAS3File = strings.TrimSpace(opts.OAS3File)
-	isFile, err := ioutilmore.IsFile(opts.OAS2File)
+	isFile, err := osutil.IsFile(opts.OAS2File)
 	if err != nil {
 		log.Fatal(err)
 	} else if !isFile {

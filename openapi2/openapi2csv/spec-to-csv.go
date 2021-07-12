@@ -10,7 +10,7 @@ import (
 )
 
 func TableFromSpecFiles(files []string, includeFilename bool) (*table.Table, error) {
-	tbl := table.NewTable()
+	tbl := table.NewTable("")
 	tblp := &tbl
 	tbl.Columns = []string{}
 	if includeFilename {
