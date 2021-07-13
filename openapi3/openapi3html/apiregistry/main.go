@@ -27,7 +27,7 @@ type Server struct {
 func NewServer() Server {
 	return Server{
 		Port:   strconvutil.AtoiOrDefault(os.Getenv("PORT"), 8080),
-		Engine: stringsutil.OrDefault(os.Getenv("ENGINE"), "nethttp")}
+		Engine: stringsutil.FirstNonEmpty(os.Getenv("ENGINE"), "nethttp")}
 }
 
 func (svc *Server) HandleAPIRegistryNetHTTP(res http.ResponseWriter, req *http.Request) {
