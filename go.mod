@@ -6,8 +6,8 @@ require (
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/getkin/kin-openapi v0.66.0
 	github.com/ghodss/yaml v1.0.0
-	github.com/grokify/gocharts v1.10.0
-	github.com/grokify/simplego v0.28.0
+	github.com/grokify/gocharts v1.11.0
+	github.com/grokify/simplego v0.28.1
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/pkg/errors v0.9.1
 	github.com/rs/zerolog v1.23.0
