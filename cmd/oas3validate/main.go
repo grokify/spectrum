@@ -15,8 +15,9 @@ import (
 )
 
 type Options struct {
-	SpecFileOAS3 string `short:"s" long:"specfile" description:"Input OAS Spec File" required:"true"`
-	XlsxWrite    string `short:"x" long:"xlsxwrite" description:"Output File" required:"false"`
+	SpecFileOAS3          string `short:"s" long:"specfile" description:"Input OAS Spec File" required:"true"`
+	WriteOpStatusCodeXlsx string `long:"writeopstatus" description:"Output File" required:"false"`
+	XlsxWrite             string `short:"x" long:"xlsxwrite" description:"Output File" required:"false"`
 }
 
 func main() {
@@ -59,6 +60,15 @@ func main() {
 	opts.XlsxWrite = strings.TrimSpace(opts.XlsxWrite)
 	if len(opts.XlsxWrite) > 0 {
 		err := sm.WriteFileXLSX(opts.XlsxWrite, nil, nil)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	opts.WriteOpStatusCodeXlsx = strings.TrimSpace(opts.WriteOpStatusCodeXlsx)
+	if len(opts.WriteOpStatusCodeXlsx) > 0 {
+		err := sm.WriteFileXLSXOperationStatusCodes(
+			opts.WriteOpStatusCodeXlsx)
 		if err != nil {
 			log.Fatal(err)
 		}
