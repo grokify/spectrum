@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/grokify/gocharts/data/table"
+	"github.com/grokify/gocharts/data/table/tabulator"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3/openapi3html"
 	"github.com/jessevdk/go-flags"
@@ -46,8 +46,8 @@ func main() {
 	fmt.Println("DONE")
 }
 
-func ColumnTexts() *table.ColumnSet {
-	columns := []table.Column{
+func ColumnTexts() *tabulator.ColumnSet {
+	columns := []tabulator.Column{
 		{
 			Display: "Method",
 			Slug:    "method"},
@@ -79,5 +79,5 @@ func ColumnTexts() *table.ColumnSet {
 			Display: "Docs Level",
 			Slug:    "x-docs-level"},
 	}
-	return &table.ColumnSet{Columns: columns}
+	return &tabulator.ColumnSet{Columns: columns}
 }

@@ -11,6 +11,7 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/histogram"
 	"github.com/grokify/gocharts/data/table"
+	"github.com/grokify/gocharts/data/table/tabulator"
 	"github.com/grokify/simplego/encoding/jsonutil"
 	"github.com/grokify/simplego/net/urlutil"
 	"github.com/grokify/simplego/type/stringsutil"
@@ -41,11 +42,11 @@ func (sm *SpecMore) SchemasCount() int {
 	return len(sm.Spec.Components.Schemas)
 }
 
-func (sm *SpecMore) OperationsTable(columns *table.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) (*table.Table, error) {
+func (sm *SpecMore) OperationsTable(columns *tabulator.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) (*table.Table, error) {
 	return operationsTable(sm.Spec, columns, filterFunc)
 }
 
-func operationsTable(spec *Spec, columns *table.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) (*table.Table, error) {
+func operationsTable(spec *Spec, columns *tabulator.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) (*table.Table, error) {
 	if columns == nil {
 		columns = OpTableColumnsDefault(false)
 	}
@@ -99,8 +100,8 @@ func operationsTable(spec *Spec, columns *table.ColumnSet, filterFunc func(path,
 	return &tbl, nil
 }
 
-func OpTableColumnsDefault(inclDocsURL bool) *table.ColumnSet {
-	cols := []table.Column{
+func OpTableColumnsDefault(inclDocsURL bool) *tabulator.ColumnSet {
+	cols := []tabulator.Column{
 		{
 			Display: "Tags",
 			Slug:    "tags",
@@ -131,17 +132,17 @@ func OpTableColumnsDefault(inclDocsURL bool) *table.ColumnSet {
 			Width:   150},
 	}
 	if inclDocsURL {
-		cols = append(cols, table.Column{
+		cols = append(cols, tabulator.Column{
 			Display: "DocsURL",
 			Slug:    "docsURL",
 			Width:   150})
 	}
-	return &table.ColumnSet{Columns: cols}
+	return &tabulator.ColumnSet{Columns: cols}
 }
 
-func OpTableColumnsRingCentral() *table.ColumnSet {
+func OpTableColumnsRingCentral() *tabulator.ColumnSet {
 	columns := OpTableColumnsDefault(false)
-	rcCols := []table.Column{
+	rcCols := []tabulator.Column{
 		{
 			Display: "API Group",
 			Slug:    "x-api-group",
@@ -485,7 +486,7 @@ func (sm *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, ind
 	return ioutil.WriteFile(filename, jsonData, perm)
 }
 
-func (sm *SpecMore) WriteFileXLSX(filename string, columns *table.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) error {
+func (sm *SpecMore) WriteFileXLSX(filename string, columns *tabulator.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) error {
 	if columns == nil {
 		columns = OpTableColumnsDefault(true)
 	}

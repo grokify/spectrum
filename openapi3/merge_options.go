@@ -5,7 +5,7 @@ import (
 	"regexp"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/gocharts/data/table"
+	"github.com/grokify/gocharts/data/table/tabulator"
 )
 
 type CollisionCheckResult int
@@ -23,7 +23,7 @@ type MergeOptions struct {
 	CollisionCheckResult CollisionCheckResult
 	ValidateEach         bool
 	ValidateFinal        bool
-	TableColumns         *table.ColumnSet
+	TableColumns         *tabulator.ColumnSet
 	TableOpFilterFunc    func(path, method string, op *oas3.Operation) bool
 }
 

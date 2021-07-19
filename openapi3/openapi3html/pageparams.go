@@ -9,6 +9,7 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/table"
+	"github.com/grokify/gocharts/data/table/tabulator"
 	"github.com/grokify/spectrum/openapi3"
 )
 
@@ -17,7 +18,7 @@ type PageParams struct {
 	PageLink      string
 	TableDomID    string
 	Spec          *openapi3.Spec
-	ColumnSet     *table.ColumnSet
+	ColumnSet     *tabulator.ColumnSet
 	OpsFilterFunc func(path, method string, op *oas3.Operation) bool
 	TableJSON     []byte
 }
@@ -64,10 +65,10 @@ func (pp *PageParams) TableJSONBytesOrEmpty() []byte {
 func (pp *PageParams) TabulatorColumnsJSONBytesOrEmpty() []byte {
 	if pp.ColumnSet == nil || len(pp.ColumnSet.Columns) == 0 {
 		colSet := openapi3.OpTableColumnsDefault(false)
-		tcols := table.BuildColumnsTabulator(colSet.Columns)
+		tcols := tabulator.BuildColumnsTabulator(colSet.Columns)
 		return tcols.MustColumnsJSON()
 	}
-	tcols := table.BuildColumnsTabulator(pp.ColumnSet.Columns)
+	tcols := tabulator.BuildColumnsTabulator(pp.ColumnSet.Columns)
 	return tcols.MustColumnsJSON()
 }
 
