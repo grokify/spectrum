@@ -11,20 +11,20 @@ import (
 	"github.com/grokify/simplego/type/stringsutil"
 )
 
-func CountEndpointsByTag(spec Specification, tags []string) *histogram.HistogramSet {
-	tags = stringsutil.SliceTrimSpace(tags, true)
+func CountEndpointsByTag(spec Specification, tagsFilter []string) *histogram.HistogramSet {
+	tagsFilter = stringsutil.SliceCondenseSpace(tagsFilter, true,true   )
 	hist := histogram.NewHistogramSet("endpoints by tag")
 	for url, path := range spec.Paths {
-		hist = countEndpointByTag(hist, tags, url, http.MethodGet, path.Get)
-		hist = countEndpointByTag(hist, tags, url, http.MethodPatch, path.Patch)
-		hist = countEndpointByTag(hist, tags, url, http.MethodPut, path.Put)
-		hist = countEndpointByTag(hist, tags, url, http.MethodPost, path.Post)
-		hist = countEndpointByTag(hist, tags, url, http.MethodDelete, path.Delete)
+		hist = countEndpointByTag(hist, tagsFilter, url, http.MethodGet, path.Get)
+		hist = countEndpointByTag(hist, tagsFilter, url, http.MethodPatch, path.Patch)
+		hist = countEndpointByTag(hist, tagsFilter, url, http.MethodPut, path.Put)
+		hist = countEndpointByTag(hist, tagsFilter, url, http.MethodPost, path.Post)
+		hist = countEndpointByTag(hist, tagsFilter, url, http.MethodDelete, path.Delete)
 	}
 	return hist
 }
 
-func countEndpointByTag(hist *histogram.HistogramSet, tags []string, url string, method string, ep *Endpoint) *histogram.HistogramSet {
+func countEndpointByTag(hist *histogram.HistogramSet, tagsFilter []string, url string, method string, ep *Endpoint) *histogram.HistogramSet {
 	if ep == nil {
 		return hist
 	}
@@ -34,9 +34,9 @@ func countEndpointByTag(hist *histogram.HistogramSet, tags []string, url string,
 	for _, tag := range ep.Tags {
 		tag = strings.TrimSpace(tag)
 		add := true
-		if len(tags) > 0 {
+		if len(tagsFilter) > 0 { // have tagsFilter
 			add = false
-			for _, try := range tags {
+			for _, try := range tagsFilter {
 				if tag == try {
 					add = true
 				}

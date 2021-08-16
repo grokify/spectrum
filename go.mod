@@ -4,10 +4,10 @@ go 1.16
 
 require (
 	github.com/buaazp/fasthttprouter v0.1.1
-	github.com/getkin/kin-openapi v0.66.0
+	github.com/getkin/kin-openapi v0.73.0
 	github.com/ghodss/yaml v1.0.0
-	github.com/grokify/gocharts v1.14.5
-	github.com/grokify/simplego v0.29.4
+	github.com/grokify/gocharts v1.15.0
+	github.com/grokify/simplego v0.30.2
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/pkg/errors v0.9.1
 	github.com/rs/zerolog v1.23.0

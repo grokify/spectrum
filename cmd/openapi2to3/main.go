@@ -26,11 +26,11 @@ func main() {
 	}
 	opts.OAS2File = strings.TrimSpace(opts.OAS2File)
 	opts.OAS3File = strings.TrimSpace(opts.OAS3File)
-	isFile, err := osutil.IsFile(opts.OAS2File)
+	isFile, err := osutil.IsFile(opts.OAS2File, true)
 	if err != nil {
 		log.Fatal(err)
 	} else if !isFile {
-		log.Fatalf("E_INPUT_FILE_IS_NOT_FILE [%v]", opts.OAS2File)
+		log.Fatalf("E_INPUT_FILE_IS_NOT_NONEMPTY_FILE [%v]", opts.OAS2File)
 	}
 
 	wantPretty := false

@@ -42,7 +42,7 @@ func main() {
 			if err != nil {
 				log.Fatal(err)
 			}
-			files = osutil.DirEntrySlice(entries).Names(opts.InputFileOAS3, true)
+			files = osutil.DirEntries(entries).Names(opts.InputFileOAS3, true)
 		} else {
 			files = []string{opts.InputFileOAS3}
 		}
