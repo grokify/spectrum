@@ -4,6 +4,7 @@ Spectrum - OpenAPI Spec SDK and Postman Converter
 [![Build Status][build-status-svg]][build-status-url]
 [![Go Report Card][goreport-svg]][goreport-url]
 [![Docs][docs-godoc-svg]][docs-godoc-url]
+[![LOC][loc-svg]][repo-url]
 [![License][license-svg]][license-url]
 
 Spectrum is a multi-purpose OpenAPI Spec SDK that includes enhanced Postman conversion. Most of the OpenAPI Spec SDK is designed to support OAS3. Some functionality for OAS2 exists.
@@ -129,5 +130,7 @@ To set your environment variables, use the Settings Gear icon and then click "Ma
  [goreport-url]: https://goreportcard.com/report/github.com/grokify/spectrum
  [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/spectrum
  [docs-godoc-url]: https://pkg.go.dev/github.com/grokify/spectrum
+ [loc-svg]: https://tokei.rs/b1/github/grokify/spectrum
+ [repo-url]: https://github.com/grokify/spectrum
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
  [license-url]: https://github.com/grokify/spectrum/blob/master/LICENSE
