@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/grokify/simplego/cmd/cmdutil"
 	"github.com/grokify/simplego/errors/errorsutil"
+	"github.com/grokify/simplego/os/executil"
 	"github.com/grokify/simplego/type/stringsutil"
 )
 
@@ -26,7 +26,7 @@ func Convert(filenames []string, outdir string, renameFunc func(string) string) 
 			cmdSwagger2OpenAPI,
 			qtr.Quote(srcpath)}, " ")
 
-		_, stderr, err := cmdutil.ExecToFiles(cmd, outpath, "", 0644)
+		_, stderr, err := executil.ExecToFiles(cmd, outpath, "", 0644)
 		if err != nil {
 			if err.Error() == "exit status 1" {
 				ei := errorsutil.ErrorInfo{

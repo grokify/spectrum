@@ -130,7 +130,7 @@ func (uto *UpdateTagsOpts) ModifyTagsOperationFunc(path, method string, op *oas3
 	for tagTry, urlSuffixes := range uto.TagURLsMap {
 		tags := strings.Split(tagTry, ",")
 		tags = stringsutil.SliceCondenseSpace(tags, true, false)
-		if stringsutil.SliceIndex(
+		if stringsutil.SliceIndexMore(
 			urlSuffixes,
 			path, true, true, stringsutil.MatchHasSuffix) > -1 {
 			op.Tags = tags
