@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/simplego/fmt/fmtutil"
+	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/pkg/errors"
 )

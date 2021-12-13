@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/grokify/simplego/net/urlutil"
+	"github.com/grokify/mogo/net/urlutil"
 )
 
 // URL is the Postman URL used in the Postman 2.0 Collection Spec.

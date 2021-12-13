@@ -7,9 +7,9 @@ import (
 	"strings"
 
 	"github.com/grokify/gocharts/data/histogram"
-	"github.com/grokify/simplego/fmt/fmtutil"
-	"github.com/grokify/simplego/net/urlutil"
-	"github.com/grokify/simplego/type/maputil"
+	"github.com/grokify/mogo/fmt/fmtutil"
+	"github.com/grokify/mogo/net/urlutil"
+	"github.com/grokify/mogo/type/maputil"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/jessevdk/go-flags"
 )

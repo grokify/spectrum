@@ -4,8 +4,8 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/simplego/net/httputilmore"
-	"github.com/grokify/simplego/type/stringsutil"
+	"github.com/grokify/mogo/net/httputilmore"
+	"github.com/grokify/mogo/type/stringsutil"
 	"github.com/grokify/spectrum/openapi3"
 )
 

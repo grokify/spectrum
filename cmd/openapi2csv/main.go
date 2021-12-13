@@ -5,7 +5,7 @@ import (
 	"log"
 	"regexp"
 
-	"github.com/grokify/simplego/os/osutil"
+	"github.com/grokify/mogo/os/osutil"
 	csv "github.com/grokify/spectrum/openapi2/openapi2csv"
 	"github.com/jessevdk/go-flags"
 )

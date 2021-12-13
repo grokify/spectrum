@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/simplego/net/httputilmore"
+	"github.com/grokify/mogo/net/httputilmore"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/postman2"
 )

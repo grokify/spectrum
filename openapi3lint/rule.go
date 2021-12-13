@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/simplego/log/severity"
-	"github.com/grokify/simplego/type/stringsutil"
+	"github.com/grokify/mogo/log/severity"
+	"github.com/grokify/mogo/type/stringsutil"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )

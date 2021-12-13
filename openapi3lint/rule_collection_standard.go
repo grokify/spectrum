@@ -5,7 +5,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/grokify/simplego/text/stringcase"
+	"github.com/grokify/mogo/text/stringcase"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 	"github.com/grokify/spectrum/openapi3lint/ruleintstdformat"
 	"github.com/grokify/spectrum/openapi3lint/ruleopidstyle"

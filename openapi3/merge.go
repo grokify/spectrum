@@ -11,7 +11,7 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/table"
-	"github.com/grokify/simplego/os/osutil"
+	"github.com/grokify/mogo/os/osutil"
 	"github.com/pkg/errors"
 )
 

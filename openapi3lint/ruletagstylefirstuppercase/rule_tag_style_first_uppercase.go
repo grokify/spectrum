@@ -3,8 +3,8 @@ package ruletagstylefirstuppercase
 import (
 	"strconv"
 
-	"github.com/grokify/simplego/encoding/jsonutil"
-	"github.com/grokify/simplego/text/stringcase"
+	"github.com/grokify/mogo/encoding/jsonutil"
+	"github.com/grokify/mogo/text/stringcase"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )

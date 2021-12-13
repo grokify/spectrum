@@ -31,7 +31,7 @@ type Rule interface {
 
 * `Name()` should return the name of a rule in kebab case.
 * `Scope()` should return the type of object / property operated on. This affects the processing function provided. As of now, `operation` and `specfication` are supported.
-* `Severity()` should return a syslog like severity level supported by `github.com/grokify/simplego/log/severity`. This should be updated for the `Policy` used.
+* `Severity()` should return a syslog like severity level supported by `github.com/grokify/mogo/log/severity`. This should be updated for the `Policy` used.
 * `ProcessSpec(spec *oas3.Swagger, pointerBase string)` is a function to process a rule at the top specfication level. `pointerBase` is used to provide JSON Pointer info before the `#`. This is executed when `Scope()` is set to `specification`.
 * `ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string)` is executed when `Scope()` is set to `operation`.
 

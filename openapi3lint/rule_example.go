@@ -1,7 +1,7 @@
 package openapi3lint
 
 import (
-	"github.com/grokify/simplego/log/severity"
+	"github.com/grokify/mogo/log/severity"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )
 

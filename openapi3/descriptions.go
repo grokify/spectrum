@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/simplego/os/osutil"
-	"github.com/grokify/simplego/type/maputil"
+	"github.com/grokify/mogo/os/osutil"
+	"github.com/grokify/mogo/type/maputil"
 )
 
 const (

@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/simplego/net/urlutil"
-	"github.com/grokify/simplego/text/stringcase"
+	"github.com/grokify/mogo/net/urlutil"
+	"github.com/grokify/mogo/text/stringcase"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )

@@ -12,9 +12,9 @@ import (
 	"github.com/grokify/gocharts/data/histogram"
 	"github.com/grokify/gocharts/data/table"
 	"github.com/grokify/gocharts/data/table/tabulator"
-	"github.com/grokify/simplego/encoding/jsonutil"
-	"github.com/grokify/simplego/net/urlutil"
-	"github.com/grokify/simplego/type/stringsutil"
+	"github.com/grokify/mogo/encoding/jsonutil"
+	"github.com/grokify/mogo/net/urlutil"
+	"github.com/grokify/mogo/type/stringsutil"
 )
 
 type Spec = oas3.T

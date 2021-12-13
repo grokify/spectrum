@@ -7,12 +7,12 @@ import (
 	"strings"
 
 	"github.com/grokify/gocharts/data/histogram"
-	"github.com/grokify/simplego/encoding/csvutil"
-	"github.com/grokify/simplego/type/stringsutil"
+	"github.com/grokify/mogo/encoding/csvutil"
+	"github.com/grokify/mogo/type/stringsutil"
 )
 
 func CountEndpointsByTag(spec Specification, tagsFilter []string) *histogram.HistogramSet {
-	tagsFilter = stringsutil.SliceCondenseSpace(tagsFilter, true,true   )
+	tagsFilter = stringsutil.SliceCondenseSpace(tagsFilter, true, true)
 	hist := histogram.NewHistogramSet("endpoints by tag")
 	for url, path := range spec.Paths {
 		hist = countEndpointByTag(hist, tagsFilter, url, http.MethodGet, path.Get)
