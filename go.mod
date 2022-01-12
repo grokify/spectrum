@@ -10,7 +10,6 @@ require (
 	github.com/grokify/gohttp v0.1.0
 	github.com/grokify/mogo v0.33.8
 	github.com/jessevdk/go-flags v1.5.0
-	github.com/pkg/errors v0.9.1
 	github.com/rs/zerolog v1.26.1
 	github.com/valyala/fasthttp v1.32.0
 	github.com/valyala/quicktemplate v1.7.0

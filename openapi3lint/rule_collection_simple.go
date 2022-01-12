@@ -1,11 +1,10 @@
 package openapi3lint
 
 import (
+	"errors"
 	"fmt"
 	"sort"
 	"strings"
-
-	"github.com/pkg/errors"
 )
 
 type RuleCollectionSimple struct {
