@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/buaazp/fasthttprouter"
-	"github.com/grokify/mogo/net/anyhttp"
-	"github.com/grokify/mogo/net/http/httpsimple"
+	"github.com/grokify/gohttp/anyhttp"
+	"github.com/grokify/gohttp/httpsimple"
 	"github.com/grokify/mogo/net/httputilmore"
 	"github.com/grokify/mogo/strconv/strconvutil"
 	"github.com/grokify/mogo/type/stringsutil"
