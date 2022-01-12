@@ -11,8 +11,8 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/gocharts/data/table"
+	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/os/osutil"
-	"github.com/pkg/errors"
 )
 
 var jsonFileRx = regexp.MustCompile(`(?i)\.(json|yaml|yml)\s*$`)
@@ -52,14 +52,14 @@ func MergeFiles(filepaths []string, mergeOpts *MergeOptions) (*Spec, error) {
 	for i, fpath := range filepaths {
 		thisSpec, err := ReadFile(fpath, validateEach)
 		if err != nil {
-			return specMaster, errors.Wrap(err, fmt.Sprintf("ReadSpecError [%v] ValidateEach [%v]", fpath, validateEach))
+			return specMaster, errorsutil.Wrap(err, fmt.Sprintf("ReadSpecError [%v] ValidateEach [%v]", fpath, validateEach))
 		}
 		if i == 0 {
 			specMaster = thisSpec
 		} else {
 			specMaster, err = Merge(specMaster, thisSpec, fpath, mergeOpts)
 			if err != nil {
-				return nil, errors.Wrap(err, fmt.Sprintf("Merging [%v]", fpath))
+				return nil, errorsutil.Wrap(err, fmt.Sprintf("Merging [%v]", fpath))
 			}
 		}
 	}
@@ -71,7 +71,7 @@ func MergeFiles(filepaths []string, mergeOpts *MergeOptions) (*Spec, error) {
 		}
 		newSpec, err := oas3.NewLoader().LoadFromData(bytes)
 		if err != nil {
-			return newSpec, errors.Wrap(err, "Loader.LoadSwaggerFromData (MergeFiles().ValidateFinal)")
+			return newSpec, errorsutil.Wrap(err, "Loader.LoadSwaggerFromData (MergeFiles().ValidateFinal)")
 		}
 		return newSpec, nil
 	}
@@ -339,17 +339,17 @@ func MergeRequestBodies(specMaster, specExtra *Spec, specExtraNote string) (*Spe
 func WriteFileDirMerge(outfile, inputDir string, perm os.FileMode, mergeOpts *MergeOptions) (int, error) {
 	spec, num, err := MergeDirectory(inputDir, mergeOpts)
 	if err != nil {
-		return num, errors.Wrap(err, "E_OPENAPI3_MERGE_DIRECTORY_FAILED")
+		return num, errorsutil.Wrap(err, "E_OPENAPI3_MERGE_DIRECTORY_FAILED")
 	}
 
 	bytes, err := spec.MarshalJSON()
 	if err != nil {
-		return num, errors.Wrap(err, "E_SWAGGER2_JSON_ENCODING_FAILED")
+		return num, errorsutil.Wrap(err, "E_SWAGGER2_JSON_ENCODING_FAILED")
 	}
 
 	err = ioutil.WriteFile(outfile, bytes, perm)
 	if err != nil {
-		return num, errors.Wrap(err, "E_SWAGGER2_WRITE_FAILED")
+		return num, errorsutil.Wrap(err, "E_SWAGGER2_WRITE_FAILED")
 	}
 	return num, nil
 }

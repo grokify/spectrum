@@ -5,9 +5,9 @@ import (
 	"io/ioutil"
 	"strings"
 
+	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/net/httputilmore"
 	"github.com/grokify/spectrum/postman2"
-	"github.com/pkg/errors"
 )
 
 type Collection struct {
@@ -19,7 +19,7 @@ func NewCollectionFromBytes(data []byte) (Collection, error) {
 	pman := Collection{}
 	err := json.Unmarshal(data, &pman)
 	if err != nil {
-		err = errors.Wrap(err, "spectrum.postman2.simple.NewCollectionFromBytes << json.Unmarshal")
+		err = errorsutil.Wrap(err, "spectrum.postman2.simple.NewCollectionFromBytes << json.Unmarshal")
 	}
 	return pman, err
 }
@@ -32,8 +32,8 @@ func NewCanonicalCollectionFromBytes(data []byte) (postman2.Collection, error) {
 	}
 	simpleCollection, err := NewCollectionFromBytes(data)
 	if err != nil {
-		err = errors.Wrap(errTry, err.Error())
-		err = errors.Wrap(err, "spectrum.postman2.simple.NewCanonicalCollectionFromBytes << NewCollectionFromBytes")
+		err = errorsutil.Wrap(errTry, err.Error())
+		err = errorsutil.Wrap(err, "spectrum.postman2.simple.NewCanonicalCollectionFromBytes << NewCollectionFromBytes")
 		return collection, err
 	}
 	collection = simpleCollection.ToCanonical()
@@ -45,7 +45,7 @@ func NewCanonicalCollectionFromBytes(data []byte) (postman2.Collection, error) {
 func ReadCanonicalCollection(filepath string) (postman2.Collection, error) {
 	bytes, err := ioutil.ReadFile(filepath)
 	if err != nil {
-		err = errors.Wrap(err, "spectrum.postman2.ReadCanonicalCollection << ioutil.ReadFile")
+		err = errorsutil.Wrap(err, "spectrum.postman2.ReadCanonicalCollection << ioutil.ReadFile")
 		return postman2.Collection{}, err
 	}
 	return NewCanonicalCollectionFromBytes(bytes)

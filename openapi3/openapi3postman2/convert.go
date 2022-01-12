@@ -10,11 +10,11 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/net/urlutil"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/postman2"
 	"github.com/grokify/spectrum/postman2/simple"
-	"github.com/pkg/errors"
 )
 
 // Converter is the struct that manages the conversion.
@@ -33,7 +33,7 @@ func NewConverter(cfg Configuration) Converter {
 func (conv *Converter) MergeConvert(openapiFilepath string, pmanBaseFilepath string, pmanSpecFilepath string) error {
 	oas3spec, err := openapi3.ReadFile(openapiFilepath, true)
 	if err != nil {
-		errors.Wrap(err,
+		errorsutil.Wrap(err,
 			fmt.Sprintf(
 				"cannot read OpenAPI 3 spec [%s] openapi3postman2.Converter.MergeConvert << openapi3.ReadFile",
 				openapiFilepath))
@@ -44,7 +44,7 @@ func (conv *Converter) MergeConvert(openapiFilepath string, pmanBaseFilepath str
 	if len(pmanBaseFilepath) > 0 {
 		pman, err := simple.ReadCanonicalCollection(pmanBaseFilepath)
 		if err != nil {
-			err = errors.Wrap(err,
+			err = errorsutil.Wrap(err,
 				fmt.Sprintf(
 					"cannot read Postman Collection [%s] openapi3postman2.Converter.MergeConvert << simple.ReadCanonicalCollection",
 					pmanBaseFilepath))

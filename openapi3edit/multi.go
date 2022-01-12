@@ -4,9 +4,9 @@ import (
 	"fmt"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/grokify/spectrum/openapi3"
-	"github.com/pkg/errors"
 )
 
 type SpecMoreModifyMultiOpts struct {
@@ -68,7 +68,7 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 	if opts.PathsExec {
 		err := SpecPathsModify(sm.Spec, opts.Paths)
 		if err != nil {
-			return errors.Wrap(err, "SpecModifyMulti")
+			return errorsutil.Wrap(err, "SpecModifyMulti")
 		}
 		if opts.PathsShow {
 			fmtutil.PrintJSON(InspectPaths(sm.Spec))

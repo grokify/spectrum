@@ -5,6 +5,7 @@ import (
 	"log"
 	"regexp"
 
+	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/grokify/mogo/log/severity"
 	"github.com/grokify/mogo/os/osutil"
@@ -14,7 +15,6 @@ import (
 	"github.com/grokify/spectrum/openapi3lint/extensions"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 	"github.com/jessevdk/go-flags"
-	"github.com/pkg/errors"
 )
 
 type Options struct {
@@ -59,7 +59,7 @@ func main() {
 
 	pol, err := polCfg.Policy()
 	if err != nil {
-		log.Fatal(errors.Wrap(err, "polCfg.Policy()"))
+		log.Fatal(errorsutil.Wrap(err, "polCfg.Policy()"))
 	}
 	fmtutil.PrintJSON(pol)
 	fmtutil.PrintJSON(pol.RuleNames())

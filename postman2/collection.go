@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"strings"
 
+	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/net/httputilmore"
-	"github.com/pkg/errors"
 )
 
 const (
@@ -23,7 +23,7 @@ func NewCollectionFromBytes(data []byte) (Collection, error) {
 	col := Collection{}
 	err := json.Unmarshal(data, &col)
 	if err != nil {
-		err = errors.Wrap(err, "spectrum.postman2.NewCollectionFromBytes << json.Unmarshal")
+		err = errorsutil.Wrap(err, "spectrum.postman2.NewCollectionFromBytes << json.Unmarshal")
 		return col, err
 	}
 	col.Inflate()

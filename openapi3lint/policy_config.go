@@ -6,8 +6,8 @@ import (
 	"io/ioutil"
 	"time"
 
+	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/type/stringsutil"
-	"github.com/pkg/errors"
 )
 
 type PolicyConfig struct {
@@ -104,14 +104,14 @@ func (cfg *PolicyConfig) Policy() (Policy, error) {
 				ruleCollectionsMap[ruleName] = append(ruleCollectionsMap[ruleName], stdRules.Name())
 				rule, err := stdRules.Rule(ruleName)
 				if err != nil {
-					return pol, errors.Wrap(err, "standard error not found. PolicyConfig.Policy()")
+					return pol, errorsutil.Wrap(err, "standard error not found. PolicyConfig.Policy()")
 				}
 				if err = pol.AddRule(rule, ruleCfg.Severity, true); err != nil {
-					return pol, errors.Wrap(err, fmt.Sprintf("Policy.AddRule() [%s]", ruleName))
+					return pol, errorsutil.Wrap(err, fmt.Sprintf("Policy.AddRule() [%s]", ruleName))
 				}
 				/*
 					if err := pol.addRuleWithPriorError(stdRules.Rule(ruleName, ruleCfg.Severity)); err != nil {
-						return pol, errors.Wrap(err, fmt.Sprintf("pol.addRuleWithPriorError [%s]", ruleName))
+						return pol, errorsutil.Wrap(err, fmt.Sprintf("pol.addRuleWithPriorError [%s]", ruleName))
 					}*/
 			}
 		}
@@ -123,13 +123,13 @@ func (cfg *PolicyConfig) Policy() (Policy, error) {
 				ruleCollectionsMap[ruleName] = append(ruleCollectionsMap[ruleName], collection.Name())
 				rule, err := collection.Rule(ruleName)
 				if err != nil {
-					return pol, errors.Wrap(err, "collection rule exists but not found. PolicyConfig.Policy()")
+					return pol, errorsutil.Wrap(err, "collection rule exists but not found. PolicyConfig.Policy()")
 				}
 				if err = pol.AddRule(rule, ruleCfg.Severity, true); err != nil {
-					return pol, errors.Wrap(err, fmt.Sprintf("Policy.AddRule() [%s]", ruleName))
+					return pol, errorsutil.Wrap(err, fmt.Sprintf("Policy.AddRule() [%s]", ruleName))
 				}
 				/*if err := pol.addRuleWithPriorError(collection.Rule(ruleName, ruleCfg.Severity)); err != nil {
-					return pol, errors.Wrap(err, fmt.Sprintf("pol.addRuleWithPriorError [%s]", ruleName))
+					return pol, errorsutil.Wrap(err, fmt.Sprintf("pol.addRuleWithPriorError [%s]", ruleName))
 				}*/
 			}
 		}
@@ -145,7 +145,7 @@ func (cfg *PolicyConfig) Policy() (Policy, error) {
 	if len(collisions) > 0 {
 		bytes, err := json.Marshal(collisions)
 		if err != nil {
-			return pol, errors.Wrap(err, fmt.Sprintf("json.Marshal [%s]", string(bytes)))
+			return pol, errorsutil.Wrap(err, fmt.Sprintf("json.Marshal [%s]", string(bytes)))
 		}
 		return pol, fmt.Errorf("rule collisions: %s", string(bytes))
 	}

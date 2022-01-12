@@ -7,9 +7,9 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/io/ioutilmore"
 	"github.com/grokify/mogo/os/osutil"
-	"github.com/pkg/errors"
 )
 
 var jsonFileRx = regexp.MustCompile(`(?i)\.json\s*$`)
@@ -45,7 +45,7 @@ func MergeFilepaths(filepaths []string) (Specification, error) {
 		fmt.Printf("[%v][%v]\n", i, fpath)
 		thisSpec, err := ReadOpenAPI2SpecFileDirect(fpath)
 		if err != nil {
-			return specMaster, errors.Wrap(err, fmt.Sprintf("E_READ_SPEC [%v]", fpath))
+			return specMaster, errorsutil.Wrap(err, fmt.Sprintf("E_READ_SPEC [%v]", fpath))
 		}
 		if i == 0 {
 			specMaster = thisSpec
@@ -96,12 +96,12 @@ func MergeDefinitions(specMaster, specExtra Specification) Specification {
 func WriteFileDirMerge(outfile, inputDir string, perm os.FileMode) error {
 	spec, err := MergeDirectory(inputDir)
 	if err != nil {
-		return errors.Wrap(err, "E_OPENAPI3_MERGE_DIRECTORY_FAILED")
+		return errorsutil.Wrap(err, "E_OPENAPI3_MERGE_DIRECTORY_FAILED")
 	}
 
 	err = ioutilmore.WriteFileJSON(outfile, spec, perm, "", "  ")
 	if err != nil {
-		return errors.Wrap(err, "E_OPENAPI3_WRITE_FAILED")
+		return errorsutil.Wrap(err, "E_OPENAPI3_WRITE_FAILED")
 	}
 	return nil
 }

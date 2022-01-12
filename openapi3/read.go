@@ -10,7 +10,7 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/ghodss/yaml"
 	"github.com/grokify/mogo/encoding/jsonutil"
-	"github.com/pkg/errors"
+	"github.com/grokify/mogo/errors/errorsutil"
 )
 
 var rxYamlExtension = regexp.MustCompile(`(?i)\.ya?ml\s*$`)
@@ -35,7 +35,7 @@ func ReadFile(oas3file string, validate bool) (*Spec, error) {
 	}
 	bytes, err := ioutil.ReadFile(oas3file)
 	if err != nil {
-		return nil, errors.Wrap(err, fmt.Sprintf("ReadFile.ReadFile.Error.Filename [%v]", oas3file))
+		return nil, errorsutil.Wrap(err, fmt.Sprintf("ReadFile.ReadFile.Error.Filename [%v]", oas3file))
 	}
 	if rxYamlExtension.MatchString(oas3file) {
 		bytes, err = yaml.YAMLToJSON(bytes)
@@ -46,7 +46,7 @@ func ReadFile(oas3file string, validate bool) (*Spec, error) {
 	spec := &Spec{}
 	err = spec.UnmarshalJSON(bytes)
 	if err != nil {
-		return nil, errors.Wrap(err, fmt.Sprintf("ReadFile.UnmarshalJSON.Error.Filename [%s]", oas3file))
+		return nil, errorsutil.Wrap(err, fmt.Sprintf("ReadFile.UnmarshalJSON.Error.Filename [%s]", oas3file))
 	}
 	return spec, nil
 }
@@ -72,11 +72,11 @@ func Parse(oas3Bytes []byte) (*Spec, error) {
 func ReadAndValidateFile(oas3file string) (*Spec, error) {
 	bytes, err := ioutil.ReadFile(oas3file)
 	if err != nil {
-		return nil, errors.Wrap(err, "E_READ_FILE_ERROR")
+		return nil, errorsutil.Wrap(err, "E_READ_FILE_ERROR")
 	}
 	spec, err := oas3.NewLoader().LoadFromData(bytes)
 	if err != nil {
-		return spec, errors.Wrap(err, fmt.Sprintf("E_OPENAPI3_SPEC_LOAD_VALIDATE_ERROR [%s]", oas3file))
+		return spec, errorsutil.Wrap(err, fmt.Sprintf("E_OPENAPI3_SPEC_LOAD_VALIDATE_ERROR [%s]", oas3file))
 	}
 	_, err = ValidateMore(spec)
 	return spec, err
