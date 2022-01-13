@@ -6,7 +6,7 @@ require (
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/getkin/kin-openapi v0.88.0
 	github.com/ghodss/yaml v1.0.0
-	github.com/grokify/gocharts v1.16.8
+	github.com/grokify/gocharts v1.16.9
 	github.com/grokify/gohttp v0.1.0
 	github.com/grokify/mogo v0.33.8
 	github.com/jessevdk/go-flags v1.5.0
