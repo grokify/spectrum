@@ -23,9 +23,9 @@ func (sm *SpecMore) ExtensionNames() map[string]int {
 	return extNames
 }
 
-func (sm *SpecMore) HasComponentSchema(componentSchemaName string, lowerCaseMatch bool) bool {
+func (sm *SpecMore) HasComponentSchema(componentSchemaName string, caseInsensitiveCaseMatch bool) bool {
 	componentSchemaName = strings.TrimSpace(componentSchemaName)
-	if lowerCaseMatch {
+	if caseInsensitiveCaseMatch {
 		componentSchemaName = strings.ToLower(componentSchemaName)
 	}
 	if len(sm.Spec.Components.Schemas) == 0 {
@@ -34,10 +34,9 @@ func (sm *SpecMore) HasComponentSchema(componentSchemaName string, lowerCaseMatc
 	if _, ok := sm.Spec.Components.Schemas[componentSchemaName]; ok {
 		return true
 	}
-	if lowerCaseMatch {
+	if caseInsensitiveCaseMatch {
 		for nameTry := range sm.Spec.Components.Schemas {
-			nameTry = strings.ToLower(strings.TrimSpace(nameTry))
-			if nameTry == componentSchemaName {
+			if strings.EqualFold(strings.TrimSpace(nameTry), componentSchemaName) {
 				return true
 			}
 		}
