@@ -257,15 +257,15 @@ func BuildPostmanURL(cfg Configuration, spec *openapi3.Spec, specPath string, op
 	overrideServerURL := urlutil.JoinAbsolute(partsOverrideURL...)
 
 	specURLString := openapi3.BuildApiUrlOAS(specServerURL, overrideServerURL, specPath)
-	pmanURLString := postman2.ApiUrlOasToPostman(specURLString)
+	pmanURLString := postman2.ApiURLOasToPostman(specURLString)
 	pmanURL := postman2.NewURL(pmanURLString)
-	pmanURL = PostmanUrlAddDefaultsOAS3(pmanURL, operation)
+	pmanURL = PostmanURLAddDefaultsOAS3(pmanURL, operation)
 	return pmanURL
 }
 
 var postmanUrlDefaultsRx *regexp.Regexp = regexp.MustCompile(`^\s*(:(.+))\s*$`)
 
-func PostmanUrlAddDefaultsOAS3(pmanURL postman2.URL, operation *oas3.Operation) postman2.URL {
+func PostmanURLAddDefaultsOAS3(pmanURL postman2.URL, operation *oas3.Operation) postman2.URL {
 	for _, part := range pmanURL.Path {
 		match := postmanUrlDefaultsRx.FindAllStringSubmatch(part, -1)
 		if len(match) > 0 {

@@ -104,7 +104,6 @@ func (item *Item) UpsertSubItem(newItem *Item) {
 		}
 	}
 	item.Item = append(item.Item, newItem)
-	return
 }
 
 type Description struct {
@@ -128,5 +127,5 @@ type Event struct {
 
 type Script struct {
 	Type string   `json:"type,omitempty"`
-	Exec []string `json:"exec,omitmpety"`
+	Exec []string `json:"exec,omitempty"`
 }

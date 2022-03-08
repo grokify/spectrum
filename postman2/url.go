@@ -34,11 +34,11 @@ func NewURLParameters() URLParameters {
 	}
 }
 
-func (url *URL) IsRawOnly() bool {
-	url.Protocol = strings.TrimSpace(url.Protocol)
-	if len(url.Protocol) > 0 ||
-		len(url.Host) > 0 ||
-		len(url.Path) > 0 {
+func (pmURL *URL) IsRawOnly() bool {
+	pmURL.Protocol = strings.TrimSpace(pmURL.Protocol)
+	if len(pmURL.Protocol) > 0 ||
+		len(pmURL.Host) > 0 ||
+		len(pmURL.Path) > 0 {
 		return false
 	}
 	return true
@@ -64,7 +64,7 @@ type URLVariableDescription struct {
 	Type    string `json:"type,omitempty"`
 }
 
-func NewURLForGoUrl(goUrl url.URL) URL {
+func NewURLForGoURL(goUrl url.URL) URL {
 	pmURL := URL{Variable: []URLVariable{}}
 	goUrl.Scheme = strings.TrimSpace(goUrl.Scheme)
 	goUrl.Host = strings.TrimSpace(goUrl.Host)
@@ -122,15 +122,15 @@ func (pmURL *URL) AddVariable(key string, value interface{}) {
 }
 
 const (
-	apiUrlOasToPostmanVarMatch   string = `(^|[^\{])\{([^\/\{\}]+)\}([^\}]|$)`
-	apiUrlOasToPostmanVarReplace string = "$1:$2$3"
+	apiURLOasToPostmanVarMatch   string = `(^|[^\{])\{([^\/\{\}]+)\}([^\}]|$)`
+	apiURLOasToPostmanVarReplace string = "$1:$2$3"
 )
 
-var apiUrlOasToPostmanVarMatchRx = regexp.MustCompile(
-	apiUrlOasToPostmanVarMatch)
+var apiURLOasToPostmanVarMatchRx = regexp.MustCompile(
+	apiURLOasToPostmanVarMatch)
 
 //noinspection ALL
-func ApiUrlOasToPostman(urlWithOasVars string) string {
-	return apiUrlOasToPostmanVarMatchRx.ReplaceAllString(
-		urlWithOasVars, apiUrlOasToPostmanVarReplace)
+func ApiURLOasToPostman(urlWithOasVars string) string {
+	return apiURLOasToPostmanVarMatchRx.ReplaceAllString(
+		urlWithOasVars, apiURLOasToPostmanVarReplace)
 }
