@@ -195,7 +195,7 @@ func ValidateFixOperationResponseTypes(spec *openapi3.Spec, fix bool) ([]*openap
 				response := resRef
 				for mediaTypeOrig, mtRef := range response.Value.Content {
 					mediaType := strings.ToLower(strings.TrimSpace(mediaTypeOrig))
-					if mediaType == httputilmore.ContentTypeAppJson {
+					if mediaType == httputilmore.ContentTypeAppJSON {
 						schemaRef := mtRef.Schema
 						if len(schemaRef.Ref) == 0 {
 							schema := schemaRef.Value

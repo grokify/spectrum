@@ -29,7 +29,7 @@ func main() {
 
 	spec := &openapi3.Spec{}
 
-	if urlutil.IsHttp(opts.SpecFileOAS3, true, true) {
+	if urlutil.IsHTTP(opts.SpecFileOAS3, true, true) {
 		spec, err = openapi3.ReadURL(opts.SpecFileOAS3)
 	} else {
 		spec, err = openapi3.ReadAndValidateFile(opts.SpecFileOAS3)

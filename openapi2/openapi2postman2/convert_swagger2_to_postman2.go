@@ -165,7 +165,7 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag openapi2.Specificatio
 
 	item.Request.Header = headers
 
-	jsonCT := httputilmore.ContentTypeAppJsonUtf8
+	jsonCT := httputilmore.ContentTypeAppJSONUtf8
 	indexAppJson := strings.Index(
 		strings.ToLower(requestContentType), jsonCT)
 	if indexAppJson > -1 {

@@ -32,17 +32,17 @@ func NewServer() Server {
 
 func (svc *Server) HandleAPIRegistryNetHTTP(res http.ResponseWriter, req *http.Request) {
 	log.Debug().Msg("FUNC_HandleNetHTTP__BEGIN")
-	svc.HandleAPIRegistryAnyEngine(anyhttp.NewResReqNetHttp(res, req))
+	svc.HandleAPIRegistryAnyEngine(anyhttp.NewResReqNetHTTP(res, req))
 }
 
 func (svc *Server) HandleAPIRegistryFastHTTP(ctx *fasthttp.RequestCtx) {
 	log.Debug().Msg("HANDLE_FastHTTP")
-	svc.HandleAPIRegistryAnyEngine(anyhttp.NewResReqFastHttp(ctx))
+	svc.HandleAPIRegistryAnyEngine(anyhttp.NewResReqFastHTTP(ctx))
 }
 
 func (svc *Server) HandleAPIRegistryAnyEngine(aRes anyhttp.Response, aReq anyhttp.Request) {
 	log.Debug().Msg("FUNC_HandleAnyEngine__BEGIN")
-	aRes.SetContentType(httputilmore.ContentTypeTextHtmlUtf8)
+	aRes.SetContentType(httputilmore.ContentTypeTextHTMLUtf8)
 	err := aReq.ParseForm()
 	if err != nil {
 		SetResponseError(aRes, err.Error())
@@ -83,7 +83,7 @@ func (svc *Server) HandleAPIRegistryAnyEngine(aRes anyhttp.Response, aReq anyhtt
 
 	oas3PageHtml := openapi3html.SpectrumUIPage(oas3HtmlParams)
 
-	aRes.SetHeader(httputilmore.HeaderContentType, httputilmore.ContentTypeTextHtmlUtf8)
+	aRes.SetHeader(httputilmore.HeaderContentType, httputilmore.ContentTypeTextHTMLUtf8)
 	aRes.SetBodyBytes([]byte(oas3PageHtml))
 }
 

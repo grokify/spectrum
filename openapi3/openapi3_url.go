@@ -14,6 +14,6 @@ func BuildApiUrlOAS(specServerURL, overrideServerURL, specPath string) string {
 	if len(overrideServerURL) > 0 {
 		serverURL = overrideServerURL
 	}
-	fullUrl := strings.Join([]string{serverURL, specPath}, "/")
-	return urlutil.CondenseUri(fullUrl)
+	return urlutil.CondenseURI(
+		strings.Join([]string{serverURL, specPath}, "/"))
 }
