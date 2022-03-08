@@ -107,13 +107,19 @@ func (pol *Policy) ValidateSpec(spec *openapi3.Spec, pointerBase, filterSeverity
 	if err != nil {
 		return vsets, err
 	}
-	vsets.UpsertSets(vsetsOps)
+	err = vsets.UpsertSets(vsetsOps)
+	if err != nil {
+		return vsets, err
+	}
 
 	vsetsSpec, err := pol.processRulesSpecification(spec, pointerBase, filterSeverity)
 	if err != nil {
 		return vsets, err
 	}
-	vsets.UpsertSets(vsetsSpec)
+	err = vsets.UpsertSets(vsetsSpec)
+	if err != nil {
+		return vsets, err
+	}
 
 	return vsets, nil
 }

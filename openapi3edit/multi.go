@@ -28,7 +28,7 @@ type SpecMoreModifyMultiOpts struct {
 // an OpenAPI 3 spec.
 func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) error {
 	if opts.OperationsShowIds {
-		fmtutil.PrintJSON(SpecOperationIds(sm.Spec))
+		// fmtutil.PrintJSON(SpecOperationIds(sm.Spec))
 		oldIds := SpecOperationIds(sm.Spec)
 		if opts.OperationsShowIds {
 			err := fmtutil.PrintJSON(oldIds)
@@ -52,7 +52,10 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 		// UpdateOperationIds(sm.Spec, opts.OperationIdsRename)
 		newIds := SpecOperationIds(sm.Spec)
 		if opts.OperationsShowIds {
-			fmtutil.PrintJSON(newIds)
+			err := fmtutil.PrintJSON(newIds)
+			if err != nil {
+				return err
+			}
 		}
 		for id, count := range newIds {
 			if count != 1 {
@@ -66,22 +69,31 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 	}
 	// Update Paths
 	if opts.PathsShow {
-		fmtutil.PrintJSON(InspectPaths(sm.Spec))
+		err := fmtutil.PrintJSON(InspectPaths(sm.Spec))
+		if err != nil {
+			return err
+		}
 	}
 	if opts.PathsExec {
 		err := SpecPathsModify(sm.Spec, opts.Paths)
 		if err != nil {
-			return errorsutil.Wrap(err, "SpecModifyMulti")
+			return errorsutil.Wrap(err, "specModifyMulti")
 		}
 		if opts.PathsShow {
-			fmtutil.PrintJSON(InspectPaths(sm.Spec))
+			err := fmtutil.PrintJSON(InspectPaths(sm.Spec))
+			if err != nil {
+				return err
+			}
 		}
 	}
 
 	// Update Tags
 	if opts.TagsOperationFunc != nil || len(opts.Tags) > 0 {
 		if opts.TagsShow {
-			fmtutil.PrintJSON(sm.TagsMap(true, true))
+			err := fmtutil.PrintJSON(sm.TagsMap(true, true))
+			if err != nil {
+				return err
+			}
 		}
 		if opts.TagsExec {
 			if opts.TagsOperationFunc != nil {
@@ -89,7 +101,10 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 			}
 			SpecTagsModify(sm.Spec, opts.Tags)
 			if opts.TagsShow {
-				fmtutil.PrintJSON(sm.TagsMap(true, true))
+				err := fmtutil.PrintJSON(sm.TagsMap(true, true))
+				if err != nil {
+					return err
+				}
 			}
 		}
 	}
