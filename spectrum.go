@@ -46,8 +46,7 @@ func main() {
 		if len(opts.Config) > 0 {
 			cfg3, err = openapi3postman2.ConfigurationReadFile(opts.Config)
 			if err != nil {
-				errorsutil.Wrap(err, "openapi3postman2.ConfigurationReadFile")
-				log.Fatal(err)
+				log.Fatal(errorsutil.Wrap(err, "openapi3postman2.ConfigurationReadFile"))
 			}
 		}
 
@@ -61,8 +60,7 @@ func main() {
 			opts.Postman)
 
 		if err != nil {
-			errorsutil.Wrap(err, "spectrum.main << conv.MergeConvert")
-			log.Fatal(err)
+			log.Fatal(errorsutil.Wrap(err, "spectrum.main << conv.MergeConvert"))
 		}
 
 		fmt.Printf("wrote Postman collection [%s]\n", opts.Postman)

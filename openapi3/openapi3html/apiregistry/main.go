@@ -87,13 +87,14 @@ func (svr *Server) HandleAPIRegistryAnyEngine(aRes anyhttp.Response, aReq anyhtt
 	aRes.SetBodyBytes([]byte(oas3PageHTML))
 }
 
-func SetResponseError(aRes anyhttp.Response, bodyText string) {
+func SetResponseError(aRes anyhttp.Response, bodyText string) error {
 	bodyText = `<!DOCTYPE html>
 	<html>
 	<body>
 	<h1>` + bodyText + `</p></body></html>`
 
-	aRes.SetBodyBytes([]byte(bodyText))
+	_, err := aRes.SetBodyBytes([]byte(bodyText))
+	return err
 }
 
 const ErrorPage = `<!DOCTYPE html>

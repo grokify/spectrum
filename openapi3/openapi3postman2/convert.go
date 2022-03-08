@@ -33,11 +33,10 @@ func NewConverter(cfg Configuration) Converter {
 func (conv *Converter) MergeConvert(openapiFilepath string, pmanBaseFilepath string, pmanSpecFilepath string) error {
 	oas3spec, err := openapi3.ReadFile(openapiFilepath, true)
 	if err != nil {
-		errorsutil.Wrap(err,
+		return errorsutil.Wrap(err,
 			fmt.Sprintf(
 				"cannot read OpenAPI 3 spec [%s] openapi3postman2.Converter.MergeConvert << openapi3.ReadFile",
 				openapiFilepath))
-		return err
 	}
 
 	pmanBaseFilepath = strings.TrimSpace(pmanBaseFilepath)
