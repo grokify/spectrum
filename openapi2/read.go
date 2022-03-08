@@ -60,8 +60,5 @@ var rxYAMLExtension = regexp.MustCompile(`.ya?ml$`)
 // FilenameIsYAML checks to see if a filename ends
 // in `.yml` or `.yaml` with a case-insensitive match.
 func FilenameIsYAML(filename string) bool {
-	if rxYAMLExtension.MatchString(strings.ToLower(strings.TrimSpace(filename))) {
-		return true
-	}
-	return false
+	return rxYAMLExtension.MatchString(strings.ToLower(strings.TrimSpace(filename)))
 }

@@ -250,7 +250,7 @@ type Parameter struct {
 	XExamples        map[string]string `json:"x-examples,omitempty"`
 }
 
-func GetJsonBodyParameterExampleForKey(params []Parameter, exampleKey string) (string, error) {
+func GetJSONBodyParameterExampleForKey(params []Parameter, exampleKey string) (string, error) {
 	exampleKey = strings.TrimSpace(exampleKey)
 	if len(exampleKey) == 0 {
 		return "", errors.New("exampleKey is empty")

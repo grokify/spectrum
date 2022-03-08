@@ -169,7 +169,7 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag openapi2.Specificatio
 	indexAppJSON := strings.Index(
 		strings.ToLower(requestContentType), jsonCT)
 	if indexAppJSON > -1 {
-		jsonExample, err := openapi2.GetJsonBodyParameterExampleForKey(
+		jsonExample, err := openapi2.GetJSONBodyParameterExampleForKey(
 			endpoint.Parameters, jsonCT)
 		if err == nil {
 			jsonExample = strings.TrimSpace(jsonExample)

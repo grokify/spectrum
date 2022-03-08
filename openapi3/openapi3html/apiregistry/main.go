@@ -30,17 +30,17 @@ func NewServer() Server {
 		Engine: stringsutil.FirstNonEmpty(os.Getenv("ENGINE"), "nethttp")}
 }
 
-func (svc *Server) HandleAPIRegistryNetHTTP(res http.ResponseWriter, req *http.Request) {
+func (svr *Server) HandleAPIRegistryNetHTTP(res http.ResponseWriter, req *http.Request) {
 	log.Debug().Msg("FUNC_HandleNetHTTP__BEGIN")
-	svc.HandleAPIRegistryAnyEngine(anyhttp.NewResReqNetHTTP(res, req))
+	svr.HandleAPIRegistryAnyEngine(anyhttp.NewResReqNetHTTP(res, req))
 }
 
-func (svc *Server) HandleAPIRegistryFastHTTP(ctx *fasthttp.RequestCtx) {
+func (svr *Server) HandleAPIRegistryFastHTTP(ctx *fasthttp.RequestCtx) {
 	log.Debug().Msg("HANDLE_FastHTTP")
-	svc.HandleAPIRegistryAnyEngine(anyhttp.NewResReqFastHTTP(ctx))
+	svr.HandleAPIRegistryAnyEngine(anyhttp.NewResReqFastHTTP(ctx))
 }
 
-func (svc *Server) HandleAPIRegistryAnyEngine(aRes anyhttp.Response, aReq anyhttp.Request) {
+func (svr *Server) HandleAPIRegistryAnyEngine(aRes anyhttp.Response, aReq anyhttp.Request) {
 	log.Debug().Msg("FUNC_HandleAnyEngine__BEGIN")
 	aRes.SetContentType(httputilmore.ContentTypeTextHTMLUtf8)
 	err := aReq.ParseForm()
@@ -76,15 +76,15 @@ func (svc *Server) HandleAPIRegistryAnyEngine(aRes anyhttp.Response, aReq anyhtt
 		return
 	}
 
-	oas3HtmlParams := openapi3html.PageParams{
+	oas3HTMLParams := openapi3html.PageParams{
 		PageTitle:  spec.Info.Title,
 		TableDomID: "specTable",
 		Spec:       spec}
 
-	oas3PageHtml := openapi3html.SpectrumUIPage(oas3HtmlParams)
+	oas3PageHTML := openapi3html.SpectrumUIPage(oas3HTMLParams)
 
 	aRes.SetHeader(httputilmore.HeaderContentType, httputilmore.ContentTypeTextHTMLUtf8)
-	aRes.SetBodyBytes([]byte(oas3PageHtml))
+	aRes.SetBodyBytes([]byte(oas3PageHTML))
 }
 
 func SetResponseError(aRes anyhttp.Response, bodyText string) {
