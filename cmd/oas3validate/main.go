@@ -51,7 +51,10 @@ func main() {
 		[]string{"Tag", "Operation Count"}, sortBy, true)
 
 	ops2 := ops.ItemCounts(sortBy)
-	fmtutil.PrintJSON(ops2)
+	err = fmtutil.PrintJSON(ops2)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	ops2a := maputil.RecordSet(ops2)
 

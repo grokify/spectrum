@@ -17,8 +17,8 @@ type OperationMore struct {
 	Operation *oas3.Operation
 }
 
-func (opm *OperationMore) AddExternalDocs(docURL, docDescription string, preserveIfReqEmpty bool) {
-	operationAddExternalDocs(opm.Operation, docURL, docDescription, preserveIfReqEmpty)
+func (opm *OperationMore) AddExternalDocs(docURL, docDescription string, preserveIfReqEmpty bool) error {
+	return operationAddExternalDocs(opm.Operation, docURL, docDescription, preserveIfReqEmpty)
 }
 
 func (opm *OperationMore) AddRequestBodySchemaRef(description string, required bool, contentType string, schemaRef *oas3.SchemaRef) error {

@@ -31,7 +31,10 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 		fmtutil.PrintJSON(SpecOperationIds(sm.Spec))
 		oldIds := SpecOperationIds(sm.Spec)
 		if opts.OperationsShowIds {
-			fmtutil.PrintJSON(oldIds)
+			err := fmtutil.PrintJSON(oldIds)
+			if err != nil {
+				return err
+			}
 		}
 		for id, count := range oldIds {
 			if count != 1 {
