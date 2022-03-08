@@ -46,7 +46,10 @@ func main() {
 		} else {
 			files = []string{opts.InputFileOAS3}
 		}
-		fmtutil.PrintJSON(files)
+		err = fmtutil.PrintJSON(files)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	polCfg, err := openapi3lint.NewPolicyConfigFile(opts.PolicyFile)
@@ -54,8 +57,14 @@ func main() {
 		log.Fatal(err)
 	}
 	polCfg.AddRuleCollection(extensions.NewRuleCollectionExtensions())
-	fmtutil.PrintJSON(polCfg)
-	fmtutil.PrintJSON(polCfg.RuleNames())
+	err = fmtutil.PrintJSON(polCfg)
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = fmtutil.PrintJSON(polCfg.RuleNames())
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	pol, err := polCfg.Policy()
 	if err != nil {

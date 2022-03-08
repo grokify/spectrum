@@ -246,7 +246,10 @@ func SpecAddOperationMetas(spec *openapi3.Spec, metas map[string]openapi3.Operat
 			writeThrottling = true
 		}
 		if writeDocs {
-			operationAddExternalDocs(op, opMeta.DocsURL, opMeta.DocsDescription, true)
+			err := operationAddExternalDocs(op, opMeta.DocsURL, opMeta.DocsDescription, true)
+			if err != nil {
+				return
+			}
 		}
 		if writeScopes {
 			if len(opMeta.SecurityScopes) > 0 {
