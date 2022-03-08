@@ -53,7 +53,7 @@ func (conv *Converter) MergeConvert(swaggerFilepath string, pmanBaseFilepath str
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(pmanSpecFilepath, bytes, 0644)
+	return ioutil.WriteFile(pmanSpecFilepath, bytes, 0600)
 }
 
 // Convert builds a Postman 2.0 spec using a Swagger 2.0 spec.
@@ -68,7 +68,7 @@ func (conv *Converter) Convert(swaggerFilepath string, pmanSpecFilepath string) 
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(pmanSpecFilepath, bytes, 0644)
+	return ioutil.WriteFile(pmanSpecFilepath, bytes, 0600)
 }
 
 // Convert creates a Postman 2.0 collection from a configuration and Swagger 2.0 spec
@@ -140,12 +140,12 @@ func postmanAddItemToFolder(pman postman2.Collection, pmItem *postman2.Item, pmF
 // Swagger2PathToPostman2APIItem converts a Swagger 2.0 path to a
 // Postman 2.0 API item
 func Swagger2PathToPostman2APIItem(cfg Configuration, swag openapi2.Specification, url string, method string, endpoint *openapi2.Endpoint) *postman2.Item {
-	pmUrl := BuildPostmanURL(cfg, swag, url, endpoint)
+	pmURL := BuildPostmanURL(cfg, swag, url, endpoint)
 	item := &postman2.Item{
 		Name: endpoint.Summary,
 		Request: &postman2.Request{
 			Method: strings.ToUpper(method),
-			URL:    &pmUrl,
+			URL:    &pmURL,
 		},
 	}
 
@@ -166,9 +166,9 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag openapi2.Specificatio
 	item.Request.Header = headers
 
 	jsonCT := httputilmore.ContentTypeAppJSONUtf8
-	indexAppJson := strings.Index(
+	indexAppJSON := strings.Index(
 		strings.ToLower(requestContentType), jsonCT)
-	if indexAppJson > -1 {
+	if indexAppJSON > -1 {
 		jsonExample, err := openapi2.GetJsonBodyParameterExampleForKey(
 			endpoint.Parameters, jsonCT)
 		if err == nil {
@@ -184,7 +184,7 @@ func Swagger2PathToPostman2APIItem(cfg Configuration, swag openapi2.Specificatio
 
 // BuildPostmanURL creates a Postman 2.0 spec URL from a Swagger URL
 func BuildPostmanURL(cfg Configuration, swag openapi2.Specification, swaggerURL string, endpoint *openapi2.Endpoint) postman2.URL {
-	goUrl := url.URL{}
+	goURL := url.URL{}
 
 	//URLParts := []string{}
 	URLPathParts := []string{}
@@ -193,13 +193,13 @@ func BuildPostmanURL(cfg Configuration, swag openapi2.Specification, swaggerURL 
 	// Set URL path parts
 	if len(cfg.PostmanURLBase) > 0 {
 		//URLParts = append(URLParts, cfg.PostmanURLBase)
-		goUrl.Host = cfg.PostmanURLBase
+		goURL.Host = cfg.PostmanURLBase
 	} else if len(strings.TrimSpace(cfg.PostmanURLHostname)) > 0 {
 		//URLParts = append(URLParts, strings.TrimSpace(cfg.PostmanURLHostname))
-		goUrl.Host = cfg.PostmanURLHostname
+		goURL.Host = cfg.PostmanURLHostname
 	} else if len(strings.TrimSpace(swag.Host)) > 0 {
 		//URLParts = append(URLParts, strings.TrimSpace(swag.Host))
-		goUrl.Host = swag.Host
+		goURL.Host = swag.Host
 	}
 
 	if len(strings.TrimSpace(swag.BasePath)) > 0 {
@@ -223,7 +223,7 @@ func BuildPostmanURL(cfg Configuration, swag openapi2.Specification, swaggerURL 
 	rawPostmanURLPath := strings.TrimSpace(strings.Join(URLPathParts, "/"))
 	rawPostmanURLPath = rx1.ReplaceAllString(rawPostmanURLPath, "/")
 	rawPostmanURLPath = rx2.ReplaceAllString(rawPostmanURLPath, "")
-	goUrl.Path = rawPostmanURLPath
+	goURL.Path = rawPostmanURLPath
 
 	// Add URL Scheme
 	if len(cfg.PostmanURLBase) == 0 {
@@ -231,7 +231,7 @@ func BuildPostmanURL(cfg Configuration, swag openapi2.Specification, swaggerURL 
 			for _, scheme := range swag.Schemes {
 				if len(strings.TrimSpace(scheme)) > 0 {
 					//rawPostmanURL = strings.Join([]string{scheme, rawPostmanURL}, "://")
-					goUrl.Scheme = scheme
+					goURL.Scheme = scheme
 					break
 				}
 			}
@@ -244,8 +244,8 @@ func BuildPostmanURL(cfg Configuration, swag openapi2.Specification, swaggerURL 
 		goUrl.Path = rx3.ReplaceAllString(goUrl.Path, "$1:$2$3")
 	*/
 
-	goUrl.Path = postman2.ApiUrlOasToPostman(goUrl.Path)
-	postmanURL := postman2.NewURLForGoUrl(goUrl)
+	goURL.Path = postman2.ApiUrlOasToPostman(goURL.Path)
+	postmanURL := postman2.NewURLForGoUrl(goURL)
 
 	// rawPostmanURL = postman2.ApiUrlOasToPostman(rawPostmanURL)
 	// postmanURL := postman2.NewURL(rawPostmanURL)

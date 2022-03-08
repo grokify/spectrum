@@ -114,7 +114,7 @@ func (sets *PolicyViolationsSets) Count() uint {
 func (sets *PolicyViolationsSets) CountsByRule() map[string]uint {
 	counts := map[string]uint{}
 	for _, set := range sets.ByRule {
-		counts[set.RuleName] = uint(set.Count())
+		counts[set.RuleName] = set.Count()
 	}
 	return counts
 }
