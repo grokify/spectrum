@@ -16,7 +16,7 @@ import (
 var rxYamlExtension = regexp.MustCompile(`(?i)\.ya?ml\s*$`)
 
 func ReadURL(oas3url string) (*Spec, error) {
-	resp, err := http.Get(oas3url)
+	resp, err := http.Get(oas3url) // #nosec G107
 	if err != nil {
 		return nil, err
 	}

@@ -13,7 +13,7 @@ func SchemaPointerExpand(prefix, schemaName string) string {
 	prefix = strings.TrimSpace(prefix)
 	schemaName = strings.TrimSpace(schemaName)
 	pointer := schemaName
-	if strings.Index(schemaName, PointerComponentsSchemas) < 0 {
+	if !strings.Contains(schemaName, PointerComponentsSchemas) {
 		pointer = PointerComponentsSchemas + "/" + jsonutil.PropertyNameEscape(schemaName)
 	}
 	if len(prefix) > 0 && strings.Index(pointer, "#") == 0 {

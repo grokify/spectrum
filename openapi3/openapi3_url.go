@@ -6,7 +6,7 @@ import (
 	"github.com/grokify/mogo/net/urlutil"
 )
 
-func BuildApiUrlOAS(specServerURL, overrideServerURL, specPath string) string {
+func BuildApiURLOAS(specServerURL, overrideServerURL, specPath string) string {
 	overrideServerURL = strings.TrimSpace(overrideServerURL)
 	specServerURL = strings.TrimSpace(specServerURL)
 	specPath = strings.TrimSpace(specPath)

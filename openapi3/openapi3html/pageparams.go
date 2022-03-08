@@ -52,14 +52,18 @@ func (pp *PageParams) AddOperationsTable(tbl *table.Table) error {
 }
 
 func (pp *PageParams) TableJSONBytesOrEmpty() []byte {
+	empty := []byte("[]")
 	if len(pp.TableJSON) > 0 {
 		return pp.TableJSON
 	}
 	if pp.Spec != nil {
-		pp.AddSpec(pp.Spec)
+		err := pp.AddSpec(pp.Spec)
+		if err != nil {
+			return empty
+		}
 		return pp.TableJSON
 	}
-	return []byte("[]")
+	return empty
 }
 
 func (pp *PageParams) TabulatorColumnsJSONBytesOrEmpty() []byte {
