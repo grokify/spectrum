@@ -190,12 +190,14 @@ func postmanAddItemToFolders(pman postman2.Collection, pmItem *postman2.Item, ta
 	return pman
 }
 
+/*
 func postmanAddItemToFolder(pman postman2.Collection, pmItem *postman2.Item, pmFolderName string) postman2.Collection {
 	pmFolder := pman.GetOrNewFolder(pmFolderName)
 	pmFolder.Item = append(pmFolder.Item, pmItem)
 	pman.SetFolder(pmFolder)
 	return pman
 }
+*/
 
 func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *openapi3.Spec, oasUrl string, method string, operation *oas3.Operation) *postman2.Item {
 	pmUrl := BuildPostmanURL(cfg, oas3spec, oasUrl, operation)

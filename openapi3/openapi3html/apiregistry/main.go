@@ -58,7 +58,7 @@ func (svr *Server) HandleAPIRegistryAnyEngine(aRes anyhttp.Response, aReq anyhtt
 		SetResponseError(aRes, "No OpenAPI 3.0 Spec URL")
 		return
 	}
-	resp, err := http.Get(specURL)
+	resp, err := http.Get(specURL) // #nosec G107
 	if err != nil || resp.StatusCode > 299 {
 		SetResponseError(aRes, err.Error())
 		return
@@ -97,10 +97,12 @@ func SetResponseError(aRes anyhttp.Response, bodyText string) error {
 	return err
 }
 
+/*
 const ErrorPage = `<!DOCTYPE html>
 <html>
 <h1>Error</h1>
 <html>`
+*/
 
 func (svr Server) PortInt() int                       { return svr.Port }
 func (svr Server) HttpEngine() string                 { return svr.Engine }

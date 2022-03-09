@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"regexp"
 
 	"github.com/grokify/mogo/errors/errorsutil"
@@ -37,9 +36,8 @@ func main() {
 		if isDir {
 			entries, err := osutil.ReadDirMore(opts.InputFileOAS3,
 				regexp.MustCompile(`(?i)\.(json|yaml|yml)$`), false, true, false)
-			if err != nil {
-				log.Fatal(err)
-			}
+			logutil.FatalOnError(err)
+
 			files = osutil.DirEntries(entries).Names(opts.InputFileOAS3, true)
 		} else {
 			files = []string{opts.InputFileOAS3}
@@ -70,14 +68,11 @@ func main() {
 	vsets := lintutil.NewPolicyViolationsSets()
 	for _, file := range files {
 		spec, err := openapi3.ReadFile(file, false)
-		if err != nil {
-			log.Fatal(err)
-		}
+		logutil.FatalOnError(err)
+
 		vsetsRule, err := pol.ValidateSpec(spec, filepathutil.FilepathLeaf(file), severityLevel)
-		if err != nil {
-			log.Fatal(err)
-		}
-		vsets.UpsertSets(vsetsRule)
+		logutil.FatalOnError(err)
+		logutil.FatalOnError(vsets.UpsertSets(vsetsRule))
 	}
 
 	logutil.FatalOnError(fmtutil.PrintJSON(vsets.LocationsByRule()))

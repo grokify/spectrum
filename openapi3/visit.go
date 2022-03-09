@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	jPtrParamFormat          = "#/components/parameters/%s"
-	jPtrSchemasRoot          = "#/components/schemas/"
+	jPtrParamFormat = "#/components/parameters/%s"
+	// jPtrSchemasRoot          = "#/components/schemas/"
 	jPtrSchemaPropertyFormat = "#/components/schemas/%s/properties/%s"
 )
 

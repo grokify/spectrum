@@ -7,7 +7,7 @@ import (
 	"github.com/grokify/spectrum/openapi3"
 )
 
-var rxOptionalDefault = regexp.MustCompile(`(?i)\boptional\b`)
+// var rxOptionalDefault = regexp.MustCompile(`(?i)\boptional\b`)
 
 func SpecSetSchemaPropertiesOptional(spec *openapi3.Spec, rxOptional *regexp.Regexp) {
 	if rxOptional == nil {
