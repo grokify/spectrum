@@ -7,6 +7,7 @@ import (
 
 	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/fmt/fmtutil"
+	"github.com/grokify/mogo/log/logutil"
 	"github.com/grokify/mogo/log/severity"
 	"github.com/grokify/mogo/os/osutil"
 	"github.com/grokify/mogo/path/filepathutil"
@@ -26,16 +27,13 @@ type Options struct {
 func main() {
 	var opts Options
 	_, err := flags.Parse(&opts)
-	if err != nil {
-		log.Fatal(err)
-	}
+	logutil.FatalOnError(err)
 
 	var files []string
 	if len(opts.InputFileOAS3) > 0 {
 		isDir, err := osutil.IsDir(opts.InputFileOAS3)
-		if err != nil {
-			log.Fatal(err)
-		}
+		logutil.FatalOnError(err)
+
 		if isDir {
 			entries, err := osutil.ReadDirMore(opts.InputFileOAS3,
 				regexp.MustCompile(`(?i)\.(json|yaml|yml)$`), false, true, false)
@@ -47,38 +45,25 @@ func main() {
 			files = []string{opts.InputFileOAS3}
 		}
 		err = fmtutil.PrintJSON(files)
-		if err != nil {
-			log.Fatal(err)
-		}
+		logutil.FatalOnError(err)
 	}
 
 	polCfg, err := openapi3lint.NewPolicyConfigFile(opts.PolicyFile)
-	if err != nil {
-		log.Fatal(err)
-	}
+	logutil.FatalOnError(err)
+
 	polCfg.AddRuleCollection(extensions.NewRuleCollectionExtensions())
-	err = fmtutil.PrintJSON(polCfg)
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = fmtutil.PrintJSON(polCfg.RuleNames())
-	if err != nil {
-		log.Fatal(err)
-	}
+	logutil.FatalOnError(fmtutil.PrintJSON(polCfg))
+	logutil.FatalOnError(fmtutil.PrintJSON(polCfg.RuleNames()))
 
 	pol, err := polCfg.Policy()
-	if err != nil {
-		log.Fatal(errorsutil.Wrap(err, "polCfg.Policy()"))
-	}
-	fmtutil.PrintJSON(pol)
-	fmtutil.PrintJSON(pol.RuleNames())
+	logutil.FatalOnError(errorsutil.Wrap(err, "polCfg.Policy()"))
+	logutil.FatalOnError(fmtutil.PrintJSON(pol))
+	logutil.FatalOnError(fmtutil.PrintJSON(pol.RuleNames()))
 
 	severityLevel := severity.SeverityError
 	if len(opts.Severity) > 0 {
 		severityTry, err := severity.Parse(opts.Severity)
-		if err != nil {
-			log.Fatal(err)
-		}
+		logutil.FatalOnError(err)
 		severityLevel = severityTry
 	}
 
@@ -95,9 +80,8 @@ func main() {
 		vsets.UpsertSets(vsetsRule)
 	}
 
-	fmtutil.PrintJSON(vsets.LocationsByRule())
-
-	fmtutil.PrintJSON(vsets.CountsByRule())
+	logutil.FatalOnError(fmtutil.PrintJSON(vsets.LocationsByRule()))
+	logutil.FatalOnError(fmtutil.PrintJSON(vsets.CountsByRule()))
 
 	fmt.Println("DONE")
 }
