@@ -120,7 +120,7 @@ func (p *Path) SetEndpoint(method string, endpoint Endpoint) error {
 		p.Put = &endpoint
 
 	default:
-		return fmt.Errorf("Method [%v] not supported.", method)
+		return fmt.Errorf("method [%v] not supported", method)
 	}
 	return nil
 }
@@ -260,7 +260,7 @@ func GetJSONBodyParameterExampleForKey(params []Parameter, exampleKey string) (s
 			continue
 		}
 		if len(param.XExamples) == 0 {
-			return "", fmt.Errorf("No `x-examples` in param name [%s]", param.Name)
+			return "", fmt.Errorf("no `x-examples` in param name [%s]", param.Name)
 		}
 		if example, ok := param.XExamples[exampleKey]; !ok {
 			return "", fmt.Errorf("no `x-examples` key [%s] in param name [%s]", exampleKey, param.Name)
@@ -268,5 +268,5 @@ func GetJSONBodyParameterExampleForKey(params []Parameter, exampleKey string) (s
 			return example, nil
 		}
 	}
-	return "", fmt.Errorf("No `in=body` param in [%d] count params]", len(params))
+	return "", fmt.Errorf("no `in=body` param in [%d] count params]", len(params))
 }

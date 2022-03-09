@@ -42,30 +42,30 @@ func TableAddOpenAPI2Spec(tbl *table.Table, spec *openapi2.Spec, prefix []string
 // prefix can be `filename`,`path`
 func TableAddOpenAPI2Path(tbl *table.Table, path *oas2.PathItem, prefix []string) *table.Table {
 	if path.Delete != nil {
-		tbl.Rows = append(tbl.Rows, pathOpenApi2ToRow(prefix, path.Delete, http.MethodDelete))
+		tbl.Rows = append(tbl.Rows, pathOpenAPI2ToRow(prefix, path.Delete, http.MethodDelete))
 	}
 	if path.Get != nil {
-		tbl.Rows = append(tbl.Rows, pathOpenApi2ToRow(prefix, path.Get, http.MethodGet))
+		tbl.Rows = append(tbl.Rows, pathOpenAPI2ToRow(prefix, path.Get, http.MethodGet))
 	}
 	if path.Head != nil {
-		tbl.Rows = append(tbl.Rows, pathOpenApi2ToRow(prefix, path.Head, http.MethodHead))
+		tbl.Rows = append(tbl.Rows, pathOpenAPI2ToRow(prefix, path.Head, http.MethodHead))
 	}
 	if path.Options != nil {
-		tbl.Rows = append(tbl.Rows, pathOpenApi2ToRow(prefix, path.Options, http.MethodOptions))
+		tbl.Rows = append(tbl.Rows, pathOpenAPI2ToRow(prefix, path.Options, http.MethodOptions))
 	}
 	if path.Patch != nil {
-		tbl.Rows = append(tbl.Rows, pathOpenApi2ToRow(prefix, path.Patch, http.MethodPatch))
+		tbl.Rows = append(tbl.Rows, pathOpenAPI2ToRow(prefix, path.Patch, http.MethodPatch))
 	}
 	if path.Post != nil {
-		tbl.Rows = append(tbl.Rows, pathOpenApi2ToRow(prefix, path.Post, http.MethodPost))
+		tbl.Rows = append(tbl.Rows, pathOpenAPI2ToRow(prefix, path.Post, http.MethodPost))
 	}
 	if path.Put != nil {
-		tbl.Rows = append(tbl.Rows, pathOpenApi2ToRow(prefix, path.Put, http.MethodPut))
+		tbl.Rows = append(tbl.Rows, pathOpenAPI2ToRow(prefix, path.Put, http.MethodPut))
 	}
 	return tbl
 }
 
-func pathOpenApi2ToRow(prefix []string, op *oas2.Operation, method string) []string {
+func pathOpenAPI2ToRow(prefix []string, op *oas2.Operation, method string) []string {
 	row := prefix
 	row = append(row, method, op.OperationID, op.Summary, op.Description)
 	return row
