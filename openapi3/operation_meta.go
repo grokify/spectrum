@@ -83,7 +83,7 @@ func OperationSetResponseBodySchemaRef(op *oas3.Operation, status, description, 
 	if _, ok := op.Responses[status]; !ok || op.Responses[status] == nil {
 		op.Responses[status] = &oas3.ResponseRef{}
 	}
-	resRef, _ := op.Responses[status]
+	resRef := op.Responses[status]
 	if resRef.Value == nil {
 		resRef.Value = &oas3.Response{}
 	}

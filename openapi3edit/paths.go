@@ -193,10 +193,5 @@ func PathVarsToGeneric(input string) string {
 }
 
 func PathMatchGeneric(path1, path2 string) bool {
-	gen1 := PathVarsToGeneric(path1)
-	gen2 := PathVarsToGeneric(path2)
-	if gen1 != gen2 {
-		return false
-	}
-	return true
+	return PathVarsToGeneric(path1) == PathVarsToGeneric(path2)
 }

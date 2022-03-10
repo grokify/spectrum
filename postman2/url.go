@@ -64,24 +64,24 @@ type URLVariableDescription struct {
 	Type    string `json:"type,omitempty"`
 }
 
-func NewURLForGoURL(goUrl url.URL) URL {
+func NewURLForGoURL(goURL url.URL) URL {
 	pmURL := URL{Variable: []URLVariable{}}
-	goUrl.Scheme = strings.TrimSpace(goUrl.Scheme)
-	goUrl.Host = strings.TrimSpace(goUrl.Host)
-	goUrl.Path = strings.TrimSpace(goUrl.Path)
+	goURL.Scheme = strings.TrimSpace(goURL.Scheme)
+	goURL.Host = strings.TrimSpace(goURL.Host)
+	goURL.Path = strings.TrimSpace(goURL.Path)
 	urlParts := []string{}
-	if len(goUrl.Host) > 0 {
-		pmURL.Host = strings.Split(goUrl.Host, ".")
-		urlParts = append(urlParts, goUrl.Host)
+	if len(goURL.Host) > 0 {
+		pmURL.Host = strings.Split(goURL.Host, ".")
+		urlParts = append(urlParts, goURL.Host)
 	}
-	if len(goUrl.Path) > 0 {
-		pmURL.Path = strings.Split(goUrl.Path, "/")
-		urlParts = append(urlParts, goUrl.Path)
+	if len(goURL.Path) > 0 {
+		pmURL.Path = strings.Split(goURL.Path, "/")
+		urlParts = append(urlParts, goURL.Path)
 	}
 	rawURL := strings.Join(urlParts, "/")
-	if len(goUrl.Scheme) > 0 {
-		pmURL.Protocol = goUrl.Scheme
-		rawURL = goUrl.Scheme + "://" + rawURL
+	if len(goURL.Scheme) > 0 {
+		pmURL.Protocol = goURL.Scheme
+		rawURL = goURL.Scheme + "://" + rawURL
 	}
 	pmURL.Raw = rawURL
 	return pmURL

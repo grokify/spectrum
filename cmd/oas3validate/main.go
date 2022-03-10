@@ -27,7 +27,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	spec := &openapi3.Spec{}
+	var spec *openapi3.Spec
 
 	if urlutil.IsHTTP(opts.SpecFileOAS3, true, true) {
 		spec, err = openapi3.ReadURL(opts.SpecFileOAS3)

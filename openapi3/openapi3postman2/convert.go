@@ -80,7 +80,7 @@ func (conv *Converter) ConvertFile(openapiFilepath string, pmanSpecFilepath stri
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(pmanSpecFilepath, bytes, 0644)
+	return ioutil.WriteFile(pmanSpecFilepath, bytes, 0600)
 }
 
 // ConvertSpec creates a Postman 2.0 collection from a configuration and Swagger 2.0 spec
@@ -147,9 +147,7 @@ func Merge(cfg Configuration, pman postman2.Collection, oas3spec *openapi3.Spec)
 				Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodPut, path.Put),
 				path.Put.Tags, tagGroupSet)
 		}
-
 	}
-
 	return pman, nil
 }
 
