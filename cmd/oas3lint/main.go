@@ -26,57 +26,57 @@ type Options struct {
 func main() {
 	var opts Options
 	_, err := flags.Parse(&opts)
-	logutil.FatalOnError(err)
+	logutil.FatalErr(err)
 
 	var files []string
 	if len(opts.InputFileOAS3) > 0 {
 		isDir, err := osutil.IsDir(opts.InputFileOAS3)
-		logutil.FatalOnError(err)
+		logutil.FatalErr(err)
 
 		if isDir {
 			entries, err := osutil.ReadDirMore(opts.InputFileOAS3,
 				regexp.MustCompile(`(?i)\.(json|yaml|yml)$`), false, true, false)
-			logutil.FatalOnError(err)
+			logutil.FatalErr(err)
 
 			files = osutil.DirEntries(entries).Names(opts.InputFileOAS3, true)
 		} else {
 			files = []string{opts.InputFileOAS3}
 		}
 		err = fmtutil.PrintJSON(files)
-		logutil.FatalOnError(err)
+		logutil.FatalErr(err)
 	}
 
 	polCfg, err := openapi3lint.NewPolicyConfigFile(opts.PolicyFile)
-	logutil.FatalOnError(err)
+	logutil.FatalErr(err)
 
 	polCfg.AddRuleCollection(extensions.NewRuleCollectionExtensions())
-	logutil.FatalOnError(fmtutil.PrintJSON(polCfg))
-	logutil.FatalOnError(fmtutil.PrintJSON(polCfg.RuleNames()))
+	logutil.FatalErr(fmtutil.PrintJSON(polCfg))
+	logutil.FatalErr(fmtutil.PrintJSON(polCfg.RuleNames()))
 
 	pol, err := polCfg.Policy()
-	logutil.FatalOnError(errorsutil.Wrap(err, "polCfg.Policy()"))
-	logutil.FatalOnError(fmtutil.PrintJSON(pol))
-	logutil.FatalOnError(fmtutil.PrintJSON(pol.RuleNames()))
+	logutil.FatalErr(errorsutil.Wrap(err, "polCfg.Policy()"))
+	logutil.FatalErr(fmtutil.PrintJSON(pol))
+	logutil.FatalErr(fmtutil.PrintJSON(pol.RuleNames()))
 
 	severityLevel := severity.SeverityError
 	if len(opts.Severity) > 0 {
 		severityTry, err := severity.Parse(opts.Severity)
-		logutil.FatalOnError(err)
+		logutil.FatalErr(err)
 		severityLevel = severityTry
 	}
 
 	vsets := lintutil.NewPolicyViolationsSets()
 	for _, file := range files {
 		spec, err := openapi3.ReadFile(file, false)
-		logutil.FatalOnError(err)
+		logutil.FatalErr(err)
 
 		vsetsRule, err := pol.ValidateSpec(spec, filepathutil.FilepathLeaf(file), severityLevel)
-		logutil.FatalOnError(err)
-		logutil.FatalOnError(vsets.UpsertSets(vsetsRule))
+		logutil.FatalErr(err)
+		logutil.FatalErr(vsets.UpsertSets(vsetsRule))
 	}
 
-	logutil.FatalOnError(fmtutil.PrintJSON(vsets.LocationsByRule()))
-	logutil.FatalOnError(fmtutil.PrintJSON(vsets.CountsByRule()))
+	logutil.FatalErr(fmtutil.PrintJSON(vsets.LocationsByRule()))
+	logutil.FatalErr(fmtutil.PrintJSON(vsets.CountsByRule()))
 
 	fmt.Println("DONE")
 }

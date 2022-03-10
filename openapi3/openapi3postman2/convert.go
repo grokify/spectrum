@@ -59,7 +59,7 @@ func (conv *Converter) MergeConvert(openapiFilepath string, pmanBaseFilepath str
 		if err != nil {
 			return err
 		}
-		return ioutil.WriteFile(pmanSpecFilepath, bytes, 0644)
+		return ioutil.WriteFile(pmanSpecFilepath, bytes, 0600)
 	}
 	return conv.ConvertFile(openapiFilepath, pmanSpecFilepath)
 }

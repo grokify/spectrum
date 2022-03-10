@@ -9,6 +9,7 @@ import (
 	"github.com/buaazp/fasthttprouter"
 	"github.com/grokify/gohttp/anyhttp"
 	"github.com/grokify/gohttp/httpsimple"
+	"github.com/grokify/mogo/log/logutil"
 	"github.com/grokify/mogo/net/httputilmore"
 	"github.com/grokify/mogo/strconv/strconvutil"
 	"github.com/grokify/mogo/type/stringsutil"
@@ -45,7 +46,7 @@ func (svr *Server) HandleAPIRegistryAnyEngine(aRes anyhttp.Response, aReq anyhtt
 	aRes.SetContentType(httputilmore.ContentTypeTextHTMLUtf8)
 	err := aReq.ParseForm()
 	if err != nil {
-		SetResponseError(aRes, err.Error())
+		logutil.PrintErr(SetResponseError(aRes, err.Error()))
 		return
 	}
 
@@ -55,24 +56,24 @@ func (svr *Server) HandleAPIRegistryAnyEngine(aRes anyhttp.Response, aReq anyhtt
 		Msg("SpecURL")
 
 	if len(specURL) == 0 {
-		SetResponseError(aRes, "No OpenAPI 3.0 Spec URL")
+		logutil.PrintErr(SetResponseError(aRes, "No OpenAPI 3.0 Spec URL"))
 		return
 	}
 	resp, err := http.Get(specURL) // #nosec G107
 	if err != nil || resp.StatusCode > 299 {
-		SetResponseError(aRes, err.Error())
+		logutil.PrintErr(SetResponseError(aRes, err.Error()))
 		return
 	}
 
 	bytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		SetResponseError(aRes, err.Error())
+		logutil.PrintErr(SetResponseError(aRes, err.Error()))
 		return
 	}
 
 	spec, err := openapi3.Parse(bytes)
 	if err != nil {
-		SetResponseError(aRes, err.Error())
+		logutil.PrintErr(SetResponseError(aRes, err.Error()))
 		return
 	}
 
@@ -84,7 +85,8 @@ func (svr *Server) HandleAPIRegistryAnyEngine(aRes anyhttp.Response, aReq anyhtt
 	oas3PageHTML := openapi3html.SpectrumUIPage(oas3HTMLParams)
 
 	aRes.SetHeader(httputilmore.HeaderContentType, httputilmore.ContentTypeTextHTMLUtf8)
-	aRes.SetBodyBytes([]byte(oas3PageHTML))
+	_, err = aRes.SetBodyBytes([]byte(oas3PageHTML))
+	logutil.PrintErr(err)
 }
 
 func SetResponseError(aRes anyhttp.Response, bodyText string) error {
