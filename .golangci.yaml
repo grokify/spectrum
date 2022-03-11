@@ -17,3 +17,7 @@ linters-settings:
     checks:
       - all
       - '-ST1003' # disable uppercase acronyms, like Google Go SDK
+issues:
+  exclude-rules:
+    - path: openapi2/copy.go
+      text: "`copyOrIgnoreEndpoint` - `path` is unused (unparam)"
