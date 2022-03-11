@@ -11,3 +11,9 @@ linters:
     - unconvert
     - unparam
     - whitespace
+linters-settings:
+  stylecheck:
+    go: "1.16"
+    checks:
+      - all
+      - '-ST1003' # disable uppercase acronyms, like Google Go SDK
