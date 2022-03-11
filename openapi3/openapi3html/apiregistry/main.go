@@ -110,16 +110,16 @@ func (svr Server) PortInt() int                       { return svr.Port }
 func (svr Server) HttpEngine() string                 { return svr.Engine }
 func (svr Server) RouterFast() *fasthttprouter.Router { return nil }
 
-func (svc Server) Router() http.Handler {
+func (svr Server) Router() http.Handler {
 	/*
 		mux := mux.NewRouter()
 		mux.HandleFunc("/ping", http.HandlerFunc(httpsimple.HandleTestNetHTTP))
 		mux.HandleFunc("/ping/", http.HandlerFunc(httpsimple.HandleTestNetHTTP))
-		mux.HandleFunc("/", http.HandlerFunc(svc.HandleAPIRegistryNetHTTP))
+		mux.HandleFunc("/", http.HandlerFunc(svr.HandleAPIRegistryNetHTTP))
 		return mux
 	*/
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", http.HandlerFunc(svc.HandleAPIRegistryNetHTTP))
+	mux.HandleFunc("/", http.HandlerFunc(svr.HandleAPIRegistryNetHTTP))
 	mux.HandleFunc("/ping", http.HandlerFunc(httpsimple.HandleTestNetHTTP))
 	mux.HandleFunc("/ping/", http.HandlerFunc(httpsimple.HandleTestNetHTTP))
 	return mux

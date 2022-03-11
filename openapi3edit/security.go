@@ -101,12 +101,12 @@ func SecuritySchemeApikeyAddDefinition(spec *openapi3.Spec, schemeName, location
 		schemeName = SecuritySchemeApikeyDefaultName
 	}
 	if len(location) == 0 {
-		return errors.New("API Key Security Scheme Location cannot be empty. Must be one of: [\"header\", \"query\", \"cookie\"]")
+		return errors.New("api key security scheme location cannot be empty. Must be one of: [\"header\", \"query\", \"cookie\"]")
 	} else if location != "header" && location != "query" && location != "cookie" {
-		return fmt.Errorf("API Key Security Scheme Invalid Location [%s], must be one of: [\"header\", \"query\", \"cookie\"]", location)
+		return fmt.Errorf("api key security scheme invalid location [%s], must be one of: [\"header\", \"query\", \"cookie\"]", location)
 	}
 	if len(name) == 0 {
-		return errors.New("API Key Security Scheme name cannot be empty.")
+		return errors.New("api key security scheme name cannot be empty")
 	}
 	if spec.Components.SecuritySchemes == nil {
 		spec.Components.SecuritySchemes = map[string]*oas3.SecuritySchemeRef{}

@@ -90,13 +90,13 @@ type RuleConfig struct {
 	Severity string `json:"severity"`
 }
 
-func (cfg *PolicyConfig) Policy() (Policy, error) {
+func (polCfg *PolicyConfig) Policy() (Policy, error) {
 	pol := NewPolicy()
 	stdRules := NewRuleCollectionStandard()
 	ruleCollectionsMap := map[string][]string{}
 
-	for ruleName, ruleCfg := range cfg.Rules {
-		if cfg.IncludeStandardRules {
+	for ruleName, ruleCfg := range polCfg.Rules {
+		if polCfg.IncludeStandardRules {
 			if stdRules.RuleExists(ruleName) {
 				if _, ok := ruleCollectionsMap[ruleName]; !ok {
 					ruleCollectionsMap[ruleName] = []string{}
@@ -115,7 +115,7 @@ func (cfg *PolicyConfig) Policy() (Policy, error) {
 					}*/
 			}
 		}
-		for _, collection := range cfg.xRuleCollections {
+		for _, collection := range polCfg.xRuleCollections {
 			if collection.RuleExists(ruleName) {
 				if _, ok := ruleCollectionsMap[ruleName]; !ok {
 					ruleCollectionsMap[ruleName] = []string{}

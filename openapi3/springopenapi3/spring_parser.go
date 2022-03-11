@@ -64,7 +64,7 @@ func ParseSpringPropertyLinesToSchema(lines []string) (string, *oas3.Schema, err
 	return "", nil, nil
 }
 
-func lineToBoolDef(line string) (string, oas3.Schema, error) {
+func lineToBoolDef(line string) (string, oas3.Schema) {
 	m1 := rxSpringLineBoolDef.FindAllStringSubmatch(line, -1)
 	if len(m1) > 0 {
 		propName := m1[0][1]
@@ -76,9 +76,9 @@ func lineToBoolDef(line string) (string, oas3.Schema, error) {
 		} else {
 			sch.Default = false
 		}
-		return propName, sch, nil
+		return propName, sch
 	}
-	return "", oas3.Schema{}, nil
+	return "", oas3.Schema{}
 }
 
 func lineToIntOrLongDef(line string) (string, oas3.Schema, error) {
@@ -103,7 +103,7 @@ func lineToIntOrLongDef(line string) (string, oas3.Schema, error) {
 	return "", oas3.Schema{}, nil
 }
 
-func lineToStringDef(line string) (string, oas3.Schema, error) {
+func lineToStringDef(line string) (string, oas3.Schema) {
 	// error needs to return empty name.
 	m1 := rxSpringLineStringDef.FindAllStringSubmatch(line, -1)
 	if len(m1) > 0 {
@@ -111,12 +111,12 @@ func lineToStringDef(line string) (string, oas3.Schema, error) {
 		sch := oas3.Schema{
 			Type:    TypeString,
 			Default: strings.TrimSpace(m1[0][2])}
-		return propName, sch, nil
+		return propName, sch
 	}
-	return "", oas3.Schema{}, nil
+	return "", oas3.Schema{}
 }
 
-func lineToArrayDef(line string, explicitCustomTypes []string) (string, *oas3.SchemaRef, error) {
+func lineToArrayDef(line string, explicitCustomTypes []string) (string, *oas3.SchemaRef) {
 	// error needs to return empty name.
 	// private List<Integer> leadIds = new ArrayList<>();
 	m1 := rxSpringLineIntArrayDef.FindAllStringSubmatch(line, -1)
@@ -134,7 +134,7 @@ func lineToArrayDef(line string, explicitCustomTypes []string) (string, *oas3.Sc
 					&oas3.Schema{
 						Type: TypeInteger})}
 			sr := oas3.NewSchemaRef("", &sch)
-			return propName, sr, nil
+			return propName, sr
 		case TypeString:
 			sch := oas3.Schema{
 				Type: TypeArray,
@@ -142,18 +142,18 @@ func lineToArrayDef(line string, explicitCustomTypes []string) (string, *oas3.Sc
 					&oas3.Schema{
 						Type: TypeString})}
 			sr := oas3.NewSchemaRef("", &sch)
-			return propName, sr, nil
+			return propName, sr
 		default:
 			for _, exType := range explicitCustomTypes {
 				exType = strings.TrimSpace(exType)
 				if exType == javaType {
 					sr := oas3.NewSchemaRef(schemaPath(exType), nil)
-					return propName, sr, nil
+					return propName, sr
 				}
 			}
 		}
 	}
-	return "", nil, nil
+	return "", nil
 }
 
 // ParseSpringLinesToMapStringSchemaRefs parses a Spring Java code line and
@@ -185,19 +185,19 @@ func ParseSpringLineToSchemaRef(line string, explicitCustomTypes []string) (stri
 	var sch oas3.Schema
 	line = strings.Trim(line, " \t")
 
-	name, sch, err := lineToStringDef(line)
-	if err == nil && len(name) > 0 {
+	name, sch := lineToStringDef(line)
+	if len(name) > 0 {
 		return name, oas3.NewSchemaRef("", &sch), nil
 	}
-	name, sch, err = lineToBoolDef(line)
-	if err == nil && len(name) > 0 {
+	name, sch = lineToBoolDef(line)
+	if len(name) > 0 {
 		return name, oas3.NewSchemaRef("", &sch), nil
 	}
-	name, schRef, err := lineToArrayDef(line, explicitCustomTypes)
-	if err == nil && len(name) > 0 {
+	name, schRef := lineToArrayDef(line, explicitCustomTypes)
+	if len(name) > 0 {
 		return name, schRef, nil
 	}
-	name, sch, err = lineToIntOrLongDef(line)
+	name, sch, err := lineToIntOrLongDef(line)
 	if err != nil {
 		return "", nil, err
 	} else if len(name) > 0 {
@@ -259,19 +259,19 @@ func ParseSpringLineToSchema(line string) (string, *oas3.Schema, error) {
 	var sch oas3.Schema
 	line = strings.Trim(line, " \t")
 
-	name, sch, err := lineToStringDef(line)
-	if err == nil && len(name) > 0 {
+	name, sch := lineToStringDef(line)
+	if len(name) > 0 {
 		return name, &sch, nil
 	}
-	name, sch, err = lineToBoolDef(line)
-	if err == nil && len(name) > 0 {
+	name, sch = lineToBoolDef(line)
+	if len(name) > 0 {
 		return name, &sch, nil
 	} /*
 		name, sch, err = lineToArrayDef(line)
 		if err == nil && len(name) > 0 {
 			return name, &sch, nil
 		}*/
-	name, sch, err = lineToIntOrLongDef(line)
+	name, sch, err := lineToIntOrLongDef(line)
 	if err != nil {
 		return "", nil, err
 	} else if len(name) > 0 {
