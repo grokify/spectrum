@@ -21,3 +21,5 @@ issues:
   exclude-rules:
     - path: openapi2/copy.go
       text: "`copyOrIgnoreEndpoint` - `path` is unused"
+    - path: openapi2/copy.go
+      text: "`copyOrIgnoreEndpoint` - `specOld` is unused"
