@@ -20,4 +20,4 @@ linters-settings:
 issues:
   exclude-rules:
     - path: openapi2/copy.go
-      text: "`copyOrIgnoreEndpoint` - `path` is unused (unparam)"
+      text: "`copyOrIgnoreEndpoint` - `path` is unused"
