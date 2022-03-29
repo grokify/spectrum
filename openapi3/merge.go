@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/gocharts/data/table"
+	"github.com/grokify/gocharts/v2/data/table"
 	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/os/osutil"
 )
@@ -114,7 +114,7 @@ func MergeTags(specMaster, specExtra *Spec) *Spec {
 }
 
 // MergeWithTables performs a spec merge and returns comparison
-// tables. This is useful to combine with github.com/grokify/gocharts/data/table
+// tables. This is useful to combine with github.com/grokify/gocharts/v2/data/table
 // WriteXLSX() to write out comparison tables for debugging.
 func MergeWithTables(spec1, spec2 *Spec, specExtraNote string, mergeOpts *MergeOptions) (*Spec, []*table.Table, error) {
 	tbls := []*table.Table{}

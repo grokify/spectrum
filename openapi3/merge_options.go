@@ -5,7 +5,7 @@ import (
 	"regexp"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/gocharts/data/table/tabulator"
+	"github.com/grokify/gocharts/v2/data/table/tabulator"
 )
 
 type CollisionCheckResult int

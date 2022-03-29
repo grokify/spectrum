@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 
 	oas2 "github.com/getkin/kin-openapi/openapi2"
-	"github.com/grokify/gocharts/data/table"
+	"github.com/grokify/gocharts/v2/data/table"
 	"github.com/grokify/spectrum/openapi2"
 )
 

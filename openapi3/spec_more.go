@@ -9,9 +9,9 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/gocharts/data/histogram"
-	"github.com/grokify/gocharts/data/table"
-	"github.com/grokify/gocharts/data/table/tabulator"
+	"github.com/grokify/gocharts/v2/data/histogram"
+	"github.com/grokify/gocharts/v2/data/table"
+	"github.com/grokify/gocharts/v2/data/table/tabulator"
 	"github.com/grokify/mogo/encoding/jsonutil"
 	"github.com/grokify/mogo/net/urlutil"
 	"github.com/grokify/mogo/type/stringsutil"

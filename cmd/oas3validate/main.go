@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/grokify/gocharts/data/histogram"
+	"github.com/grokify/gocharts/v2/data/histogram"
 	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/grokify/mogo/net/urlutil"
 	"github.com/grokify/mogo/type/maputil"

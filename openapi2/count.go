@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/grokify/gocharts/data/histogram"
+	"github.com/grokify/gocharts/v2/data/histogram"
 	"github.com/grokify/mogo/encoding/csvutil"
 	"github.com/grokify/mogo/type/stringsutil"
 )

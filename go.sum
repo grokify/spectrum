@@ -47,8 +47,8 @@ github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB7
 github.com/grokify/base36 v1.0.5 h1:iUgnt40hrPtn3M2gjU4Darow5ikf8xWXrTuMWTLziCk=
 github.com/grokify/base36 v1.0.5/go.mod h1:L+1aaUBGfp5Ctar7KCS5G9uPABo1Ccu1Ct2iQAuhOJ4=
 github.com/grokify/bitcoinmath v0.1.0/go.mod h1:Y8OyDefB55NHGzi+uJshYmE4Hn5juIQqJahsQJN5o2k=
-github.com/grokify/gocharts v1.18.2 h1:KJLPz9wLw37SZYakQ7UJkGXxeqMxDOLOqXwpyuMxeLc=
-github.com/grokify/gocharts v1.18.2/go.mod h1:4GHjq3nVCnR++m2s+96PWu0IIA7bs6PTe2qLzGoPqtg=
+github.com/grokify/gocharts/v2 v2.2.0 h1:xW+t6BuADcL38tVabXGYI75dDE3ZeArx39bonFBw3NY=
+github.com/grokify/gocharts/v2 v2.2.0/go.mod h1:l3BIgYBAqbDN2sj5dLetW7ahzX0yYJGUH/R3Bi042m8=
 github.com/grokify/gohttp v0.2.1 h1:9WRHON2OUcQOjbbs12rMSfmepZVzlUxB0etNX/gowCo=
 github.com/grokify/gohttp v0.2.1/go.mod h1:lvWGlBA0PeelznQ5fFlr9GRbNOCsY86q5dmY9FqSlxE=
 github.com/grokify/mogo v0.37.15 h1:/N8tanuvxqliH+aD+htsajXV8Y5F+lChKSO9HXfvB2Y=

@@ -2,7 +2,7 @@ package openapi3
 
 import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/gocharts/data/histogram"
+	"github.com/grokify/gocharts/v2/data/histogram"
 )
 
 func (sm *SpecMore) StatusCodesHistogram() *histogram.HistogramSets {

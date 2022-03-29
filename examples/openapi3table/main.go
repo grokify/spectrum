@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/grokify/gocharts/data/table/tabulator"
+	"github.com/grokify/gocharts/v2/data/table/tabulator"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3/openapi3html"
 	"github.com/jessevdk/go-flags"

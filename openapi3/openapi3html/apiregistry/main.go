@@ -107,7 +107,7 @@ const ErrorPage = `<!DOCTYPE html>
 */
 
 func (svr Server) PortInt() int                       { return svr.Port }
-func (svr Server) HttpEngine() string                 { return svr.Engine }
+func (svr Server) HTTPEngine() string                 { return svr.Engine }
 func (svr Server) RouterFast() *fasthttprouter.Router { return nil }
 
 func (svr Server) Router() http.Handler {
