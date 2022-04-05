@@ -47,11 +47,10 @@ github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB7
 github.com/grokify/base36 v1.0.5 h1:iUgnt40hrPtn3M2gjU4Darow5ikf8xWXrTuMWTLziCk=
 github.com/grokify/base36 v1.0.5/go.mod h1:L+1aaUBGfp5Ctar7KCS5G9uPABo1Ccu1Ct2iQAuhOJ4=
 github.com/grokify/bitcoinmath v0.1.0/go.mod h1:Y8OyDefB55NHGzi+uJshYmE4Hn5juIQqJahsQJN5o2k=
-github.com/grokify/gocharts/v2 v2.2.0 h1:xW+t6BuADcL38tVabXGYI75dDE3ZeArx39bonFBw3NY=
-github.com/grokify/gocharts/v2 v2.2.0/go.mod h1:l3BIgYBAqbDN2sj5dLetW7ahzX0yYJGUH/R3Bi042m8=
+github.com/grokify/gocharts/v2 v2.4.0 h1:J9l1aq+klIsoQKC0Y+J/O3TCC6g/AKnifDyP3DW463s=
+github.com/grokify/gocharts/v2 v2.4.0/go.mod h1:GkwWT3LKCkFYRQ/vJ9pg0KB8agdFoGO0XDBgkbeignw=
 github.com/grokify/gohttp v0.2.1 h1:9WRHON2OUcQOjbbs12rMSfmepZVzlUxB0etNX/gowCo=
 github.com/grokify/gohttp v0.2.1/go.mod h1:lvWGlBA0PeelznQ5fFlr9GRbNOCsY86q5dmY9FqSlxE=
-github.com/grokify/mogo v0.37.15/go.mod h1:C5Sr7TmcUxSYOFmQrlSsh+6Kx5WDpXgsXW+G261vV3s=
 github.com/grokify/mogo v0.37.17 h1:Cv73Bkoy1JHX47bNT3cgN0gRrw+bFv1fxKxoDzMsReA=
 github.com/grokify/mogo v0.37.17/go.mod h1:C5Sr7TmcUxSYOFmQrlSsh+6Kx5WDpXgsXW+G261vV3s=
 github.com/huandu/xstrings v1.3.2 h1:L18LIDzqlW6xN2rEkpdV8+oL/IXWJ1APd+vsdYy4Wdw=
