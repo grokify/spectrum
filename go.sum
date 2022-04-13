@@ -1,5 +1,6 @@
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/ProtonMail/go-crypto v0.0.0-20220404123522-616f957b79ad/go.mod h1:z4/9nQmJSSwwds7ejkxaJwO37dru3geImFUdJlaLzQo=
+github.com/ProtonMail/go-crypto v0.0.0-20220407094043-a94812496cf5/go.mod h1:z4/9nQmJSSwwds7ejkxaJwO37dru3geImFUdJlaLzQo=
 github.com/andybalholm/brotli v1.0.2/go.mod h1:loMXtMfwqflxFJPmdbJO0a3KNoPuLBgiu3qAvBg8x/Y=
 github.com/andybalholm/brotli v1.0.3/go.mod h1:fO7iG3H7G2nSZ7m0zPUDn85XEX2GTukHGRSepvi9Eig=
 github.com/andybalholm/brotli v1.0.4 h1:V7DdXeJtZscaqfNuAdSRuRFzuiKlHSC/Zh3zl9qY3JY=
@@ -47,12 +48,14 @@ github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB7
 github.com/grokify/base36 v1.0.5 h1:iUgnt40hrPtn3M2gjU4Darow5ikf8xWXrTuMWTLziCk=
 github.com/grokify/base36 v1.0.5/go.mod h1:L+1aaUBGfp5Ctar7KCS5G9uPABo1Ccu1Ct2iQAuhOJ4=
 github.com/grokify/bitcoinmath v0.1.0/go.mod h1:Y8OyDefB55NHGzi+uJshYmE4Hn5juIQqJahsQJN5o2k=
-github.com/grokify/gocharts/v2 v2.4.1 h1:O97TXdUW9AeaU0HaJzdbykQHXz57FkimVSV9YI3nvzQ=
-github.com/grokify/gocharts/v2 v2.4.1/go.mod h1:rfKIZT84ndxlIBmVB06nkGE+NwsXK8lO8GCEje8Zrjs=
+github.com/grokify/elastirad-go v0.1.10/go.mod h1:xPKbZAeEQiBykAqRxdipnsyAa1+csHRccb45335CKiU=
+github.com/grokify/gocharts/v2 v2.5.1 h1:xjxmWFSz3xbsVN0QwuvOu6Iu47m1DYNiA0orBkML0YA=
+github.com/grokify/gocharts/v2 v2.5.1/go.mod h1:o2PnLmGm+jCtvO3UILmP4f3kMf4wd/D/MkSEy01Zjlw=
 github.com/grokify/gohttp v0.2.1 h1:9WRHON2OUcQOjbbs12rMSfmepZVzlUxB0etNX/gowCo=
 github.com/grokify/gohttp v0.2.1/go.mod h1:lvWGlBA0PeelznQ5fFlr9GRbNOCsY86q5dmY9FqSlxE=
-github.com/grokify/mogo v0.37.18 h1:UhNEPdh/HiR0mvlU1SADuDzUgU2MKjjT5nHM1VtM7+c=
 github.com/grokify/mogo v0.37.18/go.mod h1:emNx8mwkHHcn3bB/8z8542H/WY6IxrHWBeWnyYHRV9g=
+github.com/grokify/mogo v0.38.1 h1:QIcRUSLz00X/CnDQk97lFizI2nv5GHH+OoaQAUkkzZA=
+github.com/grokify/mogo v0.38.1/go.mod h1:C4rAfY6EmQe1jxESH+KND19PxHwy6EoG5n6yGVBSOgk=
 github.com/huandu/xstrings v1.3.2 h1:L18LIDzqlW6xN2rEkpdV8+oL/IXWJ1APd+vsdYy4Wdw=
 github.com/huandu/xstrings v1.3.2/go.mod h1:y5/lhBue+AyNmUVz9RLU9xbLR0o4KIIExikq4ovT0aE=
 github.com/itchyny/base58-go v0.2.0/go.mod h1:uSBhd5brsJi5iG4IVb0egRS7SsGU1kgf+xO1AbKMCJE=
