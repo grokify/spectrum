@@ -218,16 +218,15 @@ func (sm *SpecMore) OperationCountsByTag() *histogram.Histogram {
 	return hist
 }
 
-func (sm *SpecMore) OperationsIDs() []string {
+func (sm *SpecMore) OperationIDs() []string {
 	ids := []string{}
-	VisitOperations(sm.Spec, func(thisPath, thisMethod string, thisOp *oas3.Operation) {
-		if thisOp == nil {
+	VisitOperations(sm.Spec, func(path, method string, op *oas3.Operation) {
+		if op == nil {
 			return
 		}
-		ids = append(ids, thisOp.OperationID)
+		ids = append(ids, op.OperationID)
 	})
-	ids = stringsutil.SliceCondenseSpace(ids, false, true)
-	return ids
+	return stringsutil.SliceCondenseSpace(ids, false, true)
 }
 
 func (sm *SpecMore) OperationByID(wantOperationID string) (path, method string, op *oas3.Operation, err error) {

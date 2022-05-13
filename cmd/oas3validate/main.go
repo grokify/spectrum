@@ -77,5 +77,8 @@ func main() {
 		}
 	}
 
+	opsCount := sm.OperationIDs()
+	fmt.Printf("OP COUNT [%d]\n", len(opsCount))
+
 	fmt.Println("DONE")
 }
