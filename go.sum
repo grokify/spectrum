@@ -25,6 +25,7 @@ github.com/buaazp/fasthttprouter v0.1.1/go.mod h1:h/Ap5oRVLeItGKTVBb+heQPks+HdIU
 github.com/buger/jsonparser v1.1.1 h1:2PnMjfWD7wBILjqQbt530v576A/cAbQvEW9gGIpYMUs=
 github.com/buger/jsonparser v1.1.1/go.mod h1:6RYKKt7H4d4+iWqouImQ9R2FZql3VbhNgx27UK13J/0=
 github.com/caarlos0/env/v6 v6.9.1/go.mod h1:hvp/ryKXKipEkcuYjs9mI4bBCg+UI0Yhgm5Zu0ddvwc=
+github.com/caarlos0/env/v6 v6.9.2/go.mod h1:hvp/ryKXKipEkcuYjs9mI4bBCg+UI0Yhgm5Zu0ddvwc=
 github.com/cockroachdb/apd v1.1.0/go.mod h1:8Sl8LxpKi29FqWXR16WEFZRNSz3SoPzUzeMeY4+DwBQ=
 github.com/coreos/go-systemd/v22 v22.3.2/go.mod h1:Y58oyj3AT4RCenI/lSvhwexgC+NSVTIJ3seZv2GcEnc=
 github.com/cpuguy83/go-md2man/v2 v2.0.0-20190314233015-f79a8a8ca69d/go.mod h1:maD7wRr/U5Z6m/iR4s+kqSMx2CaBsrgA7czyZG/E6dU=
@@ -72,8 +73,9 @@ github.com/grokify/gocharts/v2 v2.7.2 h1:FrKDr0RIHpRFcqklsFbkfwBKA0zN5Knlcxl4vbU
 github.com/grokify/gocharts/v2 v2.7.2/go.mod h1:lZixG0ajJkk2QzZlvZOkDvnEQJC2nUGJ4zz3Sm9hvio=
 github.com/grokify/gohttp v0.2.1 h1:9WRHON2OUcQOjbbs12rMSfmepZVzlUxB0etNX/gowCo=
 github.com/grokify/gohttp v0.2.1/go.mod h1:lvWGlBA0PeelznQ5fFlr9GRbNOCsY86q5dmY9FqSlxE=
-github.com/grokify/mogo v0.39.1 h1:NwCOLvA0lpdaEOAer7yIxhFvXGcAm/tXWGZqTHI1XOI=
 github.com/grokify/mogo v0.39.1/go.mod h1:PePLmFD41Nw+qjF8xrtIi3CCHMzEpacW2DL+VJOOldk=
+github.com/grokify/mogo v0.39.3 h1:b80+tYYh9yc0YE3IcFYM2jBCBbzFn0V34HvYc1CIFjg=
+github.com/grokify/mogo v0.39.3/go.mod h1:SETrLlAB0FQj5XCcFBVmoPpcLkNBWVLfhdtEs7yB8wE=
 github.com/huandu/xstrings v1.3.2 h1:L18LIDzqlW6xN2rEkpdV8+oL/IXWJ1APd+vsdYy4Wdw=
 github.com/huandu/xstrings v1.3.2/go.mod h1:y5/lhBue+AyNmUVz9RLU9xbLR0o4KIIExikq4ovT0aE=
 github.com/itchyny/base58-go v0.2.0/go.mod h1:uSBhd5brsJi5iG4IVb0egRS7SsGU1kgf+xO1AbKMCJE=
