@@ -256,7 +256,7 @@ func BuildPostmanURL(cfg Configuration, spec *openapi3.Spec, specPath string, op
 	overrideServerURL := urlutil.JoinAbsolute(partsOverrideURL...)
 
 	specURLString := openapi3.BuildApiURLOAS(specServerURL, overrideServerURL, specPath)
-	pmanURLString := postman2.ApiURLOasToPostman(specURLString)
+	pmanURLString := postman2.APIURLOasToPostman(specURLString)
 	pmanURL := postman2.NewURL(pmanURLString)
 	pmanURL = PostmanURLAddDefaultsOAS3(pmanURL, operation)
 	return pmanURL

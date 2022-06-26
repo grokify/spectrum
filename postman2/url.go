@@ -130,7 +130,7 @@ var apiURLOasToPostmanVarMatchRx = regexp.MustCompile(
 	apiURLOasToPostmanVarMatch)
 
 //noinspection ALL
-func ApiURLOasToPostman(urlWithOasVars string) string {
+func APIURLOasToPostman(urlWithOasVars string) string {
 	return apiURLOasToPostmanVarMatchRx.ReplaceAllString(
 		urlWithOasVars, apiURLOasToPostmanVarReplace)
 }

@@ -244,7 +244,7 @@ func BuildPostmanURL(cfg Configuration, swag openapi2.Specification, swaggerURL 
 		goUrl.Path = rx3.ReplaceAllString(goUrl.Path, "$1:$2$3")
 	*/
 
-	goURL.Path = postman2.ApiURLOasToPostman(goURL.Path)
+	goURL.Path = postman2.APIURLOasToPostman(goURL.Path)
 	postmanURL := postman2.NewURLForGoURL(goURL)
 
 	// rawPostmanURL = postman2.ApiUrlOasToPostman(rawPostmanURL)
