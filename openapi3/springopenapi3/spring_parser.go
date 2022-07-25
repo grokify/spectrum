@@ -12,11 +12,11 @@ import (
 )
 
 const (
-	TypeArray            = openapi3.TypeArray
+	/*TypeArray            = openapi3.TypeArray
 	TypeBoolean          = openapi3.TypeBoolean
 	TypeInteger          = openapi3.TypeInteger
 	TypeObject           = openapi3.TypeObject
-	TypeString           = openapi3.TypeString
+	TypeString           = openapi3.TypeString*/
 	FormatStringDate     = openapi3.FormatDate
 	FormatStringDateTime = openapi3.FormatDateTime
 	FormatIntegerInt64   = openapi3.FormatInt64
@@ -70,7 +70,7 @@ func lineToBoolDef(line string) (string, oas3.Schema) {
 		propName := m1[0][1]
 		boolDefaultVal := m1[0][2]
 		sch := oas3.Schema{
-			Type: TypeBoolean}
+			Type: openapi3.TypeBoolean}
 		if boolDefaultVal == "true" {
 			sch.Default = true
 		} else {
@@ -93,7 +93,7 @@ func lineToIntOrLongDef(line string) (string, oas3.Schema, error) {
 			return "", oas3.Schema{}, err
 		}
 		sch := oas3.Schema{
-			Type:    TypeInteger,
+			Type:    openapi3.TypeInteger,
 			Default: defaultVal}
 		if intOrLong == "long" {
 			sch.Format = FormatIntegerInt64
@@ -109,7 +109,7 @@ func lineToStringDef(line string) (string, oas3.Schema) {
 	if len(m1) > 0 {
 		propName := m1[0][1]
 		sch := oas3.Schema{
-			Type:    TypeString,
+			Type:    openapi3.TypeString,
 			Default: strings.TrimSpace(m1[0][2])}
 		return propName, sch
 	}
@@ -127,20 +127,20 @@ func lineToArrayDef(line string, explicitCustomTypes []string) (string, *oas3.Sc
 		javaTypeLc := strings.ToLower(javaType)
 		propName := m1[0][2]
 		switch javaTypeLc {
-		case TypeInteger:
+		case openapi3.TypeInteger:
 			sch := oas3.Schema{
-				Type: TypeArray,
+				Type: openapi3.TypeArray,
 				Items: oas3.NewSchemaRef("",
 					&oas3.Schema{
-						Type: TypeInteger})}
+						Type: openapi3.TypeInteger})}
 			sr := oas3.NewSchemaRef("", &sch)
 			return propName, sr
-		case TypeString:
+		case openapi3.TypeString:
 			sch := oas3.Schema{
-				Type: TypeArray,
+				Type: openapi3.TypeArray,
 				Items: oas3.NewSchemaRef("",
 					&oas3.Schema{
-						Type: TypeString})}
+						Type: openapi3.TypeString})}
 			sr := oas3.NewSchemaRef("", &sch)
 			return propName, sr
 		default:
@@ -206,9 +206,9 @@ func ParseSpringLineToSchemaRef(line string, explicitCustomTypes []string) (stri
 
 	m := rxSpringLine.FindAllStringSubmatch(line, -1)
 	if len(m) == 0 {
-		return "", nil, fmt.Errorf("E_SPRING_TO_OAS_SCHEMA_NO_MATCH [%v]", line)
+		return "", nil, fmt.Errorf("spring-to-oas schema-no-match [%v]", line)
 	} else if len(m) != 1 && len(m[1]) != 3 {
-		return "", nil, fmt.Errorf("E_SPRING_TO_OAS_SCHEMA_NO_MATCH [%v]", m)
+		return "", nil, fmt.Errorf("spring-to-oas schema-no-match [%v]", m)
 	}
 	m2a := m[0]
 	propName := m2a[2]
@@ -216,23 +216,23 @@ func ParseSpringLineToSchemaRef(line string, explicitCustomTypes []string) (stri
 	javaTypeLc := strings.ToLower(javaType)
 	schemaRef := &oas3.SchemaRef{}
 	switch javaTypeLc {
-	case "boolean":
-		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: TypeBoolean})
+	case openapi3.TypeBoolean:
+		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: openapi3.TypeBoolean})
 	case "date":
 		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{
-			Type: TypeString, Format: FormatStringDate})
+			Type: openapi3.TypeString, Format: FormatStringDate})
 	case "datetime":
 		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{
-			Type:        TypeString,
+			Type:        openapi3.TypeString,
 			Description: "Date-time in Java format. Example: `2019-01-01T01:01:01.000+0000`. Note this is not compatible with RFC-3339 which is used by OpenAPI 3.0 Spec because it doesn't have a `:` between hours and minutes.",
 		})
-	case TypeInteger:
-		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: TypeInteger})
+	case openapi3.TypeInteger:
+		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: openapi3.TypeInteger})
 	case "long":
 		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{
-			Type: TypeInteger, Format: FormatIntegerInt64})
-	case TypeString:
-		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: TypeString})
+			Type: openapi3.TypeInteger, Format: FormatIntegerInt64})
+	case openapi3.TypeString:
+		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: openapi3.TypeString})
 	default:
 		found := false
 		for _, exType := range explicitCustomTypes {
@@ -288,21 +288,21 @@ func ParseSpringLineToSchema(line string) (string, *oas3.Schema, error) {
 	propName := m2a[2]
 	javaTypeLc := strings.ToLower(strings.TrimSpace(m2a[1]))
 	switch javaTypeLc {
-	case "boolean":
-		sch.Type = TypeBoolean
-	case "date":
-		sch.Type = TypeString
+	case openapi3.TypeBoolean:
+		sch.Type = openapi3.TypeBoolean
+	case openapi3.FormatDate:
+		sch.Type = openapi3.TypeString
 		sch.Format = FormatStringDate
 	case "datetime":
-		sch.Type = TypeString
+		sch.Type = openapi3.TypeString
 		sch.Format = FormatStringDateTime
-	case "integer":
-		sch.Type = TypeInteger
+	case openapi3.TypeInteger:
+		sch.Type = openapi3.TypeInteger
 	case "long":
-		sch.Type = TypeInteger
+		sch.Type = openapi3.TypeInteger
 		sch.Format = FormatIntegerInt64
-	case "string":
-		sch.Type = TypeString
+	case openapi3.TypeString:
+		sch.Type = openapi3.TypeString
 	default:
 		panic(fmt.Sprintf("TYPE [%v] LINE [%v]", javaTypeLc, line))
 	}
