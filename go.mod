@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/buaazp/fasthttprouter v0.1.1
-	github.com/getkin/kin-openapi v0.104.0
+	github.com/getkin/kin-openapi v0.105.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/grokify/gocharts/v2 v2.8.1
 	github.com/grokify/gohttp v0.2.1
