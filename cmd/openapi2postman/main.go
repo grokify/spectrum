@@ -6,7 +6,7 @@ import (
 
 	"github.com/grokify/spectrum/openapi2/openapi2postman2"
 	"github.com/grokify/spectrum/postman2"
-	"github.com/jessevdk/go-flags"
+	flags "github.com/jessevdk/go-flags"
 )
 
 // Convert yaml2json: https://github.com/bronze1man/yaml2json ... yaml2json_darwin_amd64

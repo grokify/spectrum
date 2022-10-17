@@ -7,7 +7,7 @@ import (
 
 	"github.com/grokify/mogo/os/osutil"
 	"github.com/grokify/spectrum/openapi2"
-	"github.com/jessevdk/go-flags"
+	flags "github.com/jessevdk/go-flags"
 )
 
 // install: go get github.com/grokify/spectrum/apps/openapi2to3

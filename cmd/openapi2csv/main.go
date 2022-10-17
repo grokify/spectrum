@@ -7,7 +7,7 @@ import (
 
 	"github.com/grokify/mogo/os/osutil"
 	csv "github.com/grokify/spectrum/openapi2/openapi2csv"
-	"github.com/jessevdk/go-flags"
+	flags "github.com/jessevdk/go-flags"
 )
 
 type Options struct {
