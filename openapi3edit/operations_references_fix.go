@@ -30,8 +30,7 @@ func SpecOperationsFixResponseReferences(spec *openapi3.Spec) []*openapi3.Operat
 					resRefOrig := resRef.Ref
 					resRef.Ref = oas3BasePathComponentsSchemas + m[1]
 					om := openapi3.OperationToMeta(path, method, op)
-					om.MetaNotes = append(om.MetaNotes,
-						fmt.Sprintf("E_BAD_RESPONSE_REF_OAS2_DEF [%s] type[%s]", resCode, resRefOrig))
+					om.MetaNotes = append(om.MetaNotes, fmt.Sprintf("E_BAD_RESPONSE_REF_OAS2_DEF [%s] type[%s]", resCode, resRefOrig))
 					errorOperations = append(errorOperations, &om)
 				}
 			}
