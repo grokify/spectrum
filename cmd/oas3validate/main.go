@@ -11,7 +11,7 @@ import (
 	"github.com/grokify/mogo/net/urlutil"
 	"github.com/grokify/mogo/type/maputil"
 	"github.com/grokify/spectrum/openapi3"
-	"github.com/jessevdk/go-flags"
+	flags "github.com/jessevdk/go-flags"
 )
 
 type Options struct {

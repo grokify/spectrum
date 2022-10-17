@@ -8,7 +8,7 @@ import (
 	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3/openapi3postman2"
-	"github.com/jessevdk/go-flags"
+	flags "github.com/jessevdk/go-flags"
 )
 
 // Convert yaml2json: https://github.com/bronze1man/yaml2json ... yaml2json_darwin_amd64

@@ -14,7 +14,7 @@ import (
 	"github.com/grokify/spectrum/openapi3lint"
 	"github.com/grokify/spectrum/openapi3lint/extensions"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
-	"github.com/jessevdk/go-flags"
+	flags "github.com/jessevdk/go-flags"
 )
 
 type Options struct {
