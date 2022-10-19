@@ -45,6 +45,19 @@ func (opm *OperationMore) HasParameter(paramNameWant string) bool {
 	return false
 }
 
+func (opm *OperationMore) PathMethod() string {
+	parts := []string{}
+	p := strings.TrimSpace(opm.Path)
+	if len(p) > 0 {
+		parts = append(parts, p)
+	}
+	m := strings.ToUpper(strings.TrimSpace(opm.Method))
+	if len(m) > 0 {
+		parts = append(parts, m)
+	}
+	return strings.Join(parts, " ")
+}
+
 func (opm *OperationMore) AddToSpec(spec *openapi3.Spec, force bool) (bool, error) {
 	sm := openapi3.SpecMore{Spec: spec}
 	op, err := sm.OperationByPathMethod(opm.Path, opm.Method)
@@ -284,6 +297,16 @@ func SpecAddOperationMetas(spec *openapi3.Spec, metas map[string]openapi3.Operat
 
 type OperationMoreSet struct {
 	OperationMores []OperationMore
+}
+
+// SummariesMap returns a `map[string]string` where the keys are the operation's
+// path and method, while the values are the sumamries.`
+func (omSet *OperationMoreSet) SummariesMap() map[string]string {
+	mss := map[string]string{}
+	for _, om := range omSet.OperationMores {
+		mss[om.PathMethod()] = om.Operation.Summary
+	}
+	return mss
 }
 
 func QueryOperationsByTags(spec *openapi3.Spec, tags []string) *OperationMoreSet {
