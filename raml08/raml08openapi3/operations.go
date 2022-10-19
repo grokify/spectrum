@@ -60,32 +60,12 @@ func msaPaths(basePath string, msa map[string]any, omSet *openapi3edit.Operation
 	basePath = strings.TrimSpace(basePath)
 	if len(basePath) > 0 {
 		// only do if not at root.
-		for k, valAny := range msa {
-			// check if current `basePath`` is an HTTP method, and add operations if so.
-			_, err := httputilmore.ParseHTTPMethod(k)
-			if err != nil { // err means not known HTTP Method
-				continue
-			}
-			om := openapi3edit.OperationMore{
-				Path:      basePath,
-				Method:    strings.ToUpper(strings.TrimSpace(k)),
-				Operation: &oas3.Operation{}}
-			opMSA := valAny.(map[string]any)
-			if descAny, ok := opMSA[RAMLKeyDescription]; ok {
-				if descStr, ok := descAny.(string); ok {
-					om.Operation.Description = descStr
-				} else {
-					return ErrRAMLDescriptionNotString
-				}
-			}
-			if dispNameAny, ok := opMSA[RAMLKeyDisplayName]; ok {
-				if dispNameStr, ok := dispNameAny.(string); ok {
-					om.Operation.Summary = dispNameStr
-				} else {
-					return ErrRAMLDispNameNotString
-				}
-			}
-			omSet.OperationMores = append(omSet.OperationMores, om)
+		pathOms, err := operationMoresFromPathItem(basePath, msa)
+		if err != nil {
+			return err
+		}
+		if len(pathOms) > 0 {
+			omSet.OperationMores = append(omSet.OperationMores, pathOms...)
 		}
 	}
 
@@ -105,4 +85,36 @@ func msaPaths(basePath string, msa map[string]any, omSet *openapi3edit.Operation
 		}
 	}
 	return nil
+}
+
+func operationMoresFromPathItem(opPath string, opPathItem map[string]any) ([]openapi3edit.OperationMore, error) {
+	oms := []openapi3edit.OperationMore{}
+	for k, valAny := range opPathItem {
+		// check if current `opPathItem`` property is an HTTP method, and add operations if so.
+		_, err := httputilmore.ParseHTTPMethod(k)
+		if err != nil { // err means not known HTTP Method
+			continue
+		}
+		om := openapi3edit.OperationMore{
+			Path:      opPath,
+			Method:    strings.ToUpper(strings.TrimSpace(k)),
+			Operation: &oas3.Operation{}}
+		opMSA := valAny.(map[string]any)
+		if descAny, ok := opMSA[RAMLKeyDescription]; ok {
+			if descStr, ok := descAny.(string); ok {
+				om.Operation.Description = descStr
+			} else {
+				return oms, ErrRAMLDescriptionNotString
+			}
+		}
+		if dispNameAny, ok := opMSA[RAMLKeyDisplayName]; ok {
+			if dispNameStr, ok := dispNameAny.(string); ok {
+				om.Operation.Summary = dispNameStr
+			} else {
+				return oms, ErrRAMLDispNameNotString
+			}
+		}
+		oms = append(oms, om)
+	}
+	return oms, nil
 }
