@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/mogo/type/stringsutil"
 	"github.com/grokify/spectrum/openapi3"
 )
 
@@ -46,16 +47,7 @@ func (opm *OperationMore) HasParameter(paramNameWant string) bool {
 }
 
 func (opm *OperationMore) PathMethod() string {
-	parts := []string{}
-	p := strings.TrimSpace(opm.Path)
-	if len(p) > 0 {
-		parts = append(parts, p)
-	}
-	m := strings.ToUpper(strings.TrimSpace(opm.Method))
-	if len(m) > 0 {
-		parts = append(parts, m)
-	}
-	return strings.Join(parts, " ")
+	return openapi3.PathMethod(opm.Path, opm.Method)
 }
 
 func (opm *OperationMore) AddToSpec(spec *openapi3.Spec, force bool) (bool, error) {
@@ -295,6 +287,31 @@ func SpecAddOperationMetas(spec *openapi3.Spec, metas map[string]openapi3.Operat
 	})
 }
 
+// SpecOperationsSecurityReplace rplaces the security requirement object of operations that meets its
+// include and exclude filters. SecurityRequirement is specified by OpenAPI/Swagger standard version 3.
+// See https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md#securityRequirementObject
+func SpecOperationsSecurityReplace(spec *openapi3.Spec, pathMethodsInclude, pathMethodsExclude []string, securityRequirement map[string][]string) {
+	pathMethodsExcludeMap := stringsutil.SliceToMap(stringsutil.SliceCondenseSpace(pathMethodsExclude, true, false))
+	pathMethodsIncludeMap := stringsutil.SliceToMap(stringsutil.SliceCondenseSpace(pathMethodsInclude, true, false))
+
+	openapi3.VisitOperations(spec, func(opPath, opMethod string, op *oas3.Operation) {
+		if op == nil {
+			return
+		}
+		pathMethod := openapi3.PathMethod(opPath, opMethod)
+		if _, ok := pathMethodsExcludeMap[pathMethod]; ok {
+			return
+		}
+		if len(pathMethodsIncludeMap) > 0 { // only filter on explicit includes is more than one include.
+			if _, ok := pathMethodsIncludeMap[pathMethod]; !ok {
+				return
+			}
+		}
+		op.Security = oas3.NewSecurityRequirements()
+		op.Security.With(securityRequirement)
+	})
+}
+
 type OperationMoreSet struct {
 	OperationMores []OperationMore
 }
@@ -315,7 +332,7 @@ func QueryOperationsByTags(spec *openapi3.Spec, tags []string) *OperationMoreSet
 		tagsWantMatch[tag] = 1
 	}
 	opmSet := &OperationMoreSet{OperationMores: []OperationMore{}}
-	// for path, pathInfo := range spec.Paths {
+
 	openapi3.VisitOperations(spec, func(path, method string, op *oas3.Operation) {
 		if op == nil {
 			return
@@ -331,6 +348,6 @@ func QueryOperationsByTags(spec *openapi3.Spec, tags []string) *OperationMoreSet
 			}
 		}
 	})
-	// }
+
 	return opmSet
 }
