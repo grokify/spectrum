@@ -10,9 +10,22 @@ import (
 	"github.com/grokify/spectrum/openapi3"
 )
 
-func SpecTagsModify(spec *openapi3.Spec, changeTagsRaw map[string]string) {
+func SpecTagsModifyMore(spec *openapi3.Spec, opts *TagsModifyOpts) {
+	if opts == nil {
+		return
+	}
+	if len(opts.TagsMap) > 0 {
+		SpecTagsModify(spec, opts.TagsMap)
+	}
+	if len(opts.TagURLsMap) > 0 {
+		openapi3.VisitOperations(spec, opts.ModifyTagsOperationFunc)
+	}
+}
+
+// SpecTagsModify renames tags using mapping of old tags to new tags.
+func SpecTagsModify(spec *openapi3.Spec, mapTagsOldToNew map[string]string) {
 	changeTags := map[string]string{}
-	for old, new := range changeTagsRaw {
+	for old, new := range mapTagsOldToNew {
 		changeTags[strings.TrimSpace(old)] = strings.TrimSpace(new)
 	}
 
@@ -117,17 +130,24 @@ func SpecTagsCondense(spec *openapi3.Spec) {
 	spec.Tags = newTags
 }
 
-type UpdateTagsOpts struct {
-	TagURLsMap   map[string][]string
-	TagsMap      map[string]string
+// TagsModifyOpts is used with `SpecTagsModifyTagsMore()`.
+type TagsModifyOpts struct {
+	// TagURLsMap is a map where the keys are the new tags to add in CSV format while the values
+	// are a set of URL suffixes.
+	TagURLsMap map[string][]string
+	// TagsMap is a map where the keys are the old tag to modify and the value is the tag to use.
+	TagsMap map[string]string
+	// TagGroupsSet is a tag group set which can be added using Redocly's `x-tagGroups` property
+	// as `spec.Extensions["x-tagGroups"] = opts.TagGroupsSet.TagGroups``
 	TagGroupsSet openapi3.TagGroupSet
 }
 
-func (uto *UpdateTagsOpts) ModifyTagsOperationFunc(path, method string, op *oas3.Operation) {
+// ModifyTagsOperationFunc satsifies the function signature used in `openapi3.VisitOperations`.`
+func (tmo *TagsModifyOpts) ModifyTagsOperationFunc(path, method string, op *oas3.Operation) {
 	if op == nil {
 		return
 	}
-	for tagTry, urlSuffixes := range uto.TagURLsMap {
+	for tagTry, urlSuffixes := range tmo.TagURLsMap {
 		tags := strings.Split(tagTry, ",")
 		tags = stringsutil.SliceCondenseSpace(tags, true, false)
 		if stringsutil.SliceIndexMore(
@@ -136,4 +156,13 @@ func (uto *UpdateTagsOpts) ModifyTagsOperationFunc(path, method string, op *oas3
 			op.Tags = tags
 		}
 	}
+}
+
+// NewTagsSimple returns a `Tags` struct that can be assigned to `openapi3.Spec.Tags`.
+func NewTagsSimple(tagNames []string) oas3.Tags {
+	var tags oas3.Tags
+	for _, tagName := range tagNames {
+		tags = append(tags, &oas3.Tag{Name: tagName})
+	}
+	return tags
 }
