@@ -63,8 +63,7 @@ func msaPaths(basePath string, msa map[string]any, omSet *openapi3edit.Operation
 		pathOms, err := operationMoresFromPathItem(basePath, msa)
 		if err != nil {
 			return err
-		}
-		if len(pathOms) > 0 {
+		} else if len(pathOms) > 0 {
 			omSet.OperationMores = append(omSet.OperationMores, pathOms...)
 		}
 	}
