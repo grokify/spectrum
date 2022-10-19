@@ -1,6 +1,7 @@
 package openapi3
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -13,6 +14,7 @@ import (
 	"github.com/grokify/gocharts/v2/data/table"
 	"github.com/grokify/gocharts/v2/data/table/tabulator"
 	"github.com/grokify/mogo/encoding/jsonutil"
+	"github.com/grokify/mogo/net/httputilmore"
 	"github.com/grokify/mogo/net/urlutil"
 	"github.com/grokify/mogo/type/stringsutil"
 )
@@ -247,6 +249,26 @@ func (sm *SpecMore) OperationByID(wantOperationID string) (path, method string, 
 	return path, method, op, err
 }
 
+var (
+	ErrPathNotFound      = errors.New("path not found")
+	ErrOperationNotFound = errors.New("operation not found")
+)
+
+func (sm *SpecMore) OperationByPathMethod(path, method string) (*oas3.Operation, error) {
+	method = strings.ToUpper(strings.TrimSpace(method))
+	_, err := httputilmore.ParseHTTPMethod(method)
+	if err != nil {
+		return nil, err
+	}
+
+	pathItem, ok := sm.Spec.Paths[path]
+	if !ok {
+		return nil, nil
+	}
+
+	return pathItem.GetOperation(method), nil
+}
+
 func (sm *SpecMore) SetOperation(path, method string, op *oas3.Operation) {
 	path = strings.TrimSpace(path)
 	if strings.Index(path, "/") != 0 {
@@ -394,6 +416,28 @@ func (sm *SpecMore) ServerURLBasePath(index uint) (string, error) {
 	return serverURLParsed.Path, nil
 }
 
+func (sm *SpecMore) SpecTagStats() SpecTagStats {
+	stats := SpecTagStats{
+		TagStats:      SpecTagCounts{},
+		TagsAll:       sm.Tags(true, true),
+		TagsMeta:      sm.Tags(true, false),
+		TagsOps:       sm.Tags(false, true),
+		TagCountsAll:  sm.TagsMap(true, true),
+		TagCountsMeta: sm.TagsMap(true, false),
+		TagCountsOps:  sm.TagsMap(false, true),
+	}
+	VisitOperations(sm.Spec, func(skipPath, skipMethod string, op *oas3.Operation) {
+		op.Tags = stringsutil.SliceCondenseSpace(op.Tags, true, true)
+		stats.TagStats.OpsTotal++
+		if len(op.Tags) > 0 {
+			stats.TagStats.OpsWithTags++
+		} else {
+			stats.TagStats.OpsWithoutTags++
+		}
+	})
+	return stats
+}
+
 func (sm *SpecMore) Tags(inclTop, inclOps bool) []string {
 	tags := []string{}
 	tagsMap := sm.TagsMap(inclTop, inclOps)
@@ -403,7 +447,7 @@ func (sm *SpecMore) Tags(inclTop, inclOps bool) []string {
 	return stringsutil.SliceCondenseSpace(tags, true, true)
 }
 
-// TagsMap returns a set of tags present in the current spec.
+// TagsMap returns a set of operations with tags present in the current spec.
 func (sm *SpecMore) TagsMap(inclTop, inclOps bool) map[string]int {
 	tagsMap := map[string]int{}
 	if inclTop {
@@ -411,9 +455,8 @@ func (sm *SpecMore) TagsMap(inclTop, inclOps bool) map[string]int {
 			tagName := strings.TrimSpace(tag.Name)
 			if len(tagName) > 0 {
 				if _, ok := tagsMap[tagName]; !ok {
-					tagsMap[tagName] = 0
+					tagsMap[tagName] = 0 // don't increment unless present in operations
 				}
-				tagsMap[tagName]++
 			}
 		}
 	}
@@ -436,6 +479,22 @@ func (sm *SpecMore) TagsMap(inclTop, inclOps bool) map[string]int {
 type SpecStats struct {
 	OperationsCount int
 	SchemasCount    int
+}
+
+type SpecTagStats struct {
+	TagStats      SpecTagCounts
+	TagsAll       []string
+	TagsMeta      []string
+	TagsOps       []string
+	TagCountsAll  map[string]int
+	TagCountsMeta map[string]int
+	TagCountsOps  map[string]int
+}
+
+type SpecTagCounts struct {
+	OpsWithTags    int
+	OpsWithoutTags int
+	OpsTotal       int
 }
 
 func (sm *SpecMore) Stats() SpecStats {
