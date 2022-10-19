@@ -136,3 +136,17 @@ func SecurityRequirementsToRaw(secReqs oas3.SecurityRequirements) []map[string][
 	}
 	return raw
 }
+
+// PathMethod returns a path-method string which can be used as a unique identifier for operations.
+func PathMethod(opPath, opMethod string) string {
+	opPath = strings.TrimSpace(opPath)
+	opMethod = strings.ToUpper(strings.TrimSpace(opMethod))
+	parts := []string{}
+	if len(opPath) > 0 {
+		parts = append(parts, opPath)
+	}
+	if len(opMethod) > 0 {
+		parts = append(parts, opMethod)
+	}
+	return strings.Join(parts, " ")
+}
