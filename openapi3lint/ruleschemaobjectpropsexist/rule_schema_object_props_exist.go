@@ -32,17 +32,30 @@ func (rule RuleSchemaObjectPropsExist) ProcessSpec(spec *openapi3.Spec, pointerB
 	vios := []lintutil.PolicyViolation{}
 
 	for schName, schRef := range spec.Components.Schemas {
-		if schRef == nil || schRef.Value == nil ||
-			schRef.Value.Type != openapi3.TypeObject {
+		if schRef == nil || schRef.Value == nil || schRef.Value.Type != openapi3.TypeObject {
 			continue
 		}
-		if len(schRef.Value.Properties) == 0 &&
-			schRef.Value.AdditionalProperties == nil {
+		if len(schRef.Value.Properties) == 0 && schRef.Value.AdditionalProperties == nil &&
+			(schRef.Value.AdditionalPropertiesAllowed == nil || !*schRef.Value.AdditionalPropertiesAllowed) {
 			vios = append(vios, lintutil.PolicyViolation{
 				RuleName: rule.Name(),
 				Location: jsonutil.PointerSubEscapeAll(
 					"%s#/components/schemas/%s",
 					pointerBase, schName)})
+		}
+		for propName, propRef := range schRef.Value.Properties {
+			if propRef == nil || propRef.Value == nil || propRef.Value.Type != openapi3.TypeObject {
+				continue
+			}
+			if len(propRef.Value.Properties) == 0 &&
+				propRef.Value.AdditionalProperties == nil &&
+				(propRef.Value.AdditionalPropertiesAllowed == nil || !*propRef.Value.AdditionalPropertiesAllowed) {
+				vios = append(vios, lintutil.PolicyViolation{
+					RuleName: rule.Name(),
+					Location: jsonutil.PointerSubEscapeAll(
+						"%s#/components/schemas/%s/properties/%s",
+						pointerBase, schName, propName)})
+			}
 		}
 	}
 	return vios
