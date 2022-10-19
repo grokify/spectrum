@@ -45,6 +45,19 @@ func (opm *OperationMore) HasParameter(paramNameWant string) bool {
 	return false
 }
 
+func (opm *OperationMore) AddToSpec(spec *openapi3.Spec, force bool) (bool, error) {
+	sm := openapi3.SpecMore{Spec: spec}
+	op, err := sm.OperationByPathMethod(opm.Path, opm.Method)
+	if err != nil {
+		return false, err
+	}
+	if op == nil || force {
+		spec.AddOperation(opm.Path, opm.Method, opm.Operation)
+		return true, nil
+	}
+	return false, nil
+}
+
 func operationAddRequestBodySchemaRef(op *oas3.Operation, description string, required bool, contentType string, schemaRef *oas3.SchemaRef) error {
 	if op == nil {
 		return fmt.Errorf("operation to edit is nil")
