@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"regexp"
+	"strconv"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
@@ -209,7 +210,11 @@ func (sm *SpecMore) OperationsCount() int {
 	if sm.Spec == nil {
 		return -1
 	}
-	return len(sm.OperationMetas())
+	count := 0
+	VisitOperations(sm.Spec, func(skipPath, skipMethod string, op *oas3.Operation) {
+		count++
+	})
+	return count
 }
 
 // OperationCountsByTag returns a histogram for operations by tag.
@@ -229,6 +234,30 @@ func (sm *SpecMore) OperationIDs() []string {
 		ids = append(ids, op.OperationID)
 	})
 	return stringsutil.SliceCondenseSpace(ids, false, true)
+}
+
+func (sm *SpecMore) OperationIDsCounts() map[string]int {
+	msi := map[string]int{}
+	VisitOperations(sm.Spec, func(skipPath, skipMethod string, op *oas3.Operation) {
+		msi[op.OperationID]++
+	})
+	return msi
+}
+
+// OperationIDsLocations returns a `map[string][]string` where the keys are
+// operationIDs and the values are pathMethods for use in analyzing if there are
+// duplicate operationIDs.
+func (sm *SpecMore) OperationIDsLocations() map[string][]string {
+	vals := map[string][]string{}
+	VisitOperations(sm.Spec, func(opPath, opMethod string, op *oas3.Operation) {
+		if op == nil {
+			return
+		}
+		pathMethod := PathMethod(opPath, opMethod)
+		op.OperationID = strings.TrimSpace(op.OperationID)
+		vals[op.OperationID] = append(vals[op.OperationID], pathMethod)
+	})
+	return vals
 }
 
 func (sm *SpecMore) OperationByID(wantOperationID string) (path, method string, op *oas3.Operation, err error) {
@@ -402,8 +431,7 @@ func (sm *SpecMore) ServerURL(index uint) string {
 	return strings.TrimSpace(server.URL)
 }
 
-// ServerURLBasePath extracts the base path from a OAS URL
-// which can include variables.
+// ServerURLBasePath extracts the base path from a OAS URL which can include variables.
 func (sm *SpecMore) ServerURLBasePath(index uint) (string, error) {
 	serverURL := sm.ServerURL(index)
 	if len(serverURL) == 0 {
@@ -414,6 +442,31 @@ func (sm *SpecMore) ServerURLBasePath(index uint) (string, error) {
 		return "", err
 	}
 	return serverURLParsed.Path, nil
+}
+
+// OperationsDescriptionInfo returns information on operations with and without descriptions.
+func (sm *SpecMore) OperationsDescriptionInfo() map[string][]string {
+	data := map[string][]string{
+		"opWithDesc":      []string{},
+		"opWoutDesc":      []string{},
+		"opWithDescCount": []string{},
+		"opWoutDescCount": []string{},
+	}
+	VisitOperations(sm.Spec, func(opPath, opMethod string, op *oas3.Operation) {
+		if op == nil {
+			return
+		}
+		pathMethod := PathMethod(opPath, opMethod)
+		op.Description = strings.TrimSpace(op.Description)
+		if len(op.Description) == 0 {
+			data["opWoutDesc"] = append(data["opWoutDesc"], pathMethod)
+		} else {
+			data["opWithDesc"] = append(data["opWithDesc"], pathMethod)
+		}
+	})
+	data["opWithDescCount"] = append(data["opWithDescCount"], strconv.Itoa(len(data["opWithDesc"])))
+	data["opWoutDescCount"] = append(data["opWoutDescCount"], strconv.Itoa(len(data["opWoutDesc"])))
+	return data
 }
 
 func (sm *SpecMore) SpecTagStats() SpecTagStats {
