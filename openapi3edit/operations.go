@@ -150,14 +150,6 @@ func operationAddExternalDocs(op *oas3.Operation, docURL, docDescription string,
 	return nil
 }
 
-func SpecOperationsCount(spec *openapi3.Spec) uint {
-	count := uint(0)
-	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
-		count++
-	})
-	return count
-}
-
 // SpecSetOperation sets an operation in a OpenAPI Specification.
 func SpecSetOperation(spec *openapi3.Spec, path, method string, op oas3.Operation) error {
 	if spec == nil {
@@ -193,31 +185,44 @@ func SpecSetOperation(spec *openapi3.Spec, path, method string, op oas3.Operatio
 	return nil
 }
 
-func SpecOperationIds(spec *openapi3.Spec) map[string]int {
-	msi := map[string]int{}
-	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
-		op.OperationID = strings.TrimSpace(op.OperationID)
-		if _, ok := msi[op.OperationID]; !ok {
-			msi[op.OperationID] = 0
-		}
-		msi[op.OperationID]++
-	})
-	return msi
-}
-
-func SpecOperationIdsFromSummaries(spec *openapi3.Spec, errorOnEmpty bool) error {
+func SpecOperationIDsFromSummaries(spec *openapi3.Spec, errorOnEmpty bool) error {
 	empty := []string{}
 	openapi3.VisitOperations(spec, func(path, method string, op *oas3.Operation) {
 		op.Summary = strings.Join(strings.Split(op.Summary, " "), " ")
 		op.OperationID = op.Summary
 		if len(op.OperationID) == 0 {
-			empty = append(empty, path+" "+method)
+			empty = append(empty, openapi3.PathMethod(path, method))
 		}
 	})
 	if errorOnEmpty && len(empty) > 0 {
 		return fmt.Errorf("no_opid: [%s]", strings.Join(empty, ", "))
 	}
 	return nil
+}
+
+// SpecOperationsOperationIDSummaryReplace sets the OperationID and Summary with a `map[string]string`
+// where the keys are pathMethod values and the values are Summary strings.
+// This currently converst a Summary into an OperationID by using the supplied `opIDFunc`.
+func SpecOperationsOperationIDSummaryReplace(spec *openapi3.Spec, customMapPathMethodToSummary map[string]string, opIDFunc func(s string) string, forceOpID, forceSummary bool) {
+	openapi3.VisitOperations(spec, func(path, method string, op *oas3.Operation) {
+		op.OperationID = strings.TrimSpace(op.OperationID)
+		op.Summary = strings.TrimSpace(op.Summary)
+		pathMethod := openapi3.PathMethod(path, method)
+		summaryTry, ok := customMapPathMethodToSummary[pathMethod]
+		if !ok {
+			return
+		}
+		opIDTry := summaryTry
+		if opIDFunc != nil {
+			opIDTry = opIDFunc(summaryTry)
+		}
+		if len(op.OperationID) == 0 || forceOpID {
+			op.OperationID = opIDTry
+		}
+		if len(op.Summary) == 0 || forceSummary {
+			op.Summary = summaryTry
+		}
+	})
 }
 
 func SpecAddCustomProperties(spec *openapi3.Spec, custom map[string]interface{}, addToOperations, addToSchemas bool) {
