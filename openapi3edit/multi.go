@@ -10,10 +10,10 @@ import (
 )
 
 type SpecMoreModifyMultiOpts struct {
-	OperationsDeleteFunc     func(urlpath, method string, op *oas3.Operation) bool
-	OperationsRenameIdsFunc  func(string, string, *oas3.Operation)
+	OperationsDeleteFunc     func(opPath, opMethod string, op *oas3.Operation) bool
+	OperationsRenameIDsFunc  func(string, string, *oas3.Operation)
 	OperationsRemoveSecurity bool
-	OperationsShowIds        bool
+	OperationsShowIDs        bool
 	OperationsExec           bool
 	Paths                    SpecPathsModifyOpts
 	PathsShow                bool
@@ -24,19 +24,18 @@ type SpecMoreModifyMultiOpts struct {
 	TagsExec                 bool
 }
 
-// SpecMoreModifyMulti is used to perform multiple updates on
-// an OpenAPI 3 spec.
+// SpecMoreModifyMulti is used to perform multiple updates on an OpenAPI 3 spec.
 func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) error {
-	if opts.OperationsShowIds {
+	if opts.OperationsShowIDs {
 		// fmtutil.PrintJSON(SpecOperationIds(sm.Spec))
-		oldIds := SpecOperationIds(sm.Spec)
-		if opts.OperationsShowIds {
-			err := fmtutil.PrintJSON(oldIds)
+		oldIDs := sm.OperationIDsCounts()
+		if opts.OperationsShowIDs {
+			err := fmtutil.PrintJSON(oldIDs)
 			if err != nil {
 				return err
 			}
 		}
-		for id, count := range oldIds {
+		for id, count := range oldIDs {
 			if count != 1 {
 				return fmt.Errorf("E_OPERATION_ID_BAD_COUNT ID[%s]COUNT[%d]", id, count)
 			}
@@ -46,18 +45,18 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 		if opts.OperationsDeleteFunc != nil {
 			SpecDeleteOperations(sm.Spec, opts.OperationsDeleteFunc)
 		}
-		if opts.OperationsRenameIdsFunc != nil {
-			openapi3.VisitOperations(sm.Spec, opts.OperationsRenameIdsFunc)
+		if opts.OperationsRenameIDsFunc != nil {
+			openapi3.VisitOperations(sm.Spec, opts.OperationsRenameIDsFunc)
 		}
 		// UpdateOperationIds(sm.Spec, opts.OperationIdsRename)
-		newIds := SpecOperationIds(sm.Spec)
-		if opts.OperationsShowIds {
-			err := fmtutil.PrintJSON(newIds)
+		newIDs := sm.OperationIDsCounts()
+		if opts.OperationsShowIDs {
+			err := fmtutil.PrintJSON(newIDs)
 			if err != nil {
 				return err
 			}
 		}
-		for id, count := range newIds {
+		for id, count := range newIDs {
 			if count != 1 {
 				return fmt.Errorf("E_OPERATION_ID_BAD_COUNT_AFTER_RENAME ID[%s]COUNT[%d]", id, count)
 			}
