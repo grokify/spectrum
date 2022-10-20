@@ -18,12 +18,12 @@ func NewSpecMetadata(spec *openapi3.Spec) SpecMetadata {
 		OperationIDs: []string{},
 		Endpoints:    []string{}}
 	if spec != nil {
-		mapOpIDs := SpecOperationIds(spec)
+		sm := openapi3.SpecMore{Spec: spec}
+		mapOpIDs := sm.OperationIDsCounts()
 		for key := range mapOpIDs {
 			md.OperationIDs = append(md.OperationIDs, key)
 		}
 		md.Endpoints = SpecEndpoints(spec, true)
-		sm := openapi3.SpecMore{Spec: spec}
 		md.SchemaNames = sm.SchemaNames()
 	}
 	return md
