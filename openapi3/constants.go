@@ -14,4 +14,8 @@ const (
 	PropertyOperationID = "operationId"
 	PropertySummary     = "summary"
 	PropertyTags        = "tags"
+
+	InHeader = "header"
+	InQuery  = "query"
+	InCookie = "cookie"
 )
