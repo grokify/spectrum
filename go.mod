@@ -8,12 +8,13 @@ require (
 	github.com/ghodss/yaml v1.0.0
 	github.com/grokify/gocharts/v2 v2.8.2
 	github.com/grokify/gohttp v0.2.2
-	github.com/grokify/mogo v0.40.6
+	github.com/grokify/mogo v0.40.8
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.28.0
 	github.com/valyala/fasthttp v1.40.0
 	github.com/valyala/quicktemplate v1.7.0
 	gopkg.in/yaml.v2 v2.4.0
+
 )
 
 require (

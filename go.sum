@@ -41,8 +41,8 @@ github.com/grokify/gocharts/v2 v2.8.2 h1:D2SB9upv/P9GkXRRZjz/hYQBVU2f07sk0TeYRfH
 github.com/grokify/gocharts/v2 v2.8.2/go.mod h1:l/7POMWMLJ/PLwaJnDHZrMdVWRDFtGGjgKOrOvS23rQ=
 github.com/grokify/gohttp v0.2.2 h1:bb+LOffbJdwzazuuwMnS320cId02iFFicLwWIGeMD3o=
 github.com/grokify/gohttp v0.2.2/go.mod h1:665NrVNsW1YlgiFbl8Iyl62gEcGZ6CgE2nCsQO6OLYg=
-github.com/grokify/mogo v0.40.6 h1:5RtyoCbtq9ceDboC7PIfiz9P0F4kMZI2MVw3xvh5E8Q=
-github.com/grokify/mogo v0.40.6/go.mod h1:AGWKEvAttAy54LkiQdP1JDKapI20rgpTVZMFfirkMR0=
+github.com/grokify/mogo v0.40.8 h1:oCyQq+ZM0m4kJxJz1jCKFophN7EfaJiEfDjkG7ZGe7E=
+github.com/grokify/mogo v0.40.8/go.mod h1:AGWKEvAttAy54LkiQdP1JDKapI20rgpTVZMFfirkMR0=
 github.com/huandu/xstrings v1.3.2 h1:L18LIDzqlW6xN2rEkpdV8+oL/IXWJ1APd+vsdYy4Wdw=
 github.com/huandu/xstrings v1.3.2/go.mod h1:y5/lhBue+AyNmUVz9RLU9xbLR0o4KIIExikq4ovT0aE=
 github.com/invopop/yaml v0.1.0 h1:YW3WGUoJEXYfzWBjn00zIlrw7brGVD0fUKRYDPAPhrc=
