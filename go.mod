@@ -8,7 +8,7 @@ require (
 	github.com/ghodss/yaml v1.0.0
 	github.com/grokify/gocharts/v2 v2.8.2
 	github.com/grokify/gohttp v0.2.2
-	github.com/grokify/mogo v0.40.9
+	github.com/grokify/mogo v0.40.10
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.28.0
 	github.com/valyala/fasthttp v1.40.0
