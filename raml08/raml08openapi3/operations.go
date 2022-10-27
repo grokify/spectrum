@@ -102,14 +102,14 @@ func operationMoresFromPathItem(opPath string, opPathItem map[string]any) ([]ope
 		opMSA := valAny.(map[string]any)
 		if descAny, ok := opMSA[RAMLKeyDescription]; ok {
 			if descStr, ok := descAny.(string); ok {
-				om.Operation.Description = descStr
+				om.Operation.Description = strings.TrimSpace(descStr)
 			} else {
 				return oms, ErrRAMLDescriptionNotString
 			}
 		}
 		if dispNameAny, ok := opMSA[RAMLKeyDisplayName]; ok {
 			if dispNameStr, ok := dispNameAny.(string); ok {
-				om.Operation.Summary = dispNameStr
+				om.Operation.Summary = strings.TrimSpace(dispNameStr)
 			} else {
 				return oms, ErrRAMLDispNameNotString
 			}
