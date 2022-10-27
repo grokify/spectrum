@@ -91,13 +91,13 @@ func operationMoresFromPathItem(opPath string, opPathItem map[string]any) ([]ope
 	oms := []openapi3edit.OperationMore{}
 	for k, valAny := range opPathItem {
 		// check if current `opPathItem`` property is an HTTP method, and add operations if so.
-		_, err := httputilmore.ParseHTTPMethod(k)
+		methodCanonical, err := httputilmore.ParseHTTPMethod(k)
 		if err != nil { // err means not known HTTP Method
 			continue
 		}
 		om := openapi3edit.OperationMore{
 			Path:      opPath,
-			Method:    strings.ToUpper(strings.TrimSpace(k)),
+			Method:    string(methodCanonical),
 			Operation: &oas3.Operation{}}
 		opMSA := valAny.(map[string]any)
 		if descAny, ok := opMSA[RAMLKeyDescription]; ok {
