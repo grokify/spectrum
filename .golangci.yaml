@@ -13,7 +13,7 @@ linters:
     - whitespace
 linters-settings:
   stylecheck:
-    go: "1.16"
+    go: "1.18"
     checks:
       - all
       - '-ST1003' # disable uppercase acronyms, like Google Go SDK
