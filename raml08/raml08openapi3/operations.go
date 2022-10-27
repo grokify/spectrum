@@ -16,6 +16,7 @@ import (
 // ReadFileOperations reads a RAML v0.8 file and returns a set of `openapi3edit.OperationMore` structs.
 // The properties `path`, `method`, `summary`, `description` are populated. OpenAPI `summary` is populated
 // by the `displayName` property. Currently, this reads a JSON formatted file into a map[string]interface.
+// This is useful after converting a RAML v0.8 spec using https://github.com/daviemakz/oas-raml-converter-cli.
 func ReadFileOperations(filename string) (*openapi3edit.OperationMoreSet, error) {
 	bytes, err := os.ReadFile(filename)
 	if err != nil {
