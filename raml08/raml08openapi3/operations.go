@@ -50,12 +50,11 @@ var (
 // using the `openapi3edit.OperationMore` struct: `path`, `method`, `summary`, `description`. OpenAPI
 // `summary` is populated by the `displayName` property.
 func msaPaths(basePath string, msa map[string]any, omSet *openapi3edit.OperationMoreSet) error {
-	if omSet == nil {
-		return ErrOperationMoreSetMissing
-	} else if msa == nil {
+	if len(msa) == 0 {
 		return nil
-	}
-	if omSet.OperationMores == nil {
+	} else if omSet == nil {
+		return ErrOperationMoreSetMissing
+	} else if omSet.OperationMores == nil {
 		omSet.OperationMores = []openapi3edit.OperationMore{}
 	}
 	basePath = strings.TrimSpace(basePath)
