@@ -2,7 +2,6 @@ package openapi3
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"reflect"
 	"regexp"
@@ -347,7 +346,7 @@ func WriteFileDirMerge(outfile, inputDir string, perm os.FileMode, mergeOpts *Me
 		return num, errorsutil.Wrap(err, "E_SWAGGER2_JSON_ENCODING_FAILED")
 	}
 
-	err = ioutil.WriteFile(outfile, bytes, perm)
+	err = os.WriteFile(outfile, bytes, perm)
 	if err != nil {
 		return num, errorsutil.Wrap(err, "E_SWAGGER2_WRITE_FAILED")
 	}

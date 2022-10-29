@@ -3,7 +3,6 @@ package openapi3
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"regexp"
@@ -594,7 +593,7 @@ func (sm *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, ind
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(filename, jsonData, perm)
+	return os.WriteFile(filename, jsonData, perm)
 }
 
 func (sm *SpecMore) WriteFileXLSX(filename string, columns *tabulator.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) error {

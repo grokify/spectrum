@@ -1,7 +1,7 @@
 package main
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"strings"
@@ -65,7 +65,7 @@ func (svr *Server) HandleAPIRegistryAnyEngine(aRes anyhttp.Response, aReq anyhtt
 		return
 	}
 
-	bytes, err := ioutil.ReadAll(resp.Body)
+	bytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		logutil.PrintErr(SetResponseError(aRes, err.Error()))
 		return

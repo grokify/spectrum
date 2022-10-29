@@ -37,7 +37,10 @@ func SpecAddSchemaDir(spec *openapi3.Spec, dir string, fileRx *regexp.Regexp) er
 		spec.Components.Schemas[entryRoot] = &oas3.SchemaRef{Value: sch}
 	}
 	for _, sdir := range sdirs {
-		SpecAddSchemaDir(spec, filepath.Join(dir, sdir.Name()), fileRx)
+		err := SpecAddSchemaDir(spec, filepath.Join(dir, sdir.Name()), fileRx)
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }

@@ -142,7 +142,7 @@ type TagsModifyOpts struct {
 	TagGroupsSet openapi3.TagGroupSet
 }
 
-// ModifyTagsOperationFunc satsifies the function signature used in `openapi3.VisitOperations`.`
+// ModifyTagsOperationFunc satisfies the function signature used in `openapi3.VisitOperations`.`
 func (tmo *TagsModifyOpts) ModifyTagsOperationFunc(path, method string, op *oas3.Operation) {
 	if op == nil {
 		return

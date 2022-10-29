@@ -3,7 +3,7 @@ package openapi3lint
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"time"
 
 	"github.com/grokify/mogo/errors/errorsutil"
@@ -22,7 +22,7 @@ type PolicyConfig struct {
 
 func NewPolicyConfigFile(filename string) (PolicyConfig, error) {
 	pol := PolicyConfig{}
-	bytes, err := ioutil.ReadFile(filename)
+	bytes, err := os.ReadFile(filename)
 	if err != nil {
 		return pol, err
 	}

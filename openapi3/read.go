@@ -2,8 +2,9 @@ package openapi3
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
+	"os"
 	"regexp"
 	"strings"
 
@@ -20,7 +21,7 @@ func ReadURL(oas3url string) (*Spec, error) {
 	if err != nil {
 		return nil, err
 	}
-	bytes, err := ioutil.ReadAll(resp.Body)
+	bytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +34,7 @@ func ReadFile(oas3file string, validate bool) (*Spec, error) {
 	if validate {
 		return ReadAndValidateFile(oas3file)
 	}
-	bytes, err := ioutil.ReadFile(oas3file)
+	bytes, err := os.ReadFile(oas3file)
 	if err != nil {
 		return nil, errorsutil.Wrap(err, fmt.Sprintf("ReadFile.ReadFile.Error.Filename [%v]", oas3file))
 	}
@@ -70,7 +71,7 @@ func Parse(oas3Bytes []byte) (*Spec, error) {
 }
 
 func ReadAndValidateFile(oas3file string) (*Spec, error) {
-	bytes, err := ioutil.ReadFile(oas3file)
+	bytes, err := os.ReadFile(oas3file)
 	if err != nil {
 		return nil, errorsutil.Wrap(err, "E_READ_FILE_ERROR")
 	}

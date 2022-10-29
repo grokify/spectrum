@@ -31,7 +31,7 @@ func main() {
 	filepaths := osutil.DirEntries(entries).Names(opts.Directory, true)
 	tbl, err := csv.TableFromSpecFiles(filepaths, true)
 	if err != nil {
-		log.Fatal(fmt.Sprintf("TableFromSpecFiles [%v]\n", err.Error()))
+		log.Fatalf("TableFromSpecFiles [%v]\n", err.Error())
 	}
 
 	err = tbl.WriteCSV(opts.Output)

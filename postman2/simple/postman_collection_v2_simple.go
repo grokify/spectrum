@@ -2,7 +2,7 @@ package simple
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"os"
 	"strings"
 
 	"github.com/grokify/mogo/errors/errorsutil"
@@ -43,9 +43,9 @@ func NewCanonicalCollectionFromBytes(data []byte) (postman2.Collection, error) {
 
 //noinspection ALL
 func ReadCanonicalCollection(filepath string) (postman2.Collection, error) {
-	bytes, err := ioutil.ReadFile(filepath)
+	bytes, err := os.ReadFile(filepath)
 	if err != nil {
-		err = errorsutil.Wrap(err, "spectrum.postman2.ReadCanonicalCollection << ioutil.ReadFile")
+		err = errorsutil.Wrap(err, "spectrum.postman2.ReadCanonicalCollection << os.ReadFile")
 		return postman2.Collection{}, err
 	}
 	return NewCanonicalCollectionFromBytes(bytes)

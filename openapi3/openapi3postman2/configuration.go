@@ -3,7 +3,7 @@ package openapi3postman2
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strings"
 
 	"github.com/grokify/spectrum/postman2"
@@ -32,7 +32,7 @@ func ConfigurationReadFile(filename string) (Configuration, error) {
 	if len(filename) == 0 {
 		return cfg, fmt.Errorf("empty file provided [%s]", filename)
 	}
-	bytes, err := ioutil.ReadFile(filename)
+	bytes, err := os.ReadFile(filename)
 	if err != nil {
 		return cfg, err
 	}

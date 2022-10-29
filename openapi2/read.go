@@ -2,7 +2,7 @@ package openapi2
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"os"
 	"regexp"
 	"strings"
 
@@ -20,7 +20,7 @@ func ReadSwagger2SpecFile(filepath string) (Specification, error) {
 
 func ReadOpenAPI2SpecFileDirect(filename string) (Specification, error) {
 	var spec Specification
-	bytes, err := ioutil.ReadFile(filename)
+	bytes, err := os.ReadFile(filename)
 	if err != nil {
 		return spec, err
 	}
@@ -34,7 +34,7 @@ func ReadOpenAPI2SpecFileDirect(filename string) (Specification, error) {
 }
 
 /*func ReadSwagger2Spec(filepath string) (Specification, error) {
-	bytes, err := ioutil.ReadFile(filepath)
+	bytes, err := os.ReadFile(filepath)
 	if err != nil {
 		return Specification{}, err
 	}
@@ -43,7 +43,7 @@ func ReadOpenAPI2SpecFileDirect(filename string) (Specification, error) {
 
 func ReadOpenAPI2KinSpecFile(filename string) (*Spec, error) {
 	var swag Spec
-	bytes, err := ioutil.ReadFile(filename)
+	bytes, err := os.ReadFile(filename)
 	if err != nil {
 		return &swag, err
 	}

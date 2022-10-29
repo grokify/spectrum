@@ -202,7 +202,7 @@ func SpecOperationIDsFromSummaries(spec *openapi3.Spec, errorOnEmpty bool) error
 
 // SpecOperationsOperationIDSummaryReplace sets the OperationID and Summary with a `map[string]string`
 // where the keys are pathMethod values and the values are Summary strings.
-// This currently converst a Summary into an OperationID by using the supplied `opIDFunc`.
+// This currently converts a Summary into an OperationID by using the supplied `opIDFunc`.
 func SpecOperationsOperationIDSummaryReplace(spec *openapi3.Spec, customMapPathMethodToSummary map[string]string, opIDFunc func(s string) string, forceOpID, forceSummary bool) {
 	openapi3.VisitOperations(spec, func(path, method string, op *oas3.Operation) {
 		op.OperationID = strings.TrimSpace(op.OperationID)

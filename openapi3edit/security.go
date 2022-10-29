@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	SecuritySchemeApikeyDefaultName      = "ApiKeyAuth"
+	SecuritySchemeApikeyDefaultName      = "ApiKeyAuth" // #nosec G101
 	SecuritySchemeBearertokenDefaultName = "BearerAuth"
 	SchemeHTTP                           = "http"
 	TokenTypeBearer                      = "bearer"

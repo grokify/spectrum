@@ -2,9 +2,9 @@ package openapi2postman2
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"regexp"
 	"sort"
 	"strings"
@@ -53,7 +53,7 @@ func (conv *Converter) MergeConvert(swaggerFilepath string, pmanBaseFilepath str
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(pmanSpecFilepath, bytes, 0600)
+	return os.WriteFile(pmanSpecFilepath, bytes, 0600)
 }
 
 // Convert builds a Postman 2.0 spec using a Swagger 2.0 spec.
@@ -68,7 +68,7 @@ func (conv *Converter) Convert(swaggerFilepath string, pmanSpecFilepath string) 
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(pmanSpecFilepath, bytes, 0600)
+	return os.WriteFile(pmanSpecFilepath, bytes, 0600)
 }
 
 // Convert creates a Postman 2.0 collection from a configuration and Swagger 2.0 spec
