@@ -171,9 +171,9 @@ func (sm *SpecMore) OperationMetas(inclTags []string) []OperationMeta {
 	if sm.Spec == nil {
 		return []OperationMeta{}
 	}
-	ometas := []*OperationMeta{}
+	oms := []*OperationMeta{}
 	for url, path := range sm.Spec.Paths {
-		ometas = append(ometas,
+		oms = append(oms,
 			OperationToMeta(url, http.MethodConnect, path.Connect, inclTags),
 			OperationToMeta(url, http.MethodDelete, path.Delete, inclTags),
 			OperationToMeta(url, http.MethodGet, path.Get, inclTags),
@@ -185,13 +185,13 @@ func (sm *SpecMore) OperationMetas(inclTags []string) []OperationMeta {
 			OperationToMeta(url, http.MethodTrace, path.Trace, inclTags))
 	}
 
-	ometas2 := []OperationMeta{}
-	for _, om := range ometas {
+	oms2 := []OperationMeta{}
+	for _, om := range oms {
 		if om != nil {
-			ometas2 = append(ometas2, *om)
+			oms2 = append(oms2, *om)
 		}
 	}
-	return ometas2
+	return oms2
 }
 
 func (sm *SpecMore) OperationsCount() int {
