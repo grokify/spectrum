@@ -130,11 +130,11 @@ func ValidateFixOperationPathParameters(spec *openapi3.Spec, fix bool) ([]*opena
 				op.Parameters = SortParameters(op.Parameters, varNamesPath)
 			}
 			if len(varNamesMissing) > 0 {
-				om := openapi3.OperationToMeta(path, method, op)
+				om := openapi3.OperationToMeta(path, method, op, []string{})
 				om.MetaNotes = append(om.MetaNotes,
 					fmt.Sprintf("E_OP_MISSING_PATH_PARAMETER PARAM_NAMES[%s]",
 						strings.Join(varNamesMissing, ",")))
-				errorOperations = append(errorOperations, &om)
+				errorOperations = append(errorOperations, om)
 			}
 		},
 	)
@@ -163,10 +163,10 @@ func MoveRequestBodies(spec *openapi3.Spec, move bool) ([]*openapi3.OperationMet
 						op.RequestBody = requestBodyRef
 					}
 				} else {
-					om := openapi3.OperationToMeta(path, method, op)
+					om := openapi3.OperationToMeta(path, method, op, []string{})
 					om.MetaNotes = append(om.MetaNotes,
 						fmt.Sprintf("E_REQUEST_BODY_DEFINITION REF[%s]", op.RequestBody.Ref))
-					errorOperations = append(errorOperations, &om)
+					errorOperations = append(errorOperations, om)
 				}
 			}
 		},
@@ -204,19 +204,19 @@ func ValidateFixOperationResponseTypes(spec *openapi3.Spec, fix bool) ([]*openap
 								delete(response.Value.Content, mediaTypeOrig)
 								if mtRefTry, ok := response.Value.Content[httputilmore.ContentTypeTextPlain]; ok {
 									if !reflect.DeepEqual(mtRef, mtRefTry) {
-										om := openapi3.OperationToMeta(path, method, op)
+										om := openapi3.OperationToMeta(path, method, op, []string{})
 										om.MetaNotes = append(om.MetaNotes,
 											fmt.Sprintf("E_BAD_MIME_TYPE_AND_SCHEMA_COLLISION MT[%s] type[%s]", mediaType, schemaType))
-										errorOperations = append(errorOperations, &om)
+										errorOperations = append(errorOperations, om)
 									}
 								} else {
 									response.Value.Content[httputilmore.ContentTypeTextPlain] = mtRef
 								}
 							} else if schemaType != "object" && schemaType != "array" {
-								om := openapi3.OperationToMeta(path, method, op)
+								om := openapi3.OperationToMeta(path, method, op, []string{})
 								om.MetaNotes = append(om.MetaNotes,
 									fmt.Sprintf("E_BAD_MIME_TYPE_AND_SCHEMA MT[%s] type[%s]", mediaType, schemaType))
-								errorOperations = append(errorOperations, &om)
+								errorOperations = append(errorOperations, om)
 							}
 						}
 					}

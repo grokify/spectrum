@@ -167,42 +167,30 @@ func OpTableColumnsRingCentral() *tabulator.ColumnSet {
 	//return &table.ColumnSet{Columns: columns}
 }
 
-func (sm *SpecMore) OperationMetas() []OperationMeta {
-	ometas := []OperationMeta{}
+func (sm *SpecMore) OperationMetas(inclTags []string) []OperationMeta {
 	if sm.Spec == nil {
-		return ometas
+		return []OperationMeta{}
 	}
+	ometas := []*OperationMeta{}
 	for url, path := range sm.Spec.Paths {
-		if path.Connect != nil {
-			ometas = append(ometas, OperationToMeta(url, http.MethodConnect, path.Connect))
-		}
-		if path.Delete != nil {
-			ometas = append(ometas, OperationToMeta(url, http.MethodDelete, path.Delete))
-		}
-		if path.Get != nil {
-			ometas = append(ometas, OperationToMeta(url, http.MethodGet, path.Get))
-		}
-		if path.Head != nil {
-			ometas = append(ometas, OperationToMeta(url, http.MethodHead, path.Head))
-		}
-		if path.Options != nil {
-			ometas = append(ometas, OperationToMeta(url, http.MethodOptions, path.Options))
-		}
-		if path.Patch != nil {
-			ometas = append(ometas, OperationToMeta(url, http.MethodPatch, path.Patch))
-		}
-		if path.Post != nil {
-			ometas = append(ometas, OperationToMeta(url, http.MethodPost, path.Post))
-		}
-		if path.Put != nil {
-			ometas = append(ometas, OperationToMeta(url, http.MethodPut, path.Put))
-		}
-		if path.Trace != nil {
-			ometas = append(ometas, OperationToMeta(url, http.MethodTrace, path.Trace))
-		}
+		ometas = append(ometas, OperationToMeta(url, http.MethodConnect, path.Connect, inclTags))
+		ometas = append(ometas, OperationToMeta(url, http.MethodDelete, path.Delete, inclTags))
+		ometas = append(ometas, OperationToMeta(url, http.MethodGet, path.Get, inclTags))
+		ometas = append(ometas, OperationToMeta(url, http.MethodHead, path.Head, inclTags))
+		ometas = append(ometas, OperationToMeta(url, http.MethodOptions, path.Options, inclTags))
+		ometas = append(ometas, OperationToMeta(url, http.MethodPatch, path.Patch, inclTags))
+		ometas = append(ometas, OperationToMeta(url, http.MethodPost, path.Post, inclTags))
+		ometas = append(ometas, OperationToMeta(url, http.MethodPut, path.Put, inclTags))
+		ometas = append(ometas, OperationToMeta(url, http.MethodTrace, path.Trace, inclTags))
 	}
 
-	return ometas
+	ometas2 := []OperationMeta{}
+	for _, om := range ometas {
+		if om != nil {
+			ometas2 = append(ometas2, *om)
+		}
+	}
+	return ometas2
 }
 
 func (sm *SpecMore) OperationsCount() int {

@@ -10,8 +10,29 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 )
 
-func OperationToMeta(url, method string, op *oas3.Operation) OperationMeta {
-	return OperationMeta{
+// OperationToMeta converts a path, method and operation to an `*OperationMeta`.
+// The function returns `nil` if any of the items are empty.
+func OperationToMeta(url, method string, op *oas3.Operation, inclTags []string) *OperationMeta {
+	if url == "" || method == "" || op == nil {
+		return nil
+	}
+	if len(inclTags) > 0 {
+		inclTagsMap := map[string]int{}
+		for _, inclTag := range inclTags {
+			inclTagsMap[inclTag]++
+		}
+		haveMatch := false
+		for _, opTag := range op.Tags {
+			if _, ok := inclTagsMap[opTag]; ok {
+				haveMatch = true
+				break
+			}
+		}
+		if !haveMatch {
+			return nil
+		}
+	}
+	return &OperationMeta{
 		OperationID: strings.TrimSpace(op.OperationID),
 		Summary:     strings.TrimSpace(op.Summary),
 		Method:      strings.ToUpper(strings.TrimSpace(method)),
