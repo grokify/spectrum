@@ -173,15 +173,16 @@ func (sm *SpecMore) OperationMetas(inclTags []string) []OperationMeta {
 	}
 	ometas := []*OperationMeta{}
 	for url, path := range sm.Spec.Paths {
-		ometas = append(ometas, OperationToMeta(url, http.MethodConnect, path.Connect, inclTags))
-		ometas = append(ometas, OperationToMeta(url, http.MethodDelete, path.Delete, inclTags))
-		ometas = append(ometas, OperationToMeta(url, http.MethodGet, path.Get, inclTags))
-		ometas = append(ometas, OperationToMeta(url, http.MethodHead, path.Head, inclTags))
-		ometas = append(ometas, OperationToMeta(url, http.MethodOptions, path.Options, inclTags))
-		ometas = append(ometas, OperationToMeta(url, http.MethodPatch, path.Patch, inclTags))
-		ometas = append(ometas, OperationToMeta(url, http.MethodPost, path.Post, inclTags))
-		ometas = append(ometas, OperationToMeta(url, http.MethodPut, path.Put, inclTags))
-		ometas = append(ometas, OperationToMeta(url, http.MethodTrace, path.Trace, inclTags))
+		ometas = append(ometas,
+			OperationToMeta(url, http.MethodConnect, path.Connect, inclTags),
+			OperationToMeta(url, http.MethodDelete, path.Delete, inclTags),
+			OperationToMeta(url, http.MethodGet, path.Get, inclTags),
+			OperationToMeta(url, http.MethodHead, path.Head, inclTags),
+			OperationToMeta(url, http.MethodOptions, path.Options, inclTags),
+			OperationToMeta(url, http.MethodPatch, path.Patch, inclTags),
+			OperationToMeta(url, http.MethodPost, path.Post, inclTags),
+			OperationToMeta(url, http.MethodPut, path.Put, inclTags),
+			OperationToMeta(url, http.MethodTrace, path.Trace, inclTags))
 	}
 
 	ometas2 := []OperationMeta{}
