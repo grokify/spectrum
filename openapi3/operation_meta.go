@@ -41,8 +41,7 @@ func OperationToMeta(url, method string, op *oas3.Operation, inclTags []string) 
 		MetaNotes:   []string{}}
 }
 
-// OperationMeta is used to hold additional information
-// for a spec operation.
+// OperationMeta is used to hold additional information for a spec operation.
 type OperationMeta struct {
 	OperationID      string
 	DocsDescription  string
