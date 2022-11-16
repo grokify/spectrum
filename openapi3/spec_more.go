@@ -19,6 +19,8 @@ import (
 	"github.com/grokify/mogo/type/stringsutil"
 )
 
+var ErrSpecNotSet = errors.New("spec not set")
+
 type Spec = oas3.T
 
 type Operation = oas3.Operation
