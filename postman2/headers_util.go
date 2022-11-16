@@ -33,16 +33,17 @@ func AddOperationReqResMediaTypeHeaders(
 	operation *oas3.Operation,
 	reqPreferences []string,
 	resPreferences []string) ([]Header, string, string) {
+	om := openapi3.OperationMore{Operation: operation}
 	headers, reqMediaType := AppendPostmanHeaderValueLower(
 		headers,
 		httputilmore.HeaderContentType,
-		openapi3.OperationRequestMediaTypes(operation),
+		om.RequestMediaTypes(),
 		reqPreferences,
 	)
 	headers, resMediaType := AppendPostmanHeaderValueLower(
 		headers,
 		httputilmore.HeaderAccept,
-		openapi3.OperationResponseMediaTypes(operation),
+		om.ResponseMediaTypes(),
 		resPreferences,
 	)
 	return headers, reqMediaType, resMediaType

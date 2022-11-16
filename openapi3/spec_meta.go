@@ -10,6 +10,7 @@ import (
 
 const (
 	OASVersionLatest  = "3.1.0"
+	OASVersionDefault = "3.0.3"
 	apiVersionDefault = "0.0.1"
 )
 

@@ -85,7 +85,8 @@ func operationsTable(spec *Spec, columns *tabulator.ColumnSet, filterFunc func(p
 				row = append(row, strings.Join(
 					tgs.GetTagGroupNamesForTagNames(op.Tags...), ", "))
 			case "securityScopes":
-				row = append(row, strings.Join(OperationSecurityScopes(op, false), ", "))
+				om := OperationMore{Operation: op}
+				row = append(row, strings.Join(om.SecurityScopes(false), ", "))
 			case XThrottlingGroup:
 				row = append(row, GetExtensionPropStringOrEmpty(op.ExtensionProps, XThrottlingGroup))
 			case "docsURL":

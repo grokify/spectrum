@@ -1,7 +1,6 @@
 package openapi3
 
 import (
-	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -113,48 +112,6 @@ func OperationSetResponseBodySchemaRef(op *oas3.Operation, status, description, 
 	}
 	resRef.Value.Content[mediaType] = oas3.NewMediaType().WithSchemaRef(schemaRef)
 	return nil
-}
-
-// OperationSecurityScopes retrieves a flat list of security scopes for
-// an operation.
-func OperationSecurityScopes(op *oas3.Operation, fullyQualified bool) []string {
-	securityScopes := []string{}
-	if op == nil || op.Security == nil {
-		return securityScopes
-	}
-	seqReqRaw := SecurityRequirementsToRaw(*op.Security)
-	for _, secReq := range seqReqRaw {
-		for secSchemeName, scopes := range secReq {
-			if fullyQualified {
-				secSchemeNameTrimmed := strings.TrimSpace(secSchemeName)
-				for _, scope := range scopes {
-					scope = strings.TrimSpace(scope)
-					if len(scope) > 0 {
-						securityScopes = append(securityScopes,
-							secSchemeNameTrimmed+"."+scope)
-					}
-				}
-			} else {
-				securityScopes = append(securityScopes, scopes...)
-			}
-		}
-	}
-	return stringsutil.SliceCondenseSpace(securityScopes, true, false)
-}
-
-// SecurityRequirementsToRaw returns a raw SecurityRequirements slice
-// to be used for iterating over elements.
-func SecurityRequirementsToRaw(secReqs oas3.SecurityRequirements) []map[string][]string {
-	bytes, err := json.Marshal(secReqs)
-	if err != nil {
-		panic(err)
-	}
-	raw := []map[string][]string{}
-	err = json.Unmarshal(bytes, &raw)
-	if err != nil {
-		panic(err)
-	}
-	return raw
 }
 
 // PathMethod returns a path-method string which can be used as a unique identifier for operations.
