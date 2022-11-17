@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/mogo/type/maputil"
 	"github.com/grokify/mogo/type/stringsutil"
 )
 
@@ -20,15 +21,6 @@ type OperationMore struct {
 	Operation *oas3.Operation
 }
 
-/*
-func MediaTypesToSlice(typesMap map[string]*oas3.MediaType) []string {
-	slice := []string{}
-	for thisType := range typesMap {
-		slice = append(slides, thisType)
-	}
-	return slice
-}
-*/
 // RequestMediaTypes returns a sorted slice of request media types.
 func (om *OperationMore) RequestMediaTypes() []string {
 	op := om.Operation
@@ -72,14 +64,11 @@ func (om *OperationMore) ResponseMediaTypes() []string {
 // JSONPointers returns a `map[string][]string` where the keys
 // are JSON pointers and the value slice is a slice of locations.
 func (om *OperationMore) JSONPointers() map[string][]string {
-	op := om.Operation
 	schemaRefs := url.Values{}
-	if op == nil {
+	if om.Operation == nil {
 		return schemaRefs
 	}
-	if op == nil {
-		return schemaRefs
-	}
+	op := om.Operation
 	for _, paramRef := range op.Parameters {
 		if paramRef == nil {
 			continue
@@ -87,9 +76,32 @@ func (om *OperationMore) JSONPointers() map[string][]string {
 		if len(paramRef.Ref) > 0 {
 			schemaRefs.Add(paramRef.Ref, LocationParameter)
 		}
+		if paramRef.Value == nil {
+			continue
+		}
+		if len(paramRef.Value.Schema.Ref) > 0 {
+			schemaRefs.Add(paramRef.Value.Schema.Ref, LocationParameter)
+		}
+		if paramRef.Value.Schema.Value != nil && paramRef.Value.Schema.Value.Items != nil {
+			if len(paramRef.Value.Schema.Value.Items.Ref) > 0 {
+				schemaRefs.Add(paramRef.Value.Schema.Value.Items.Ref, LocationParameter)
+			}
+		}
 	}
-	if op.RequestBody != nil && len(op.RequestBody.Ref) > 0 {
-		schemaRefs.Add(op.RequestBody.Ref, LocationParameter)
+	if op.RequestBody != nil {
+		if len(op.RequestBody.Ref) > 0 {
+			schemaRefs.Add(op.RequestBody.Ref, LocationRequest)
+		}
+		if op.RequestBody.Value != nil {
+			for _, mediaType := range op.RequestBody.Value.Content {
+				if mediaType.Schema == nil {
+					continue
+				}
+				if len(strings.TrimSpace(mediaType.Schema.Ref)) > 0 {
+					schemaRefs.Add(mediaType.Schema.Ref, LocationRequest)
+				}
+			}
+		}
 	}
 	for _, respRef := range op.Responses {
 		if respRef == nil {
@@ -98,8 +110,19 @@ func (om *OperationMore) JSONPointers() map[string][]string {
 		if len(respRef.Ref) > 0 {
 			schemaRefs.Add(respRef.Ref, LocationResponse)
 		}
+		if respRef.Value == nil {
+			continue
+		}
+		for _, mediaType := range respRef.Value.Content {
+			if mediaType.Schema == nil {
+				continue
+			}
+			if len(strings.TrimSpace(mediaType.Schema.Ref)) > 0 {
+				schemaRefs.Add(mediaType.Schema.Ref, LocationResponse)
+			}
+		}
 	}
-	return schemaRefs
+	return maputil.MapStringSliceCondenseSpace(schemaRefs, true, true)
 }
 
 // SecurityScopes retrieves a flat list of security scopes for an operation.
