@@ -399,16 +399,33 @@ func (sm *SpecMore) SchemaNameExists(schemaName string, includeNil bool) bool {
 	return false
 }
 
+// SchemaRef returns a top level `SchemaRef` under `Components` based on
+// map name or JSON pointer. It returns `nil` if the `schemaName` is not
+// found.
 func (sm *SpecMore) SchemaRef(schemaName string) *oas3.SchemaRef {
-	for schemaNameTry, schemaRef := range sm.Spec.Components.Schemas {
-		if schemaName == schemaNameTry {
-			return schemaRef
+	if sm.Spec == nil {
+		return nil
+	}
+	if strings.Contains(schemaName, PointerComponentsSchemas) {
+		ptr, err := ParseJSONPointer(schemaName)
+		if err != nil {
+
+			return nil
 		}
+		schNameTry, ok := ptr.IsTopSchema()
+		if !ok {
+			return nil
+		}
+		schemaName = schNameTry
+	}
+
+	if schRef, ok := sm.Spec.Components.Schemas[schemaName]; ok {
+		return schRef
 	}
 	return nil
 }
 
-func (sm *SpecMore) SetSchemaRef(schemaName string, schemaRef *oas3.SchemaRef) error {
+func (sm *SpecMore) SchemaRefSet(schemaName string, schemaRef *oas3.SchemaRef) error {
 	schemaName = strings.TrimSpace(schemaName)
 	if schemaRef != nil {
 		if sm.Spec.Components.Schemas == nil {
