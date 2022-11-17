@@ -69,9 +69,9 @@ func (om *OperationMore) ResponseMediaTypes() []string {
 	return mediaTypes
 }
 
-// SchemaRefs returns a `map[string][]string` where the keys
+// JSONPointers returns a `map[string][]string` where the keys
 // are JSON pointers and the value slice is a slice of locations.
-func (om *OperationMore) SchemaRefs() map[string][]string {
+func (om *OperationMore) JSONPointers() map[string][]string {
 	op := om.Operation
 	schemaRefs := url.Values{}
 	if op == nil {
