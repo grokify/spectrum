@@ -119,12 +119,3 @@ func ValidateMore(spec *Spec) (ValidationStatus, error) {
 	vs.Status = true
 	return vs, nil
 }
-
-func Copy(spec *Spec) (*Spec, error) {
-	bytes, err := spec.MarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	loader := oas3.NewLoader()
-	return loader.LoadFromData(bytes)
-}

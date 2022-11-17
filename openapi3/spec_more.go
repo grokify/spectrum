@@ -37,6 +37,18 @@ func ReadSpecMore(path string, validate bool) (*SpecMore, error) {
 	return &SpecMore{Spec: spec}, nil
 }
 
+func (sm *SpecMore) Clone() (*Spec, error) {
+	if sm.Spec == nil {
+		return nil, nil
+	}
+	bytes, err := sm.Spec.MarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	loader := oas3.NewLoader()
+	return loader.LoadFromData(bytes)
+}
+
 func (sm *SpecMore) SchemasCount() int {
 	if sm.Spec == nil {
 		return -1
