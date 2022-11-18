@@ -10,54 +10,32 @@ import (
 	"github.com/grokify/spectrum/openapi3"
 )
 
-// OperationMore is used for two purposes: (a) to store path and method information with the operation and
+// OperationEdit is used for two purposes: (a) to store path and method information with the operation and
 // (b) to provide a container to organize operation related functions.
-type OperationMore struct {
-	Path      string
-	Method    string
-	Operation *oas3.Operation
+type OperationEdit struct {
+	openapi3.OperationMore
 }
 
-func (opm *OperationMore) AddExternalDocs(docURL, docDescription string, preserveIfReqEmpty bool) error {
-	return operationAddExternalDocs(opm.Operation, docURL, docDescription, preserveIfReqEmpty)
+func (ope *OperationEdit) AddExternalDocs(docURL, docDescription string, preserveIfReqEmpty bool) error {
+	return operationAddExternalDocs(ope.OperationMore.Operation, docURL, docDescription, preserveIfReqEmpty)
 }
 
-func (opm *OperationMore) AddRequestBodySchemaRef(description string, required bool, contentType string, schemaRef *oas3.SchemaRef) error {
-	return operationAddRequestBodySchemaRef(opm.Operation, description, required, contentType, schemaRef)
+func (ope *OperationEdit) AddRequestBodySchemaRef(description string, required bool, contentType string, schemaRef *oas3.SchemaRef) error {
+	return operationAddRequestBodySchemaRef(ope.OperationMore.Operation, description, required, contentType, schemaRef)
 }
 
-func (opm *OperationMore) AddResponseBodySchemaRef(statusCode, description, contentType string, schemaRef *oas3.SchemaRef) error {
-	return operationAddResponseBodySchemaRef(opm.Operation, statusCode, description, contentType, schemaRef)
+func (ope *OperationEdit) AddResponseBodySchemaRef(statusCode, description, contentType string, schemaRef *oas3.SchemaRef) error {
+	return operationAddResponseBodySchemaRef(ope.OperationMore.Operation, statusCode, description, contentType, schemaRef)
 }
 
-func (opm *OperationMore) HasParameter(paramNameWant string) bool {
-	paramNameWantLc := strings.ToLower(strings.TrimSpace(paramNameWant))
-	for _, paramRef := range opm.Operation.Parameters {
-		if paramRef.Value == nil {
-			continue
-		}
-		param := paramRef.Value
-		param.Name = strings.TrimSpace(param.Name)
-		paramNameTryLc := strings.ToLower(param.Name)
-		if paramNameWantLc == paramNameTryLc {
-			return true
-		}
-	}
-	return false
-}
-
-func (opm *OperationMore) PathMethod() string {
-	return openapi3.PathMethod(opm.Path, opm.Method)
-}
-
-func (opm *OperationMore) AddToSpec(spec *openapi3.Spec, force bool) (bool, error) {
+func (ope *OperationEdit) AddToSpec(spec *openapi3.Spec, force bool) (bool, error) {
 	sm := openapi3.SpecMore{Spec: spec}
-	op, err := sm.OperationByPathMethod(opm.Path, opm.Method)
+	op, err := sm.OperationByPathMethod(ope.OperationMore.Path, ope.OperationMore.Method)
 	if err != nil {
 		return false, err
 	}
 	if op == nil || force {
-		spec.AddOperation(opm.Path, opm.Method, opm.Operation)
+		spec.AddOperation(ope.OperationMore.Path, ope.OperationMore.Method, ope.OperationMore.Operation)
 		return true, nil
 	}
 	return false, nil
@@ -317,26 +295,26 @@ func SpecOperationsSecurityReplace(spec *openapi3.Spec, pathMethodsInclude, path
 	})
 }
 
-type OperationMoreSet struct {
-	OperationMores []OperationMore
+type OperationEditSet struct {
+	OperationEdits []OperationEdit
 }
 
 // SummariesMap returns a `map[string]string` where the keys are the operation's
 // path and method, while the values are the sumamries.`
-func (omSet *OperationMoreSet) SummariesMap() map[string]string {
+func (omSet *OperationEditSet) SummariesMap() map[string]string {
 	mss := map[string]string{}
-	for _, om := range omSet.OperationMores {
+	for _, om := range omSet.OperationEdits {
 		mss[om.PathMethod()] = om.Operation.Summary
 	}
 	return mss
 }
 
-func QueryOperationsByTags(spec *openapi3.Spec, tags []string) *OperationMoreSet {
+func QueryOperationsByTags(spec *openapi3.Spec, tags []string) *OperationEditSet {
 	tagsWantMatch := map[string]int{}
 	for _, tag := range tags {
 		tagsWantMatch[tag] = 1
 	}
-	opmSet := &OperationMoreSet{OperationMores: []OperationMore{}}
+	opmSet := &OperationEditSet{OperationEdits: []OperationEdit{}}
 
 	openapi3.VisitOperations(spec, func(path, method string, op *oas3.Operation) {
 		if op == nil {
@@ -344,11 +322,12 @@ func QueryOperationsByTags(spec *openapi3.Spec, tags []string) *OperationMoreSet
 		}
 		for _, tagTry := range op.Tags {
 			if _, ok := tagsWantMatch[tagTry]; ok {
-				opmSet.OperationMores = append(opmSet.OperationMores,
-					OperationMore{
-						Path:      path,
-						Method:    method,
-						Operation: op})
+				opmSet.OperationEdits = append(opmSet.OperationEdits,
+					OperationEdit{
+						OperationMore: openapi3.OperationMore{
+							Path:      path,
+							Method:    method,
+							Operation: op}})
 				return
 			}
 		}

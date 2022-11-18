@@ -97,7 +97,7 @@ func ValidateFixOperationPathParameters(spec *openapi3.Spec, fix bool) ([]*opena
 			}
 			varNamesMissing := []string{}
 			fixed := false
-			opm := OperationMore{Operation: op}
+			opm := openapi3.OperationMore{Operation: op}
 			for _, varName := range varNamesPath {
 				if !opm.HasParameter(varName) {
 					if fix {

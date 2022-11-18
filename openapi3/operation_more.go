@@ -18,7 +18,29 @@ const (
 )
 
 type OperationMore struct {
+	Path      string
+	Method    string
 	Operation *oas3.Operation
+}
+
+func (om *OperationMore) HasParameter(paramNameWant string) bool {
+	paramNameWantLc := strings.ToLower(strings.TrimSpace(paramNameWant))
+	for _, paramRef := range om.Operation.Parameters {
+		if paramRef.Value == nil {
+			continue
+		}
+		param := paramRef.Value
+		param.Name = strings.TrimSpace(param.Name)
+		paramNameTryLc := strings.ToLower(param.Name)
+		if paramNameWantLc == paramNameTryLc {
+			return true
+		}
+	}
+	return false
+}
+
+func (om *OperationMore) PathMethod() string {
+	return PathMethod(om.Path, om.Method)
 }
 
 // RequestMediaTypes returns a sorted slice of request media types.
@@ -168,4 +190,8 @@ func SecurityRequirementsToRaw(secReqs oas3.SecurityRequirements) []map[string][
 		panic(err)
 	}
 	return raw
+}
+
+type OperationMoreSet struct {
+	OperationMores []OperationMore
 }
