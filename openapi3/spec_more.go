@@ -594,56 +594,56 @@ func (sm *SpecMore) MarshalJSON(prefix, indent string) ([]byte, error) {
 }
 
 func (sm *SpecMore) MarshalYAML() ([]byte, error) {
-	jbytes, err := sm.MarshalJSON("", "")
-	if err != nil {
+	if jbytes, err := sm.MarshalJSON("", ""); err != nil {
 		return []byte{}, err
+	} else {
+		return yaml.JSONToYAML(jbytes)
 	}
-	return yaml.JSONToYAML(jbytes)
 }
 
 func (sm *SpecMore) PrintJSON(prefix, indent string) error {
-	bytes, err := sm.MarshalJSON(prefix, indent)
-	if err != nil {
+	if bytes, err := sm.MarshalJSON(prefix, indent); err != nil {
+		return err
+	} else {
+		_, err = fmt.Println(string(bytes))
 		return err
 	}
-	_, err = fmt.Println(string(bytes))
-	return err
 }
 
 func (sm *SpecMore) WriteFileCSV(filename string) error {
-	tbl, err := sm.OperationsTable(nil, nil)
-	if err != nil {
+	if tbl, err := sm.OperationsTable(nil, nil); err != nil {
 		return err
+	} else {
+		return tbl.WriteCSV(filename)
 	}
-	return tbl.WriteCSV(filename)
 }
 
 func (sm *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, indent string) error {
-	jsonData, err := sm.MarshalJSON(prefix, indent)
-	if err != nil {
+	if jsonData, err := sm.MarshalJSON(prefix, indent); err != nil {
 		return err
+	} else {
+		return os.WriteFile(filename, jsonData, perm)
 	}
-	return os.WriteFile(filename, jsonData, perm)
 }
 
 func (sm *SpecMore) WriteFileXLSX(filename string, columns *tabulator.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) error {
 	if columns == nil {
 		columns = OpTableColumnsDefault(true)
 	}
-	tbl, err := sm.OperationsTable(columns, filterFunc)
-	if err != nil {
+	if tbl, err := sm.OperationsTable(columns, filterFunc); err != nil {
 		return err
+	} else {
+		tbl.FormatAutoLink = true
+		return table.WriteXLSX(filename, tbl)
 	}
-	tbl.FormatAutoLink = true
-	return table.WriteXLSX(filename, tbl)
 }
 
 func (sm *SpecMore) WriteFileYAML(filename string, perm os.FileMode) error {
-	ybytes, err := sm.MarshalYAML()
-	if err != nil {
+	if ybytes, err := sm.MarshalYAML(); err != nil {
 		return err
+	} else {
+		return os.WriteFile(filename, ybytes, perm)
 	}
-	return os.WriteFile(filename, ybytes, perm)
 }
 
 type TagsMore struct {
