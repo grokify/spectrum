@@ -593,6 +593,14 @@ func (sm *SpecMore) MarshalJSON(prefix, indent string) ([]byte, error) {
 	return bytes, nil
 }
 
+func (sm *SpecMore) MarshalYAML() ([]byte, error) {
+	jbytes, err := sm.MarshalJSON("", "")
+	if err != nil {
+		return []byte{}, err
+	}
+	return yaml.JSONToYAML(jbytes)
+}
+
 func (sm *SpecMore) PrintJSON(prefix, indent string) error {
 	bytes, err := sm.MarshalJSON(prefix, indent)
 	if err != nil {
@@ -631,11 +639,7 @@ func (sm *SpecMore) WriteFileXLSX(filename string, columns *tabulator.ColumnSet,
 }
 
 func (sm *SpecMore) WriteFileYAML(filename string, perm os.FileMode) error {
-	jbytes, err := sm.MarshalJSON("", "")
-	if err != nil {
-		return err
-	}
-	ybytes, err := yaml.JSONToYAML(jbytes)
+	ybytes, err := sm.MarshalYAML()
 	if err != nil {
 		return err
 	}
