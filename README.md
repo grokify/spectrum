@@ -13,6 +13,13 @@ The following article provides an overview of OpenAPI spec to Postman conversion
 
 1. [Blog Introduction](https://medium.com/ringcentral-developers/using-postman-with-swagger-and-the-ringcentral-api-523712f792a0)
 
+## Use Cases
+
+1. Converting from OpenAPI Spec to Postman where `x-tagGroups` are converted to Postman folders.
+1. Programmatically editing specs for reproducible results, typically when source spec is maintained.
+1. Merging multiple specs when a single spec is desired.
+1. Splitting a spec by tags when multiple specs are desired.
+
 ## Packages and Major Features
 
 * openapi2 ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi2))
@@ -22,6 +29,7 @@ The following article provides an overview of OpenAPI spec to Postman conversion
 * openapi3 ([godoc](https://pkg.go.dev/github.com/grokify/spectrum/openapi3))
   1. Support for OpenAPI 3 files, including serialization, deserialization, and validation.
   1. Merging of multiple specs
+  1. Splitting specs by tag
   1. Output of spec to tabular format to HTML (API Registry), CSV, XLSX. HTML API Registry has a bonus feature that makes each line clickable. Click any line here: http://ringcentral.github.io/api-registry/
   1. Programmatic API to modify OpenAPI specs using rules
   1. [Programmatic ability to "fix" spec, e.g. change response Content Type to match output (needed for Engage Voice)](docs/openapi3_fix.md)
@@ -41,6 +49,9 @@ The following article provides an overview of OpenAPI spec to Postman conversion
   1. Add headers, such as environment variable based Authorization headers, such as `Authorization: Bearer {{myAccessToken}}`
   1. Utilize baseline Postman collection to add Postman-specific functionality including Postman `prerequest` scripts.
   1. Add example request bodies, e.g. JSON bodies with example parameter values.
+* raml08
+  1. Support for parsing RAML v0.8
+  1. Limited functionality to extracting OpenAPI v3 `description` and `summary` from `description` and `displayName` respectively.
 
 ## Notes
 
