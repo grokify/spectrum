@@ -10,14 +10,14 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/mogo/net/httputilmore"
 	"github.com/grokify/mogo/net/urlutil"
-	"github.com/grokify/spectrum/openapi3edit"
+	"github.com/grokify/spectrum/openapi3"
 )
 
 // ReadFileOperations reads a RAML v0.8 file and returns a set of `openapi3edit.OperationMore` structs.
 // The properties `path`, `method`, `summary`, `description` are populated. OpenAPI `summary` is populated
 // by the `displayName` property. Currently, this reads a JSON formatted file into a map[string]interface.
 // This is useful after converting a RAML v0.8 spec using https://github.com/daviemakz/oas-raml-converter-cli.
-func ReadFileOperations(filename string) (*openapi3edit.OperationMoreSet, error) {
+func ReadFileOperations(filename string) (*openapi3.OperationMoreSet, error) {
 	bytes, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
@@ -27,8 +27,8 @@ func ReadFileOperations(filename string) (*openapi3edit.OperationMoreSet, error)
 	if err != nil {
 		return nil, err
 	}
-	omSet := &openapi3edit.OperationMoreSet{
-		OperationMores: []openapi3edit.OperationMore{}}
+	omSet := &openapi3.OperationMoreSet{
+		OperationMores: []openapi3.OperationMore{}}
 	err = msaPaths("", msa, omSet)
 	return omSet, err
 }
@@ -49,13 +49,13 @@ var (
 // with a slash `/`. This method walks the operation segements and collects the following information
 // using the `openapi3edit.OperationMore` struct: `path`, `method`, `summary`, `description`. OpenAPI
 // `summary` is populated by the `displayName` property.
-func msaPaths(basePath string, msa map[string]any, omSet *openapi3edit.OperationMoreSet) error {
+func msaPaths(basePath string, msa map[string]any, omSet *openapi3.OperationMoreSet) error {
 	if len(msa) == 0 {
 		return nil
 	} else if omSet == nil {
 		return ErrOperationMoreSetMissing
 	} else if omSet.OperationMores == nil {
-		omSet.OperationMores = []openapi3edit.OperationMore{}
+		omSet.OperationMores = []openapi3.OperationMore{}
 	}
 	basePath = strings.TrimSpace(basePath)
 	if len(basePath) > 0 {
@@ -86,15 +86,15 @@ func msaPaths(basePath string, msa map[string]any, omSet *openapi3edit.Operation
 	return nil
 }
 
-func operationMoresFromPathItem(opPath string, opPathItem map[string]any) ([]openapi3edit.OperationMore, error) {
-	oms := []openapi3edit.OperationMore{}
+func operationMoresFromPathItem(opPath string, opPathItem map[string]any) ([]openapi3.OperationMore, error) {
+	oms := []openapi3.OperationMore{}
 	for k, valAny := range opPathItem {
 		// check if current `opPathItem`` property is an HTTP method, and add operations if so.
 		methodCanonical, err := httputilmore.ParseHTTPMethod(k)
 		if err != nil { // err means not known HTTP Method
 			continue
 		}
-		om := openapi3edit.OperationMore{
+		om := openapi3.OperationMore{
 			Path:      opPath,
 			Method:    string(methodCanonical),
 			Operation: &oas3.Operation{}}
