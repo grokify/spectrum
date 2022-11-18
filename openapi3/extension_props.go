@@ -14,9 +14,12 @@ const (
 
 type ExtensionPropsParent interface{}
 
-// GetOperationExtensionPropStringOrEmpty converts extension prop value from `json.RawMessage` to `string`.
-func GetOperationExtensionPropStringOrEmpty(op oas3.Operation, key string) string {
-	str, err := GetExtensionPropString(op.ExtensionProps, key)
+// ExtensionPropStringOrEmpty converts extension prop value from `json.RawMessage` to `string`.
+func (om *OperationMore) ExtensionPropStringOrEmpty(key string) string {
+	if om.Operation == nil {
+		return ""
+	}
+	str, err := GetExtensionPropString(om.Operation.ExtensionProps, key)
 	if err != nil {
 		return ""
 	}
