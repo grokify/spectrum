@@ -17,6 +17,7 @@ import (
 	"github.com/grokify/mogo/net/httputilmore"
 	"github.com/grokify/mogo/net/urlutil"
 	"github.com/grokify/mogo/type/stringsutil"
+	"sigs.k8s.io/yaml"
 )
 
 var ErrSpecNotSet = errors.New("spec not set")
@@ -627,6 +628,18 @@ func (sm *SpecMore) WriteFileXLSX(filename string, columns *tabulator.ColumnSet,
 	}
 	tbl.FormatAutoLink = true
 	return table.WriteXLSX(filename, tbl)
+}
+
+func (sm *SpecMore) WriteFileYAML(filename string, perm os.FileMode) error {
+	jbytes, err := sm.MarshalJSON("", "")
+	if err != nil {
+		return err
+	}
+	ybytes, err := yaml.JSONToYAML(jbytes)
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(filename, ybytes, perm)
 }
 
 type TagsMore struct {
