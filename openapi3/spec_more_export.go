@@ -42,6 +42,8 @@ func (sm *SpecMore) ExportByTag(tag string) (*Spec, error) {
 			ExtensionProps:  sm.Spec.Components.ExtensionProps,
 			SecuritySchemes: sm.Spec.Components.SecuritySchemes,
 		},
+		Info:    sm.Spec.Info,
+		OpenAPI: sm.Spec.OpenAPI,
 	}
 	for _, om := range oms {
 		op, err := sm.OperationByPathMethod(om.Path, om.Method)
