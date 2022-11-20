@@ -2,6 +2,7 @@ package openapi3
 
 import (
 	"encoding/json"
+	"errors"
 	"net/url"
 	"sort"
 	"strings"
@@ -10,6 +11,8 @@ import (
 	"github.com/grokify/mogo/type/maputil"
 	"github.com/grokify/mogo/type/stringsutil"
 )
+
+var ErrOperationNotSet = errors.New("operation not set")
 
 const (
 	LocationParameter = "parameter"

@@ -1,7 +1,6 @@
 package openapi3
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/grokify/mogo/type/stringsutil"
@@ -63,6 +62,7 @@ func (om *OperationMeta) TrimSpace() {
 	om.XThrottlingGroup = strings.TrimSpace(om.XThrottlingGroup)
 }
 
+/*
 func OperationSetRequestBodySchemaRef(op *oas3.Operation, mediaType string, schemaRef *oas3.SchemaRef) {
 	if op.RequestBody == nil {
 		op.RequestBody = &oas3.RequestBodyRef{}
@@ -73,6 +73,7 @@ func OperationSetRequestBodySchemaRef(op *oas3.Operation, mediaType string, sche
 	}
 	op.RequestBody.Value.Content[mediaType] = oas3.NewMediaType().WithSchemaRef(schemaRef)
 }
+*/
 
 /*
 	op.RequestBody = &oas3.RequestBodyRef{
@@ -89,6 +90,7 @@ func OperationSetRequestBodySchemaRef(op *oas3.Operation, mediaType string, sche
 	}
 */
 
+/*
 func OperationSetResponseBodySchemaRef(op *oas3.Operation, status, description, mediaType string, schemaRef *oas3.SchemaRef) error {
 	description = strings.TrimSpace(description)
 	if len(description) == 0 {
@@ -113,6 +115,7 @@ func OperationSetResponseBodySchemaRef(op *oas3.Operation, status, description, 
 	resRef.Value.Content[mediaType] = oas3.NewMediaType().WithSchemaRef(schemaRef)
 	return nil
 }
+*/
 
 // PathMethod returns a path-method string which can be used as a unique identifier for operations.
 func PathMethod(opPath, opMethod string) string {

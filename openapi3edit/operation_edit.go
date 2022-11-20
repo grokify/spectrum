@@ -14,15 +14,51 @@ type OperationEdit struct {
 	openapi3.OperationMore
 }
 
-func (ope *OperationEdit) AddExternalDocs(docURL, docDescription string, preserveIfReqEmpty bool) error {
+func (ope *OperationEdit) SetExternalDocs(docURL, docDescription string, preserveIfReqEmpty bool) error {
 	return operationAddExternalDocs(ope.OperationMore.Operation, docURL, docDescription, preserveIfReqEmpty)
 }
 
-func (ope *OperationEdit) AddRequestBodySchemaRef(description string, required bool, contentType string, schemaRef *oas3.SchemaRef) error {
-	return operationAddRequestBodySchemaRef(ope.OperationMore.Operation, description, required, contentType, schemaRef)
+func (ope *OperationEdit) SetRequestBodyAttrs(description string, required bool) error {
+	if ope.OperationMore.Operation == nil {
+		return openapi3.ErrOperationNotSet
+	}
+	op := ope.OperationMore.Operation
+	if op.RequestBody == nil {
+		op.RequestBody = &oas3.RequestBodyRef{}
+	}
+	if op.RequestBody.Value == nil {
+		op.RequestBody.Value = &oas3.RequestBody{
+			Content: oas3.NewContent()}
+	}
+	op.RequestBody.Value.Description = strings.TrimSpace(description)
+	op.RequestBody.Value.Required = required
+	return nil
 }
 
-func (ope *OperationEdit) AddResponseBodySchemaRef(statusCode, description, contentType string, schemaRef *oas3.SchemaRef) error {
+func (ope *OperationEdit) SetRequestBodySchemaRef(mediaType string, schemaRef *oas3.SchemaRef) error {
+	if ope.OperationMore.Operation == nil {
+		return openapi3.ErrOperationNotSet
+	}
+	op := ope.OperationMore.Operation
+	mediaType = strings.TrimSpace(mediaType)
+	if op.RequestBody == nil {
+		op.RequestBody = &oas3.RequestBodyRef{}
+	}
+	if op.RequestBody.Value == nil {
+		op.RequestBody.Value = &oas3.RequestBody{
+			Content: oas3.NewContent()}
+	}
+	op.RequestBody.Value.Content[mediaType] = oas3.NewMediaType().WithSchemaRef(schemaRef)
+	return nil
+}
+
+/*
+func (ope *OperationEdit) SetRequestBodySchemaRefMore(description string, required bool, contentType string, schemaRef *oas3.SchemaRef) error {
+	return operationAddRequestBodySchemaRef(ope.OperationMore.Operation, description, required, contentType, schemaRef)
+}
+*/
+
+func (ope *OperationEdit) SetResponseBodySchemaRefMore(statusCode, description, contentType string, schemaRef *oas3.SchemaRef) error {
 	return operationAddResponseBodySchemaRef(ope.OperationMore.Operation, statusCode, description, contentType, schemaRef)
 }
 
@@ -39,6 +75,7 @@ func (ope *OperationEdit) AddToSpec(spec *openapi3.Spec, force bool) (bool, erro
 	return false, nil
 }
 
+/*
 func operationAddRequestBodySchemaRef(op *oas3.Operation, description string, required bool, contentType string, schemaRef *oas3.SchemaRef) error {
 	if op == nil {
 		return fmt.Errorf("operation to edit is nil")
@@ -65,10 +102,11 @@ func operationAddRequestBodySchemaRef(op *oas3.Operation, description string, re
 	op.RequestBody.Value.Content[contentType] = oas3.NewMediaType().WithSchemaRef(schemaRef)
 	return nil
 }
+*/
 
 func operationAddResponseBodySchemaRef(op *oas3.Operation, statusCode, description, contentType string, schemaRef *oas3.SchemaRef) error {
 	if op == nil {
-		return fmt.Errorf("operation to edit is nil")
+		return openapi3.ErrOperationNotSet
 	}
 	if schemaRef == nil {
 		return fmt.Errorf("operation response to body to add is nil")
@@ -89,10 +127,9 @@ func operationAddResponseBodySchemaRef(op *oas3.Operation, statusCode, descripti
 		return fmt.Errorf("response is a reference and not actual")
 	}
 	if op.Responses[statusCode].Value == nil {
-		op.Responses[statusCode].Value = &oas3.Response{
-			Description: &description,
-		}
+		op.Responses[statusCode].Value = &oas3.Response{}
 	}
+	op.Responses[statusCode].Value.Description = &description
 	if op.Responses[statusCode].Value.Content == nil {
 		op.Responses[statusCode].Value.Content = oas3.NewContent()
 	}
@@ -100,9 +137,36 @@ func operationAddResponseBodySchemaRef(op *oas3.Operation, statusCode, descripti
 	return nil
 }
 
+/*
+func OperationSetResponseBodySchemaRef(op *oas3.Operation, status, description, mediaType string, schemaRef *oas3.SchemaRef) error {
+	description = strings.TrimSpace(description)
+	if len(description) == 0 {
+		return fmt.Errorf("no response description for operationId [%s]", op.OperationID)
+	}
+	if op.Responses == nil {
+		op.Responses = oas3.Responses{}
+	}
+	status = strings.TrimSpace(status)
+	mediaType = strings.ToLower(strings.TrimSpace(mediaType))
+	if _, ok := op.Responses[status]; !ok || op.Responses[status] == nil {
+		op.Responses[status] = &oas3.ResponseRef{}
+	}
+	resRef := op.Responses[status]
+	if resRef.Value == nil {
+		resRef.Value = &oas3.Response{}
+	}
+	resRef.Value.Description = &description
+	if resRef.Value.Content == nil {
+		resRef.Value.Content = oas3.NewContent()
+	}
+	resRef.Value.Content[mediaType] = oas3.NewMediaType().WithSchemaRef(schemaRef)
+	return nil
+}
+*/
+
 func operationAddExternalDocs(op *oas3.Operation, docURL, docDescription string, preserveIfReqEmpty bool) error {
 	if op == nil {
-		return fmt.Errorf("operation to edit is nil")
+		return openapi3.ErrOperationNotSet
 	}
 	docURL = strings.TrimSpace(docURL)
 	docDescription = strings.TrimSpace(docDescription)
