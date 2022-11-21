@@ -167,8 +167,14 @@ func MapSliceIntersectionExists(haystack map[string]int, needles []string) bool 
 // for all operations. It is useful when building a spec
 // to get individual specs to validate before setting the
 // correct security property.
-func RemoveOperationsSecurity(spec *openapi3.Spec) {
-	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
+func RemoveOperationsSecurity(spec *openapi3.Spec, inclPathMethods []string) {
+	pms := openapi3.PathMethodSet{}
+	pms.Add(inclPathMethods...)
+	countInclPathMethods := pms.Count()
+	openapi3.VisitOperations(spec, func(opPath, opMethod string, op *oas3.Operation) {
+		if countInclPathMethods > 0 && !pms.Exists(opPath, opMethod) {
+			return
+		}
 		op.Security = &oas3.SecurityRequirements{}
 	})
 }
