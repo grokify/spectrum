@@ -445,7 +445,6 @@ func (sm *SpecMore) SchemaRef(schemaName string) *oas3.SchemaRef {
 	if strings.Contains(schemaName, PointerComponentsSchemas) {
 		ptr, err := ParseJSONPointer(schemaName)
 		if err != nil {
-
 			return nil
 		}
 		schNameTry, ok := ptr.IsTopSchema()

@@ -13,7 +13,7 @@ type JSONPointer struct {
 
 func ParseJSONPointer(s string) (JSONPointer, error) {
 	ptr := JSONPointer{String: s}
-	if strings.Index(s, "#") == -1 {
+	if strings.Contains(s, "#") {
 		s = strings.Trim(s, "/")
 		parts := strings.Split(s, ",")
 		ptr.Path = parts
