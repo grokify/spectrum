@@ -175,16 +175,7 @@ func RemoveOperationsSecurity(spec *openapi3.Spec, inclPathMethods []string) err
 	}
 	countInclPathMethods := pms.Count()
 	openapi3.VisitOperations(spec, func(opPath, opMethod string, op *oas3.Operation) {
-		pm := openapi3.PathMethod(opPath, opMethod)
-		if pm == "/auth POST" {
-			fmt.Printf("Have Auth; count [%d]\n", countInclPathMethods)
-		}
 		if countInclPathMethods > 0 && !pms.Exists(opPath, opMethod) {
-			if pm == "/auth POST" {
-				fmt.Println("Have Auth")
-				panic("Z")
-			}
-
 			return
 		}
 		op.Security = &oas3.SecurityRequirements{}
