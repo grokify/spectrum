@@ -198,3 +198,13 @@ func SecurityRequirementsToRaw(secReqs oas3.SecurityRequirements) []map[string][
 type OperationMoreSet struct {
 	OperationMores []OperationMore
 }
+
+// SummariesMap returns a `map[string]string` where the keys are the operation's
+// path and method, while the values are the sumamries.`
+func (omSet *OperationMoreSet) SummariesMap() map[string]string {
+	mss := map[string]string{}
+	for _, om := range omSet.OperationMores {
+		mss[om.PathMethod()] = om.Operation.Summary
+	}
+	return mss
+}
