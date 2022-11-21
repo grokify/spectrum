@@ -183,6 +183,41 @@ func OpTableColumnsRingCentral() *tabulator.ColumnSet {
 	//return &table.ColumnSet{Columns: columns}
 }
 
+func (sm *SpecMore) Operations(inclTags []string) *OperationMoreSet {
+	if sm.Spec == nil {
+		return nil
+	}
+	// func QueryOperationsByTags(spec *openapi3.Spec, tags []string) *OperationEditSet {
+	tagsWantMatch := map[string]int{}
+	for _, tag := range inclTags {
+		tagsWantMatch[tag] = 1
+	}
+	opmSet := &OperationMoreSet{OperationMores: []OperationMore{}}
+
+	VisitOperations(sm.Spec, func(path, method string, op *oas3.Operation) {
+		if len(tagsWantMatch) == 0 {
+			opmSet.OperationMores = append(opmSet.OperationMores,
+				OperationMore{
+					Path:      path,
+					Method:    method,
+					Operation: op})
+			return
+		}
+		for _, opTagTry := range op.Tags {
+			if _, ok := tagsWantMatch[opTagTry]; ok {
+				opmSet.OperationMores = append(opmSet.OperationMores,
+					OperationMore{
+						Path:      path,
+						Method:    method,
+						Operation: op})
+				return
+			}
+		}
+	})
+
+	return opmSet
+}
+
 func (sm *SpecMore) OperationMetas(inclTags []string) []OperationMeta {
 	if sm.Spec == nil {
 		return []OperationMeta{}

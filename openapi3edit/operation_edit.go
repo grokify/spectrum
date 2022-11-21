@@ -190,11 +190,11 @@ func operationAddExternalDocs(op *oas3.Operation, docURL, docDescription string,
 	return nil
 }
 
+/*
 type OperationEditSet struct {
 	OperationEdits []OperationEdit
 }
 
-/*
 // SummariesMap returns a `map[string]string` where the keys are the operation's
 // path and method, while the values are the sumamries.`
 func (omSet *OperationEditSet) SummariesMap() map[string]string {
@@ -204,7 +204,6 @@ func (omSet *OperationEditSet) SummariesMap() map[string]string {
 	}
 	return mss
 }
-*/
 
 func QueryOperationsByTags(spec *openapi3.Spec, tags []string) *OperationEditSet {
 	tagsWantMatch := map[string]int{}
@@ -232,3 +231,4 @@ func QueryOperationsByTags(spec *openapi3.Spec, tags []string) *OperationEditSet
 
 	return opmSet
 }
+*/
