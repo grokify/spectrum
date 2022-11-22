@@ -59,20 +59,10 @@ func SecuritySchemeBearertokenAddOperationsByTags(spec *openapi3.Spec, schemeNam
 			}
 		}
 		if addSecurity {
-			SecuritySchemeAddOperation(op, schemeName, []string{})
+			ope := NewOperationEdit(skipPath, skipMethod, op)
+			ope.AddSecurityRequirement(schemeName, []string{})
 		}
 	})
-}
-
-// SecuritySchemeAddOperation adds a scheme name and value to an operation.
-func SecuritySchemeAddOperation(op *oas3.Operation, schemeName string, schemeValue []string) {
-	if op.Security == nil {
-		op.Security = &oas3.SecurityRequirements{}
-	}
-	op.Security.With(
-		oas3.SecurityRequirement(
-			map[string][]string{
-				schemeName: schemeValue}))
 }
 
 func SecuritySchemeBearertokenAddDefinition(spec *openapi3.Spec, schemeName, bearerFormat string) {
@@ -132,10 +122,12 @@ func SecuritySchemeApikeyAddOperations(spec *openapi3.Spec, tags []string, keyNa
 		tagsMap[tagName] = 1
 	}
 	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
-		if !maputil.MapSliceIntersectionExists(tagsMap, op.Tags) {
+		if !maputil.StringKeysExist(tagsMap, op.Tags, false) {
 			return
 		}
-		SecuritySchemeAddOperation(op, keyName, []string{})
+		ope := NewOperationEdit(skipPath, skipMethod, op)
+		ope.AddSecurityRequirement(keyName, []string{})
+		//SecuritySchemeAddOperation(op, keyName, []string{})
 	})
 }
 
@@ -153,15 +145,6 @@ func MapSliceIntersection(haystack map[string]int, needles []string, unique bool
 	return matches
 }
 */
-
-func MapSliceIntersectionExists(haystack map[string]int, needles []string) bool {
-	for _, needle := range needles {
-		if _, ok := haystack[needle]; ok {
-			return true
-		}
-	}
-	return false
-}
 
 // RemoveOperationsSecurity removes the security property
 // for all operations. It is useful when building a spec

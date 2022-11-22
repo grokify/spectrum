@@ -14,6 +14,16 @@ type OperationEdit struct {
 	openapi3.OperationMore
 }
 
+func NewOperationEdit(opPath, opMethod string, op *oas3.Operation) OperationEdit {
+	return OperationEdit{
+		OperationMore: openapi3.OperationMore{
+			Path:      opPath,
+			Method:    opMethod,
+			Operation: op,
+		},
+	}
+}
+
 func (ope *OperationEdit) SetExternalDocs(docURL, docDescription string, preserveIfReqEmpty bool) error {
 	return operationAddExternalDocs(ope.OperationMore.Operation, docURL, docDescription, preserveIfReqEmpty)
 }
@@ -49,6 +59,22 @@ func (ope *OperationEdit) SetRequestBodySchemaRef(mediaType string, schemaRef *o
 			Content: oas3.NewContent()}
 	}
 	op.RequestBody.Value.Content[mediaType] = oas3.NewMediaType().WithSchemaRef(schemaRef)
+	return nil
+}
+
+// AddSecurityRequirement adds a scheme name and value to an operation.
+func (ope *OperationEdit) AddSecurityRequirement(schemeName string, schemeValue []string) error {
+	if ope.OperationMore.Operation == nil {
+		return openapi3.ErrOperationNotSet
+	}
+	op := ope.OperationMore.Operation
+	if op.Security == nil {
+		op.Security = &oas3.SecurityRequirements{}
+	}
+	op.Security.With(
+		oas3.SecurityRequirement(
+			map[string][]string{
+				schemeName: schemeValue}))
 	return nil
 }
 
