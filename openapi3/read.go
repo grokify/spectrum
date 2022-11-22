@@ -9,9 +9,9 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/ghodss/yaml"
 	"github.com/grokify/mogo/encoding/jsonutil"
 	"github.com/grokify/mogo/errors/errorsutil"
+	"sigs.k8s.io/yaml"
 )
 
 var rxYamlExtension = regexp.MustCompile(`(?i)\.ya?ml\s*$`)
