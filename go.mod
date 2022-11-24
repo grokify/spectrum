@@ -10,7 +10,7 @@ require (
 	github.com/grokify/mogo v0.41.4
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.28.0
-	github.com/valyala/fasthttp v1.41.0
+	github.com/valyala/fasthttp v1.42.0
 	github.com/valyala/quicktemplate v1.7.0
 	gopkg.in/yaml.v2 v2.4.0
 	sigs.k8s.io/yaml v1.3.0
