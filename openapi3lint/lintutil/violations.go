@@ -7,6 +7,9 @@ import (
 	"github.com/grokify/mogo/type/stringsutil"
 )
 
+// PolicyViolationsSets is a container for `openapi3lint` policy violations.
+// Common approaches to view violatiosn are to use `PolicyViolationsSets.LocationsByRule()`
+// and `PolicyViolationsSets.CountsByRule()`.
 type PolicyViolationsSets struct {
 	ByRule map[string]PolicyViolationsSet
 }
