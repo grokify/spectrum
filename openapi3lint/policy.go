@@ -27,6 +27,20 @@ func NewPolicy() Policy {
 		policyRules: map[string]PolicyRule{}}
 }
 
+func NewPolicyWithConfig(policyfile string) (Policy, error) {
+	policyfile = strings.TrimSpace(policyfile)
+	if len(policyfile) == 0 {
+		return Policy{
+			//rules:       map[string]Rule{},
+			policyRules: map[string]PolicyRule{}}, nil
+	}
+	polCfg, err := NewPolicyConfigFile(policyfile)
+	if err != nil {
+		return Policy{}, err
+	}
+	return polCfg.Policy()
+}
+
 func (pol *Policy) AddRule(rule Rule, sev string, errorOnCollision bool) error {
 	ruleName := rule.Name()
 	if len(strings.TrimSpace(ruleName)) == 0 {
