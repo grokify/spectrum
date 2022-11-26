@@ -27,6 +27,10 @@ func NewPolicy() Policy {
 		policyRules: map[string]PolicyRule{}}
 }
 
+// NewPolicyWithConfig is useful when not programatically augmenting
+// the `PolicyConfig` struct before creating the `Policy` struct. For
+// example, `PolicyConfig.AddRuleCollection()` can be called programmtcally.
+// before calling `PolicyConfig.Policy()`.
 func NewPolicyWithConfig(policyfile string) (Policy, error) {
 	policyfile = strings.TrimSpace(policyfile)
 	if len(policyfile) == 0 {
