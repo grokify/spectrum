@@ -4,15 +4,10 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/grokify/mogo/log/logutil"
-	"github.com/grokify/mogo/log/severity"
 	"github.com/grokify/mogo/os/osutil"
-	"github.com/grokify/mogo/path/filepathutil"
-	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint"
-	"github.com/grokify/spectrum/openapi3lint/extensions"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 	flags "github.com/jessevdk/go-flags"
 )
@@ -27,58 +22,62 @@ func main() {
 	var opts Options
 	_, err := flags.Parse(&opts)
 	logutil.FatalErr(err)
+	fmtutil.PrintJSON(opts)
 
+	vsets, err := ValidateSpecFiles(opts.InputFileOAS3, opts.PolicyFile, opts.Severity)
+	logutil.FatalErr(err)
+
+	fmtutil.MustPrintJSON(vsets.LocationsByRule())
+	fmtutil.MustPrintJSON(vsets.CountsByRule())
+
+	fmt.Println("DONE")
+}
+
+func ValidateSpecFiles(specFileOrDir string, policyfile, sev string) (*lintutil.PolicyViolationsSets, error) {
+	files, err := filesFromFileOrDir(specFileOrDir)
+	if err != nil {
+		return nil, err
+	}
+
+	polCfg, err := openapi3lint.NewPolicyConfigFile(policyfile)
+	if err != nil {
+		return nil, err
+	}
+	//polCfg.AddRuleCollection(extensions.NewRuleCollectionExtensions())
+	//logutil.FatalErr(fmtutil.PrintJSON(polCfg))
+	//logutil.FatalErr(fmtutil.PrintJSON(polCfg.RuleNames()))
+
+	pol, err := polCfg.Policy()
+	if err != nil {
+		return nil, err
+	}
+	fmtutil.MustPrintJSON(pol)
+	fmtutil.MustPrintJSON(pol.RuleNames())
+
+	return pol.ValidateSpecFiles(sev, files)
+}
+
+func filesFromFileOrDir(filename string) ([]string, error) {
 	var files []string
-	if len(opts.InputFileOAS3) > 0 {
-		isDir, err := osutil.IsDir(opts.InputFileOAS3)
-		logutil.FatalErr(err)
+	if len(filename) > 0 {
+		isDir, err := osutil.IsDir(filename)
+		if err != nil {
+			return files, err
+		}
 
 		if isDir {
-			entries, err := osutil.ReadDirMore(opts.InputFileOAS3,
+			entries, err := osutil.ReadDirMore(filename,
 				regexp.MustCompile(`(?i)\.(json|yaml|yml)$`), false, true, false)
 			logutil.FatalErr(err)
 
-			files = osutil.DirEntries(entries).Names(opts.InputFileOAS3, true)
+			files = osutil.DirEntries(entries).Names(filename, true)
 		} else {
-			files = []string{opts.InputFileOAS3}
+			files = []string{filename}
 		}
-		err = fmtutil.PrintJSON(files)
-		logutil.FatalErr(err)
+	} else {
+		files = []string{filename}
 	}
-
-	polCfg, err := openapi3lint.NewPolicyConfigFile(opts.PolicyFile)
-	logutil.FatalErr(err)
-
-	polCfg.AddRuleCollection(extensions.NewRuleCollectionExtensions())
-	logutil.FatalErr(fmtutil.PrintJSON(polCfg))
-	logutil.FatalErr(fmtutil.PrintJSON(polCfg.RuleNames()))
-
-	pol, err := polCfg.Policy()
-	logutil.FatalErr(errorsutil.Wrap(err, "polCfg.Policy()"))
-	logutil.FatalErr(fmtutil.PrintJSON(pol))
-	logutil.FatalErr(fmtutil.PrintJSON(pol.RuleNames()))
-
-	severityLevel := severity.SeverityError
-	if len(opts.Severity) > 0 {
-		severityTry, err := severity.Parse(opts.Severity)
-		logutil.FatalErr(err)
-		severityLevel = severityTry
-	}
-
-	vsets := lintutil.NewPolicyViolationsSets()
-	for _, file := range files {
-		spec, err := openapi3.ReadFile(file, false)
-		logutil.FatalErr(err)
-
-		vsetsRule, err := pol.ValidateSpec(spec, filepathutil.FilepathLeaf(file), severityLevel)
-		logutil.FatalErr(err)
-		logutil.FatalErr(vsets.UpsertSets(vsetsRule))
-	}
-
-	logutil.FatalErr(fmtutil.PrintJSON(vsets.LocationsByRule()))
-	logutil.FatalErr(fmtutil.PrintJSON(vsets.CountsByRule()))
-
-	fmt.Println("DONE")
+	return files, nil
 }
 
 /*
