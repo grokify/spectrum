@@ -374,6 +374,41 @@ func (sm *SpecMore) SetOperation(path, method string, op *oas3.Operation) {
 	sm.Spec.Paths[path] = pathItem
 }
 
+// Ontology returns a populated `Ontology` struct for the spec. If no spec
+// is supplied, a zero value is returned.
+func (sm *SpecMore) Ontology() Ontology {
+	return Ontology{
+		OperationIDs:   sm.OperationIDsLocations(),
+		ParameterNames: sm.ParameterNames(),
+		SchemaNames:    sm.SchemaNames()}
+}
+
+// ParameterNames returns a `map[string][]string` where they key is the
+// key in `#/components/parameters` and the values are both references
+// and names. There should only be either a reference or a name but this
+// structure allows capture of both.
+func (sm *SpecMore) ParameterNames() map[string][]string {
+	mss := map[string][]string{}
+	if sm.Spec == nil {
+		return mss
+	}
+	for paramKey, paramRef := range sm.Spec.Components.Parameters {
+		if _, ok := mss[paramKey]; !ok {
+			mss[paramKey] = []string{}
+		}
+		if len(paramRef.Ref) > 0 {
+			mss[paramKey] = append(mss[paramKey], paramRef.Ref)
+		}
+		if paramRef.Value == nil {
+			continue
+		}
+		if len(paramRef.Value.Name) > 0 {
+			mss[paramKey] = append(mss[paramKey], paramRef.Value.Name)
+		}
+	}
+	return mss
+}
+
 func (sm *SpecMore) SchemaNames() []string {
 	schemaNames := []string{}
 	for schemaName := range sm.Spec.Components.Schemas {
