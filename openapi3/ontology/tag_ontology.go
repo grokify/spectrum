@@ -68,7 +68,7 @@ type TagOnologyData struct {
 }
 
 func (to *TagOnology) Data() TagOnologyData {
-	data := TagOnologyData{
+	return TagOnologyData{
 		Tag:                        to.ResourceNamePluralTitle,
 		CreateSummary:              to.CreateSummary(),
 		ReadSummary:                to.ReadSummary(),
@@ -83,9 +83,7 @@ func (to *TagOnology) Data() TagOnologyData {
 		ResourcePathVar:            to.ResourcePathVar(),
 		ResourceSchemaNameRequest:  to.ResourceSchemaNameRequest(),
 		ResourceSchemaNameResponse: to.ResourceSchemaNameResponse(),
-		SpecFilename:               to.SpecFilename(),
-	}
-	return data
+		SpecFilename:               to.SpecFilename()}
 }
 
 func (tod *TagOnologyData) Equal(data TagOnologyData) ([]string, bool) {
