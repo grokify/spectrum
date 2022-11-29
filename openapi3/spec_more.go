@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -18,6 +19,7 @@ import (
 	"github.com/grokify/mogo/net/httputilmore"
 	"github.com/grokify/mogo/net/urlutil"
 	"github.com/grokify/mogo/type/stringsutil"
+	"golang.org/x/exp/slices"
 	"sigs.k8s.io/yaml"
 )
 
@@ -598,6 +600,16 @@ func (sm *SpecMore) Tags(inclTop, inclOps bool) []string {
 		tags = append(tags, tag)
 	}
 	return stringsutil.SliceCondenseSpace(tags, true, true)
+}
+
+// TagsValidate checks to see if the tag names in the Spec tags property
+// and operations match.
+func (sm *SpecMore) TagsValidate() bool {
+	spTags := sm.Tags(true, false)
+	opTags := sm.Tags(false, true)
+	sort.Strings(spTags)
+	sort.Strings(opTags)
+	return slices.Equal(spTags, opTags)
 }
 
 // TagsMap returns a set of operations with tags present in the current spec.
