@@ -18,8 +18,8 @@ var jsonPointerTests = []struct {
 	{"#/components/schemas/FooBar", "", []string{"components", "schemas", "FooBar"}, false, true},
 }
 
-// TestJSONPointers ensures the `ParseJSONPointer` is working properly.
-func TestJSONPointers(t *testing.T) {
+// TestParseJSONPointer ensures the `ParseJSONPointer` is working properly.
+func TestParseJSONPointer(t *testing.T) {
 	for _, tt := range jsonPointerTests {
 		ptr, err := ParseJSONPointer(tt.jsonPointer)
 		if err != nil {
