@@ -41,16 +41,17 @@ func OperationToMeta(url, method string, op *oas3.Operation, inclTags []string) 
 
 // OperationMeta is used to hold additional information for a spec operation.
 type OperationMeta struct {
-	OperationID      string
-	DocsDescription  string
-	DocsURL          string
-	Method           string
-	Path             string
-	SecurityScopes   []string
-	Summary          string
-	Tags             []string
-	MetaNotes        []string
-	XThrottlingGroup string
+	OperationID          string
+	DocsDescription      string `json:"docsDescription,omitempty"`
+	DocsURL              string `json:"docsURL,omitempty"`
+	Method               string
+	Path                 string
+	SecurityScopes       []string `json:"securityScopes,omitempty"`
+	Summary              string
+	Tags                 []string
+	MetaNotes            []string `json:"metaNotes,omitempty"`
+	XThrottlingGroup     string   `json:"x-throttlingGroup,omitempty"`
+	RequestBodySchemaRef string   `json:"requestBodySchemaRef"`
 }
 
 func (om *OperationMeta) TrimSpace() {
@@ -60,6 +61,10 @@ func (om *OperationMeta) TrimSpace() {
 	om.SecurityScopes = stringsutil.SliceCondenseSpace(om.SecurityScopes, true, false)
 	om.Tags = stringsutil.SliceCondenseSpace(om.Tags, true, false)
 	om.XThrottlingGroup = strings.TrimSpace(om.XThrottlingGroup)
+}
+
+func (om *OperationMeta) PathMethod() string {
+	return PathMethod(om.Path, om.Method)
 }
 
 /*
