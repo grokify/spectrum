@@ -15,7 +15,7 @@ var jsonPointerTests = []struct {
 	isTopSchema bool
 }{
 	{"mydoc.yaml#/components/schemas/FooBar", "mydoc.yaml", []string{"components", "schemas", "FooBar"}, false, true},
-	// {"#/components/schemas/FooBar", "", []string{"components", "schemas", "FooBar"}, false, true},
+	{"#/components/schemas/FooBar", "", []string{"components", "schemas", "FooBar"}, false, true},
 }
 
 // TestJSONPointers ensures the `ParseJSONPointer` is working properly.
