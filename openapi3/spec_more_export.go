@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/mogo/errors/errorsutil"
 )
 
 // ExportByTags creates individual specs by tag.
@@ -19,7 +20,7 @@ func (sm *SpecMore) ExportByTags() (map[string]*Spec, error) {
 	for _, tag := range tags {
 		tagSpec, err := sm.ExportByTag(tag)
 		if err != nil {
-			return specs, err
+			return specs, errorsutil.Wrapf(err, "error SpecMore.ExportByTag(\"%s\")", tag)
 		}
 		if tagSpec != nil {
 			specs[tag] = tagSpec
@@ -48,19 +49,21 @@ func (sm *SpecMore) ExportByTag(tag string) (*Spec, error) {
 	for _, om := range oms {
 		op, err := sm.OperationByPathMethod(om.Path, om.Method)
 		if err != nil {
-			return nil, err
+			return nil, errorsutil.Wrapf(err, "error `OperationByPathMethod` pathmethod: (%s)", PathMethod(om.Path, om.Method))
 		} else if op == nil {
 			continue
 		}
 		tagSpec.AddOperation(om.Path, om.Method, op)
 		err = sm.SchemasCopyOperation(tagSpec, op)
 		if err != nil {
-			return nil, err
+			return nil, errorsutil.Wrapf(err, "error `SpecMore.SchemasCopyOperation()` tag: (%s)", tag)
 		}
 	}
 	tagSm := SpecMore{Spec: tagSpec}
 	return tagSm.Clone()
 }
+
+var ErrJSONPointerNotParamOrSchema = errors.New("pointer is not components/parameters or components/schemas")
 
 func (sm *SpecMore) SchemasCopyOperation(destSpec *Spec, op *oas3.Operation) error {
 	if sm.Spec == nil || destSpec == nil || op == nil {
@@ -71,7 +74,7 @@ func (sm *SpecMore) SchemasCopyOperation(destSpec *Spec, op *oas3.Operation) err
 	for refJSONPointer := range refs {
 		ptr, err := ParseJSONPointer(refJSONPointer)
 		if err != nil {
-			return err
+			return errorsutil.Wrapf(err, "error ParseJSONPointer() jsonpointer: (%s)", refJSONPointer)
 		}
 		paramName, isParam := ptr.IsTopParameter()
 		if isParam {
@@ -90,7 +93,7 @@ func (sm *SpecMore) SchemasCopyOperation(destSpec *Spec, op *oas3.Operation) err
 			}
 		}
 		if !isParam && !isSchema {
-			return errors.New("pointer is not components/parameters or components/schemas")
+			return errorsutil.Wrapf(ErrJSONPointerNotParamOrSchema, "jsonpointer: (%s)", refJSONPointer)
 		}
 	}
 	return nil
