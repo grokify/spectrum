@@ -32,11 +32,11 @@ func ReadURL(oas3url string) (*Spec, error) {
 // merging incomplete spec files.
 func ReadFile(oas3file string, validate bool) (*Spec, error) {
 	if validate {
-		return ReadAndValidateFile(oas3file)
+		return readAndValidateFile(oas3file)
 	}
 	bytes, err := os.ReadFile(oas3file)
 	if err != nil {
-		return nil, errorsutil.Wrap(err, fmt.Sprintf("ReadFile.ReadFile.Error.Filename [%v]", oas3file))
+		return nil, errorsutil.Wrapf(err, "ReadFile.ReadFile.Error.Filename file: (%v)", oas3file)
 	}
 	if rxYamlExtension.MatchString(oas3file) {
 		bytes, err = yaml.YAMLToJSON(bytes)
@@ -47,9 +47,22 @@ func ReadFile(oas3file string, validate bool) (*Spec, error) {
 	spec := &Spec{}
 	err = spec.UnmarshalJSON(bytes)
 	if err != nil {
-		return nil, errorsutil.Wrap(err, fmt.Sprintf("ReadFile.UnmarshalJSON.Error.Filename [%s]", oas3file))
+		return nil, errorsutil.Wrapf(err, "error ReadFile.UnmarshalJSON.Error.Filename file: (%s) ", oas3file)
 	}
 	return spec, nil
+}
+
+func readAndValidateFile(oas3file string) (*Spec, error) {
+	bytes, err := os.ReadFile(oas3file)
+	if err != nil {
+		return nil, errorsutil.Wrap(err, "E_READ_FILE_ERROR")
+	}
+	spec, err := oas3.NewLoader().LoadFromData(bytes)
+	if err != nil {
+		return spec, errorsutil.Wrapf(err, "error `oas3.NewLoader().LoadFromData(bytes)` file: (%s)", oas3file)
+	}
+	_, err = ValidateMore(spec)
+	return spec, err
 }
 
 // Parse will parse a byte array to an `*oas3.Swagger` struct.
@@ -67,19 +80,6 @@ func Parse(oas3Bytes []byte) (*Spec, error) {
 		err3 := spec.UnmarshalJSON(bytes)
 		return spec, err3
 	}
-	return spec, err
-}
-
-func ReadAndValidateFile(oas3file string) (*Spec, error) {
-	bytes, err := os.ReadFile(oas3file)
-	if err != nil {
-		return nil, errorsutil.Wrap(err, "E_READ_FILE_ERROR")
-	}
-	spec, err := oas3.NewLoader().LoadFromData(bytes)
-	if err != nil {
-		return spec, errorsutil.Wrap(err, fmt.Sprintf("E_OPENAPI3_SPEC_LOAD_VALIDATE_ERROR [%s]", oas3file))
-	}
-	_, err = ValidateMore(spec)
 	return spec, err
 }
 

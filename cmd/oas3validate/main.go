@@ -32,7 +32,7 @@ func main() {
 	if urlutil.IsHTTP(opts.SpecFileOAS3, true, true) {
 		spec, err = openapi3.ReadURL(opts.SpecFileOAS3)
 	} else {
-		spec, err = openapi3.ReadAndValidateFile(opts.SpecFileOAS3)
+		spec, err = openapi3.ReadFile(opts.SpecFileOAS3, true)
 	}
 
 	if err != nil {
