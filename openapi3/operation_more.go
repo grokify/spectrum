@@ -42,6 +42,10 @@ func (om *OperationMore) HasParameter(paramNameWant string) bool {
 	return false
 }
 
+func (om *OperationMore) Meta() *OperationMeta {
+	return OperationToMeta(om.Path, om.Method, om.Operation, []string{})
+}
+
 func (om *OperationMore) PathMethod() string {
 	return PathMethod(om.Path, om.Method)
 }
@@ -65,6 +69,26 @@ func (om *OperationMore) RequestMediaTypes() []string {
 	}
 	sort.Strings(mediaTypes)
 	return mediaTypes
+}
+
+func (om *OperationMore) RequestBodySchemaRef() []string {
+	schemaRefs := []string{}
+	if om.Operation == nil {
+		return schemaRefs
+	}
+	if om.Operation.RequestBody == nil {
+		return schemaRefs
+	}
+	if len(om.Operation.RequestBody.Ref) > 0 {
+		schemaRefs = append(schemaRefs, om.Operation.RequestBody.Ref)
+	}
+	if om.Operation.RequestBody.Value != nil {
+		ctMap := ContentToSchemaRefMap(om.Operation.RequestBody.Value.Content)
+		keys := maputil.StringValues(ctMap)
+		schemaRefs = append(schemaRefs, keys...)
+	}
+
+	return schemaRefs
 }
 
 // ResponseMediaTypes returns a sorted slice of response media types.
