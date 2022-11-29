@@ -3,7 +3,7 @@ package ruletagstylefirstuppercase
 import (
 	"strconv"
 
-	"github.com/grokify/mogo/encoding/jsonutil"
+	"github.com/grokify/mogo/encoding/jsonpointer"
 	"github.com/grokify/mogo/text/stringcase"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
@@ -36,7 +36,7 @@ func (rule RuleTagStyleFirstUpperCase) ProcessSpec(spec *openapi3.Spec, pointerB
 		if op == nil {
 			return
 		}
-		opLoc := jsonutil.PointerSubEscapeAll(
+		opLoc := jsonpointer.PointerSubEscapeAll(
 			"%s#/paths/%s/%s/tags/",
 			pointerBase,
 			path,
@@ -51,7 +51,7 @@ func (rule RuleTagStyleFirstUpperCase) ProcessSpec(spec *openapi3.Spec, pointerB
 		}
 	})
 	for i, tag := range spec.Tags {
-		jsLoc := jsonutil.PointerSubEscapeAll(
+		jsLoc := jsonpointer.PointerSubEscapeAll(
 			"%s#/tags/%d/name", pointerBase, i)
 		if tag == nil {
 			vios = append(vios, lintutil.PolicyViolation{

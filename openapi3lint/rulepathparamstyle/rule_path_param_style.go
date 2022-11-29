@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/mogo/encoding/jsonutil"
+	"github.com/grokify/mogo/encoding/jsonpointer"
 	"github.com/grokify/mogo/text/stringcase"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
@@ -62,7 +62,7 @@ func (rule RulePathParamStyle) ProcessSpec(spec *openapi3.Spec, pointerBase stri
 		if len(m) == 0 {
 			continue
 		}
-		jsPtr := jsonutil.PointerSubEscapeAll("%s#/paths/%s",
+		jsPtr := jsonpointer.PointerSubEscapeAll("%s#/paths/%s",
 			pointerBase, pathUrl)
 		for _, mi := range m {
 			isWantCase, err := stringcase.IsCase(rule.stringCase, mi[1])
@@ -83,7 +83,7 @@ func (rule RulePathParamStyle) ProcessSpec(spec *openapi3.Spec, pointerBase stri
 		if op == nil {
 			return
 		}
-		jsPtr := jsonutil.PointerSubEscapeAll(
+		jsPtr := jsonpointer.PointerSubEscapeAll(
 			"%s#/paths/%s/%s/parameters/",
 			pointerBase,
 			path,

@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/mogo/encoding/jsonutil"
+	"github.com/grokify/mogo/encoding/jsonpointer"
 	"github.com/grokify/mogo/text/stringcase"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
@@ -67,7 +67,7 @@ func (rule RuleSchemaPropEnumStyle) ProcessSpec(spec *openapi3.Spec, pointerBase
 			}
 			for i, enumValue := range propRef.Value.Enum {
 				if enumValueString, ok := enumValue.(string); ok {
-					jsPtr := jsonutil.PointerSubEscapeAll(
+					jsPtr := jsonpointer.PointerSubEscapeAll(
 						"%s#/components/schemas/%s/properties/%s/%d",
 						pointerBase, schName, propName, i)
 					isWantCase, err := stringcase.IsCase(rule.stringCase, enumValueString)

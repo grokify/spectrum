@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/mogo/encoding/jsonutil"
+	"github.com/grokify/mogo/encoding/jsonpointer"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )
@@ -83,7 +83,7 @@ func (rule RuleOperationXPropertyStringExist) ProcessSpec(spec *openapi3.Spec, p
 				if len(propVal) == 0 {
 					vios = append(vios, lintutil.PolicyViolation{
 						RuleName: rule.Name(),
-						Location: jsonutil.PointerSubEscapeAll(
+						Location: jsonpointer.PointerSubEscapeAll(
 							"%s#/paths/%s/%s/%s",
 							pointerBase, pathURL, method, rule.xPropertyName,
 						),

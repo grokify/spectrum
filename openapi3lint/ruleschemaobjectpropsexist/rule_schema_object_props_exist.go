@@ -2,7 +2,7 @@ package ruleschemaobjectpropsexist
 
 import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/mogo/encoding/jsonutil"
+	"github.com/grokify/mogo/encoding/jsonpointer"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )
@@ -39,7 +39,7 @@ func (rule RuleSchemaObjectPropsExist) ProcessSpec(spec *openapi3.Spec, pointerB
 			(schRef.Value.AdditionalPropertiesAllowed == nil || !*schRef.Value.AdditionalPropertiesAllowed) {
 			vios = append(vios, lintutil.PolicyViolation{
 				RuleName: rule.Name(),
-				Location: jsonutil.PointerSubEscapeAll(
+				Location: jsonpointer.PointerSubEscapeAll(
 					"%s#/components/schemas/%s",
 					pointerBase, schName)})
 		}
@@ -52,7 +52,7 @@ func (rule RuleSchemaObjectPropsExist) ProcessSpec(spec *openapi3.Spec, pointerB
 				(propRef.Value.AdditionalPropertiesAllowed == nil || !*propRef.Value.AdditionalPropertiesAllowed) {
 				vios = append(vios, lintutil.PolicyViolation{
 					RuleName: rule.Name(),
-					Location: jsonutil.PointerSubEscapeAll(
+					Location: jsonpointer.PointerSubEscapeAll(
 						"%s#/components/schemas/%s/properties/%s",
 						pointerBase, schName, propName)})
 			}

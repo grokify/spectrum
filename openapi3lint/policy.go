@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/mogo/encoding/jsonutil"
+	"github.com/grokify/mogo/encoding/jsonpointer"
 	"github.com/grokify/mogo/log/severity"
 	"github.com/grokify/mogo/path/filepathutil"
 	"github.com/grokify/mogo/text/stringcase"
@@ -177,7 +177,7 @@ func (pol *Policy) processRulesOperation(spec *openapi3.Spec, pointerBase, filte
 			if op == nil {
 				return
 			}
-			opPointer := jsonutil.PointerSubEscapeAll(
+			opPointer := jsonpointer.PointerSubEscapeAll(
 				"%s#/paths/%s/%s", pointerBase, path, strings.ToLower(method))
 			for _, policyRule := range pol.policyRules {
 				if !lintutil.ScopeMatch(lintutil.ScopeOperation, policyRule.Rule.Scope()) {
