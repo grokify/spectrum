@@ -218,6 +218,15 @@ func (sm *SpecMore) Operations(inclTags []string) *OperationMoreSet {
 	return opmSet
 }
 
+func (sm *SpecMore) OperationMetasMap(inclTags []string) map[string]OperationMeta {
+	oms := sm.OperationMetas(inclTags)
+	omsMap := map[string]OperationMeta{}
+	for _, om := range oms {
+		omsMap[om.PathMethod()] = om
+	}
+	return omsMap
+}
+
 func (sm *SpecMore) OperationMetas(inclTags []string) []OperationMeta {
 	if sm.Spec == nil {
 		return []OperationMeta{}
@@ -378,9 +387,9 @@ func (sm *SpecMore) SetOperation(path, method string, op *oas3.Operation) {
 // is supplied, a zero value is returned.
 func (sm *SpecMore) Ontology() Ontology {
 	return Ontology{
-		OperationIDs:   sm.OperationIDsLocations(),
-		ParameterNames: sm.ParameterNames(),
-		SchemaNames:    sm.SchemaNames()}
+		Operations:  sm.OperationMetasMap([]string{}),
+		Parameters:  sm.Spec.Components.Parameters,
+		SchemaNames: sm.SchemaNames()}
 }
 
 // ParameterNames returns a `map[string][]string` where they key is the
@@ -652,13 +661,11 @@ func (sm *SpecMore) MarshalJSON(prefix, indent string) ([]byte, error) {
 	if err != nil {
 		return bytes, err
 	}
-	pretty := false
+
 	if len(prefix) > 0 || len(indent) > 0 {
-		pretty = true
+		return jsonutil.IndentBytes(bytes, prefix, indent)
 	}
-	if pretty {
-		bytes = jsonutil.PrettyPrint(bytes, "", "  ")
-	}
+
 	return bytes, nil
 }
 

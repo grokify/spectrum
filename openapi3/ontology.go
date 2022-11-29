@@ -1,5 +1,7 @@
 package openapi3
 
+import oas3 "github.com/getkin/kin-openapi/openapi3"
+
 // OntologySet is a set of ontologies which can be used to understand
 // ontologies by a key, such as filename or by tag.
 type OntologySet struct {
@@ -11,14 +13,14 @@ type OntologySet struct {
 // For example, the relationship of operationIDs to paths and the relationship
 // of parameter name component keys to parameter names.
 type Ontology struct {
-	OperationIDs   map[string][]string `json:"operationIDs"`
-	SchemaNames    []string            `json:"schemaNames"`
-	ParameterNames map[string][]string `json:"parameterNames"`
+	Operations  map[string]OperationMeta `json:"operationIDs"`
+	SchemaNames []string                 `json:"schemaNames"`
+	Parameters  oas3.ParametersMap       `json:"parameters"`
 }
 
 func NewOntology() Ontology {
 	return Ontology{
-		OperationIDs:   map[string][]string{},
-		SchemaNames:    []string{},
-		ParameterNames: map[string][]string{}}
+		Operations:  map[string]OperationMeta{},
+		SchemaNames: []string{},
+		Parameters:  oas3.ParametersMap{}}
 }
