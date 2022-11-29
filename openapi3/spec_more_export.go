@@ -45,6 +45,7 @@ func (sm *SpecMore) ExportByTag(tag string) (*Spec, error) {
 			SecuritySchemes: sm.Spec.Components.SecuritySchemes,
 		},
 		Info:    sm.Spec.Info,
+		Servers: sm.Spec.Servers,
 		OpenAPI: sm.Spec.OpenAPI,
 	}
 	for _, om := range oms {
