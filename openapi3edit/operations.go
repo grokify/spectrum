@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/mogo/net/http/pathmethod"
 	"github.com/grokify/mogo/type/stringsutil"
 	"github.com/grokify/spectrum/openapi3"
 )
@@ -51,7 +52,7 @@ func SpecOperationIDsFromSummaries(spec *openapi3.Spec, errorOnEmpty bool) error
 		op.Summary = strings.Join(strings.Split(op.Summary, " "), " ")
 		op.OperationID = op.Summary
 		if len(op.OperationID) == 0 {
-			empty = append(empty, openapi3.PathMethod(path, method))
+			empty = append(empty, pathmethod.PathMethod(path, method))
 		}
 	})
 	if errorOnEmpty && len(empty) > 0 {
@@ -67,7 +68,7 @@ func SpecOperationsOperationIDSummaryReplace(spec *openapi3.Spec, customMapPathM
 	openapi3.VisitOperations(spec, func(path, method string, op *oas3.Operation) {
 		op.OperationID = strings.TrimSpace(op.OperationID)
 		op.Summary = strings.TrimSpace(op.Summary)
-		pathMethod := openapi3.PathMethod(path, method)
+		pathMethod := pathmethod.PathMethod(path, method)
 		summaryTry, ok := customMapPathMethodToSummary[pathMethod]
 		if !ok {
 			return
@@ -163,7 +164,7 @@ func SpecOperationsSecurityReplace(spec *openapi3.Spec, pathMethodsInclude, path
 		if op == nil {
 			return
 		}
-		pathMethod := openapi3.PathMethod(opPath, opMethod)
+		pathMethod := pathmethod.PathMethod(opPath, opMethod)
 		if _, ok := pathMethodsExcludeMap[pathMethod]; ok {
 			return
 		}

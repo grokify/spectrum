@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/mogo/net/http/pathmethod"
 	"github.com/grokify/mogo/type/maputil"
 	"github.com/grokify/spectrum/openapi3"
 )
@@ -151,7 +152,7 @@ func MapSliceIntersection(haystack map[string]int, needles []string, unique bool
 // to get individual specs to validate before setting the
 // correct security property.
 func RemoveOperationsSecurity(spec *openapi3.Spec, inclPathMethods []string) error {
-	pms := openapi3.PathMethodSet{}
+	pms := pathmethod.NewPathMethodSet()
 	err := pms.Add(inclPathMethods...)
 	if err != nil {
 		return err

@@ -7,6 +7,7 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/mogo/errors/errorsutil"
+	"github.com/grokify/mogo/net/http/pathmethod"
 )
 
 // ExportByTags creates individual specs by tag.
@@ -49,7 +50,7 @@ func (sm *SpecMore) ExportByTag(tag string) (*Spec, error) {
 	for _, om := range oms {
 		op, err := sm.OperationByPathMethod(om.Path, om.Method)
 		if err != nil {
-			return nil, errorsutil.Wrapf(err, "error `OperationByPathMethod` pathmethod: (%s)", PathMethod(om.Path, om.Method))
+			return nil, errorsutil.Wrapf(err, "error `OperationByPathMethod` pathmethod: (%s)", pathmethod.PathMethod(om.Path, om.Method))
 		} else if op == nil {
 			continue
 		}

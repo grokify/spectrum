@@ -3,9 +3,9 @@ package openapi3
 import (
 	"strings"
 
-	"github.com/grokify/mogo/type/stringsutil"
-
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/mogo/net/http/pathmethod"
+	"github.com/grokify/mogo/type/stringsutil"
 )
 
 // OperationToMeta converts a path, method and operation to an `*OperationMeta`.
@@ -64,7 +64,7 @@ func (om *OperationMeta) TrimSpace() {
 }
 
 func (om *OperationMeta) PathMethod() string {
-	return PathMethod(om.Path, om.Method)
+	return pathmethod.PathMethod(om.Path, om.Method)
 }
 
 /*

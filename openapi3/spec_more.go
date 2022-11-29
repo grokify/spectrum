@@ -14,6 +14,7 @@ import (
 	"github.com/grokify/gocharts/v2/data/table"
 	"github.com/grokify/gocharts/v2/data/table/tabulator"
 	"github.com/grokify/mogo/encoding/jsonutil"
+	"github.com/grokify/mogo/net/http/pathmethod"
 	"github.com/grokify/mogo/net/httputilmore"
 	"github.com/grokify/mogo/net/urlutil"
 	"github.com/grokify/mogo/type/stringsutil"
@@ -301,7 +302,7 @@ func (sm *SpecMore) OperationIDsLocations() map[string][]string {
 		if op == nil {
 			return
 		}
-		pathMethod := PathMethod(opPath, opMethod)
+		pathMethod := pathmethod.PathMethod(opPath, opMethod)
 		op.OperationID = strings.TrimSpace(op.OperationID)
 		vals[op.OperationID] = append(vals[op.OperationID], pathMethod)
 	})
@@ -555,7 +556,7 @@ func (sm *SpecMore) OperationsDescriptionInfo() map[string][]string {
 		if op == nil {
 			return
 		}
-		pathMethod := PathMethod(opPath, opMethod)
+		pathMethod := pathmethod.PathMethod(opPath, opMethod)
 		op.Description = strings.TrimSpace(op.Description)
 		if len(op.Description) == 0 {
 			data["opWoutDesc"] = append(data["opWoutDesc"], pathMethod)

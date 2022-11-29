@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/mogo/net/http/pathmethod"
 	"github.com/grokify/mogo/type/maputil"
 	"github.com/grokify/mogo/type/stringsutil"
 )
@@ -47,7 +48,7 @@ func (om *OperationMore) Meta() *OperationMeta {
 }
 
 func (om *OperationMore) PathMethod() string {
-	return PathMethod(om.Path, om.Method)
+	return pathmethod.PathMethod(om.Path, om.Method)
 }
 
 // RequestMediaTypes returns a sorted slice of request media types.
