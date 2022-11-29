@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/mogo/encoding/jsonutil"
+	"github.com/grokify/mogo/encoding/jsonpointer"
 )
 
 const PointerComponentsSchemas = "#/components/schemas"
@@ -16,7 +16,7 @@ func SchemaPointerExpand(prefix, schemaName string) string {
 	schemaName = strings.TrimSpace(schemaName)
 	pointer := schemaName
 	if !strings.Contains(schemaName, PointerComponentsSchemas) {
-		pointer = PointerComponentsSchemas + "/" + jsonutil.PropertyNameEscape(schemaName)
+		pointer = PointerComponentsSchemas + "/" + jsonpointer.PropertyNameEscape(schemaName)
 	}
 	if len(prefix) > 0 && strings.Index(pointer, "#") == 0 {
 		pointer = prefix + pointer

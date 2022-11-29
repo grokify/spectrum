@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/mogo/encoding/jsonutil"
+	"github.com/grokify/mogo/encoding/jsonpointer"
 )
 
 const (
@@ -54,7 +54,7 @@ func VisitTypesFormats(spec *Spec, visitTypeFormat func(jsonPointerRoot, oasType
 					continue
 				}
 				visitTypeFormat(
-					jsonutil.PointerSubEscapeAll(
+					jsonpointer.PointerSubEscapeAll(
 						"#/paths/%s/%s/parameters/%d/schema", path, strings.ToLower(method), i),
 					paramRef.Value.Schema.Value.Type,
 					paramRef.Value.Schema.Value.Format)
