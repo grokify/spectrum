@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/getkin/kin-openapi/openapi2conv"
-	yaml "gopkg.in/yaml.v2"
+	yaml "gopkg.in/yaml.v3"
 )
 
 func ConvertSpectrumOAS2ToKinOAS2(smSpec *Specification) (*Spec, error) {

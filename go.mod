@@ -13,7 +13,7 @@ require (
 	github.com/valyala/fasthttp v1.43.0
 	github.com/valyala/quicktemplate v1.7.0
 	golang.org/x/exp v0.0.0-20221126150942-6ab00d035af9
-	gopkg.in/yaml.v2 v2.4.0
+	gopkg.in/yaml.v3 v3.0.1
 	sigs.k8s.io/yaml v1.3.0
 )
 
@@ -56,7 +56,7 @@ require (
 	gonum.org/v1/gonum v0.12.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/oleiade/reflections.v1 v1.0.0 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
 // replace github.com/grokify/mogo v0.41.9 => ../mogo
