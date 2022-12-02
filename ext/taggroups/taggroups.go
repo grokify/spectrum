@@ -1,6 +1,5 @@
-package openapi3
+package taggroups
 
-/*
 import (
 	"encoding/json"
 	"fmt"
@@ -8,6 +7,8 @@ import (
 	"strings"
 
 	"github.com/grokify/mogo/type/stringsutil"
+	"github.com/grokify/spectrum/openapi3"
+	"github.com/grokify/spectrum/openapi3edit"
 )
 
 const XTagGroupsPropertyName = "x-tag-groups"
@@ -45,16 +46,29 @@ func (set *TagGroupSet) GetTagGroupNamesForTagNames(wantTagNames ...string) []st
 	return stringsutil.SliceCondenseSpace(tagGroupNames, true, true)
 }
 
-func (set *TagGroupSet) AddToSpec(spec *Spec) error {
+func (set *TagGroupSet) AddToSpec(spec *openapi3.Spec) error {
 	if len(set.TagGroups) == 0 {
 		return nil
 	}
-	missing := TagsWithoutGroups(spec, *set)
+	missing := SpecTagsWithoutGroups(spec, *set)
 	if len(missing) > 0 {
 		return fmt.Errorf("E_TAGS_WITHOUT_GROUPS [%s]", strings.Join(missing, ","))
 	}
-	spec.ExtensionProps.Extensions[XTagGroupsPropertyName] = set.TagGroups
+	se := openapi3edit.SpecEdit{}
+	se.SpecSet(spec)
+	se.ExtensionSet(XTagGroupsPropertyName, set.TagGroups)
+	// spec.ExtensionProps.Extensions[XTagGroupsPropertyName] = set.TagGroups
 	return nil
+}
+
+// OperationMoreTagGroupNames this function is meant to be used wtih `SpecMore.Table()`
+// and must follow the `OperationMoreStringFunc` interface.
+func (set *TagGroupSet) OperationMoreTagGroupNames(opm *openapi3.OperationMore) string {
+	// row = append(row, strings.Join(tgs.GetTagGroupNamesForTagNames(op.Tags...), ", "))
+	if opm == nil || opm.Operation == nil {
+		return ""
+	}
+	return strings.Join(set.GetTagGroupNamesForTagNames(opm.Operation.Tags...), ", ")
 }
 
 type TagGroup struct {
@@ -63,7 +77,8 @@ type TagGroup struct {
 	Tags    []string `json:"tags"`
 }
 
-func (sm *SpecMore) TagsWithoutGroupsOLDOLD() ([]string, []string, []string, error) {
+/*
+func (sm *SpecMore) TagsWithoutGroups() ([]string, []string, []string, error) {
 	tgs, err := sm.TagGroups()
 	if err != nil {
 		return []string{}, []string{}, []string{}, err
@@ -79,8 +94,9 @@ func (sm *SpecMore) TagsWithoutGroupsOLDOLD() ([]string, []string, []string, err
 	allTags = stringsutil.SliceCondenseSpace(allTags, true, true)
 	return allTags, topTags, opsTags, nil
 }
+*/
 
-func TagsWithoutGroups(spec *Spec, tagGroupSet TagGroupSet) []string {
+func SpecTagsWithoutGroups(spec *openapi3.Spec, tagGroupSet TagGroupSet) []string {
 	missing := []string{}
 	for _, tag := range spec.Tags {
 		if !tagGroupSet.Exists(tag.Name) {
@@ -90,8 +106,9 @@ func TagsWithoutGroups(spec *Spec, tagGroupSet TagGroupSet) []string {
 	return missing
 }
 
-// TagGroups parses a TagGroupSet from an OpenAPI3 spec.
-func (sm *SpecMore) TagGroups() (TagGroupSet, error) {
+// SpecTagGroups parses a TagGroupSet from an OpenAPI3 spec.
+func SpecTagGroups(spec *openapi3.Spec) (TagGroupSet, error) {
+	sm := openapi3.SpecMore{Spec: spec}
 	tgs := NewTagGroupSet()
 	iface, ok := sm.Spec.ExtensionProps.Extensions[XTagGroupsPropertyName]
 	if !ok {
@@ -116,4 +133,3 @@ func (sm *SpecMore) TagGroups() (TagGroupSet, error) {
 	sm.Spec.ExtensionProps.Extensions[XTagGroupsPropertyName] = tagGroups
 	return tgs, nil
 }
-*/

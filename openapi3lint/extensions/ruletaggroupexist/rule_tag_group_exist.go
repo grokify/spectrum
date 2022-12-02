@@ -5,6 +5,7 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/mogo/net/urlutil"
+	"github.com/grokify/spectrum/ext/taggroups"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )
@@ -34,8 +35,9 @@ func (rule RuleTagHasGroup) ProcessOperation(spec *openapi3.Spec, op *oas3.Opera
 	if spec == nil || op == nil || len(op.Tags) == 0 {
 		return nil
 	}
-	sm := openapi3.SpecMore{Spec: spec}
-	tagGroups, err := sm.TagGroups()
+	// sm := openapi3.SpecMore{Spec: spec}
+	// tagGroups, err := sm.TagGroups()
+	tagGroups, err := taggroups.SpecTagGroups(spec)
 	if err != nil {
 		vio := lintutil.PolicyViolation{
 			RuleName: rule.Name(),

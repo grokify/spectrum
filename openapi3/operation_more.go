@@ -27,6 +27,19 @@ type OperationMore struct {
 	Operation *oas3.Operation
 }
 
+type OperationMoreStringFunc func(opm *OperationMore) string
+
+type OperationMoreStringFuncMap map[string]OperationMoreStringFunc
+
+func (opmmap *OperationMoreStringFuncMap) Func(key string) OperationMoreStringFunc {
+	opmmapIndexable := map[string]OperationMoreStringFunc(*opmmap)
+	wantFunc, ok := opmmapIndexable[key]
+	if !ok {
+		return nil
+	}
+	return wantFunc
+}
+
 func (om *OperationMore) HasParameter(paramNameWant string) bool {
 	paramNameWantLc := strings.ToLower(strings.TrimSpace(paramNameWant))
 	for _, paramRef := range om.Operation.Parameters {

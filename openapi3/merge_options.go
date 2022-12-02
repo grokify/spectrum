@@ -18,13 +18,14 @@ const (
 )
 
 type MergeOptions struct {
-	FileRx               *regexp.Regexp
-	SchemaFunc           func(schemaName string, sch1, sch2 interface{}, hint2 string) CollisionCheckResult
-	CollisionCheckResult CollisionCheckResult
-	ValidateEach         bool
-	ValidateFinal        bool
-	TableColumns         *tabulator.ColumnSet
-	TableOpFilterFunc    func(path, method string, op *oas3.Operation) bool
+	FileRx                  *regexp.Regexp
+	SchemaFunc              func(schemaName string, sch1, sch2 interface{}, hint2 string) CollisionCheckResult
+	CollisionCheckResult    CollisionCheckResult
+	ValidateEach            bool
+	ValidateFinal           bool
+	TableColumns            *tabulator.ColumnSet
+	TableOpFilterFunc       func(path, method string, op *oas3.Operation) bool
+	TableAddlColFormatFuncs *OperationMoreStringFuncMap
 }
 
 func NewMergeOptionsSkip() *MergeOptions {

@@ -67,7 +67,7 @@ func main() {
 	}
 	if len(opts.XLSXFile) > 0 {
 		sm := openapi3.SpecMore{Spec: spec}
-		err := sm.WriteFileXLSX(opts.XLSXFile, nil, nil)
+		err := sm.WriteFileXLSX(opts.XLSXFile, nil, nil, nil)
 		if err != nil {
 			log.Fatal(err)
 		}

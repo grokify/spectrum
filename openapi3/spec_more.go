@@ -62,23 +62,22 @@ func (sm *SpecMore) SchemasCount() int {
 	return len(sm.Spec.Components.Schemas)
 }
 
-func (sm *SpecMore) OperationsTable(columns *tabulator.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) (*table.Table, error) {
-	return operationsTable(sm.Spec, columns, filterFunc)
+func (sm *SpecMore) OperationsTable(columns *tabulator.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool, addlColFuncs *OperationMoreStringFuncMap) (*table.Table, error) {
+	return operationsTable(sm.Spec, columns, filterFunc, addlColFuncs)
 }
 
-func operationsTable(spec *Spec, columns *tabulator.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) (*table.Table, error) {
+func operationsTable(spec *Spec, columns *tabulator.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool, addlColFuncs *OperationMoreStringFuncMap) (*table.Table, error) {
 	if columns == nil {
 		columns = OpTableColumnsDefault(false)
 	}
 	tbl := table.NewTable(spec.Info.Title)
 	tbl.Columns = columns.DisplayTexts()
 
-	specMore := SpecMore{Spec: spec}
-
-	tgs, err := specMore.TagGroups()
-	if err != nil {
-		return nil, err
-	}
+	// specMore := SpecMore{Spec: spec}
+	// tgs, err := specMore.TagGroups()
+	// if err != nil {
+	// 	return nil, err
+	// }
 
 	VisitOperations(spec, func(path, method string, op *oas3.Operation) {
 		if filterFunc != nil &&
@@ -99,9 +98,9 @@ func operationsTable(spec *Spec, columns *tabulator.ColumnSet, filterFunc func(p
 				row = append(row, op.OperationID)
 			case "summary":
 				row = append(row, op.Summary)
-			case XTagGroups:
-				row = append(row, strings.Join(
-					tgs.GetTagGroupNamesForTagNames(op.Tags...), ", "))
+			// case XTagGroups:
+			//	row = append(row, strings.Join(
+			//		tgs.GetTagGroupNamesForTagNames(op.Tags...), ", "))
 			case "securityScopes":
 				om := OperationMore{Operation: op}
 				row = append(row, strings.Join(om.SecurityScopes(false), ", "))
@@ -112,6 +111,17 @@ func operationsTable(spec *Spec, columns *tabulator.ColumnSet, filterFunc func(p
 					row = append(row, op.ExternalDocs.URL)
 				}
 			default:
+				if addlColFuncs != nil {
+					colFunc := addlColFuncs.Func(text.Slug)
+					// for XTagGroups send OperationMoreStringFuncMap[XTagGroups] = tgs.
+					if colFunc != nil {
+						row = append(row, colFunc(&OperationMore{
+							Path:      path,
+							Method:    method,
+							Operation: op}))
+						continue
+					}
+				}
 				row = append(row, GetExtensionPropStringOrEmpty(op.ExtensionProps, text.Slug))
 			}
 		}
@@ -699,8 +709,8 @@ func (sm *SpecMore) PrintJSON(prefix, indent string) error {
 	}
 }
 
-func (sm *SpecMore) WriteFileCSV(filename string) error {
-	if tbl, err := sm.OperationsTable(nil, nil); err != nil {
+func (sm *SpecMore) WriteFileCSV(filename string, addlColFuncs *OperationMoreStringFuncMap) error {
+	if tbl, err := sm.OperationsTable(nil, nil, addlColFuncs); err != nil {
 		return err
 	} else {
 		return tbl.WriteCSV(filename)
@@ -715,11 +725,11 @@ func (sm *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, ind
 	}
 }
 
-func (sm *SpecMore) WriteFileXLSX(filename string, columns *tabulator.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool) error {
+func (sm *SpecMore) WriteFileXLSX(filename string, columns *tabulator.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool, addlColFuncs *OperationMoreStringFuncMap) error {
 	if columns == nil {
 		columns = OpTableColumnsDefault(true)
 	}
-	if tbl, err := sm.OperationsTable(columns, filterFunc); err != nil {
+	if tbl, err := sm.OperationsTable(columns, filterFunc, addlColFuncs); err != nil {
 		return err
 	} else {
 		tbl.FormatAutoLink = true

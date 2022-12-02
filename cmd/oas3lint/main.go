@@ -7,6 +7,7 @@ import (
 	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/grokify/mogo/log/logutil"
 	"github.com/grokify/mogo/os/osutil"
+	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 	flags "github.com/jessevdk/go-flags"
@@ -23,6 +24,15 @@ func main() {
 	_, err := flags.Parse(&opts)
 	logutil.FatalErr(err)
 	fmtutil.PrintJSON(opts)
+
+	if 1 == 1 {
+		spec, err := openapi3.ReadFile(opts.InputFileOAS3, false)
+		logutil.FatalErr(err)
+		sm := openapi3.SpecMore{Spec: spec}
+		ont := sm.Ontology()
+		fmtutil.PrintJSON(ont)
+		panic("Z")
+	}
 
 	vsets, err := ValidateSpecFiles(opts.InputFileOAS3, opts.PolicyFile, opts.Severity)
 	logutil.FatalErr(err)

@@ -14,13 +14,14 @@ import (
 )
 
 type PageParams struct {
-	PageTitle     string
-	PageLink      string
-	TableDomID    string
-	Spec          *openapi3.Spec
-	ColumnSet     *tabulator.ColumnSet
-	OpsFilterFunc func(path, method string, op *oas3.Operation) bool
-	TableJSON     []byte
+	PageTitle                string
+	PageLink                 string
+	TableDomID               string
+	Spec                     *openapi3.Spec
+	ColumnSet                *tabulator.ColumnSet
+	OpsFilterFunc            func(path, method string, op *oas3.Operation) bool
+	OpsAdditionalFormatFuncs *openapi3.OperationMoreStringFuncMap
+	TableJSON                []byte
 }
 
 func (pp *PageParams) PageLinkHTML() string {
@@ -34,7 +35,7 @@ func (pp *PageParams) PageLinkHTML() string {
 
 func (pp *PageParams) AddSpec(spec *openapi3.Spec) error {
 	sm := openapi3.SpecMore{Spec: spec}
-	tbl, err := sm.OperationsTable(pp.ColumnSet, pp.OpsFilterFunc)
+	tbl, err := sm.OperationsTable(pp.ColumnSet, pp.OpsFilterFunc, pp.OpsAdditionalFormatFuncs)
 	if err != nil {
 		return err
 	}

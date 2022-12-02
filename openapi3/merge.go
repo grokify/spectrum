@@ -119,13 +119,13 @@ func MergeWithTables(spec1, spec2 *Spec, specExtraNote string, mergeOpts *MergeO
 	tbls := []*table.Table{}
 	sm1 := SpecMore{Spec: spec1}
 	sm2 := SpecMore{Spec: spec2}
-	tbls1, err := sm1.OperationsTable(mergeOpts.TableColumns, mergeOpts.TableOpFilterFunc)
+	tbls1, err := sm1.OperationsTable(mergeOpts.TableColumns, mergeOpts.TableOpFilterFunc, mergeOpts.TableAddlColFormatFuncs)
 	if err != nil {
 		return nil, nil, err
 	}
 	tbls = append(tbls, tbls1)
 	tbls[0].Name = "Spec1"
-	tbls2, err := sm2.OperationsTable(mergeOpts.TableColumns, mergeOpts.TableOpFilterFunc)
+	tbls2, err := sm2.OperationsTable(mergeOpts.TableColumns, mergeOpts.TableOpFilterFunc, mergeOpts.TableAddlColFormatFuncs)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -136,7 +136,7 @@ func MergeWithTables(spec1, spec2 *Spec, specExtraNote string, mergeOpts *MergeO
 		return specf, tbls, err
 	}
 	smf := SpecMore{Spec: specf}
-	tblsf, err := smf.OperationsTable(mergeOpts.TableColumns, mergeOpts.TableOpFilterFunc)
+	tblsf, err := smf.OperationsTable(mergeOpts.TableColumns, mergeOpts.TableOpFilterFunc, mergeOpts.TableAddlColFormatFuncs)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -148,7 +148,7 @@ type TagsModifyOpts struct {
 	TagsMap map[string]string
 	// TagGroupsSet is a tag group set which can be added using Redocly's `x-tagGroups` property
 	// as `spec.Extensions["x-tagGroups"] = opts.TagGroupsSet.TagGroups``
-	TagGroupsSet openapi3.TagGroupSet
+	// TagGroupsSet openapi3.TagGroupSet
 }
 
 // ModifyTagsOperationFunc satisfies the function signature used in `openapi3.VisitOperations`.`

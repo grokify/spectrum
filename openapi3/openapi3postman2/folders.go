@@ -6,13 +6,14 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/mogo/net/httputilmore"
+	"github.com/grokify/spectrum/ext/taggroups"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/postman2"
 )
 
 func CreateTagsAndTagGroups(pman postman2.Collection, spec *openapi3.Spec) (postman2.Collection, error) {
-	oas3specMore := openapi3.SpecMore{Spec: spec}
-	tagGroupSet, err := oas3specMore.TagGroups()
+	// oas3specMore := openapi3.SpecMore{Spec: spec}
+	tagGroupSet, err := taggroups.SpecTagGroups(spec)
 	// tagGroupSet, err := openapi3.SpecTagGroups(spec)
 	if err != nil {
 		return pman, err
@@ -23,7 +24,7 @@ func CreateTagsAndTagGroups(pman postman2.Collection, spec *openapi3.Spec) (post
 	return addFoldersFromTags(pman, spec.Tags), nil
 }
 
-func addFoldersFromTagGroups(pman postman2.Collection, tgSet openapi3.TagGroupSet, tags oas3.Tags) (postman2.Collection, error) {
+func addFoldersFromTagGroups(pman postman2.Collection, tgSet taggroups.TagGroupSet, tags oas3.Tags) (postman2.Collection, error) {
 	tagsMore := openapi3.TagsMore{Tags: tags}
 	for _, tg := range tgSet.TagGroups {
 		tg.Name = strings.TrimSpace(tg.Name)

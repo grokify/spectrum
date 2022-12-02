@@ -12,6 +12,7 @@ import (
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/net/urlutil"
+	"github.com/grokify/spectrum/ext/taggroups"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/postman2"
 	"github.com/grokify/spectrum/postman2/simple"
@@ -106,9 +107,10 @@ func Merge(cfg Configuration, pman postman2.Collection, oas3spec *openapi3.Spec)
 		return pman, err
 	}
 
-	oas3specMore := openapi3.SpecMore{Spec: oas3spec}
-	tagGroupSet, err := oas3specMore.TagGroups()
-	//tagGroupSet, err := openapi3.SpecTagGroups(oas3spec)
+	// tagGroupSet, err := openapi3.SpecTagGroups(oas3spec)
+	// oas3specMore := openapi3.SpecMore{Spec: oas3spec}
+	// tagGroupSet, err := oas3specMore.TagGroups()
+	tagGroupSet, err := taggroups.SpecTagGroups(oas3spec)
 	if err != nil {
 		return pman, err
 	}
@@ -151,7 +153,7 @@ func Merge(cfg Configuration, pman postman2.Collection, oas3spec *openapi3.Spec)
 	return pman, nil
 }
 
-func postmanAddItemToFolders(pman postman2.Collection, pmItem *postman2.Item, tagNames []string, tagGroupSet openapi3.TagGroupSet) postman2.Collection {
+func postmanAddItemToFolders(pman postman2.Collection, pmItem *postman2.Item, tagNames []string, tagGroupSet taggroups.TagGroupSet) postman2.Collection {
 	for _, tagName := range tagNames {
 		tagGroupNames := tagGroupSet.GetTagGroupNamesForTagNames(tagName)
 		if len(tagGroupNames) == 0 {
