@@ -7,7 +7,7 @@ type SpecEdit struct {
 }
 
 func (se *SpecEdit) ExtensionSet(key string, val any) {
-	se.SpecMore.Spec.Extensions[key] = val
+	se.SpecMore.Spec.ExtensionProps.Extensions[key] = val
 }
 
 func (se *SpecEdit) SpecSet(spec *openapi3.Spec) {
