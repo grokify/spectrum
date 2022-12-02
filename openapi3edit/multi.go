@@ -98,7 +98,8 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 			if opts.TagsOperationFunc != nil {
 				openapi3.VisitOperations(sm.Spec, opts.TagsOperationFunc)
 			}
-			SpecTagsModify(sm.Spec, opts.Tags)
+			se := SpecEdit{SpecMore: *sm}
+			se.TagsModify(opts.Tags)
 			if opts.TagsShow {
 				err := fmtutil.PrintJSON(sm.TagsMap(true, true))
 				if err != nil {
