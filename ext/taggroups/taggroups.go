@@ -61,7 +61,7 @@ func (set *TagGroupSet) AddToSpec(spec *openapi3.Spec) error {
 	return nil
 }
 
-// OperationMoreTagGroupNames this function is meant to be used wtih `SpecMore.Table()`
+// OperationMoreTagGroupNames this function is meant to be used with `SpecMore.Table()`
 // and must follow the `OperationMoreStringFunc` interface.
 func (set *TagGroupSet) OperationMoreTagGroupNames(opm *openapi3.OperationMore) string {
 	// row = append(row, strings.Join(tgs.GetTagGroupNamesForTagNames(op.Tags...), ", "))

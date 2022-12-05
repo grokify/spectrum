@@ -559,10 +559,10 @@ func (sm *SpecMore) ServerURLBasePath(index uint) (string, error) {
 // OperationsDescriptionInfo returns information on operations with and without descriptions.
 func (sm *SpecMore) OperationsDescriptionInfo() map[string][]string {
 	data := map[string][]string{
-		"opWithDesc":      []string{},
-		"opWoutDesc":      []string{},
-		"opWithDescCount": []string{},
-		"opWoutDescCount": []string{},
+		"opWithDesc":      {},
+		"opWoutDesc":      {},
+		"opWithDescCount": {},
+		"opWoutDescCount": {},
 	}
 	VisitOperations(sm.Spec, func(opPath, opMethod string, op *oas3.Operation) {
 		if op == nil {
