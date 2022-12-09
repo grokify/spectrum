@@ -11,7 +11,10 @@ import (
 	"github.com/grokify/spectrum/openapi3edit"
 )
 
-const XTagGroupsPropertyName = "x-tag-groups"
+const (
+	XTagGroupsPropertyName      = "x-tagGroups" // Redocly format
+	XTagGroupsPropertyNameKebab = "x-tag-groups"
+)
 
 type TagGroupSet struct {
 	TagGroups []TagGroup
