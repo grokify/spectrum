@@ -80,8 +80,7 @@ func operationsTable(spec *Spec, columns *tabulator.ColumnSet, filterFunc func(p
 	// }
 
 	VisitOperations(spec, func(path, method string, op *oas3.Operation) {
-		if filterFunc != nil &&
-			!filterFunc(path, method, op) {
+		if filterFunc != nil && !filterFunc(path, method, op) {
 			return
 		}
 		row := []string{}
@@ -725,6 +724,10 @@ func (sm *SpecMore) WriteFileJSON(filename string, perm os.FileMode, prefix, ind
 	}
 }
 
+// WriteFileXLSX writes the spec in XLSX Open XML format. If supplied, the `filterFunc` must return `true` for
+// an operation to be included in the file. if non-nil, `addlColFuncs` is used to add additional columns using
+// `OperationMoreStringFuncMap` should return a map where the keys are column names and the values are
+// functions that return a string to populate the cell.
 func (sm *SpecMore) WriteFileXLSX(filename string, columns *tabulator.ColumnSet, filterFunc func(path, method string, op *oas3.Operation) bool, addlColFuncs *OperationMoreStringFuncMap) error {
 	if columns == nil {
 		columns = OpTableColumnsDefault(true)

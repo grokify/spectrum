@@ -139,7 +139,7 @@ func SpecTagsCondense(spec *openapi3.Spec) {
 	spec.Tags = newTags
 }
 
-// TagsModifyOpts is used with `SpecTagsModifyTagsMore()`.
+// TagsModifyOpts is used with `SpecEdit.TagsModifyMore()`.
 type TagsModifyOpts struct {
 	// TagURLsMap is a map where the keys are the new tags to add in CSV format while the values
 	// are a set of URL suffixes.
