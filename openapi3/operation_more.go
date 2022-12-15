@@ -3,6 +3,7 @@ package openapi3
 import (
 	"encoding/json"
 	"errors"
+	"net/http"
 	"net/url"
 	"sort"
 	"strings"
@@ -233,16 +234,64 @@ func SecurityRequirementsToRaw(secReqs oas3.SecurityRequirements) []map[string][
 	return raw
 }
 
+type OperationMores []OperationMore
+
+/*
 type OperationMoreSet struct {
 	OperationMores []OperationMore
 }
+*/
 
 // SummariesMap returns a `map[string]string` where the keys are the operation's
-// path and method, while the values are the sumamries.`
-func (omSet *OperationMoreSet) SummariesMap() map[string]string {
+// path and method, while the values are the summaries.
+func (oms *OperationMores) SummariesMap() map[string]string {
 	mss := map[string]string{}
-	for _, om := range omSet.OperationMores {
+	for _, om := range *oms {
 		mss[om.PathMethod()] = om.Operation.Summary
 	}
 	return mss
+}
+
+func OperationMoresForPath(url string, pathItem *oas3.PathItem) []OperationMore {
+	pathOps := []OperationMore{}
+	if pathItem == nil {
+		return pathOps
+	}
+	if pathItem.Connect != nil {
+		pathOps = append(pathOps, OperationMore{Path: url,
+			Operation: pathItem.Connect, Method: http.MethodConnect})
+	}
+	if pathItem.Delete != nil {
+		pathOps = append(pathOps, OperationMore{Path: url,
+			Operation: pathItem.Delete, Method: http.MethodDelete})
+	}
+	if pathItem.Get != nil {
+		pathOps = append(pathOps, OperationMore{Path: url,
+			Operation: pathItem.Get, Method: http.MethodGet})
+	}
+	if pathItem.Head != nil {
+		pathOps = append(pathOps, OperationMore{Path: url,
+			Operation: pathItem.Head, Method: http.MethodHead})
+	}
+	if pathItem.Options != nil {
+		pathOps = append(pathOps, OperationMore{Path: url,
+			Operation: pathItem.Options, Method: http.MethodOptions})
+	}
+	if pathItem.Patch != nil {
+		pathOps = append(pathOps, OperationMore{Path: url,
+			Operation: pathItem.Patch, Method: http.MethodPatch})
+	}
+	if pathItem.Post != nil {
+		pathOps = append(pathOps, OperationMore{Path: url,
+			Operation: pathItem.Post, Method: http.MethodPost})
+	}
+	if pathItem.Put != nil {
+		pathOps = append(pathOps, OperationMore{Path: url,
+			Operation: pathItem.Put, Method: http.MethodPut})
+	}
+	if pathItem.Trace != nil {
+		pathOps = append(pathOps, OperationMore{Path: url,
+			Operation: pathItem.Trace, Method: http.MethodTrace})
+	}
+	return pathOps
 }
