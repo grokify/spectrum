@@ -8,8 +8,6 @@ import (
 	"github.com/grokify/mogo/encoding/jsonpointer"
 )
 
-const PointerComponentsSchemas = "#/components/schemas"
-
 func SchemaPointerExpand(prefix, schemaName string) string {
 	// https://swagger.io/docs/specification/components/
 	prefix = strings.TrimSpace(prefix)

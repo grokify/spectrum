@@ -16,6 +16,8 @@ const (
 	PathParameters = "parameters"
 	PathPath       = "path"
 	PathSchemas    = "schemas"
+
+	PathComponentsParameters = "#/components/parameters"
 )
 
 func (p *JSONPointer) IsTopParameter() (string, bool) {

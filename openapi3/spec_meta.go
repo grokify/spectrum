@@ -8,12 +8,6 @@ import (
 	"github.com/grokify/mogo/os/osutil"
 )
 
-const (
-	OASVersionLatest  = "3.1.0"
-	OASVersionDefault = "3.0.3"
-	apiVersionDefault = "0.0.1"
-)
-
 // NewSpec returns a new OpenAPI 3 spec that will validate.
 // Specifically, it includes an OAS version, sets `info` to
 // be an empty object instead of null and sets apiVersion.
@@ -83,7 +77,6 @@ func ReadSpecMetasFiles(files []string) (SpecMetas, error) {
 		}
 		metas.Metas = append(metas.Metas, meta)
 	}
-
 	return metas, nil
 }
 
