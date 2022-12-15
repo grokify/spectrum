@@ -7,7 +7,7 @@ import (
 	"github.com/grokify/spectrum/openapi3"
 )
 
-// SchemaPropertiesSetOptional sets properites as optional if the description matches a regexp
+// SchemaPropertiesSetOptional sets properties as optional if the description matches a regexp
 // such as var rxOptionalDefault = regexp.MustCompile(`(?i)\boptional\b`)
 func (se *SpecEdit) SchemaPropertiesSetOptional(rxOptional *regexp.Regexp) error {
 	if se.SpecMore.Spec == nil {

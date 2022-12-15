@@ -42,7 +42,7 @@ func NewParameterNames() ParameterNames {
 }
 
 // ParameterPathNames returns a set of parameter names. Parameter names exist in (1) path URLs,
-// (2) operation paramters and (3) spec component parameters.
+// (2) operation parameters and (3) spec component parameters.
 func (sm *SpecMore) ParameterPathNames() ParameterNames {
 	if sm.Spec == nil {
 		return NewParameterNames()
