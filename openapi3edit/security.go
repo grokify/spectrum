@@ -18,18 +18,27 @@ const (
 	TokenTypeBearer                      = "bearer"
 )
 
-// SecuritySchemeAddBearertoken adds bearer token auth
-// to spec and operations.
-func SecuritySchemeAddBearertoken(spec *openapi3.Spec, schemeName, bearerFormat string, inclTags, skipTags []string) {
+// SecuritySchemeAddBearertoken adds bearer token auth to spec and operations.
+func (se *SpecEdit) SecuritySchemeAddBearertoken(schemeName, bearerFormat string, inclTags, skipTags []string) error {
+	if se.SpecMore.Spec == nil {
+		return openapi3.ErrSpecNotSet
+	}
 	schemeName = strings.TrimSpace(schemeName)
 	if len(schemeName) == 0 {
 		schemeName = SecuritySchemeBearertokenDefaultName
 	}
-	SecuritySchemeBearertokenAddDefinition(spec, schemeName, bearerFormat)
-	SecuritySchemeBearertokenAddOperationsByTags(spec, schemeName, inclTags, skipTags)
+	err := se.SecuritySchemeBearertokenAddDefinition(schemeName, bearerFormat)
+	if err != nil {
+		return err
+	}
+	return se.SecuritySchemeBearertokenAddOperationsByTags(schemeName, inclTags, skipTags)
 }
 
-func SecuritySchemeBearertokenAddOperationsByTags(spec *openapi3.Spec, schemeName string, inclTags, skipTags []string) {
+func (se *SpecEdit) SecuritySchemeBearertokenAddOperationsByTags(schemeName string, inclTags, skipTags []string) error {
+	if se.SpecMore.Spec == nil {
+		return openapi3.ErrSpecNotSet
+	}
+	spec := se.SpecMore.Spec
 	inclTagsMap := map[string]int{}
 	for _, tag := range inclTags {
 		tag = strings.ToLower(strings.TrimSpace(tag))
@@ -64,9 +73,14 @@ func SecuritySchemeBearertokenAddOperationsByTags(spec *openapi3.Spec, schemeNam
 			ope.AddSecurityRequirement(schemeName, []string{})
 		}
 	})
+	return nil
 }
 
-func SecuritySchemeBearertokenAddDefinition(spec *openapi3.Spec, schemeName, bearerFormat string) {
+func (se *SpecEdit) SecuritySchemeBearertokenAddDefinition(schemeName, bearerFormat string) error {
+	if se.SpecMore.Spec == nil {
+		return openapi3.ErrSpecNotSet
+	}
+	spec := se.SpecMore.Spec
 	schemeName = strings.TrimSpace(schemeName)
 	bearerFormat = strings.TrimSpace(bearerFormat)
 	if len(schemeName) == 0 {
@@ -80,11 +94,16 @@ func SecuritySchemeBearertokenAddDefinition(spec *openapi3.Spec, schemeName, bea
 		scheme.Value.BearerFormat = bearerFormat
 	}
 	spec.Components.SecuritySchemes[schemeName] = scheme
+	return nil
 }
 
 // AddAPIKey adds an API Key definition to the spec.
 // https://swagger.io/docs/specification/authentication/api-keys/
-func SecuritySchemeApikeyAddDefinition(spec *openapi3.Spec, schemeName, location, name string) error {
+func (se *SpecEdit) SecuritySchemeApikeyAddDefinition(schemeName, location, name string) error {
+	if se.SpecMore.Spec == nil {
+		return openapi3.ErrSpecNotSet
+	}
+	spec := se.SpecMore.Spec
 	schemeName = strings.TrimSpace(schemeName)
 	location = strings.TrimSpace(location)
 	name = strings.TrimSpace(name)
@@ -112,7 +131,11 @@ func SecuritySchemeApikeyAddDefinition(spec *openapi3.Spec, schemeName, location
 	return nil
 }
 
-func SecuritySchemeApikeyAddOperations(spec *openapi3.Spec, tags []string, keyName string) {
+func (se *SpecEdit) SecuritySchemeApikeyAddOperations(tags []string, keyName string) error {
+	if se.SpecMore.Spec == nil {
+		return openapi3.ErrSpecNotSet
+	}
+	spec := se.SpecMore.Spec
 	keyName = strings.TrimSpace(keyName)
 	if len(keyName) == 0 {
 		keyName = SecuritySchemeApikeyDefaultName
@@ -123,13 +146,14 @@ func SecuritySchemeApikeyAddOperations(spec *openapi3.Spec, tags []string, keyNa
 		tagsMap[tagName] = 1
 	}
 	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
-		if !maputil.StringKeysExist(tagsMap, op.Tags, false) {
+		if !maputil.KeysExist(tagsMap, op.Tags, false) {
 			return
 		}
 		ope := NewOperationEdit(skipPath, skipMethod, op)
 		ope.AddSecurityRequirement(keyName, []string{})
 		//SecuritySchemeAddOperation(op, keyName, []string{})
 	})
+	return nil
 }
 
 /*
@@ -147,11 +171,15 @@ func MapSliceIntersection(haystack map[string]int, needles []string, unique bool
 }
 */
 
-// RemoveOperationsSecurity removes the security property
+// OperationsRemoveSecurity removes the security property
 // for all operations. It is useful when building a spec
 // to get individual specs to validate before setting the
 // correct security property.
-func RemoveOperationsSecurity(spec *openapi3.Spec, inclPathMethods []string) error {
+func (se *SpecEdit) OperationsRemoveSecurity(inclPathMethods []string) error {
+	if se.SpecMore.Spec == nil {
+		return openapi3.ErrSpecNotSet
+	}
+	spec := se.SpecMore.Spec
 	pms := pathmethod.NewPathMethodSet()
 	err := pms.Add(inclPathMethods...)
 	if err != nil {
