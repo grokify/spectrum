@@ -15,7 +15,10 @@ import (
 	"github.com/grokify/spectrum/openapi3"
 )
 
-func SpecAddSchemaDir(spec *openapi3.Spec, dir string, fileRx *regexp.Regexp) error {
+func (se *SpecEdit) AddSchemaDir(dir string, fileRx *regexp.Regexp) error {
+	if se.SpecMore.Spec == nil {
+		return openapi3.ErrSpecNotSet
+	}
 	entries, err := osutil.ReadDirMore(dir, nil, true, true, false)
 	if err != nil {
 		return err
@@ -34,10 +37,10 @@ func SpecAddSchemaDir(spec *openapi3.Spec, dir string, fileRx *regexp.Regexp) er
 		}
 		delete(sch.Extensions, "$schema")
 		entryRoot := filepathutil.TrimExt(entry.Name())
-		spec.Components.Schemas[entryRoot] = &oas3.SchemaRef{Value: sch}
+		se.SpecMore.Spec.Components.Schemas[entryRoot] = &oas3.SchemaRef{Value: sch}
 	}
 	for _, sdir := range sdirs {
-		err := SpecAddSchemaDir(spec, filepath.Join(dir, sdir.Name()), fileRx)
+		err := se.AddSchemaDir(filepath.Join(dir, sdir.Name()), fileRx)
 		if err != nil {
 			return err
 		}
@@ -45,22 +48,70 @@ func SpecAddSchemaDir(spec *openapi3.Spec, dir string, fileRx *regexp.Regexp) er
 	return nil
 }
 
-// SpecModifySchemaRefs modifies `$ref` reference strings that match a supplied
+// SchemaRefsModifyRx modifies `$ref` reference strings that match a supplied
 // `*regexp.Regexp` and replaces that with a string. It was originally
 // designed to convert `#schemas/` to `#components/schemas/`.
-func SpecModifySchemaRefs(spec *openapi3.Spec, rx *regexp.Regexp, repl string) {
-	if spec == nil || rx == nil {
+func (se *SpecEdit) SchemaRefsModifyRx(rx *regexp.Regexp, repl string) {
+	if se.SpecMore.Spec == nil || rx == nil {
 		return
 	}
+	xf := func(s string) string {
+		return rx.ReplaceAllString(s, repl)
+	}
+	se.SchemaRefsModify(xf)
+}
+
+// SchemaRefsModify modifys schema reference JSON pointers. The xf function
+// must return the entire JSON pointer.
+func (se *SpecEdit) SchemaRefsModify(xf func(string) string) {
+	if se.SpecMore.Spec == nil || xf == nil {
+		return
+	}
+	spec := se.SpecMore.Spec
+
 	for _, paramRef := range spec.Components.Parameters {
 		if paramRef == nil {
 			continue
 		}
-		paramRef.Ref = rx.ReplaceAllString(paramRef.Ref, repl)
+		// paramRef.Ref = rx.ReplaceAllString(paramRef.Ref, repl)
+		paramRef.Ref = xf(paramRef.Ref)
 		if paramRef.Value != nil && paramRef.Value.Schema != nil {
-			SchemaRefModifyRefs(paramRef.Value.Schema, rx, repl)
+			//SchemaRefModifyRefs(paramRef.Value.Schema, rx, repl)
+			SchemaRefModifyRefs(paramRef.Value.Schema, xf)
 		}
 	}
+
+	openapi3.VisitOperations(spec, func(opPath, opMethod string, op *oas3.Operation) {
+		if op == nil {
+			return
+		}
+		// Operation Parameters
+		for _, paramRef := range op.Parameters {
+			paramRef.Ref = xf(paramRef.Ref)
+			if paramRef.Value != nil && paramRef.Value.Schema != nil {
+				SchemaRefModifyRefs(paramRef.Value.Schema, xf)
+			}
+		}
+		// Operation Requests
+		if op.RequestBody != nil {
+			op.RequestBody.Ref = xf(op.RequestBody.Ref)
+			if op.RequestBody.Value != nil {
+				for _, mediaType := range op.RequestBody.Value.Content {
+					SchemaRefModifyRefs(mediaType.Schema, xf)
+				}
+			}
+		}
+		// Operation Responses
+		for _, respRef := range op.Responses {
+			respRef.Ref = xf(respRef.Ref)
+			if respRef.Value == nil {
+				continue
+			}
+			for _, mediaType := range respRef.Value.Content {
+				SchemaRefModifyRefs(mediaType.Schema, xf)
+			}
+		}
+	})
 
 	for _, schRef := range spec.Components.Schemas {
 		if schRef == nil {
@@ -92,48 +143,59 @@ func SpecModifySchemaRefs(spec *openapi3.Spec, rx *regexp.Regexp, repl string) {
 				}
 			}
 		}
-		schRef.Ref = rx.ReplaceAllString(schRef.Ref, repl)
-		SchemaRefModifyRefs(schRef, rx, repl)
+		// schRef.Ref = rx.ReplaceAllString(schRef.Ref, repl)
+		// SchemaRefModifyRefs(schRef, rx, repl)
+		schRef.Ref = xf(schRef.Ref)
+		SchemaRefModifyRefs(schRef, xf)
 	}
 }
 
-// SchemaRefModifyRefs modifies Schema reference schema pointers that match
+// SchemaRefModifyRefsRx modifies Schema reference schema pointers that match
 // the supplied `*regexp.Regexp` with the replacement string. It was originally
 // designed to convert `#schemas/` to `#components/schemas/`.
-func SchemaRefModifyRefs(schRef *oas3.SchemaRef, rx *regexp.Regexp, repl string) {
-	if schRef == nil || rx == nil {
+func SchemaRefModifyRefsRx(schRef *oas3.SchemaRef, rx *regexp.Regexp, repl string) {
+	SchemaRefModifyRefs(schRef, func(s string) string {
+		return rx.ReplaceAllString(s, repl)
+	})
+}
+
+func SchemaRefModifyRefs(schRef *oas3.SchemaRef, xf func(string) string) {
+	if schRef == nil || xf == nil {
 		return
 	}
-	schRef.Ref = rx.ReplaceAllString(schRef.Ref, repl)
+	schRef.Ref = xf(schRef.Ref)
 	if schRef.Value == nil {
 		return
 	}
 	for _, propSchemaRef := range schRef.Value.Properties {
-		SchemaRefModifyRefs(propSchemaRef, rx, repl)
+		SchemaRefModifyRefs(propSchemaRef, xf)
 	}
 	if schRef.Value.AdditionalProperties != nil {
-		SchemaRefModifyRefs(schRef.Value.AdditionalProperties, rx, repl)
+		SchemaRefModifyRefs(schRef.Value.AdditionalProperties, xf)
 	}
 	if schRef.Value.Items != nil {
-		SchemaRefModifyRefs(schRef.Value.Items, rx, repl)
+		SchemaRefModifyRefs(schRef.Value.Items, xf)
 	}
 	if schRef.Value.Not != nil {
-		SchemaRefModifyRefs(schRef.Value.Not, rx, repl)
+		SchemaRefModifyRefs(schRef.Value.Not, xf)
 	}
 	for _, allOf := range schRef.Value.OneOf {
-		SchemaRefModifyRefs(allOf, rx, repl)
+		SchemaRefModifyRefs(allOf, xf)
 	}
 	for _, anyOf := range schRef.Value.OneOf {
-		SchemaRefModifyRefs(anyOf, rx, repl)
+		SchemaRefModifyRefs(anyOf, xf)
 	}
 	for _, oneOf := range schRef.Value.OneOf {
-		SchemaRefModifyRefs(oneOf, rx, repl)
+		SchemaRefModifyRefs(oneOf, xf)
 	}
 }
 
-func SpecSchemaSetAdditionalPropertiesTrue(spec *openapi3.Spec, pointerBase string) []string {
+func (se *SpecEdit) SchemaSetAdditionalPropertiesTrue(pointerBase string) []string {
 	mods := []string{}
-	for schName, schRef := range spec.Components.Schemas {
+	if se.SpecMore.Spec == nil {
+		return mods
+	}
+	for schName, schRef := range se.SpecMore.Spec.Components.Schemas {
 		if schRef == nil || schRef.Value == nil || schRef.Value.Type != openapi3.TypeObject {
 			continue
 		}
