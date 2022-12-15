@@ -17,7 +17,7 @@ import (
 // The properties `path`, `method`, `summary`, `description` are populated. OpenAPI `summary` is populated
 // by the `displayName` property. Currently, this reads a JSON formatted file into a map[string]interface.
 // This is useful after converting a RAML v0.8 spec using https://github.com/daviemakz/oas-raml-converter-cli.
-func ReadFileOperations(filename string) (*openapi3.OperationMoreSet, error) {
+func ReadFileOperations(filename string) (*openapi3.OperationMores, error) {
 	bytes, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
@@ -27,10 +27,11 @@ func ReadFileOperations(filename string) (*openapi3.OperationMoreSet, error) {
 	if err != nil {
 		return nil, err
 	}
-	omSet := &openapi3.OperationMoreSet{
-		OperationMores: []openapi3.OperationMore{}}
-	err = msaPaths("", msa, omSet)
-	return omSet, err
+	// omSet := &openapi3.OperationMoreSet{
+	//	OperationMores: []openapi3.OperationMore{}}
+	oms := &openapi3.OperationMores{}
+	err = msaPaths("", msa, oms)
+	return oms, err
 }
 
 const (
@@ -49,13 +50,13 @@ var (
 // with a slash `/`. This method walks the operation segements and collects the following information
 // using the `openapi3edit.OperationMore` struct: `path`, `method`, `summary`, `description`. OpenAPI
 // `summary` is populated by the `displayName` property.
-func msaPaths(basePath string, msa map[string]any, omSet *openapi3.OperationMoreSet) error {
+func msaPaths(basePath string, msa map[string]any, oms *openapi3.OperationMores) error {
 	if len(msa) == 0 {
 		return nil
-	} else if omSet == nil {
+	} else if oms == nil {
 		return ErrOperationMoreSetMissing
-	} else if omSet.OperationMores == nil {
-		omSet.OperationMores = []openapi3.OperationMore{}
+	} else if oms == nil {
+		oms = &openapi3.OperationMores{}
 	}
 	basePath = strings.TrimSpace(basePath)
 	if len(basePath) > 0 {
@@ -64,7 +65,7 @@ func msaPaths(basePath string, msa map[string]any, omSet *openapi3.OperationMore
 		if err != nil {
 			return err
 		} else if len(pathOms) > 0 {
-			omSet.OperationMores = append(omSet.OperationMores, pathOms...)
+			*oms = append(*oms, pathOms...)
 		}
 	}
 
@@ -78,7 +79,7 @@ func msaPaths(basePath string, msa map[string]any, omSet *openapi3.OperationMore
 			return fmt.Errorf("value is not map[string]any for key [%s]", k)
 		}
 		childAbsPath := urlutil.JoinAbsolute(basePath, k)
-		err := msaPaths(childAbsPath, childMSA, omSet)
+		err := msaPaths(childAbsPath, childMSA, oms)
 		if err != nil {
 			return err
 		}
