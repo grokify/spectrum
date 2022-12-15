@@ -55,10 +55,9 @@ func (se *SpecEdit) SchemaRefsModifyRx(rx *regexp.Regexp, repl string) {
 	if se.SpecMore.Spec == nil || rx == nil {
 		return
 	}
-	xf := func(s string) string {
+	se.SchemaRefsModify(func(s string) string {
 		return rx.ReplaceAllString(s, repl)
-	}
-	se.SchemaRefsModify(xf)
+	})
 }
 
 // SchemaRefsModify modifys schema reference JSON pointers. The xf function
