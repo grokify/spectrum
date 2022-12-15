@@ -7,7 +7,7 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/mogo/log/severity"
-	"github.com/grokify/mogo/type/stringsutil"
+	"github.com/grokify/mogo/type/slicesutil"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )
@@ -35,7 +35,7 @@ func ValidateRules(policyRules map[string]PolicyRule) error {
 		}
 	}
 	if len(unknownSeverities) > 0 {
-		unknownSeverities = stringsutil.Dedupe(unknownSeverities)
+		unknownSeverities = slicesutil.Dedupe(unknownSeverities)
 		sort.Strings(unknownSeverities)
 		return fmt.Errorf(
 			"rules with unknown severities [%s] valid [%s]",

@@ -11,7 +11,7 @@ import (
 	"github.com/grokify/mogo/log/severity"
 	"github.com/grokify/mogo/path/filepathutil"
 	"github.com/grokify/mogo/text/stringcase"
-	"github.com/grokify/mogo/type/stringsutil"
+	"github.com/grokify/mogo/type/slicesutil"
 	"github.com/grokify/spectrum/openapi3"
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )
@@ -197,7 +197,7 @@ func (pol *Policy) processRulesOperation(spec *openapi3.Spec, pointerBase, filte
 	)
 
 	if len(severityErrorRules) > 0 || len(unknownSeverities) > 0 {
-		severityErrorRules = stringsutil.Dedupe(severityErrorRules)
+		severityErrorRules = slicesutil.Dedupe(severityErrorRules)
 		sort.Strings(severityErrorRules)
 		return vsets, fmt.Errorf(
 			"rules with unknown severities rules[%s] severities[%s] valid[%s]",
