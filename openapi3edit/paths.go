@@ -1,8 +1,6 @@
 package openapi3edit
 
 import (
-	"net/http"
-	"regexp"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
@@ -40,7 +38,11 @@ type SpecPathsModifyOpts struct {
 	OpPathRenameFuncExec    bool
 }
 
-func SpecPathsModify(spec *openapi3.Spec, opts SpecPathsModifyOpts) error {
+func (se *SpecEdit) PathsModify(opts SpecPathsModifyOpts) error {
+	if se.SpecMore.Spec == nil {
+		return openapi3.ErrSpecNotSet
+	}
+	spec := se.SpecMore.Spec
 	if opts.ServerPathExec {
 		opts.ServerPathNew = strings.TrimSpace(opts.ServerPathNew)
 		for i, svr := range spec.Servers {
@@ -87,20 +89,7 @@ func SpecPathsModify(spec *openapi3.Spec, opts SpecPathsModifyOpts) error {
 	return nil
 }
 
-func SpecEndpoints(spec *openapi3.Spec, generic bool) []string {
-	endpoints := []string{}
-	for url, pathItem := range spec.Paths {
-		if generic {
-			url = PathVarsToGeneric(url)
-		}
-		pathMethods := PathMethods(pathItem)
-		for _, pathMethod := range pathMethods {
-			endpoints = append(endpoints, url+" "+pathMethod)
-		}
-	}
-	return endpoints
-}
-
+/*
 type Endpoint struct {
 	Path      string
 	Method    string
@@ -153,45 +142,4 @@ func PathEndpoints(url string, pathItem *oas3.PathItem) []Endpoint {
 	}
 	return pathOps
 }
-
-func PathMethods(pathItem *oas3.PathItem) []string {
-	methods := []string{}
-	if pathItem.Connect != nil {
-		methods = append(methods, http.MethodConnect)
-	}
-	if pathItem.Delete != nil {
-		methods = append(methods, http.MethodDelete)
-	}
-	if pathItem.Get != nil {
-		methods = append(methods, http.MethodGet)
-	}
-	if pathItem.Head != nil {
-		methods = append(methods, http.MethodHead)
-	}
-	if pathItem.Options != nil {
-		methods = append(methods, http.MethodOptions)
-	}
-	if pathItem.Patch != nil {
-		methods = append(methods, http.MethodPatch)
-	}
-	if pathItem.Post != nil {
-		methods = append(methods, http.MethodPost)
-	}
-	if pathItem.Put != nil {
-		methods = append(methods, http.MethodPut)
-	}
-	if pathItem.Trace != nil {
-		methods = append(methods, http.MethodTrace)
-	}
-	return methods
-}
-
-var rxPathVarToGeneric = regexp.MustCompile(`{[^}{]*}`)
-
-func PathVarsToGeneric(input string) string {
-	return rxPathVarToGeneric.ReplaceAllString(input, "{}")
-}
-
-func PathMatchGeneric(path1, path2 string) bool {
-	return PathVarsToGeneric(path1) == PathVarsToGeneric(path2)
-}
+*/

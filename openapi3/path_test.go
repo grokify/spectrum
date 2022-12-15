@@ -1,6 +1,5 @@
-package openapi3edit
+package openapi3
 
-/*
 import (
 	"testing"
 )
@@ -22,4 +21,3 @@ func TestPathVarsToGeneric(t *testing.T) {
 		}
 	}
 }
-*/
