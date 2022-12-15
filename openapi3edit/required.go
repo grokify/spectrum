@@ -7,13 +7,16 @@ import (
 	"github.com/grokify/spectrum/openapi3"
 )
 
-// var rxOptionalDefault = regexp.MustCompile(`(?i)\boptional\b`)
-
-func SpecSetSchemaPropertiesOptional(spec *openapi3.Spec, rxOptional *regexp.Regexp) {
-	if rxOptional == nil {
-		return
+// SchemaPropertiesSetOptional sets properites as optional if the description matches a regexp
+// such as var rxOptionalDefault = regexp.MustCompile(`(?i)\boptional\b`)
+func (se *SpecEdit) SchemaPropertiesSetOptional(rxOptional *regexp.Regexp) error {
+	if se.SpecMore.Spec == nil {
+		return openapi3.ErrSpecNotSet
 	}
-	for _, schemaRef := range spec.Components.Schemas {
+	if rxOptional == nil {
+		return nil
+	}
+	for _, schemaRef := range se.SpecMore.Spec.Components.Schemas {
 		if len(schemaRef.Ref) == 0 && schemaRef.Value != nil {
 			required := []string{}
 			for propName, propRef := range schemaRef.Value.Properties {
@@ -30,4 +33,5 @@ func SpecSetSchemaPropertiesOptional(spec *openapi3.Spec, rxOptional *regexp.Reg
 			schemaRef.Value.Required = required
 		}
 	}
+	return nil
 }

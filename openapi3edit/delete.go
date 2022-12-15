@@ -8,9 +8,13 @@ import (
 	"github.com/grokify/spectrum/openapi3"
 )
 
-func SpecDeleteProperties(spec *openapi3.Spec, md SpecMetadata) {
+func (se *SpecEdit) DeleteProperties(md openapi3.SpecMetadata) {
+	if se.SpecMore.Spec == nil {
+		return
+	}
+	spec := se.SpecMore.Spec
 	for _, opID := range md.OperationIDs {
-		SpecDeleteOperations(spec,
+		se.DeleteOperations(
 			func(urlpath, method string, op *oas3.Operation) bool {
 				if op != nil && op.OperationID == opID {
 					return true
@@ -19,7 +23,7 @@ func SpecDeleteProperties(spec *openapi3.Spec, md SpecMetadata) {
 			})
 	}
 	for _, epDel := range md.Endpoints {
-		SpecDeleteOperations(spec,
+		se.DeleteOperations(
 			func(urlpath, method string, op *oas3.Operation) bool {
 				if op == nil {
 					return false
@@ -40,10 +44,13 @@ func SpecDeleteProperties(spec *openapi3.Spec, md SpecMetadata) {
 	}
 }
 
-func SpecDeleteOperations(spec *openapi3.Spec, delThis func(urlpath, method string, op *oas3.Operation) bool) {
+func (se *SpecEdit) DeleteOperations(delThis func(urlpath, method string, op *oas3.Operation) bool) {
+	if se.SpecMore.Spec == nil {
+		return
+	}
 	newPaths := oas3.Paths{}
 
-	for urlpath, pathItem := range spec.Paths {
+	for urlpath, pathItem := range se.SpecMore.Spec.Paths {
 		newPathItem := oas3.PathItem{
 			ExtensionProps: pathItem.ExtensionProps,
 			Ref:            pathItem.Ref,
@@ -63,6 +70,9 @@ func SpecDeleteOperations(spec *openapi3.Spec, delThis func(urlpath, method stri
 		if pathItem.Head != nil && !delThis(urlpath, http.MethodHead, pathItem.Head) {
 			newPathItem.Head = pathItem.Head
 		}
+		if pathItem.Options != nil && !delThis(urlpath, http.MethodOptions, pathItem.Options) {
+			newPathItem.Options = pathItem.Options
+		}
 		if pathItem.Patch != nil && !delThis(urlpath, http.MethodPatch, pathItem.Patch) {
 			newPathItem.Patch = pathItem.Patch
 		}
@@ -75,19 +85,9 @@ func SpecDeleteOperations(spec *openapi3.Spec, delThis func(urlpath, method stri
 		if pathItem.Trace != nil && !delThis(urlpath, http.MethodTrace, pathItem.Trace) {
 			newPathItem.Trace = pathItem.Trace
 		}
-		if PathItemHasEndpoints(&newPathItem) {
+		if openapi3.PathItemHasEndpoints(&newPathItem) {
 			newPaths[urlpath] = &newPathItem
 		}
 	}
-	spec.Paths = newPaths
-}
-
-func PathItemHasEndpoints(pathItem *oas3.PathItem) bool {
-	if pathItem.Connect != nil || pathItem.Delete != nil ||
-		pathItem.Get != nil || pathItem.Head != nil ||
-		pathItem.Patch != nil || pathItem.Post != nil ||
-		pathItem.Put != nil || pathItem.Trace != nil {
-		return true
-	}
-	return false
+	se.SpecMore.Spec.Paths = newPaths
 }

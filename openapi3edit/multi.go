@@ -26,6 +26,7 @@ type SpecMoreModifyMultiOpts struct {
 
 // SpecMoreModifyMulti is used to perform multiple updates on an OpenAPI 3 spec.
 func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) error {
+	se := SpecEdit{SpecMore: *sm}
 	if opts.OperationsShowIDs {
 		// fmtutil.PrintJSON(SpecOperationIds(sm.Spec))
 		oldIDs := sm.OperationIDsCounts()
@@ -43,7 +44,7 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 	}
 	if opts.OperationsExec {
 		if opts.OperationsDeleteFunc != nil {
-			SpecDeleteOperations(sm.Spec, opts.OperationsDeleteFunc)
+			se.DeleteOperations(opts.OperationsDeleteFunc)
 		}
 		if opts.OperationsRenameIDsFunc != nil {
 			openapi3.VisitOperations(sm.Spec, opts.OperationsRenameIDsFunc)
@@ -63,7 +64,7 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 		}
 
 		if opts.OperationsRemoveSecurity {
-			RemoveOperationsSecurity(sm.Spec, []string{})
+			se.OperationsRemoveSecurity([]string{})
 		}
 	}
 	// Update Paths
@@ -74,7 +75,7 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 		}
 	}
 	if opts.PathsExec {
-		err := SpecPathsModify(sm.Spec, opts.Paths)
+		err := se.PathsModify(opts.Paths)
 		if err != nil {
 			return errorsutil.Wrap(err, "specModifyMulti")
 		}

@@ -3,34 +3,12 @@ package openapi3edit
 import (
 	"fmt"
 	"reflect"
-	"regexp"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/mogo/net/httputilmore"
-	"github.com/grokify/mogo/type/stringsutil"
 	"github.com/grokify/spectrum/openapi3"
 )
-
-var rxParens = regexp.MustCompile(`{([^}{}]+)}`)
-
-func ParsePathParametersParens(urlPath string) []string {
-	paramNames := []string{}
-	m := rxParens.FindAllStringSubmatch(urlPath, -1)
-	if len(m) == 0 {
-		return paramNames
-	}
-	for _, n := range m {
-		if len(n) == 2 {
-			varName := strings.TrimSpace(n[1])
-			paramNames = append(paramNames, varName)
-		}
-	}
-	if len(paramNames) > 0 {
-		paramNames = stringsutil.SliceCondenseSpace(paramNames, true, false)
-	}
-	return paramNames
-}
 
 /*
 func OperationHasParameter(paramNameWant string, op *oas3.Operation) bool {
@@ -49,6 +27,7 @@ func OperationHasParameter(paramNameWant string, op *oas3.Operation) bool {
 	return false
 }
 */
+
 // SortParameters sorts parameters according to an input name list.
 // This used to resort parameters inline with path path parameters
 // so they line up properly when rendered.
@@ -83,15 +62,18 @@ func SortParameters(sourceParams oas3.Parameters, sortOrder []string) oas3.Param
 // ValidateFixOperationPathParameters will add missing path parameters
 // and re-sort parameters so required path parameters are on top and
 // sorted by their position in the path.
-func ValidateFixOperationPathParameters(spec *openapi3.Spec, fix bool) ([]*openapi3.OperationMeta, error) {
+func (se *SpecEdit) ValidateFixOperationPathParameters(fix bool) ([]*openapi3.OperationMeta, error) {
 	errorOperations := []*openapi3.OperationMeta{}
+	if se.SpecMore.Spec == nil {
+		return errorOperations, openapi3.ErrSpecNotSet
+	}
 	openapi3.VisitOperations(
-		spec,
+		se.SpecMore.Spec,
 		func(path, method string, op *oas3.Operation) {
 			if op == nil {
 				return
 			}
-			varNamesPath := ParsePathParametersParens(path)
+			varNamesPath := openapi3.ParsePathParametersParens(path)
 			if len(varNamesPath) == 0 {
 				return
 			}
@@ -145,20 +127,23 @@ func ValidateFixOperationPathParameters(spec *openapi3.Spec, fix bool) ([]*opena
 	return errorOperations, nil
 }
 
-// MoveRequestBodies moves `requestBody` `$ref` to the operation
+// RequestBodiesMove moves `requestBody` `$ref` to the operation
 // which appears to be supported by more tools.
-func MoveRequestBodies(spec *openapi3.Spec, move bool) ([]*openapi3.OperationMeta, error) {
+func (se *SpecEdit) RequestBodiesMove(move bool) ([]*openapi3.OperationMeta, error) {
 	errorOperations := []*openapi3.OperationMeta{}
-	specMore := openapi3.SpecMore{Spec: spec}
+	if se.SpecMore.Spec == nil {
+		return errorOperations, openapi3.ErrSpecNotSet
+	}
+	//specMore := openapi3.SpecMore{Spec: spec}
 	openapi3.VisitOperations(
-		spec,
+		se.SpecMore.Spec,
 		func(path, method string, op *oas3.Operation) {
 			if op == nil || op.RequestBody == nil {
 				return
 			}
 			if len(op.RequestBody.Ref) > 0 {
 				if move {
-					requestBodyRef := specMore.ComponentRequestBody(op.RequestBody.Ref)
+					requestBodyRef := se.SpecMore.ComponentRequestBody(op.RequestBody.Ref)
 					if requestBodyRef != nil {
 						op.RequestBody = requestBodyRef
 					}
@@ -180,10 +165,13 @@ func MoveRequestBodies(spec *openapi3.Spec, move bool) ([]*openapi3.OperationMet
 // ValidateFixOperationResponseTypes looks for `application/json` responses
 // with response schema types that are not `array` or `object`. If the responses
 // is a string or integer, it will reset the response mime type to `text/plain`.
-func ValidateFixOperationResponseTypes(spec *openapi3.Spec, fix bool) ([]*openapi3.OperationMeta, error) {
+func (se *SpecEdit) ValidateFixOperationResponseTypes(fix bool) ([]*openapi3.OperationMeta, error) {
 	errorOperations := []*openapi3.OperationMeta{}
+	if se.SpecMore.Spec == nil {
+		return errorOperations, openapi3.ErrSpecNotSet
+	}
 	openapi3.VisitOperations(
-		spec,
+		se.SpecMore.Spec,
 		func(path, method string, op *oas3.Operation) {
 			if op == nil {
 				return
@@ -200,7 +188,7 @@ func ValidateFixOperationResponseTypes(spec *openapi3.Spec, fix bool) ([]*openap
 						if len(schemaRef.Ref) == 0 {
 							schema := schemaRef.Value
 							schemaType := schema.Type
-							if fix && (schemaType == "string" || schemaType == "integer") {
+							if fix && (schemaType == openapi3.TypeString || schemaType == openapi3.TypeInteger) {
 								delete(response.Value.Content, mediaTypeOrig)
 								if mtRefTry, ok := response.Value.Content[httputilmore.ContentTypeTextPlain]; ok {
 									if !reflect.DeepEqual(mtRef, mtRefTry) {
@@ -212,7 +200,7 @@ func ValidateFixOperationResponseTypes(spec *openapi3.Spec, fix bool) ([]*openap
 								} else {
 									response.Value.Content[httputilmore.ContentTypeTextPlain] = mtRef
 								}
-							} else if schemaType != "object" && schemaType != "array" {
+							} else if schemaType != openapi3.TypeObject && schemaType != openapi3.TypeArray {
 								om := openapi3.OperationToMeta(path, method, op, []string{})
 								om.MetaNotes = append(om.MetaNotes,
 									fmt.Sprintf("E_BAD_MIME_TYPE_AND_SCHEMA MT[%s] type[%s]", mediaType, schemaType))

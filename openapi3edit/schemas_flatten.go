@@ -10,19 +10,23 @@ import (
 	"github.com/grokify/spectrum/openapi3"
 )
 
-func SpecSchemasFlatten(spec *openapi3.Spec) {
-	for schName, schRef := range spec.Components.Schemas {
+func (se *SpecEdit) SchemasFlatten() {
+	if se.SpecMore.Spec == nil {
+		return
+	}
+	for schName, schRef := range se.SpecMore.Spec.Components.Schemas {
 		if schRef == nil || schRef.Value == nil {
 			continue
 		}
-		SpecSchemasFlattenSchemaRef(spec, "", schName, schRef)
+		se.SchemasFlattenSchemaRef("", schName, schRef)
 	}
 }
 
-func SpecSchemasFlattenSchemaRef(spec *openapi3.Spec, baseName, schName string, schRef *oas3.SchemaRef) {
-	if schRef == nil {
+func (se *SpecEdit) SchemasFlattenSchemaRef(baseName, schName string, schRef *oas3.SchemaRef) {
+	if se.SpecMore.Spec == nil || schRef == nil {
 		return
 	}
+	spec := se.SpecMore.Spec
 
 	basePlusSchName := baseName + stringsutil.ToUpperFirst(schName, false)
 	if len(baseName) == 0 {
@@ -49,7 +53,7 @@ func SpecSchemasFlattenSchemaRef(spec *openapi3.Spec, baseName, schName string, 
 						fmt.Printf("BASE_NAME [%s] SCH_NAME [%s] PROP_NAME [%s] ARRAY\n", baseName, schName, propName)
 						panic("collision")
 					}
-					SpecSchemasFlattenSchemaRef(spec, basePlusSchName, propName, itemsRef)
+					se.SchemasFlattenSchemaRef(basePlusSchName, propName, itemsRef)
 					spec.Components.Schemas[newSchemaName] = itemsRef
 					propRef.Value.Items = oas3.NewSchemaRef(openapi3.PointerComponentsSchemas+"/"+newSchemaName, nil)
 				}
@@ -65,7 +69,7 @@ func SpecSchemasFlattenSchemaRef(spec *openapi3.Spec, baseName, schName string, 
 					panic("collision")
 				}
 				//SpecSchemasFlattenSchemaRef(spec, basePlusSchName, propName, propRef)
-				SpecSchemasFlattenSchemaRef(spec, "", newSchemaName, propRef)
+				se.SchemasFlattenSchemaRef("", newSchemaName, propRef)
 				spec.Components.Schemas[newSchemaName] = propRef
 				schRef.Value.Properties[propName] = oas3.NewSchemaRef(openapi3.PointerComponentsSchemas+"/"+newSchemaName, nil)
 				//SpecSchemasFlattenSchemaRef(spec, basePlusSchName, propName, propRef)
@@ -77,8 +81,12 @@ func SpecSchemasFlattenSchemaRef(spec *openapi3.Spec, baseName, schName string, 
 
 var ErrEmptySchemaName = errors.New("empty schema name encountered")
 
-// SpecSchemaRefsFlatten flattens Schema refs.
-func SpecSchemaRefsFlatten(spec *openapi3.Spec) error {
+// SchemaRefsFlatten flattens Schema refs.
+func (se *SpecEdit) SchemaRefsFlatten() error {
+	if se.SpecMore.Spec == nil {
+		return openapi3.ErrSpecNotSet
+	}
+	spec := se.SpecMore.Spec
 	// func SpecFlattenSchemaRefs(spec *openapi3.Spec, visitSchemaRefFunc func(schName string, schRef *oas3.SchemaRef) error) error {
 	for schName, schRef := range spec.Components.Schemas {
 		for propSchemaName, propSchemaRef := range schRef.Value.Properties {

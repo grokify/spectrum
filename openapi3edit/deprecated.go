@@ -7,17 +7,23 @@ import (
 	"github.com/grokify/spectrum/openapi3"
 )
 
-func SpecSchemasSetDeprecated(spec *openapi3.Spec, newDeprecated bool) {
-	for _, schemaRef := range spec.Components.Schemas {
+func (se *SpecEdit) SchemasSetDeprecated(newDeprecated bool) {
+	if se.SpecMore.Spec == nil {
+		return
+	}
+	for _, schemaRef := range se.SpecMore.Spec.Components.Schemas {
 		if len(schemaRef.Ref) == 0 && schemaRef.Value != nil {
 			schemaRef.Value.Deprecated = newDeprecated
 		}
 	}
 }
 
-func SpecOperationsSetDeprecated(spec *openapi3.Spec, newDeprecated bool) {
+func (se *SpecEdit) OperationsSetDeprecated(newDeprecated bool) {
+	if se.SpecMore.Spec == nil {
+		return
+	}
 	openapi3.VisitOperations(
-		spec,
+		se.SpecMore.Spec,
 		func(path, method string, op *oas3.Operation) {
 			if op != nil {
 				op.Deprecated = newDeprecated
@@ -28,16 +34,19 @@ func SpecOperationsSetDeprecated(spec *openapi3.Spec, newDeprecated bool) {
 
 var rxDeprecated = regexp.MustCompile(`(?i)\bdeprecated\b`)
 
-func SpecSetDeprecatedImplicit(spec *openapi3.Spec) {
+func (se *SpecEdit) SetDeprecatedImplicit() {
+	if se.SpecMore.Spec == nil {
+		return
+	}
 	openapi3.VisitOperations(
-		spec,
+		se.SpecMore.Spec,
 		func(path, method string, op *oas3.Operation) {
 			if op != nil && rxDeprecated.MatchString(op.Description) {
 				op.Deprecated = true
 			}
 		},
 	)
-	for _, schemaRef := range spec.Components.Schemas {
+	for _, schemaRef := range se.SpecMore.Spec.Components.Schemas {
 		if len(schemaRef.Ref) == 0 && schemaRef.Value != nil {
 			if rxDeprecated.MatchString(schemaRef.Value.Description) {
 				schemaRef.Value.Deprecated = true

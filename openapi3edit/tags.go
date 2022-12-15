@@ -18,8 +18,6 @@ func (se *SpecEdit) TagsModifyMore(opts *TagsModifyOpts) {
 		return
 	}
 	if len(opts.TagsMap) > 0 {
-		//se := SpecEdit{}
-		//se.SpecSet(se.SpecMore.Spec)
 		se.TagsModify(opts.TagsMap)
 	}
 	if len(opts.TagURLsMap) > 0 {
@@ -71,11 +69,13 @@ TAG:
 // SpecTagsOrder sorts a specs tags based on an input set
 // and explitcit sort order. The remaining tags are sorted
 // alphabetically.
-func SpecTagsOrder(spec *openapi3.Spec, explicitSortedTagNames []string) error {
-	curTags := spec.Tags
+func (se *SpecEdit) TagsOrder(explicitSortedTagNames []string) error {
+	if se.SpecMore.Spec == nil {
+		return openapi3.ErrSpecNotSet
+	}
+	curTags := se.SpecMore.Spec.Tags
 
-	sm := openapi3.SpecMore{Spec: spec}
-	opTagNames := sm.TagsMap(false, true)
+	opTagNames := se.SpecMore.TagsMap(false, true)
 	for tagName := range opTagNames {
 		curTags = append(curTags, &oas3.Tag{Name: tagName})
 	}
@@ -84,8 +84,7 @@ func SpecTagsOrder(spec *openapi3.Spec, explicitSortedTagNames []string) error {
 	if err != nil {
 		return err
 	}
-	spec.Tags = newTags
-
+	se.SpecMore.Spec.Tags = newTags
 	return nil
 }
 
@@ -127,16 +126,19 @@ func TagsOrder(curTags oas3.Tags, explicitSortedTagNames []string) (oas3.Tags, e
 // SpecTagsCondense removes unused tags from the top
 // level specification by comparing with tags used
 // in operations.
-func SpecTagsCondense(spec *openapi3.Spec) {
-	sm := openapi3.SpecMore{Spec: spec}
-	opTags := sm.TagsMap(false, true)
+func (se *SpecEdit) SpecTagsCondense() {
+	if se.SpecMore.Spec == nil {
+		return
+	}
+	//sm := openapi3.SpecMore{Spec: spec}
+	opTags := se.SpecMore.TagsMap(false, true)
 	newTags := oas3.Tags{}
-	for _, curTag := range spec.Tags {
+	for _, curTag := range se.SpecMore.Spec.Tags {
 		if _, ok := opTags[curTag.Name]; ok {
 			newTags = append(newTags, curTag)
 		}
 	}
-	spec.Tags = newTags
+	se.SpecMore.Spec.Tags = newTags
 }
 
 // TagsModifyOpts is used with `SpecEdit.TagsModifyMore()`.
