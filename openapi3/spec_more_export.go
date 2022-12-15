@@ -106,13 +106,19 @@ func (sm *SpecMore) SchemasCopySchemaRef(destSpec *Spec, schRef *oas3.SchemaRef)
 		return nil
 	}
 	if len(strings.TrimSpace(schRef.Ref)) > 0 {
-		sm.SchemasCopyJSONPointer(destSpec, schRef.Ref)
+		err := sm.SchemasCopyJSONPointer(destSpec, schRef.Ref)
+		if err != nil {
+			return err
+		}
 	}
 	if schRef.Value == nil {
 		return nil
 	}
 	if schRef.Value.Items != nil {
-		sm.SchemasCopySchemaRef(destSpec, schRef.Value.Items)
+		err := sm.SchemasCopySchemaRef(destSpec, schRef.Value.Items)
+		if err != nil {
+			return err
+		}
 	}
 	for _, schRefProp := range schRef.Value.Properties {
 		err := sm.SchemasCopySchemaRef(destSpec, schRefProp)

@@ -55,8 +55,6 @@ func msaPaths(basePath string, msa map[string]any, oms *openapi3.OperationMores)
 		return nil
 	} else if oms == nil {
 		return ErrOperationMoreSetMissing
-	} else if oms == nil {
-		oms = &openapi3.OperationMores{}
 	}
 	basePath = strings.TrimSpace(basePath)
 	if len(basePath) > 0 {

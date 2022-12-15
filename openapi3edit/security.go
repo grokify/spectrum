@@ -53,6 +53,7 @@ func (se *SpecEdit) SecuritySchemeBearertokenAddOperationsByTags(schemeName stri
 			skipTagsMap[tag] = 1
 		}
 	}
+	var errs []error
 	openapi3.VisitOperations(spec, func(skipPath string, skipMethod string, op *oas3.Operation) {
 		addSecurity := false
 		for _, tag := range op.Tags {
@@ -70,9 +71,15 @@ func (se *SpecEdit) SecuritySchemeBearertokenAddOperationsByTags(schemeName stri
 		}
 		if addSecurity {
 			ope := NewOperationEdit(skipPath, skipMethod, op)
-			ope.AddSecurityRequirement(schemeName, []string{})
+			err := ope.AddSecurityRequirement(schemeName, []string{})
+			if err != nil {
+				errs = append(errs, err)
+			}
 		}
 	})
+	if len(errs) > 0 {
+		return errs[0]
+	}
 	return nil
 }
 
@@ -145,14 +152,21 @@ func (se *SpecEdit) SecuritySchemeApikeyAddOperations(tags []string, keyName str
 		tagName = strings.TrimSpace(tagName)
 		tagsMap[tagName] = 1
 	}
+	var errs []error
 	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 		if !maputil.KeysExist(tagsMap, op.Tags, false) {
 			return
 		}
 		ope := NewOperationEdit(skipPath, skipMethod, op)
-		ope.AddSecurityRequirement(keyName, []string{})
+		err := ope.AddSecurityRequirement(keyName, []string{})
+		if err != nil {
+			errs = append(errs, err)
+		}
 		//SecuritySchemeAddOperation(op, keyName, []string{})
 	})
+	if len(errs) > 0 {
+		return errs[0]
+	}
 	return nil
 }
 

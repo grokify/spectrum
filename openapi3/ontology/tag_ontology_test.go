@@ -5,7 +5,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/grokify/mogo/text/stringcase"
 )
 
@@ -68,8 +67,6 @@ func TestTagOnologyTests(t *testing.T) {
 		}
 		mismatchFields, isEqual := gotData.Equal(wantData)
 		if !isEqual {
-			fmtutil.PrintJSON(gotData)
-			fmtutil.PrintJSON(wantData)
 			t.Errorf("ontology.TagOnologyData.Data(...) Mistmatch fields [%s] want [%v] got [%v]",
 				strings.Join(mismatchFields, ","),
 				wantData, gotData)
