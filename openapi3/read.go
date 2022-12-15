@@ -53,15 +53,19 @@ func ReadFile(oas3file string, validate bool) (*Spec, error) {
 }
 
 func readAndValidateFile(oas3file string) (*Spec, error) {
-	bytes, err := os.ReadFile(oas3file)
+	data, err := os.ReadFile(oas3file)
 	if err != nil {
 		return nil, errorsutil.Wrap(err, "E_READ_FILE_ERROR")
 	}
-	spec, err := oas3.NewLoader().LoadFromData(bytes)
+	return readAndValidateBytes(data)
+}
+
+func readAndValidateBytes(b []byte) (*Spec, error) {
+	spec, err := oas3.NewLoader().LoadFromData(b)
 	if err != nil {
-		return spec, errorsutil.Wrapf(err, "error `oas3.NewLoader().LoadFromData(bytes)` file: (%s)", oas3file)
+		return spec, errorsutil.Wrap(err, "error `oas3.NewLoader().LoadFromData(bytes)`")
 	}
-	_, err = ValidateMore(spec)
+	_, err = validateMore(spec)
 	return spec, err
 }
 
@@ -102,9 +106,12 @@ context: "#/info"
 openapi: 3.0.0
 */
 
-func ValidateMore(spec *Spec) (ValidationStatus, error) {
-	vs := ValidationStatus{OpenAPI: "3.0.0"}
+func validateMore(spec *Spec) (ValidationStatus, error) {
 	version := strings.TrimSpace(spec.Info.Version)
+	if len(strings.TrimSpace(version)) == 0 {
+		version = OASVersionDefault
+	}
+	vs := ValidationStatus{OpenAPI: version}
 	if len(version) == 0 {
 		jdata, err := jsonutil.MarshalSimple(spec.Info, "", "  ")
 		if err != nil {
@@ -118,4 +125,20 @@ func ValidateMore(spec *Spec) (ValidationStatus, error) {
 	}
 	vs.Status = true
 	return vs, nil
+}
+
+func (sm *SpecMore) ValidateMore() (ValidationStatus, error) {
+	if sm.Spec == nil {
+		return ValidationStatus{}, ErrSpecNotSet
+	}
+	return validateMore(sm.Spec)
+}
+
+func (sm *SpecMore) Validate() error {
+	jbytes, err := sm.MarshalJSON("", "")
+	if err != nil {
+		return err
+	}
+	_, err = readAndValidateBytes(jbytes)
+	return err
 }
