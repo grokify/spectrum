@@ -3,16 +3,22 @@ package openapi3edit
 import (
 	"fmt"
 	"net/http"
+	"net/url"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
+	"github.com/grokify/mogo/encoding/jsonpointer"
 	"github.com/grokify/mogo/net/http/pathmethod"
 	"github.com/grokify/mogo/type/stringsutil"
 	"github.com/grokify/spectrum/openapi3"
 )
 
-// SpecSetOperation sets an operation in a OpenAPI Specification.
-func SpecSetOperation(spec *openapi3.Spec, path, method string, op oas3.Operation) error {
+// SetOperation sets an operation in a OpenAPI Specification.
+func (se *SpecEdit) SetOperation(path, method string, op oas3.Operation) error {
+	if se.SpecMore.Spec == nil {
+		return openapi3.ErrSpecNotSet
+	}
+	spec := se.SpecMore.Spec
 	if spec == nil {
 		return fmt.Errorf("spec to add operation to is nil for path[%s] method [%s]", path, method)
 	}
@@ -46,7 +52,11 @@ func SpecSetOperation(spec *openapi3.Spec, path, method string, op oas3.Operatio
 	return nil
 }
 
-func SpecOperationIDsFromSummaries(spec *openapi3.Spec, errorOnEmpty bool) error {
+func (se *SpecEdit) OperationIDsFromSummaries(errorOnEmpty bool) error {
+	if se.SpecMore.Spec == nil {
+		return nil
+	}
+	spec := se.SpecMore.Spec
 	empty := []string{}
 	openapi3.VisitOperations(spec, func(path, method string, op *oas3.Operation) {
 		op.Summary = strings.Join(strings.Split(op.Summary, " "), " ")
@@ -61,10 +71,14 @@ func SpecOperationIDsFromSummaries(spec *openapi3.Spec, errorOnEmpty bool) error
 	return nil
 }
 
-// SpecOperationsOperationIDSummaryReplace sets the OperationID and Summary with a `map[string]string`
+// OperationsOperationIDSummaryReplace sets the OperationID and Summary with a `map[string]string`
 // where the keys are pathMethod values and the values are Summary strings.
 // This currently converts a Summary into an OperationID by using the supplied `opIDFunc`.
-func SpecOperationsOperationIDSummaryReplace(spec *openapi3.Spec, customMapPathMethodToSummary map[string]string, opIDFunc func(s string) string, forceOpID, forceSummary bool) {
+func (se *SpecEdit) OperationsOperationIDSummaryReplace(customMapPathMethodToSummary map[string]string, opIDFunc func(s string) string, forceOpID, forceSummary bool) {
+	if se.SpecMore.Spec == nil {
+		return
+	}
+	spec := se.SpecMore.Spec
 	openapi3.VisitOperations(spec, func(path, method string, op *oas3.Operation) {
 		op.OperationID = strings.TrimSpace(op.OperationID)
 		op.Summary = strings.TrimSpace(op.Summary)
@@ -86,10 +100,11 @@ func SpecOperationsOperationIDSummaryReplace(spec *openapi3.Spec, customMapPathM
 	})
 }
 
-func SpecAddCustomProperties(spec *openapi3.Spec, custom map[string]interface{}, addToOperations, addToSchemas bool) {
-	if spec == nil || len(custom) == 0 {
+func (se *SpecEdit) AddCustomProperties(custom map[string]interface{}, addToOperations, addToSchemas bool) {
+	if se.SpecMore.Spec == nil || len(custom) == 0 {
 		return
 	}
+	spec := se.SpecMore.Spec
 	if addToOperations {
 		openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 			for key, val := range custom {
@@ -108,10 +123,11 @@ func SpecAddCustomProperties(spec *openapi3.Spec, custom map[string]interface{},
 	}
 }
 
-func SpecAddOperationMetas(spec *openapi3.Spec, metas map[string]openapi3.OperationMeta, overwrite bool) {
-	if spec == nil || len(metas) == 0 {
+func (se *SpecEdit) AddOperationMetas(metas map[string]openapi3.OperationMeta, overwrite bool) {
+	if se.SpecMore.Spec == nil || len(metas) == 0 {
 		return
 	}
+	spec := se.SpecMore.Spec
 	openapi3.VisitOperations(spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 		if op == nil {
 			return
@@ -153,10 +169,14 @@ func SpecAddOperationMetas(spec *openapi3.Spec, metas map[string]openapi3.Operat
 	})
 }
 
-// SpecOperationsSecurityReplace rplaces the security requirement object of operations that meets its
+// OperationsSecurityReplace rplaces the security requirement object of operations that meets its
 // include and exclude filters. SecurityRequirement is specified by OpenAPI/Swagger standard version 3.
 // See https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md#securityRequirementObject
-func SpecOperationsSecurityReplace(spec *openapi3.Spec, pathMethodsInclude, pathMethodsExclude []string, securityRequirement map[string][]string) {
+func (se *SpecEdit) OperationsSecurityReplace(pathMethodsInclude, pathMethodsExclude []string, securityRequirement map[string][]string) {
+	if se.SpecMore.Spec == nil {
+		return
+	}
+	spec := se.SpecMore.Spec
 	pathMethodsExcludeMap := stringsutil.SliceToMap(stringsutil.SliceCondenseSpace(pathMethodsExclude, true, false))
 	pathMethodsIncludeMap := stringsutil.SliceToMap(stringsutil.SliceCondenseSpace(pathMethodsInclude, true, false))
 
@@ -176,4 +196,56 @@ func SpecOperationsSecurityReplace(spec *openapi3.Spec, pathMethodsInclude, path
 		op.Security = oas3.NewSecurityRequirements()
 		op.Security.With(securityRequirement)
 	})
+}
+
+const (
+	ErrMsgSchemaKeyCollision    = "schemaKeySollision"
+	ErrMsgOperationMissingID    = "operationMissingID"
+	ErrMsgOperationRequestCTGT1 = "operationRequestContentTypeGT1"
+)
+
+func (se *SpecEdit) OperationsFlattenRequestBodySchemas(schemaKeySuffix string) error {
+	if se.SpecMore.Spec == nil {
+		return openapi3.ErrSpecNotSet
+	}
+	errs := url.Values{}
+	openapi3.VisitOperations(se.SpecMore.Spec, func(opPath, opMethod string, op *oas3.Operation) {
+		if op == nil || op.RequestBody == nil ||
+			len(strings.TrimSpace(op.RequestBody.Ref)) > 0 || // have ref
+			op.RequestBody.Value == nil ||
+			len(op.RequestBody.Value.Content) == 0 { // have no content
+			return
+		}
+		pm := pathmethod.PathMethod(opPath, opMethod)
+		if len(op.RequestBody.Value.Content) > 1 {
+			errs.Add(ErrMsgOperationRequestCTGT1, pm)
+			return
+		}
+		if len(strings.TrimSpace(op.OperationID)) == 0 {
+			errs.Add(ErrMsgOperationMissingID, pm)
+			return
+		}
+		for _, mt := range op.RequestBody.Value.Content {
+			if mt.Schema == nil ||
+				len(strings.TrimSpace(mt.Schema.Ref)) > 0 ||
+				mt.Schema.Value == nil {
+				return
+			}
+			schKey := strings.TrimSpace(op.OperationID) + schemaKeySuffix
+			if _, ok := se.SpecMore.Spec.Components.Schemas[schKey]; ok {
+				errs.Add(ErrMsgSchemaKeyCollision, pm)
+				return
+			}
+			schRef := mt.Schema
+			se.SpecMore.Spec.Components.Schemas[schKey] = schRef
+			schKeyPointer := jsonpointer.PointerSubEscapeAll(openapi3.PointerComponentsSchemasFormat, schKey)
+			mt.Schema = oas3.NewSchemaRef(schKeyPointer, nil)
+		}
+	})
+
+	if len(errs) > 0 {
+		enc := errs.Encode()
+		return fmt.Errorf("operation flattening faled: (%s)", enc)
+	}
+	return nil
 }
