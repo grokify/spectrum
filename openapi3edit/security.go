@@ -189,7 +189,7 @@ func MapSliceIntersection(haystack map[string]int, needles []string, unique bool
 // for all operations. It is useful when building a spec
 // to get individual specs to validate before setting the
 // correct security property.
-func (se *SpecEdit) OperationsRemoveSecurity(inclPathMethods []string) error {
+func (se *SpecEdit) OperationsSecurityRemove(inclPathMethods []string) error {
 	if se.SpecMore.Spec == nil {
 		return openapi3.ErrSpecNotSet
 	}

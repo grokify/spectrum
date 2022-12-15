@@ -64,7 +64,7 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 		}
 
 		if opts.OperationsRemoveSecurity {
-			err := se.OperationsRemoveSecurity([]string{})
+			err := se.OperationsSecurityRemove([]string{})
 			if err != nil {
 				return err
 			}
