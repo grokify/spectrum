@@ -127,9 +127,9 @@ func (se *SpecEdit) ValidateFixOperationPathParameters(fix bool) ([]*openapi3.Op
 	return errorOperations, nil
 }
 
-// RequestBodiesMove moves `requestBody` `$ref` to the operation
+// OperationsRequestBodyMove moves `requestBody` `$ref` to the operation
 // which appears to be supported by more tools.
-func (se *SpecEdit) RequestBodiesMove(move bool) ([]*openapi3.OperationMeta, error) {
+func (se *SpecEdit) OperationsRequestBodyMove(move bool) ([]*openapi3.OperationMeta, error) {
 	errorOperations := []*openapi3.OperationMeta{}
 	if se.SpecMore.Spec == nil {
 		return errorOperations, openapi3.ErrSpecNotSet

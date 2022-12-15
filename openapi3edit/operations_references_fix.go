@@ -16,9 +16,12 @@ const (
 
 var rxOAS2RefDefinition = regexp.MustCompile(`^#/definitions/(.*)`)
 
-func SpecOperationsFixResponseReferences(spec *openapi3.Spec) []*openapi3.OperationMeta {
+func (se *SpecEdit) OperationsFixResponseReferences() []*openapi3.OperationMeta {
 	errorOperations := []*openapi3.OperationMeta{}
-	openapi3.VisitOperations(spec, func(path, method string, op *oas3.Operation) {
+	if se.SpecMore.Spec == nil {
+		return errorOperations
+	}
+	openapi3.VisitOperations(se.SpecMore.Spec, func(path, method string, op *oas3.Operation) {
 		if op == nil {
 			return
 		}
@@ -44,7 +47,8 @@ func FixFile(input, output string, prefix, indent string, validateOutput bool) (
 	if err != nil {
 		return spec, []*openapi3.OperationMeta{}, err
 	}
-	errs := SpecOperationsFixResponseReferences(spec)
+	se := NewSpecEdit(spec)
+	errs := se.OperationsFixResponseReferences()
 	output = strings.TrimSpace(output)
 	if len(output) > 0 {
 		smore := openapi3.SpecMore{Spec: spec}

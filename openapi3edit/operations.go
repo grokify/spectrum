@@ -204,7 +204,7 @@ const (
 	ErrMsgOperationRequestCTGT1 = "operationRequestContentTypeGT1"
 )
 
-func (se *SpecEdit) OperationsFlattenRequestBodySchemas(schemaKeySuffix string) error {
+func (se *SpecEdit) OperationsRequestBodyFlattenSchemas(schemaKeySuffix string) error {
 	if se.SpecMore.Spec == nil {
 		return openapi3.ErrSpecNotSet
 	}
