@@ -195,7 +195,7 @@ func OpTableColumnsRingCentral() *tabulator.ColumnSet {
 	//return &table.ColumnSet{Columns: columns}
 }
 
-func (sm *SpecMore) Operations(inclTags []string) *OperationMoreSet {
+func (sm *SpecMore) Operations(inclTags []string) *OperationMores {
 	if sm.Spec == nil {
 		return nil
 	}
@@ -204,11 +204,13 @@ func (sm *SpecMore) Operations(inclTags []string) *OperationMoreSet {
 	for _, tag := range inclTags {
 		tagsWantMatch[tag] = 1
 	}
-	opmSet := &OperationMoreSet{OperationMores: []OperationMore{}}
+	// opmSet := &OperationMoreSet{OperationMores: []OperationMore{}}
+
+	oms := &OperationMores{}
 
 	VisitOperations(sm.Spec, func(path, method string, op *oas3.Operation) {
 		if len(tagsWantMatch) == 0 {
-			opmSet.OperationMores = append(opmSet.OperationMores,
+			*oms = append(*oms,
 				OperationMore{
 					Path:      path,
 					Method:    method,
@@ -217,7 +219,7 @@ func (sm *SpecMore) Operations(inclTags []string) *OperationMoreSet {
 		}
 		for _, opTagTry := range op.Tags {
 			if _, ok := tagsWantMatch[opTagTry]; ok {
-				opmSet.OperationMores = append(opmSet.OperationMores,
+				*oms = append(*oms,
 					OperationMore{
 						Path:      path,
 						Method:    method,
@@ -227,7 +229,7 @@ func (sm *SpecMore) Operations(inclTags []string) *OperationMoreSet {
 		}
 	})
 
-	return opmSet
+	return oms
 }
 
 func (sm *SpecMore) OperationMetasMap(inclTags []string) map[string]OperationMeta {
