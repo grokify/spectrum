@@ -28,16 +28,16 @@ func AppendPostmanHeaderValueLower(headers []Header, headerName string, options,
 }
 
 //noinspection ALL
-func AddOperationReqResMediaTypeHeaders(
-	headers []Header,
-	operation *oas3.Operation,
-	reqPreferences []string,
-	resPreferences []string) ([]Header, string, string) {
+func AddOperationReqResMediaTypeHeaders(headers []Header, operation *oas3.Operation, spec *openapi3.Spec, reqPreferences []string, resPreferences []string) ([]Header, string, string, error) {
 	om := openapi3.OperationMore{Operation: operation}
+	reqMediaTypes, err := om.RequestMediaTypes(spec)
+	if err != nil {
+		return []Header{}, "", "", err
+	}
 	headers, reqMediaType := AppendPostmanHeaderValueLower(
 		headers,
 		httputilmore.HeaderContentType,
-		om.RequestMediaTypes(),
+		reqMediaTypes,
 		reqPreferences,
 	)
 	headers, resMediaType := AppendPostmanHeaderValueLower(
@@ -46,5 +46,5 @@ func AddOperationReqResMediaTypeHeaders(
 		om.ResponseMediaTypes(),
 		resPreferences,
 	)
-	return headers, reqMediaType, resMediaType
+	return headers, reqMediaType, resMediaType, nil
 }

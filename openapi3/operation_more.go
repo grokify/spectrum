@@ -5,12 +5,14 @@ import (
 	"errors"
 	"net/http"
 	"net/url"
+	"regexp"
 	"sort"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/mogo/net/http/pathmethod"
 	"github.com/grokify/mogo/type/maputil"
+	"github.com/grokify/mogo/type/slicesutil"
 	"github.com/grokify/mogo/type/stringsutil"
 )
 
@@ -66,24 +68,61 @@ func (om *OperationMore) PathMethod() string {
 }
 
 // RequestMediaTypes returns a sorted slice of request media types.
-func (om *OperationMore) RequestMediaTypes() []string {
+func (om *OperationMore) RequestMediaTypes(spec *Spec) ([]string, error) {
 	op := om.Operation
-	mediaTypes := []string{}
-	if op == nil {
-		return mediaTypes
+	if op == nil || op.RequestBody == nil {
+		return []string{}, nil
 	}
-	if op.RequestBody != nil {
+	if len(strings.TrimSpace(op.RequestBody.Ref)) == 0 {
 		if op.RequestBody.Value != nil {
-			for mediaType := range op.RequestBody.Value.Content {
-				mediaType = strings.TrimSpace(mediaType)
-				if len(mediaType) > 0 {
-					mediaTypes = append(mediaTypes, mediaType)
-				}
-			}
+			return maputil.StringKeys(op.RequestBody.Value.Content, nil), nil
+		}
+		return []string{}, nil
+	}
+	if spec == nil {
+		return []string{}, errors.New("spec needed to trace json pointer")
+	}
+	sm := SpecMore{Spec: spec}
+	return sm.RequestBodyRefMediaTypes(op.RequestBody)
+}
+
+func (sm *SpecMore) RequestBodyRefMediaTypes(ref *oas3.RequestBodyRef) ([]string, error) {
+	if sm.Spec == nil {
+		return []string{}, ErrSpecNotSet
+	}
+	if ref == nil {
+		return []string{}, nil
+	}
+	if len(strings.TrimSpace(ref.Ref)) > 0 {
+		reqRef, err := sm.RequestBodyRef(ref.Ref)
+		if err != nil {
+			return []string{}, err
+		}
+		return sm.RequestBodyRefMediaTypes(reqRef)
+	}
+	if ref.Value != nil {
+		return maputil.StringKeys(ref.Value.Content, nil), nil
+	}
+	return []string{}, nil
+}
+
+var rxJSONPointerComponentsRequestBodies = regexp.MustCompile(`^(.*?)#/components/requestBodies/(.+)$`)
+
+func (sm *SpecMore) RequestBodyRef(componentKeyOrPointer string) (*oas3.RequestBodyRef, error) {
+	if reqRef, ok := sm.Spec.Components.RequestBodies[componentKeyOrPointer]; ok {
+		return reqRef, nil
+	}
+	if strings.Contains(componentKeyOrPointer, PointerComponentsRequestBodies) {
+		m := rxJSONPointerComponentsRequestBodies.FindStringSubmatch(componentKeyOrPointer)
+		if len(m) == 0 {
+			return nil, errors.New("json pointer does not match request bodies")
+		}
+		reqBodyKey := m[2]
+		if reqRef, ok := sm.Spec.Components.RequestBodies[reqBodyKey]; ok {
+			return reqRef, nil
 		}
 	}
-	sort.Strings(mediaTypes)
-	return mediaTypes
+	return nil, errors.New("request body component not found")
 }
 
 func (om *OperationMore) RequestBodySchemaRef() []string {
@@ -102,25 +141,23 @@ func (om *OperationMore) RequestBodySchemaRef() []string {
 		keys := maputil.StringValues(ctMap)
 		schemaRefs = append(schemaRefs, keys...)
 	}
-
 	return schemaRefs
 }
 
-// ResponseMediaTypes returns a sorted slice of response media types.
+// ResponseMediaTypes returns a sorted slice of response media types. Media type values are
+// deduped against multiple response statuses.
 func (om *OperationMore) ResponseMediaTypes() []string {
-	op := om.Operation
-	mediaTypes := []string{}
-	if op == nil {
-		return mediaTypes
+	if om.Operation == nil {
+		return []string{}
 	}
-	for _, resp := range op.Responses {
-		for mediaType := range resp.Value.Content {
-			mediaType = strings.TrimSpace(mediaType)
-			if len(mediaType) > 0 {
-				mediaTypes = append(mediaTypes, mediaType)
-			}
+	mediaTypes := []string{}
+	for _, respRef := range om.Operation.Responses {
+		if respRef.Value != nil {
+			mt := maputil.StringKeys(respRef.Value.Content, nil)
+			mediaTypes = append(mediaTypes, mt...)
 		}
 	}
+	mediaTypes = slicesutil.Dedupe(mediaTypes)
 	sort.Strings(mediaTypes)
 	return mediaTypes
 }

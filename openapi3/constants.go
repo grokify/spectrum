@@ -24,6 +24,7 @@ const (
 	InPath   = "path"
 	InQuery  = "query"
 
+	PointerComponentsRequestBodies = "#/components/requestBodies"
 	PointerComponentsSchemas       = "#/components/schemas"
 	PointerComponentsSchemasFormat = `#/components/schemas/%s`
 )

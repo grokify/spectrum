@@ -125,29 +125,39 @@ func Merge(cfg Configuration, pman postman2.Collection, oas3spec *openapi3.Spec)
 		path := oas3spec.Paths[url] // *PathItem
 
 		if path.Delete != nil {
-			pman = postmanAddItemToFolders(pman,
-				Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodDelete, path.Delete),
-				path.Delete.Tags, tagGroupSet)
+			pitem, err := Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodDelete, path.Delete)
+			if err != nil {
+				return pman, err
+			}
+			pman = postmanAddItemToFolders(pman, pitem, path.Delete.Tags, tagGroupSet)
 		}
 		if path.Get != nil {
-			pman = postmanAddItemToFolders(pman,
-				Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodGet, path.Get),
-				path.Get.Tags, tagGroupSet)
+			pitem, err := Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodGet, path.Get)
+			if err != nil {
+				return pman, err
+			}
+			pman = postmanAddItemToFolders(pman, pitem, path.Get.Tags, tagGroupSet)
 		}
 		if path.Patch != nil {
-			pman = postmanAddItemToFolders(pman,
-				Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodPatch, path.Patch),
-				path.Patch.Tags, tagGroupSet)
+			pitem, err := Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodPatch, path.Patch)
+			if err != nil {
+				return pman, err
+			}
+			pman = postmanAddItemToFolders(pman, pitem, path.Patch.Tags, tagGroupSet)
 		}
 		if path.Post != nil {
-			pman = postmanAddItemToFolders(pman,
-				Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodPost, path.Post),
-				path.Post.Tags, tagGroupSet)
+			pitem, err := Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodPost, path.Post)
+			if err != nil {
+				return pman, err
+			}
+			pman = postmanAddItemToFolders(pman, pitem, path.Post.Tags, tagGroupSet)
 		}
 		if path.Put != nil {
-			pman = postmanAddItemToFolders(pman,
-				Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodPut, path.Put),
-				path.Put.Tags, tagGroupSet)
+			pitem, err := Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodPut, path.Put)
+			if err != nil {
+				return pman, err
+			}
+			pman = postmanAddItemToFolders(pman, pitem, path.Put.Tags, tagGroupSet)
 		}
 	}
 	return pman, nil
@@ -199,7 +209,7 @@ func postmanAddItemToFolder(pman postman2.Collection, pmItem *postman2.Item, pmF
 }
 */
 
-func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *openapi3.Spec, oasUrl string, method string, operation *oas3.Operation) *postman2.Item {
+func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *openapi3.Spec, oasUrl string, method string, operation *oas3.Operation) (*postman2.Item, error) {
 	pmUrl := BuildPostmanURL(cfg, oas3spec, oasUrl, operation)
 	item := &postman2.Item{
 		Name: operation.Summary,
@@ -215,11 +225,14 @@ func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *openapi3.Sp
 
 	headers := cfg.PostmanHeaders
 
-	headers, _, _ = postman2.AddOperationReqResMediaTypeHeaders(
-		headers, operation,
+	headers, _, _, err := postman2.AddOperationReqResMediaTypeHeaders(
+		headers, operation, oas3spec,
 		postman2.DefaultMediaTypePreferencesSlice(),
 		postman2.DefaultMediaTypePreferencesSlice(),
 	)
+	if err != nil {
+		return nil, err
+	}
 
 	item.Request.Header = headers
 
@@ -240,7 +253,7 @@ func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *openapi3.Sp
 		}
 	}
 
-	return item
+	return item, nil
 }
 
 func BuildPostmanURL(cfg Configuration, spec *openapi3.Spec, specPath string, operation *oas3.Operation) postman2.URL {
