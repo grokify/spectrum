@@ -69,8 +69,11 @@ func (om *OperationMore) PathMethod() string {
 
 // RequestMediaTypes returns a sorted slice of request media types.
 func (om *OperationMore) RequestMediaTypes(spec *Spec) ([]string, error) {
+	if om.Operation == nil {
+		return []string{}, ErrOperationNotSet
+	}
 	op := om.Operation
-	if op == nil || op.RequestBody == nil {
+	if op.RequestBody == nil {
 		return []string{}, nil
 	}
 	if len(strings.TrimSpace(op.RequestBody.Ref)) == 0 {
