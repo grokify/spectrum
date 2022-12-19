@@ -5,11 +5,10 @@ go 1.18
 require (
 	github.com/ake-persson/mapslice-json v0.0.0-20210720081907-22c8edf57807
 	github.com/buaazp/fasthttprouter v0.1.1
-	github.com/getkin/kin-openapi v0.110.0
+	github.com/getkin/kin-openapi v0.111.0
 	github.com/grokify/gocharts/v2 v2.8.6
 	github.com/grokify/gohttp v0.2.2
 	github.com/grokify/mogo v0.43.0
-	github.com/iancoleman/strcase v0.2.0
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.28.0
 	github.com/valyala/fasthttp v1.43.0
@@ -30,6 +29,7 @@ require (
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/grokify/base36 v1.0.5 // indirect
 	github.com/huandu/xstrings v1.4.0 // indirect
+	github.com/iancoleman/strcase v0.2.0 // indirect
 	github.com/invopop/yaml v0.2.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
