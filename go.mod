@@ -6,14 +6,14 @@ require (
 	github.com/ake-persson/mapslice-json v0.0.0-20210720081907-22c8edf57807
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/getkin/kin-openapi v0.112.0
-	github.com/grokify/gocharts/v2 v2.8.6
+	github.com/grokify/gocharts/v2 v2.8.7
 	github.com/grokify/gohttp v0.2.2
-	github.com/grokify/mogo v0.43.0
+	github.com/grokify/mogo v0.44.0
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.28.0
 	github.com/valyala/fasthttp v1.43.0
 	github.com/valyala/quicktemplate v1.7.0
-	golang.org/x/exp v0.0.0-20221215174704-0915cd710c24
+	golang.org/x/exp v0.0.0-20221217163422-3c43f8badb15
 	gopkg.in/yaml.v3 v3.0.1
 	sigs.k8s.io/yaml v1.3.0
 )
@@ -21,7 +21,7 @@ require (
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/apex/gateway v1.1.2 // indirect
-	github.com/aws/aws-lambda-go v1.36.0 // indirect
+	github.com/aws/aws-lambda-go v1.36.1 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
 	github.com/go-openapi/swag v0.22.3 // indirect

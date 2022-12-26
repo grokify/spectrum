@@ -8,14 +8,12 @@ import (
 	"strings"
 
 	"github.com/grokify/mogo/errors/errorsutil"
-	"github.com/grokify/mogo/io/ioutilmore"
 	"github.com/grokify/mogo/os/osutil"
 )
 
 var jsonFileRx = regexp.MustCompile(`(?i)\.json\s*$`)
 
 func MergeDirectory(dir string) (Specification, error) {
-	//fileInfos, err := ioutilmore.DirEntriesRxSizeGt0(dir, ioutilmore.File, jsonFileRx)
 	entries, err := osutil.ReadDirMore(dir, jsonFileRx, false, true, false)
 	if err != nil {
 		return Specification{}, err
@@ -99,7 +97,7 @@ func WriteFileDirMerge(outfile, inputDir string, perm os.FileMode) error {
 		return errorsutil.Wrap(err, "E_OPENAPI3_MERGE_DIRECTORY_FAILED")
 	}
 
-	err = ioutilmore.WriteFileJSON(outfile, spec, perm, "", "  ")
+	err = osutil.WriteFileJSON(outfile, spec, perm, "", "  ")
 	if err != nil {
 		return errorsutil.Wrap(err, "E_OPENAPI3_WRITE_FAILED")
 	}
