@@ -10,7 +10,7 @@ import (
 	"github.com/grokify/gohttp/anyhttp"
 	"github.com/grokify/gohttp/httpsimple"
 	"github.com/grokify/mogo/log/logutil"
-	"github.com/grokify/mogo/net/httputilmore"
+	"github.com/grokify/mogo/net/http/httputilmore"
 	"github.com/grokify/mogo/strconv/strconvutil"
 	"github.com/grokify/mogo/type/stringsutil"
 	"github.com/grokify/spectrum/openapi3"

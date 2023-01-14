@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/grokify/mogo/errors/errorsutil"
-	"github.com/grokify/mogo/net/httputilmore"
+	"github.com/grokify/mogo/net/http/httputilmore"
 )
 
 const (

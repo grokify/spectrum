@@ -141,7 +141,7 @@ func (om *OperationMore) RequestBodySchemaRef() []string {
 	}
 	if om.Operation.RequestBody.Value != nil {
 		ctMap := ContentToSchemaRefMap(om.Operation.RequestBody.Value.Content)
-		keys := maputil.StringValues(ctMap)
+		keys := maputil.Values(ctMap)
 		schemaRefs = append(schemaRefs, keys...)
 	}
 	return schemaRefs

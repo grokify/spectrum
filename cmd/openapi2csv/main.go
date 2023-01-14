@@ -28,7 +28,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	filepaths := osutil.DirEntries(entries).Names(opts.Directory, true)
+	filepaths := osutil.DirEntries(entries).Names(opts.Directory)
 	tbl, err := csv.TableFromSpecFiles(filepaths, true)
 	if err != nil {
 		log.Fatalf("TableFromSpecFiles [%v]\n", err.Error())
