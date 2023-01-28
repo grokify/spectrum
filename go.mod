@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/ake-persson/mapslice-json v0.0.0-20210720081907-22c8edf57807
 	github.com/buaazp/fasthttprouter v0.1.1
-	github.com/getkin/kin-openapi v0.113.0
+	github.com/getkin/kin-openapi v0.112.0
 	github.com/grokify/gocharts/v2 v2.8.9
 	github.com/grokify/gohttp v0.2.2
 	github.com/grokify/mogo v0.46.0
@@ -42,7 +42,6 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
-	github.com/perimeterx/marshmallow v1.1.4 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/richardlehane/mscfb v1.0.4 // indirect
 	github.com/richardlehane/msoleps v1.0.3 // indirect
@@ -62,6 +61,6 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
-// replace github.com/grokify/mogo v0.45.0 => ../mogo
+// replace github.com/grokify/mogo v0.46.0 => ../mogo
 
 // replace github.com/grokify/gocharts/v2 v2.8.8 => ../gocharts
