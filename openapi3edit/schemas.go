@@ -120,7 +120,7 @@ func (se *SpecEdit) SchemaRefsModify(xf func(string) string) {
 			// if `$ref` is populated as an Extension with mmessage type RawMessage,
 			// manually convert to reference.
 			if refValAny, ok := schRef.Value.Extensions["$ref"]; ok {
-				switch reflectutil.TypeName(refValAny) {
+				switch reflectutil.NameOf(refValAny, false) {
 				case "RawMessage": // json.RawMessage
 					refValJRM, ok := refValAny.(json.RawMessage)
 					if !ok {
