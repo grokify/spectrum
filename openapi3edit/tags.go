@@ -163,7 +163,7 @@ func (tmo *TagsModifyOpts) ModifyTagsOperationFunc(path, method string, op *oas3
 		tags = stringsutil.SliceCondenseSpace(tags, true, false)
 		if stringsutil.SliceIndexMore(
 			urlSuffixes,
-			path, true, true, stringsutil.MatchHasSuffix) > -1 {
+			path, true, true, stringsutil.MatchStringSuffix) > -1 {
 			op.Tags = tags
 		}
 	}
