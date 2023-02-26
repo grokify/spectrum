@@ -100,9 +100,10 @@ var table = new Tabulator("#{%s data.TableDomID %}", {
     columns: {%z= data.TabulatorColumnsJSONBytesOrEmpty() %},
 	rowClick:function(e, row){
 		var data = row.getData();
-		var baseURL = "https://developers.ringcentral.com/api-reference/";
-		baseURL += data["Tags"].replace(/\s+/g, '-') + "/" + data["OperationID"];
-		window.open(baseURL, '_blank');
+        var docsURL = data["DocsURL"];
+        if ((docsURL?.trim()?.length || 0) > 0) {
+            window.open(docsURL, '_blank');
+        }
 	},
 });
 </script>

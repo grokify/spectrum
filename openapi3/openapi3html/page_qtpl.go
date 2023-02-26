@@ -146,9 +146,10 @@ var table = new Tabulator("#`)
 	qw422016.N().S(`,
 	rowClick:function(e, row){
 		var data = row.getData();
-		var baseURL = "https://developers.ringcentral.com/api-reference/";
-		baseURL += data["Tags"].replace(/\s+/g, '-') + "/" + data["OperationID"];
-		window.open(baseURL, '_blank');
+        var docsURL = data["DocsURL"];
+        if ((docsURL?.trim()?.length || 0) > 0) {
+            window.open(docsURL, '_blank');
+        }
 	},
 });
 </script>
@@ -156,31 +157,31 @@ var table = new Tabulator("#`)
 </body>
 </html>
 `)
-//line page.qtpl:112
+//line page.qtpl:113
 }
 
-//line page.qtpl:112
+//line page.qtpl:113
 func WriteSpectrumUIPage(qq422016 qtio422016.Writer, data PageParams) {
-//line page.qtpl:112
+//line page.qtpl:113
 	qw422016 := qt422016.AcquireWriter(qq422016)
-//line page.qtpl:112
+//line page.qtpl:113
 	StreamSpectrumUIPage(qw422016, data)
-//line page.qtpl:112
+//line page.qtpl:113
 	qt422016.ReleaseWriter(qw422016)
-//line page.qtpl:112
+//line page.qtpl:113
 }
 
-//line page.qtpl:112
+//line page.qtpl:113
 func SpectrumUIPage(data PageParams) string {
-//line page.qtpl:112
+//line page.qtpl:113
 	qb422016 := qt422016.AcquireByteBuffer()
-//line page.qtpl:112
+//line page.qtpl:113
 	WriteSpectrumUIPage(qb422016, data)
-//line page.qtpl:112
+//line page.qtpl:113
 	qs422016 := string(qb422016.B)
-//line page.qtpl:112
+//line page.qtpl:113
 	qt422016.ReleaseByteBuffer(qb422016)
-//line page.qtpl:112
+//line page.qtpl:113
 	return qs422016
-//line page.qtpl:112
+//line page.qtpl:113
 }
