@@ -93,7 +93,7 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 	// Update Tags
 	if opts.TagsOperationFunc != nil || len(opts.Tags) > 0 {
 		if opts.TagsShow {
-			err := fmtutil.PrintJSON(sm.TagsMap(true, true))
+			err := fmtutil.PrintJSON(sm.TagsMap(&openapi3.TagsOpts{InclDefs: true, InclOps: true}))
 			if err != nil {
 				return err
 			}
@@ -105,7 +105,7 @@ func SpecMoreModifyMulti(sm *openapi3.SpecMore, opts SpecMoreModifyMultiOpts) er
 			se := SpecEdit{SpecMore: *sm}
 			se.TagsModify(opts.Tags)
 			if opts.TagsShow {
-				err := fmtutil.PrintJSON(sm.TagsMap(true, true))
+				err := fmtutil.PrintJSON(sm.TagsMap(&openapi3.TagsOpts{InclDefs: true, InclOps: true}))
 				if err != nil {
 					return err
 				}

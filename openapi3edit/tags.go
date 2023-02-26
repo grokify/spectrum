@@ -75,7 +75,7 @@ func (se *SpecEdit) TagsOrder(explicitSortedTagNames []string) error {
 	}
 	curTags := se.SpecMore.Spec.Tags
 
-	opTagNames := se.SpecMore.TagsMap(false, true)
+	opTagNames := se.SpecMore.TagsMap(&openapi3.TagsOpts{InclDefs: false, InclOps: true})
 	for tagName := range opTagNames {
 		curTags = append(curTags, &oas3.Tag{Name: tagName})
 	}
@@ -131,7 +131,7 @@ func (se *SpecEdit) SpecTagsCondense() {
 		return
 	}
 	//sm := openapi3.SpecMore{Spec: spec}
-	opTags := se.SpecMore.TagsMap(false, true)
+	opTags := se.SpecMore.TagsMap(&openapi3.TagsOpts{InclDefs: false, InclOps: true})
 	newTags := oas3.Tags{}
 	for _, curTag := range se.SpecMore.Spec.Tags {
 		if _, ok := opTags[curTag.Name]; ok {
