@@ -25,7 +25,31 @@ func NewOperationEdit(opPath, opMethod string, op *oas3.Operation) OperationEdit
 }
 
 func (ope *OperationEdit) SetExternalDocs(docURL, docDescription string, preserveIfReqEmpty bool) error {
-	return operationAddExternalDocs(ope.OperationMore.Operation, docURL, docDescription, preserveIfReqEmpty)
+	// return operationAddExternalDocs(ope.OperationMore.Operation, docURL, docDescription, preserveIfReqEmpty)
+	if ope.OperationMore.Operation == nil {
+		return openapi3.ErrOperationNotSet
+	}
+	op := ope.OperationMore.Operation
+	docURL = strings.TrimSpace(docURL)
+	docDescription = strings.TrimSpace(docDescription)
+	if len(docURL) > 0 || len(docDescription) > 0 {
+		if preserveIfReqEmpty {
+			if op.ExternalDocs == nil {
+				op.ExternalDocs = &oas3.ExternalDocs{}
+			}
+			if docURL != "" {
+				op.ExternalDocs.URL = docURL
+			}
+			if docDescription != "" {
+				op.ExternalDocs.Description = docDescription
+			}
+		} else {
+			op.ExternalDocs = &oas3.ExternalDocs{
+				Description: docDescription,
+				URL:         docURL}
+		}
+	}
+	return nil
 }
 
 func (ope *OperationEdit) SetRequestBodyAttrs(description string, required bool) error {
@@ -190,6 +214,7 @@ func OperationSetResponseBodySchemaRef(op *oas3.Operation, status, description, 
 }
 */
 
+/*
 func operationAddExternalDocs(op *oas3.Operation, docURL, docDescription string, preserveIfReqEmpty bool) error {
 	if op == nil {
 		return openapi3.ErrOperationNotSet
@@ -201,10 +226,10 @@ func operationAddExternalDocs(op *oas3.Operation, docURL, docDescription string,
 			if op.ExternalDocs == nil {
 				op.ExternalDocs = &oas3.ExternalDocs{}
 			}
-			if len(docURL) > 0 {
+			if docURL != "" {
 				op.ExternalDocs.URL = docURL
 			}
-			if len(docDescription) > 0 {
+			if docDescription != "" {
 				op.ExternalDocs.Description = docDescription
 			}
 		} else {
@@ -215,6 +240,7 @@ func operationAddExternalDocs(op *oas3.Operation, docURL, docDescription string,
 	}
 	return nil
 }
+*/
 
 /*
 type OperationEditSet struct {
