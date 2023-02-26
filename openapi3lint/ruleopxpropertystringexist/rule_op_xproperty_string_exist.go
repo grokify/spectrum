@@ -57,7 +57,8 @@ func (rule RuleOperationXPropertyStringExist) ProcessSpec(spec *openapi3.Spec, p
 	}
 	if rule.inclSpec {
 		propVal := strings.TrimSpace(openapi3.GetExtensionPropStringOrEmpty(
-			spec.ExtensionProps, rule.xPropertyName))
+			spec.Extensions, rule.xPropertyName))
+		// spec.ExtensionProps, rule.xPropertyName))
 		if len(propVal) > 0 {
 			return vios
 		}
@@ -68,7 +69,8 @@ func (rule RuleOperationXPropertyStringExist) ProcessSpec(spec *openapi3.Spec, p
 		}
 		if rule.inclPathItem {
 			propVal := strings.TrimSpace(openapi3.GetExtensionPropStringOrEmpty(
-				pathItem.ExtensionProps, rule.xPropertyName))
+				pathItem.Extensions, rule.xPropertyName))
+			// pathItem.ExtensionProps, rule.xPropertyName))
 			if len(propVal) > 0 {
 				continue
 			}
@@ -79,7 +81,8 @@ func (rule RuleOperationXPropertyStringExist) ProcessSpec(spec *openapi3.Spec, p
 					return
 				}
 				propVal := strings.TrimSpace(openapi3.GetExtensionPropStringOrEmpty(
-					op.ExtensionProps, rule.xPropertyName))
+					op.Extensions, rule.xPropertyName))
+				// op.ExtensionProps, rule.xPropertyName))
 				if len(propVal) == 0 {
 					vios = append(vios, lintutil.PolicyViolation{
 						RuleName: rule.Name(),

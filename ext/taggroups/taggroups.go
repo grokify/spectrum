@@ -113,7 +113,8 @@ func SpecTagsWithoutGroups(spec *openapi3.Spec, tagGroupSet TagGroupSet) []strin
 func SpecTagGroups(spec *openapi3.Spec) (TagGroupSet, error) {
 	sm := openapi3.SpecMore{Spec: spec}
 	tgs := NewTagGroupSet()
-	iface, ok := sm.Spec.ExtensionProps.Extensions[XTagGroupsPropertyName]
+	// iface, ok := sm.Spec.ExtensionProps.Extensions[XTagGroupsPropertyName]
+	iface, ok := sm.Spec.Extensions[XTagGroupsPropertyName]
 	if !ok {
 		return tgs, nil
 	}
@@ -132,7 +133,9 @@ func SpecTagGroups(spec *openapi3.Spec) (TagGroupSet, error) {
 		return tgs, err
 	}
 	tgs.TagGroups = tagGroups
-	delete(sm.Spec.ExtensionProps.Extensions, XTagGroupsPropertyName)
-	sm.Spec.ExtensionProps.Extensions[XTagGroupsPropertyName] = tagGroups
+	// delete(sm.Spec.ExtensionProps.Extensions, XTagGroupsPropertyName)
+	// sm.Spec.ExtensionProps.Extensions[XTagGroupsPropertyName] = tagGroups
+	delete(sm.Spec.Extensions, XTagGroupsPropertyName)
+	sm.Spec.Extensions[XTagGroupsPropertyName] = tagGroups
 	return tgs, nil
 }

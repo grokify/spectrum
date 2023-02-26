@@ -16,7 +16,7 @@ func (sm *SpecMore) ExportByTags() (map[string]*Spec, error) {
 	if sm.Spec == nil {
 		return specs, ErrSpecNotSet
 	}
-	tags := sm.Tags(false, true)
+	tags := sm.Tags(&TagsOpts{InclDefs: false, InclOps: true})
 
 	for _, tag := range tags {
 		tagSpec, err := sm.ExportByTag(tag)
@@ -40,8 +40,9 @@ func (sm *SpecMore) ExportByTag(tag string) (*Spec, error) {
 		return nil, nil
 	}
 	tagSpec := &Spec{
-		Components: oas3.Components{
-			ExtensionProps:  sm.Spec.Components.ExtensionProps,
+		Components: &oas3.Components{
+			// ExtensionProps:  sm.Spec.Components.ExtensionProps,
+			Extensions:      sm.Spec.Components.Extensions,
 			SecuritySchemes: sm.Spec.Components.SecuritySchemes,
 		},
 		Info:    sm.Spec.Info,

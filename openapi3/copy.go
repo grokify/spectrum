@@ -16,6 +16,7 @@ func CopySchemaStandard(schema oas3.Schema) (oas3.Schema, error) {
 	if err != nil {
 		return oas3.Schema{}, err
 	}
-	newSchema.ExtensionProps = oas3.ExtensionProps{}
+	// newSchema.ExtensionProps = oas3.ExtensionProps{}
+	newSchema.Extensions = map[string]any{}
 	return newSchema, nil
 }

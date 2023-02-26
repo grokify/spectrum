@@ -1,3 +1,4 @@
+// ruleschemaobjectpropsexist ensures that schema objects have properites.
 package ruleschemaobjectpropsexist
 
 import (
@@ -35,8 +36,19 @@ func (rule RuleSchemaObjectPropsExist) ProcessSpec(spec *openapi3.Spec, pointerB
 		if schRef == nil || schRef.Value == nil || schRef.Value.Type != openapi3.TypeObject {
 			continue
 		}
-		if len(schRef.Value.Properties) == 0 && schRef.Value.AdditionalProperties == nil &&
-			(schRef.Value.AdditionalPropertiesAllowed == nil || !*schRef.Value.AdditionalPropertiesAllowed) {
+		/*
+			if len(schRef.Value.Properties) == 0 && schRef.Value.AdditionalProperties == nil &&
+				(schRef.Value.AdditionalPropertiesAllowed == nil || !*schRef.Value.AdditionalPropertiesAllowed) {
+				vios = append(vios, lintutil.PolicyViolation{
+					RuleName: rule.Name(),
+					Location: jsonpointer.PointerSubEscapeAll(
+						"%s#/components/schemas/%s",
+						pointerBase, schName)})
+			}
+		*/
+		if len(schRef.Value.Properties) == 0 && !openapi3.AdditionalPropertiesExists(schRef.Value.AdditionalProperties) {
+			// (!openapi3.AdditionalPropertiesAllowed(schRef.Value.AdditionalProperties) ||
+			// 	len(schRef.Value.AdditionalProperties) == 0) {
 			vios = append(vios, lintutil.PolicyViolation{
 				RuleName: rule.Name(),
 				Location: jsonpointer.PointerSubEscapeAll(
@@ -47,9 +59,20 @@ func (rule RuleSchemaObjectPropsExist) ProcessSpec(spec *openapi3.Spec, pointerB
 			if propRef == nil || propRef.Value == nil || propRef.Value.Type != openapi3.TypeObject {
 				continue
 			}
-			if len(propRef.Value.Properties) == 0 &&
-				propRef.Value.AdditionalProperties == nil &&
-				(propRef.Value.AdditionalPropertiesAllowed == nil || !*propRef.Value.AdditionalPropertiesAllowed) {
+			/*
+				if len(propRef.Value.Properties) == 0 &&
+					propRef.Value.AdditionalProperties == nil &&
+					(propRef.Value.AdditionalPropertiesAllowed == nil || !*propRef.Value.AdditionalPropertiesAllowed) {
+					vios = append(vios, lintutil.PolicyViolation{
+						RuleName: rule.Name(),
+						Location: jsonpointer.PointerSubEscapeAll(
+							"%s#/components/schemas/%s/properties/%s",
+							pointerBase, schName, propName)})
+				}
+			*/
+			if len(propRef.Value.Properties) == 0 && !openapi3.AdditionalPropertiesExists(propRef.Value.AdditionalProperties) {
+				// propRef.Value.AdditionalProperties == nil &&
+				// (propRef.Value.AdditionalPropertiesAllowed == nil || !*propRef.Value.AdditionalPropertiesAllowed) {
 				vios = append(vios, lintutil.PolicyViolation{
 					RuleName: rule.Name(),
 					Location: jsonpointer.PointerSubEscapeAll(

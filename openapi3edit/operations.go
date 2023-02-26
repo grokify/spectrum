@@ -146,7 +146,9 @@ func (se *SpecEdit) AddOperationMetas(metas map[string]openapi3.OperationMeta, o
 			writeThrottling = true
 		}
 		if writeDocs {
-			err := operationAddExternalDocs(op, opMeta.DocsURL, opMeta.DocsDescription, true)
+			ope := NewOperationEdit(skipPath, skipMethod, op)
+			err := ope.SetExternalDocs(opMeta.DocsURL, opMeta.DocsDescription, true)
+			// err := operationAddExternalDocs(op, opMeta.DocsURL, opMeta.DocsDescription, true)
 			if err != nil {
 				return
 			}
@@ -161,10 +163,16 @@ func (se *SpecEdit) AddOperationMetas(metas map[string]openapi3.OperationMeta, o
 			}
 		}
 		if writeThrottling {
-			if op.ExtensionProps.Extensions == nil {
-				op.ExtensionProps.Extensions = map[string]interface{}{}
+			/*
+				if op.ExtensionProps.Extensions == nil {
+					op.ExtensionProps.Extensions = map[string]interface{}{}
+				}
+				op.ExtensionProps.Extensions[openapi3.XThrottlingGroup] = opMeta.XThrottlingGroup
+			*/
+			if op.Extensions == nil {
+				op.Extensions = map[string]any{}
 			}
-			op.ExtensionProps.Extensions[openapi3.XThrottlingGroup] = opMeta.XThrottlingGroup
+			op.Extensions[openapi3.XThrottlingGroup] = opMeta.XThrottlingGroup
 		}
 	})
 }

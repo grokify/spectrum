@@ -12,7 +12,8 @@ func (sm *SpecMore) ExtensionNames() map[string]int {
 			continue
 		}
 		sch := schRef.Value
-		for extName := range sch.ExtensionProps.Extensions {
+		for extName := range sch.Extensions {
+			// for extName := range sch.ExtensionProps.Extensions {
 			count, ok := extNames[extName]
 			if !ok {
 				extNames[extName] = 1

@@ -52,12 +52,13 @@ func (se *SpecEdit) DeleteOperations(delThis func(urlpath, method string, op *oa
 
 	for urlpath, pathItem := range se.SpecMore.Spec.Paths {
 		newPathItem := oas3.PathItem{
-			ExtensionProps: pathItem.ExtensionProps,
-			Ref:            pathItem.Ref,
-			Summary:        pathItem.Summary,
-			Description:    pathItem.Description,
-			Servers:        pathItem.Servers,
-			Parameters:     pathItem.Parameters}
+			// ExtensionProps: pathItem.ExtensionProps,
+			Extensions:  pathItem.Extensions,
+			Ref:         pathItem.Ref,
+			Summary:     pathItem.Summary,
+			Description: pathItem.Description,
+			Servers:     pathItem.Servers,
+			Parameters:  pathItem.Parameters}
 		if pathItem.Connect != nil && !delThis(urlpath, http.MethodConnect, pathItem.Connect) {
 			newPathItem.Connect = pathItem.Connect
 		}

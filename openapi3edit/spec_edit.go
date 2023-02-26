@@ -12,7 +12,8 @@ func NewSpecEdit(spec *openapi3.Spec) SpecEdit {
 }
 
 func (se *SpecEdit) ExtensionSet(key string, val any) {
-	se.SpecMore.Spec.ExtensionProps.Extensions[key] = val
+	// se.SpecMore.Spec.ExtensionProps.Extensions[key] = val
+	se.SpecMore.Spec.Extensions[key] = val
 }
 
 func (se *SpecEdit) SpecSet(spec *openapi3.Spec) {

@@ -31,3 +31,25 @@ func ReadSchemaFile(filename string) (*oas3.Schema, error) {
 	err = sch.UnmarshalJSON(data)
 	return sch, err
 }
+
+// AdditionalPropertiesAllowed checks for additional properties, which exists in Schema structs.
+func AdditionalPropertiesAllowed(aprops oas3.AdditionalProperties) bool {
+	if aprops.Has != nil {
+		return *aprops.Has
+	} else {
+		return false
+	}
+}
+
+func AdditionalPropertiesExists(props oas3.AdditionalProperties) bool {
+	if props.Has == nil || *props.Has == false || props.Schema == nil {
+		return false
+	}
+	if strings.TrimSpace(props.Schema.Ref) != "" {
+		return true
+	}
+	if props.Schema.Value == nil {
+		return false
+	}
+	return true
+}

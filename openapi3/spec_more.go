@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 	"regexp"
-	"sort"
 	"strconv"
 	"strings"
 
@@ -104,7 +103,8 @@ func operationsTable(spec *Spec, columns *tabulator.ColumnSet, filterFunc func(p
 				om := OperationMore{Operation: op}
 				row = append(row, strings.Join(om.SecurityScopes(false), ", "))
 			case XThrottlingGroup:
-				row = append(row, GetExtensionPropStringOrEmpty(op.ExtensionProps, XThrottlingGroup))
+				// row = append(row, GetExtensionPropStringOrEmpty(op.ExtensionProps, XThrottlingGroup))
+				row = append(row, GetExtensionPropStringOrEmpty(op.Extensions, XThrottlingGroup))
 			case "docsURL":
 				if op.ExternalDocs != nil {
 					row = append(row, op.ExternalDocs.URL)
@@ -121,7 +121,8 @@ func operationsTable(spec *Spec, columns *tabulator.ColumnSet, filterFunc func(p
 						continue
 					}
 				}
-				row = append(row, GetExtensionPropStringOrEmpty(op.ExtensionProps, text.Slug))
+				// row = append(row, GetExtensionPropStringOrEmpty(op.ExtensionProps, text.Slug))
+				row = append(row, GetExtensionPropStringOrEmpty(op.Extensions, text.Slug))
 			}
 		}
 
@@ -160,13 +161,19 @@ func OpTableColumnsDefault(inclDocsURL bool) *tabulator.ColumnSet {
 			Display: "XThrottlingGroup",
 			Slug:    XThrottlingGroup,
 			Width:   150},
-	}
-	if inclDocsURL {
-		cols = append(cols, tabulator.Column{
+		{
 			Display: "DocsURL",
 			Slug:    "docsURL",
-			Width:   150})
+			Width:   150},
 	}
+	/*
+		if inclDocsURL {
+			cols = append(cols, tabulator.Column{
+				Display: "DocsURL",
+				Slug:    "docsURL",
+				Width:   150})
+		}
+	*/
 	return &tabulator.ColumnSet{Columns: cols}
 }
 
@@ -282,7 +289,7 @@ func (sm *SpecMore) OperationsCount() int {
 // OperationCountsByTag returns a histogram for operations by tag.
 func (sm *SpecMore) OperationCountsByTag() *histogram.Histogram {
 	hist := histogram.NewHistogram("Operation Counts by Tag")
-	hist.Bins = sm.TagsMap(false, true)
+	hist.Bins = sm.TagsMap(&TagsOpts{InclOps: true})
 	hist.Inflate()
 	return hist
 }
@@ -585,12 +592,12 @@ func (sm *SpecMore) OperationsDescriptionInfo() map[string][]string {
 func (sm *SpecMore) SpecTagStats() SpecTagStats {
 	stats := SpecTagStats{
 		TagStats:      SpecTagCounts{},
-		TagsAll:       sm.Tags(true, true),
-		TagsMeta:      sm.Tags(true, false),
-		TagsOps:       sm.Tags(false, true),
-		TagCountsAll:  sm.TagsMap(true, true),
-		TagCountsMeta: sm.TagsMap(true, false),
-		TagCountsOps:  sm.TagsMap(false, true),
+		TagsAll:       sm.Tags(&TagsOpts{InclDefs: true, InclOps: true}),
+		TagsDefs:      sm.Tags(&TagsOpts{InclDefs: true, InclOps: false}),
+		TagsOps:       sm.Tags(&TagsOpts{InclDefs: false, InclOps: true}),
+		TagCountsAll:  sm.TagsMap(&TagsOpts{InclDefs: true, InclOps: true}),
+		TagCountsDefs: sm.TagsMap(&TagsOpts{InclDefs: true, InclOps: false}),
+		TagCountsOps:  sm.TagsMap(&TagsOpts{InclDefs: false, InclOps: true}),
 	}
 	VisitOperations(sm.Spec, func(skipPath, skipMethod string, op *oas3.Operation) {
 		op.Tags = stringsutil.SliceCondenseSpace(op.Tags, true, true)
@@ -604,29 +611,44 @@ func (sm *SpecMore) SpecTagStats() SpecTagStats {
 	return stats
 }
 
-func (sm *SpecMore) Tags(inclTop, inclOps bool) []string {
+// TagsOpts represents additional settings for tag read functions.
+type TagsOpts struct {
+	InclDefs       bool
+	InclOps        bool
+	OpsTagsJoin    bool // default is false.
+	OpsTagsJoinSep string
+}
+
+func TagsOptsDefault() *TagsOpts {
+	return &TagsOpts{
+		InclDefs: true,
+		InclOps:  true,
+	}
+}
+
+func (sm *SpecMore) Tags(opts *TagsOpts) []string {
 	tags := []string{}
-	tagsMap := sm.TagsMap(inclTop, inclOps)
+	tagsMap := sm.TagsMap(opts)
 	for tag := range tagsMap {
 		tags = append(tags, tag)
 	}
 	return stringsutil.SliceCondenseSpace(tags, true, true)
 }
 
-// TagsValidate checks to see if the tag names in the Spec tags property
-// and operations match.
+// TagsValidate checks to see if the tag names in the Spec tags property and operations match.
 func (sm *SpecMore) TagsValidate() bool {
-	spTags := sm.Tags(true, false)
-	opTags := sm.Tags(false, true)
-	sort.Strings(spTags)
-	sort.Strings(opTags)
-	return slices.Equal(spTags, opTags)
+	return slices.Equal(
+		sm.Tags(&TagsOpts{InclDefs: true}),
+		sm.Tags(&TagsOpts{InclOps: true}))
 }
 
 // TagsMap returns a set of operations with tags present in the current spec.
-func (sm *SpecMore) TagsMap(inclTop, inclOps bool) map[string]int {
+func (sm *SpecMore) TagsMap(opts *TagsOpts) map[string]int {
 	tagsMap := map[string]int{}
-	if inclTop {
+	if opts == nil {
+		opts = TagsOptsDefault()
+	}
+	if opts.InclDefs {
 		for _, tag := range sm.Spec.Tags {
 			tagName := strings.TrimSpace(tag.Name)
 			if len(tagName) > 0 {
@@ -636,15 +658,23 @@ func (sm *SpecMore) TagsMap(inclTop, inclOps bool) map[string]int {
 			}
 		}
 	}
-	if inclOps {
+	if opts.InclOps {
 		VisitOperations(sm.Spec, func(skipPath, skipMethod string, op *oas3.Operation) {
-			for _, tagName := range op.Tags {
-				tagName = strings.TrimSpace(tagName)
-				if len(tagName) > 0 {
-					if _, ok := tagsMap[tagName]; !ok {
-						tagsMap[tagName] = 0
+			if op == nil {
+				return
+			}
+			if opts.OpsTagsJoin {
+				tags := strings.Join(op.Tags, opts.OpsTagsJoinSep)
+				tagsMap[tags]++
+			} else {
+				for _, tagName := range op.Tags {
+					tagName = strings.TrimSpace(tagName)
+					if len(tagName) > 0 {
+						if _, ok := tagsMap[tagName]; !ok {
+							tagsMap[tagName] = 0
+						}
+						tagsMap[tagName]++
 					}
-					tagsMap[tagName]++
 				}
 			}
 		})
@@ -657,13 +687,15 @@ type SpecStats struct {
 	SchemasCount    int
 }
 
+// SpecTagStats represents tags data for tag definitions defined at the root level of a spec
+// and tags referenced in operations.
 type SpecTagStats struct {
 	TagStats      SpecTagCounts
 	TagsAll       []string
-	TagsMeta      []string
+	TagsDefs      []string
 	TagsOps       []string
 	TagCountsAll  map[string]int
-	TagCountsMeta map[string]int
+	TagCountsDefs map[string]int
 	TagCountsOps  map[string]int
 }
 

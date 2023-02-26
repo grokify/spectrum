@@ -169,8 +169,8 @@ func SchemaRefModifyRefs(schRef *oas3.SchemaRef, xf func(string) string) {
 	for _, propSchemaRef := range schRef.Value.Properties {
 		SchemaRefModifyRefs(propSchemaRef, xf)
 	}
-	if schRef.Value.AdditionalProperties != nil {
-		SchemaRefModifyRefs(schRef.Value.AdditionalProperties, xf)
+	if schRef.Value.AdditionalProperties.Schema != nil {
+		SchemaRefModifyRefs(schRef.Value.AdditionalProperties.Schema, xf)
 	}
 	if schRef.Value.Items != nil {
 		SchemaRefModifyRefs(schRef.Value.Items, xf)
@@ -198,21 +198,36 @@ func (se *SpecEdit) SchemaSetAdditionalPropertiesTrue(pointerBase string) []stri
 		if schRef == nil || schRef.Value == nil || schRef.Value.Type != openapi3.TypeObject {
 			continue
 		}
-		if len(schRef.Value.Properties) == 0 && schRef.Value.AdditionalProperties == nil &&
-			(schRef.Value.AdditionalPropertiesAllowed == nil || !*schRef.Value.AdditionalPropertiesAllowed) {
+		/*
+			if len(schRef.Value.Properties) == 0 &&
+				schRef.Value.AdditionalProperties == nil &&
+				(schRef.Value.AdditionalPropertiesAllowed == nil || !*schRef.Value.AdditionalPropertiesAllowed) {
+				additionalPropertiesAllowed := true
+				schRef.Value.AdditionalPropertiesAllowed = &additionalPropertiesAllowed
+				mods = append(mods, fmt.Sprintf("%s%s/%s", pointerBase, openapi3.PointerComponentsSchemas, schName))
+			}
+		*/
+		if !openapi3.AdditionalPropertiesAllowed(schRef.Value.AdditionalProperties) {
 			additionalPropertiesAllowed := true
-			schRef.Value.AdditionalPropertiesAllowed = &additionalPropertiesAllowed
+			schRef.Value.AdditionalProperties.Has = &additionalPropertiesAllowed
 			mods = append(mods, fmt.Sprintf("%s%s/%s", pointerBase, openapi3.PointerComponentsSchemas, schName))
 		}
-
 		for propName, propRef := range schRef.Value.Properties {
 			if propRef == nil || propRef.Value == nil || propRef.Value.Type != openapi3.TypeObject {
 				continue
 			}
-			if len(propRef.Value.Properties) == 0 && propRef.Value.AdditionalProperties == nil &&
-				(propRef.Value.AdditionalPropertiesAllowed == nil || !*propRef.Value.AdditionalPropertiesAllowed) {
+			/*
+				if len(propRef.Value.Properties) == 0 &&
+					propRef.Value.AdditionalProperties == nil &&
+					(propRef.Value.AdditionalPropertiesAllowed == nil || !*propRef.Value.AdditionalPropertiesAllowed) {
+					additionalPropertiesAllowed := true
+					propRef.Value.AdditionalPropertiesAllowed = &additionalPropertiesAllowed
+					mods = append(mods, fmt.Sprintf("%s%s/%s/properties/%s", pointerBase, openapi3.PointerComponentsSchemas, schName, propName))
+				}
+			*/
+			if !openapi3.AdditionalPropertiesAllowed(propRef.Value.AdditionalProperties) {
 				additionalPropertiesAllowed := true
-				propRef.Value.AdditionalPropertiesAllowed = &additionalPropertiesAllowed
+				propRef.Value.AdditionalProperties.Has = &additionalPropertiesAllowed
 				mods = append(mods, fmt.Sprintf("%s%s/%s/properties/%s", pointerBase, openapi3.PointerComponentsSchemas, schName, propName))
 			}
 		}
