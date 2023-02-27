@@ -8,8 +8,7 @@ require (
 	github.com/getkin/kin-openapi v0.114.0
 	github.com/grokify/gocharts/v2 v2.8.10
 	github.com/grokify/gohttp v0.2.3
-	github.com/grokify/mogo v0.47.0
-	github.com/iancoleman/strcase v0.2.0
+	github.com/grokify/mogo v0.48.0
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.29.0
 	github.com/valyala/fasthttp v1.44.0
@@ -31,6 +30,7 @@ require (
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/grokify/base36 v1.0.5 // indirect
 	github.com/huandu/xstrings v1.4.0 // indirect
+	github.com/iancoleman/strcase v0.2.0 // indirect
 	github.com/invopop/yaml v0.2.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
