@@ -41,7 +41,6 @@ func NewCanonicalCollectionFromBytes(data []byte) (postman2.Collection, error) {
 	return collection, nil
 }
 
-//noinspection ALL
 func ReadCanonicalCollection(filepath string) (postman2.Collection, error) {
 	bytes, err := os.ReadFile(filepath)
 	if err != nil {

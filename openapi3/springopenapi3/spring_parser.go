@@ -32,7 +32,6 @@ var (
 
 // ParseSpringPropertyLinesSliceToSchema takes a set of string slices
 // and attempts to parse one property per set of lines.
-//noinspection ALL
 func ParseSpringPropertyLinesSliceToSchema(groups [][]string) (map[string]*oas3.SchemaRef, error) {
 	mss := map[string]*oas3.SchemaRef{}
 	for _, group := range groups {
@@ -157,8 +156,7 @@ func lineToArrayDef(line string, explicitCustomTypes []string) (string, *oas3.Sc
 }
 
 // ParseSpringLinesToMapStringSchemaRefs parses a Spring Java code line and
-// attempts to extract a property name, type, format and default
-// value.
+// attempts to extract a property name, type, format and default value.
 func ParseSpringLinesToMapStringSchemaRefs(lines, explicitCustomTypes []string) (map[string]*oas3.SchemaRef, error) {
 	mss := map[string]*oas3.SchemaRef{}
 	for _, line := range lines {
@@ -312,7 +310,6 @@ func ParseSpringLineToSchema(line string) (string, *oas3.Schema, error) {
 // ParseSpringCodeColumnsRaw takes a set of Java code lines
 // and groups them into lines per property. Not all Java
 // code may be formatted in a way to take advantage of this.
-//noinspection ALL
 func ParseSpringCodeColumnsRaw(input []string) [][]string {
 	columns := [][]string{}
 	curLines := []string{}

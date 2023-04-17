@@ -11,7 +11,6 @@ import (
 
 const DefaultMediaTypePreferences string = `multipart/form-data,application/json,application/x-www-form-urlencoded,application/xml,text/plain`
 
-//noinspection ALL
 func DefaultMediaTypePreferencesSlice() []string {
 	return strings.Split(DefaultMediaTypePreferences, ",")
 }
@@ -27,7 +26,6 @@ func AppendPostmanHeaderValueLower(headers []Header, headerName string, options,
 	return headers, headerValue
 }
 
-//noinspection ALL
 func AddOperationReqResMediaTypeHeaders(headers []Header, operation *oas3.Operation, spec *openapi3.Spec, reqPreferences []string, resPreferences []string) ([]Header, string, string, error) {
 	om := openapi3.OperationMore{Operation: operation}
 	reqMediaTypes, err := om.RequestMediaTypes(spec)

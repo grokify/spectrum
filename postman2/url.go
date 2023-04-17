@@ -26,7 +26,6 @@ type URLParameters struct {
 }
 
 // NewURLParameters returns an initialized empty struct.
-//noinspection ALL
 func NewURLParameters() URLParameters {
 	return URLParameters{
 		Query:    []URLQuery{},
@@ -129,7 +128,6 @@ const (
 var apiURLOasToPostmanVarMatchRx = regexp.MustCompile(
 	apiURLOasToPostmanVarMatch)
 
-//noinspection ALL
 func APIURLOasToPostman(urlWithOasVars string) string {
 	return apiURLOasToPostmanVarMatchRx.ReplaceAllString(
 		urlWithOasVars, apiURLOasToPostmanVarReplace)
