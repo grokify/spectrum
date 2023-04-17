@@ -22,12 +22,12 @@ func MergeDirectory(dir string, mergeOpts *MergeOptions) (*Spec, int, error) {
 	if mergeOpts != nil && mergeOpts.FileRx != nil {
 		entries, err := osutil.ReadDirMore(dir, mergeOpts.FileRx, false, true, false)
 		if err != nil {
-			filenames = osutil.DirEntries(entries).Names(dir)
+			filenames = entries.Names(dir)
 		}
 	} else {
 		entries, err := osutil.ReadDirMore(dir, jsonFileRx, false, true, false)
 		if err != nil {
-			filenames = osutil.DirEntries(entries).Names(dir)
+			filenames = entries.Names(dir)
 		}
 	}
 

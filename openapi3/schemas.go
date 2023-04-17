@@ -42,7 +42,7 @@ func AdditionalPropertiesAllowed(aprops oas3.AdditionalProperties) bool {
 }
 
 func AdditionalPropertiesExists(props oas3.AdditionalProperties) bool {
-	if props.Has == nil || *props.Has == false || props.Schema == nil {
+	if props.Has == nil || !*props.Has || props.Schema == nil {
 		return false
 	}
 	if strings.TrimSpace(props.Schema.Ref) != "" {

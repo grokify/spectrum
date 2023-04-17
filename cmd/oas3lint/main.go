@@ -22,7 +22,7 @@ func main() {
 	var opts Options
 	_, err := flags.Parse(&opts)
 	logutil.FatalErr(err)
-	fmtutil.PrintJSON(opts)
+	fmtutil.MustPrintJSON(opts)
 
 	vsets, err := ValidateSpecFiles(opts.InputFileOAS3, opts.PolicyFile, opts.Severity)
 	logutil.FatalErr(err)

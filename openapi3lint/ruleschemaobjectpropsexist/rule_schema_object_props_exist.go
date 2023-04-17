@@ -1,4 +1,4 @@
-// ruleschemaobjectpropsexist ensures that schema objects have properites.
+// ruleschemaobjectpropsexist ensures that schema objects have properties.
 package ruleschemaobjectpropsexist
 
 import (

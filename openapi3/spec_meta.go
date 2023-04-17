@@ -60,7 +60,7 @@ func ReadSpecMetasDir(dir string, rx *regexp.Regexp) (SpecMetas, error) {
 		return metas, err
 	}
 
-	return ReadSpecMetasFiles(osutil.DirEntries(entries).Names(dir))
+	return ReadSpecMetasFiles(entries.Names(dir))
 }
 
 func ReadSpecMetasFiles(files []string) (SpecMetas, error) {
