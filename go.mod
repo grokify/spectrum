@@ -8,13 +8,12 @@ require (
 	github.com/getkin/kin-openapi v0.118.0
 	github.com/grokify/gocharts/v2 v2.9.1
 	github.com/grokify/gohttp v0.2.5
-	github.com/grokify/mogo v0.50.0
-	github.com/iancoleman/strcase v0.3.0
+	github.com/grokify/mogo v0.52.0
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.29.1
 	github.com/valyala/fasthttp v1.48.0
 	github.com/valyala/quicktemplate v1.7.0
-	golang.org/x/exp v0.0.0-20230713183714-613f0c0eb8a1
+	golang.org/x/exp v0.0.0-20230728194245-b0cb94b80691
 	gopkg.in/yaml.v3 v3.0.1
 	sigs.k8s.io/yaml v1.3.0
 )
@@ -31,6 +30,7 @@ require (
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/grokify/base36 v1.0.5 // indirect
 	github.com/huandu/xstrings v1.4.0 // indirect
+	github.com/iancoleman/strcase v0.3.0 // indirect
 	github.com/invopop/yaml v0.2.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
@@ -59,7 +59,6 @@ require (
 	golang.org/x/sys v0.10.0 // indirect
 	golang.org/x/text v0.11.0 // indirect
 	gonum.org/v1/gonum v0.13.0 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/oleiade/reflections.v1 v1.0.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
