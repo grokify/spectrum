@@ -63,6 +63,6 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
-// replace github.com/grokify/mogo v0.47.0 => ../mogo
+// replace github.com/grokify/mogo => ../mogo
 
-// replace github.com/grokify/gocharts/v2 v2.8.8 => ../gocharts
+// replace github.com/grokify/gocharts/v2 => ../gocharts
