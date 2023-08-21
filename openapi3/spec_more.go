@@ -770,7 +770,7 @@ func (sm *SpecMore) WriteFileXLSX(filename string, columns *tabulator.ColumnSet,
 		return err
 	} else {
 		tbl.FormatAutoLink = true
-		return table.WriteXLSX(filename, tbl)
+		return table.WriteXLSX(filename, []*table.Table{tbl})
 	}
 }
 
