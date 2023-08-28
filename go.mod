@@ -6,9 +6,9 @@ require (
 	github.com/ake-persson/mapslice-json v0.0.0-20210720081907-22c8edf57807
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/getkin/kin-openapi v0.118.0
-	github.com/grokify/gocharts/v2 v2.10.0
+	github.com/grokify/gocharts/v2 v2.11.1
 	github.com/grokify/gohttp v0.2.6
-	github.com/grokify/mogo v0.53.0
+	github.com/grokify/mogo v0.54.1
 	github.com/iancoleman/strcase v0.3.0
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.30.0
@@ -52,7 +52,7 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fastjson v1.6.4 // indirect
 	github.com/xuri/efp v0.0.0-20230802181842-ad255f2331ca // indirect
-	github.com/xuri/excelize/v2 v2.7.1 // indirect
+	github.com/xuri/excelize/v2 v2.8.0 // indirect
 	github.com/xuri/nfp v0.0.0-20230819163627-dc951e3ffe1a // indirect
 	golang.org/x/crypto v0.12.0 // indirect
 	golang.org/x/net v0.14.0 // indirect

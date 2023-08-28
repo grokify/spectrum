@@ -71,7 +71,7 @@ func WriteEndpointCountCSV(filename string, hset histogram.HistogramSet) error {
 			if len(parts) >= 2 {
 				row := []string{
 					tagName,
-					strconv.Itoa(int(hist.BinCount)),
+					strconv.Itoa(int(len(hist.Bins))),
 					strings.ToUpper(parts[0]),
 					strings.Join(parts[1:], " ")}
 				err := writer.Write(row)
