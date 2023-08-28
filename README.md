@@ -135,8 +135,8 @@ To set your environment variables, use the Settings Gear icon and then click "Ma
 * Medium: [Using Postman, Swagger and the RingCentral API](https://medium.com/ringcentral-developers/using-postman-with-swagger-and-the-ringcentral-api-523712f792a0)
 * YouTube: [Getting Started with RingCentral APIs using Postman](https://youtu.be/5kE4UPXJ-5Q)
 
- [build-status-svg]: https://github.com/grokify/spectrum/workflows/build/badge.svg
- [build-status-url]: https://github.com/grokify/spectrum/actions/workflows/build.yaml
+ [build-status-svg]: https://github.com/grokify/spectrum/workflows/test/badge.svg
+ [build-status-url]: https://github.com/grokify/spectrum/actions/workflows/test.yaml
  [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/spectrum
  [goreport-url]: https://goreportcard.com/report/github.com/grokify/spectrum
  [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/spectrum
