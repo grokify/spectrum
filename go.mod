@@ -15,7 +15,7 @@ require (
 	github.com/valyala/quicktemplate v1.7.0
 	golang.org/x/exp v0.0.0-20231006140011-7918f672742d
 	gopkg.in/yaml.v3 v3.0.1
-	sigs.k8s.io/yaml v1.3.0
+	sigs.k8s.io/yaml v1.4.0
 )
 
 require (
@@ -60,7 +60,6 @@ require (
 	golang.org/x/text v0.13.0 // indirect
 	gonum.org/v1/gonum v0.14.0 // indirect
 	gopkg.in/oleiade/reflections.v1 v1.0.0 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
 // replace github.com/grokify/mogo => ../mogo
