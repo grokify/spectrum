@@ -1,15 +1,18 @@
 module github.com/grokify/spectrum
 
-go 1.18
+go 1.21
+
+// toolchain go1.21.1
 
 require (
 	github.com/ake-persson/mapslice-json v0.0.0-20210720081907-22c8edf57807
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/getkin/kin-openapi v0.120.0
-	github.com/grokify/gocharts/v2 v2.12.0
+	github.com/grokify/gocharts/v2 v2.14.1
 	github.com/grokify/gohttp v0.2.6
-	github.com/grokify/mogo v0.56.0
+	github.com/grokify/mogo v0.58.0
 	github.com/jessevdk/go-flags v1.5.0
+	github.com/rbretecher/go-postman-collection v0.9.0
 	github.com/rs/zerolog v1.31.0
 	github.com/valyala/fasthttp v1.50.0
 	github.com/valyala/quicktemplate v1.7.0
@@ -34,10 +37,10 @@ require (
 	github.com/invopop/yaml v0.2.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/klauspost/compress v1.17.1 // indirect
+	github.com/klauspost/compress v1.17.2 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.19 // indirect
+	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
@@ -51,7 +54,7 @@ require (
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fastjson v1.6.4 // indirect
-	github.com/xuri/efp v0.0.0-20230802181842-ad255f2331ca // indirect
+	github.com/xuri/efp v0.0.0-20231025114914-d1ff6096ae53 // indirect
 	github.com/xuri/excelize/v2 v2.8.0 // indirect
 	github.com/xuri/nfp v0.0.0-20230919160717-d98342af3f05 // indirect
 	golang.org/x/crypto v0.14.0 // indirect
