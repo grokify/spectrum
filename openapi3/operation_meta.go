@@ -7,6 +7,7 @@ import (
 	"github.com/grokify/mogo/net/http/pathmethod"
 	"github.com/grokify/mogo/text/stringcase"
 	"github.com/grokify/mogo/type/stringsutil"
+	"golang.org/x/exp/slices"
 )
 
 // OperationToMeta converts a path, method and operation to an `*OperationMeta`.
@@ -62,10 +63,7 @@ func (om *OperationMeta) Operation() *oas3.Operation {
 	op.Description = om.Description
 	op.OperationID = om.OperationID
 	op.Summary = om.Summary
-	op.Tags = []string{}
-	for _, tag := range om.Tags {
-		op.Tags = append(op.Tags, tag)
-	}
+	op.Tags = slices.Clone(om.Tags)
 	return op
 }
 
@@ -86,10 +84,7 @@ func (om *OperationMeta) OperationIDOrBuild(sep, wantCase string) (string, error
 	if om.OperationID != "" {
 		return om.OperationID, nil
 	}
-	idparts := []string{}
-	for _, tag := range om.Tags {
-		idparts = append(idparts, tag)
-	}
+	idparts := slices.Clone(om.Tags)
 	idparts = append(idparts, om.Summary)
 	idparts = stringsutil.SliceCondenseSpace(idparts, false, false)
 	return stringcase.Join(idparts, sep, stringcase.KebabCase)
