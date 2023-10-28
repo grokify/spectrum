@@ -5,6 +5,7 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/mogo/net/http/pathmethod"
+	"github.com/grokify/mogo/text/stringcase"
 	"github.com/grokify/mogo/type/stringsutil"
 )
 
@@ -33,6 +34,7 @@ func OperationToMeta(url, method string, op *oas3.Operation, inclTags []string) 
 	return &OperationMeta{
 		OperationID: strings.TrimSpace(op.OperationID),
 		Summary:     strings.TrimSpace(op.Summary),
+		Description: strings.TrimSpace(op.Description),
 		Method:      strings.ToUpper(strings.TrimSpace(method)),
 		Path:        strings.TrimSpace(url),
 		Tags:        op.Tags,
@@ -43,6 +45,7 @@ func OperationToMeta(url, method string, op *oas3.Operation, inclTags []string) 
 type OperationMeta struct {
 	OperationID          string   `json:"operationID,omitempty"`
 	DocsDescription      string   `json:"docsDescription,omitempty"`
+	Description          string   `json:"description,omitempty"`
 	DocsURL              string   `json:"docsURL,omitempty"`
 	Method               string   `json:"method,omitempty"`
 	Path                 string   `json:"path,omitempty"`
@@ -54,6 +57,22 @@ type OperationMeta struct {
 	RequestBodySchemaRef string   `json:"requestBodySchemaRef,omitempty"`
 }
 
+func (om *OperationMeta) Operation() *oas3.Operation {
+	op := oas3.NewOperation()
+	op.Description = om.Description
+	op.OperationID = om.OperationID
+	op.Summary = om.Summary
+	op.Tags = []string{}
+	for _, tag := range om.Tags {
+		op.Tags = append(op.Tags, tag)
+	}
+	return op
+}
+
+func (om *OperationMeta) PathMethod() string {
+	return pathmethod.PathMethod(om.Path, om.Method)
+}
+
 func (om *OperationMeta) TrimSpace() {
 	om.OperationID = strings.TrimSpace(om.OperationID)
 	om.DocsURL = strings.TrimSpace(om.DocsURL)
@@ -63,8 +82,38 @@ func (om *OperationMeta) TrimSpace() {
 	om.XThrottlingGroup = strings.TrimSpace(om.XThrottlingGroup)
 }
 
-func (om *OperationMeta) PathMethod() string {
-	return pathmethod.PathMethod(om.Path, om.Method)
+func (om *OperationMeta) OperationIDOrBuild(sep, wantCase string) (string, error) {
+	if om.OperationID != "" {
+		return om.OperationID, nil
+	}
+	idparts := []string{}
+	for _, tag := range om.Tags {
+		idparts = append(idparts, tag)
+	}
+	idparts = append(idparts, om.Summary)
+	idparts = stringsutil.SliceCondenseSpace(idparts, false, false)
+	return stringcase.Join(idparts, sep, stringcase.KebabCase)
+}
+
+type OperationMetas []*OperationMeta
+
+func (oms OperationMetas) Spec(opIDSep, opIDWantCase string) (*Spec, error) {
+	spec := Spec{}
+	for _, om := range oms {
+		if om == nil {
+			continue
+		}
+		op := om.Operation()
+		if op.OperationID == "" {
+			opID, err := om.OperationIDOrBuild(opIDSep, opIDWantCase)
+			if err != nil {
+				return nil, err
+			}
+			op.OperationID = opID
+		}
+		spec.AddOperation(om.Path, om.Method, op)
+	}
+	return &spec, nil
 }
 
 /*
