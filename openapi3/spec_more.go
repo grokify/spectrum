@@ -69,7 +69,11 @@ func operationsTable(spec *Spec, columns *tabulator.ColumnSet, filterFunc func(p
 	if columns == nil {
 		columns = OpTableColumnsDefault(false)
 	}
-	tbl := table.NewTable(spec.Info.Title)
+	title := ""
+	if spec.Info != nil {
+		title = spec.Info.Title
+	}
+	tbl := table.NewTable(title)
 	tbl.Columns = columns.DisplayTexts()
 
 	// specMore := SpecMore{Spec: spec}
@@ -96,6 +100,8 @@ func operationsTable(spec *Spec, columns *tabulator.ColumnSet, filterFunc func(p
 				row = append(row, op.OperationID)
 			case "summary":
 				row = append(row, op.Summary)
+			case "description":
+				row = append(row, op.Description)
 			// case XTagGroups:
 			//	row = append(row, strings.Join(
 			//		tgs.GetTagGroupNamesForTagNames(op.Tags...), ", "))
