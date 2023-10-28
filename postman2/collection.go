@@ -2,6 +2,7 @@ package postman2
 
 import (
 	"encoding/json"
+	"os"
 	"strings"
 
 	"github.com/grokify/mogo/errors/errorsutil"
@@ -17,6 +18,14 @@ type Collection struct {
 	Info  CollectionInfo `json:"info"`
 	Item  []*Item        `json:"item"`
 	Event []Event        `json:"event,omitempty"`
+}
+
+func ReadFile(filename string) (Collection, error) {
+	b, err := os.ReadFile(filename)
+	if err != nil {
+		return Collection{}, err
+	}
+	return NewCollectionFromBytes(b)
 }
 
 func NewCollectionFromBytes(data []byte) (Collection, error) {
