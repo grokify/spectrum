@@ -10,9 +10,8 @@ require (
 	github.com/getkin/kin-openapi v0.120.0
 	github.com/grokify/gocharts/v2 v2.14.1
 	github.com/grokify/gohttp v0.2.7
-	github.com/grokify/mogo v0.59.0
+	github.com/grokify/mogo v0.60.0
 	github.com/jessevdk/go-flags v1.5.0
-	github.com/rbretecher/go-postman-collection v0.9.0
 	github.com/rs/zerolog v1.31.0
 	github.com/valyala/fasthttp v1.50.0
 	github.com/valyala/quicktemplate v1.7.0
