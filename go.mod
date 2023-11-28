@@ -7,12 +7,11 @@ go 1.21
 require (
 	github.com/ake-persson/mapslice-json v0.0.0-20210720081907-22c8edf57807
 	github.com/buaazp/fasthttprouter v0.1.1
-	github.com/getkin/kin-openapi v0.120.0
+	github.com/getkin/kin-openapi v0.121.0
 	github.com/grokify/gocharts/v2 v2.15.2
 	github.com/grokify/mogo v0.61.0
 	github.com/grokify/xgo v0.6.0
 	github.com/jessevdk/go-flags v1.5.0
-	github.com/rbretecher/go-postman-collection v0.9.0
 	github.com/rs/zerolog v1.31.0
 	github.com/valyala/fasthttp v1.51.0
 	github.com/valyala/quicktemplate v1.7.0
