@@ -154,7 +154,9 @@ func (om *OperationMore) ResponseMediaTypes() []string {
 		return []string{}
 	}
 	mediaTypes := []string{}
-	for _, respRef := range om.Operation.Responses {
+	respsMap := om.Operation.Responses.Map() // added for getkin v0.121.0 to v0.122.0 breaking change
+	for _, respRef := range respsMap {
+		// for _, respRef := range om.Operation.Responses {
 		if respRef.Value != nil {
 			mt := maputil.StringKeys(respRef.Value.Content, nil)
 			mediaTypes = append(mediaTypes, mt...)
@@ -207,7 +209,9 @@ func (om *OperationMore) JSONPointers() map[string][]string {
 			}
 		}
 	}
-	for _, respRef := range op.Responses {
+	respsMap := op.Responses.Map()
+	for _, respRef := range respsMap {
+		// for _, respRef := range op.Responses { // added for getkin v0.121.0 to v0.122.0 breaking change
 		if respRef == nil {
 			continue
 		}

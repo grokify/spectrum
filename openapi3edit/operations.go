@@ -2,7 +2,6 @@ package openapi3edit
 
 import (
 	"fmt"
-	"net/http"
 	"net/url"
 	"strings"
 
@@ -22,33 +21,44 @@ func (se *SpecEdit) SetOperation(path, method string, op oas3.Operation) error {
 	if spec == nil {
 		return fmt.Errorf("spec to add operation to is nil for path[%s] method [%s]", path, method)
 	}
-	pathItem, ok := spec.Paths[path]
-	if !ok {
+	/*
+		pathItem, ok := spec.Paths[path]
+		if !ok {
+			pathItem = &oas3.PathItem{}
+		}
+	*/
+	pathItem := spec.Paths.Find(path) // getkin v0.121.0 to v0.122.0
+	if pathItem == nil {
 		pathItem = &oas3.PathItem{}
 	}
-	switch strings.ToUpper(strings.TrimSpace(method)) {
-	case http.MethodConnect:
-		pathItem.Connect = &op
-	case http.MethodDelete:
-		pathItem.Delete = &op
-	case http.MethodGet:
-		pathItem.Get = &op
-	case http.MethodHead:
-		pathItem.Head = &op
-	case http.MethodOptions:
-		pathItem.Options = &op
-	case http.MethodPatch:
-		pathItem.Patch = &op
-	case http.MethodPost:
-		pathItem.Post = &op
-	case http.MethodPut:
-		pathItem.Put = &op
-	case http.MethodTrace:
-		pathItem.Trace = &op
-	default:
-		return fmt.Errorf("spec operation method to set not found path[%s] method[%s]", path, method)
-	}
-	spec.Paths[path] = pathItem
+	method = strings.ToUpper(strings.TrimSpace(method))
+	pathItem.SetOperation(method, &op)
+	/*
+		switch strings.ToUpper(strings.TrimSpace(method)) {
+		case http.MethodConnect:
+			pathItem.Connect = &op
+		case http.MethodDelete:
+			pathItem.Delete = &op
+		case http.MethodGet:
+			pathItem.Get = &op
+		case http.MethodHead:
+			pathItem.Head = &op
+		case http.MethodOptions:
+			pathItem.Options = &op
+		case http.MethodPatch:
+			pathItem.Patch = &op
+		case http.MethodPost:
+			pathItem.Post = &op
+		case http.MethodPut:
+			pathItem.Put = &op
+		case http.MethodTrace:
+			pathItem.Trace = &op
+		default:
+			return fmt.Errorf("spec operation method to set not found path[%s] method[%s]", path, method)
+		}
+		spec.Paths[path] = pathItem
+	*/
+	spec.Paths.Set(path, pathItem)
 	return nil
 }
 

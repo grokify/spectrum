@@ -25,7 +25,9 @@ func (se *SpecEdit) OperationsFixResponseReferences() []*openapi3.OperationMeta 
 		if op == nil {
 			return
 		}
-		for resCode, resRef := range op.Responses {
+		respsMap := op.Responses.Map() // getkin v0.121.0 to v0.122.0
+		for resCode, resRef := range respsMap {
+			// for resCode, resRef := range op.Responses { // getkin v0.121.0 to v0.122.0
 			if strings.Index(resRef.Ref, oas2BasePathDefinitions) == 0 {
 				resRef.Ref = strings.TrimSpace(resRef.Ref)
 				m := rxOAS2RefDefinition.FindStringSubmatch(resRef.Ref)

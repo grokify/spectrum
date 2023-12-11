@@ -29,8 +29,7 @@ func NewConverter(cfg Configuration) Converter {
 	return Converter{Configuration: cfg}
 }
 
-// MergeConvert builds a Postman 2.0 spec using a base Postman 2.0 collection
-// and a OpenAPI 3.0 spec.
+// MergeConvert builds a Postman 2.0 spec using a base Postman 2.0 collection and a OpenAPI 3.0 spec.
 func (conv *Converter) MergeConvert(openapiFilepath string, pmanBaseFilepath string, pmanSpecFilepath string) error {
 	oas3spec, err := openapi3.ReadFile(openapiFilepath, true)
 	if err != nil {
@@ -115,14 +114,17 @@ func Merge(cfg Configuration, pman postman2.Collection, oas3spec *openapi3.Spec)
 		return pman, err
 	}
 
-	urls := []string{}
-	for url := range oas3spec.Paths {
+	var urls []string
+	pathsMap := oas3spec.Paths.Map()
+	// for url := range oas3spec.Paths { // getkin v0.121.0 to v0.122.0
+	for url := range pathsMap {
 		urls = append(urls, url)
 	}
 	sort.Strings(urls)
 
 	for _, url := range urls {
-		path := oas3spec.Paths[url] // *PathItem
+		// path := oas3spec.Paths[url] // *PathItem // getkin v0.121.0 to v0.122.0
+		path := oas3spec.Paths.Find(url)
 
 		if path.Delete != nil {
 			pitem, err := Openapi3OperationToPostman2APIItem(cfg, oas3spec, url, http.MethodDelete, path.Delete)

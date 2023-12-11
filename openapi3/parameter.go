@@ -101,7 +101,9 @@ func (sm *SpecMore) ParamPathNamesPaths() map[string][]string {
 	if sm.Spec == nil {
 		return names
 	}
-	for pathURL := range sm.Spec.Paths {
+	pathsMap := sm.Spec.Paths.Map()
+	for pathURL := range pathsMap {
+		// for pathURL := range sm.Spec.Paths { // getkin v0.121.0 to v0.122.0
 		m := PathParams(pathURL)
 		if len(m) > 0 {
 			jpath := jsonpointer.PointerSubEscapeAll(`#/paths/%s`, pathURL)

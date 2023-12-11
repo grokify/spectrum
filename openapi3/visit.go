@@ -98,7 +98,9 @@ func VisitOperationsPathItem(path string, pathItem *oas3.PathItem, visitOp func(
 }
 
 func VisitOperations(spec *Spec, visitOp func(path, method string, op *oas3.Operation)) {
-	for path, pathItem := range spec.Paths {
+	pathsMap := spec.Paths.Map()
+	for path, pathItem := range pathsMap {
+		// for path, pathItem := range spec.Paths { // getkin v0.121.0 to v0.122.0
 		VisitOperationsPathItem(path, pathItem, visitOp)
 	}
 }

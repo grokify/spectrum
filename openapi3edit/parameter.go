@@ -81,7 +81,8 @@ func (se *SpecEdit) paramPathNamesModifyPaths(xf func(s string) string) error {
 		return openapi3.ErrSpecNotSet
 	}
 	spec := se.SpecMore.Spec
-	pathsCountStart := len(se.SpecMore.Spec.Paths)
+	// pathsCountStart := len(se.SpecMore.Spec.Paths)
+	pathsCountStart := se.SpecMore.Spec.Paths.Len()
 	namesStart := url.Values(se.SpecMore.ParamPathNamesPaths())
 	namesStartSlice := maputil.StringKeys(namesStart, nil)
 	// check for unique outnames
@@ -89,25 +90,36 @@ func (se *SpecEdit) paramPathNamesModifyPaths(xf func(s string) string) error {
 	if err != nil {
 		return err
 	}
-	pathBefores := maputil.StringKeys(spec.Paths, nil)
+	paths := Paths{Paths: spec.Paths}
+	pathBefores := paths.PathKeys()
+	// pathBefores := maputil.StringKeys(spec.Paths, nil) // getkin v0.121.0 to v0.122.0
 	pathsMap := map[string]string{}
 	for _, pathBefore := range pathBefores {
-		pathItem, ok := spec.Paths[pathBefore]
-		if !ok {
+		/*
+			pathItem, ok := spec.Paths[pathBefore] // getkin v0.121.0 to v0.122.0
+			if !ok {
+				panic("path not found")
+			}
+		*/
+		pathItem := spec.Paths.Find(pathBefore)
+		if pathItem == nil {
 			panic("path not found")
 		}
 		pathAfter := PathTemplateParamMod(pathBefore, xf)
 		if pathAfter != pathBefore {
-			spec.Paths[pathAfter] = pathItem
+			// spec.Paths[pathAfter] = pathItem // getkin v0.121.0 to v0.122.0
+			spec.Paths.Set(pathAfter, pathItem)
 			pathsMap[pathBefore] = pathAfter
-			delete(spec.Paths, pathBefore)
+			// delete(spec.Paths, pathBefore) // getkin v0.121.0 to v0.122.0
+			spec.Paths.Set(pathBefore, nil)
 		}
 	}
 
 	if !maputil.UniqueValues(pathsMap) {
 		return errors.New("path strcase collisions")
 	}
-	pathsCountComplete := len(spec.Paths)
+	// pathsCountComplete := len(spec.Paths)
+	pathsCountComplete := spec.Paths.Len()
 	if pathsCountStart != pathsCountComplete {
 		return fmt.Errorf("conversion mismatch: start path count [%d] end path count [%d]", pathsCountStart, pathsCountComplete)
 	}

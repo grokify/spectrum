@@ -57,7 +57,9 @@ var rxParams = regexp.MustCompile(`{([^/]*)}`)
 func (rule RulePathParamStyle) ProcessSpec(spec *openapi3.Spec, pointerBase string) []lintutil.PolicyViolation {
 	vios := []lintutil.PolicyViolation{}
 
-	for pathUrl := range spec.Paths {
+	pathsMap := spec.Paths.Map()
+	for pathUrl := range pathsMap {
+		// for pathUrl := range spec.Paths { // getkin v0.121.0 to v0.122.0
 		m := rxParams.FindAllStringSubmatch(pathUrl, -1)
 		if len(m) == 0 {
 			continue

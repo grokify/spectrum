@@ -1,12 +1,27 @@
 package openapi3edit
 
 import (
+	"sort"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/mogo/net/urlutil"
 	"github.com/grokify/spectrum/openapi3"
 )
+
+type Paths struct {
+	*oas3.Paths
+}
+
+func (p Paths) PathKeys() []string {
+	var paths []string
+	pathsMap := p.Paths.Map()
+	for k := range pathsMap {
+		paths = append(paths, k)
+	}
+	sort.Strings(paths)
+	return paths
+}
 
 type SpecPaths struct {
 	Servers oas3.Servers
@@ -17,7 +32,9 @@ func InspectPaths(spec *openapi3.Spec) SpecPaths {
 	specPaths := SpecPaths{
 		Servers: spec.Servers,
 		Paths:   []PathMeta{}}
-	for url := range spec.Paths {
+	pathsMap := spec.Paths.Map()
+	for url := range pathsMap {
+		// for url := range spec.Paths {
 		pm := PathMeta{Current: url}
 		specPaths.Paths = append(specPaths.Paths, pm)
 	}
@@ -56,15 +73,20 @@ func (se *SpecEdit) PathsModify(opts SpecPathsModifyOpts) error {
 	}
 	if opts.OpPathRenameFuncExec {
 		oldPathURLs := map[string]int{}
-		for oldPathURL := range spec.Paths {
+		pathsMap := spec.Paths.Map()
+		for oldPathURL := range pathsMap {
+			// for oldPathURL := range spec.Paths { // getkin v0.121.0 to v0.122.0
 			oldPathURLs[oldPathURL] = 1
 		}
 		for oldPathURL := range oldPathURLs {
-			pathItem := spec.Paths[oldPathURL]
+			// pathItem := spec.Paths[oldPathURL] // getkin v0.121.0 to v0.122.0
+			pathItem := spec.Paths.Find(oldPathURL)
 			newPathURL := strings.TrimSpace(opts.OpPathRenameFunc(oldPathURL))
 			if len(newPathURL) > 0 && newPathURL != oldPathURL {
-				spec.Paths[newPathURL] = pathItem
-				delete(spec.Paths, oldPathURL)
+				// spec.Paths[newPathURL] = pathItem // getkin v0.121.0 to v0.122.0
+				// delete(spec.Paths, oldPathURL) // getkin v0.121.0 to v0.122.0
+				spec.Paths.Set(newPathURL, pathItem)
+				spec.Paths.Set(oldPathURL, nil) // getkin v0.121.0 to v0.122.0
 			}
 		}
 	} else if opts.OpPathRenameNewBaseExec {
@@ -75,14 +97,19 @@ func (se *SpecEdit) PathsModify(opts SpecPathsModifyOpts) error {
 		}
 		if len(opts.OpPathRenameNewBase) > 0 {
 			oldPathURLs := map[string]int{}
-			for oldPathURL := range spec.Paths {
+			oldPathsMap := spec.Paths.Map()
+			for oldPathURL := range oldPathsMap {
+				// for oldPathURL := range spec.Paths {
 				oldPathURLs[oldPathURL] = 1
 			}
 			for oldPathURL := range oldPathURLs {
-				pathItem := spec.Paths[oldPathURL]
+				// pathItem := spec.Paths[oldPathURL] // getkin v0.121.0 to v0.122.0
+				pathItem := spec.Paths.Find(oldPathURL)
 				newPathURL := urlutil.Join(opts.OpPathRenameNewBase, oldPathURL)
-				spec.Paths[newPathURL] = pathItem
-				delete(spec.Paths, oldPathURL)
+				// spec.Paths[newPathURL] = pathItem // getkin v0.121.0 to v0.122.0
+				// delete(spec.Paths, oldPathURL) // getkin v0.121.0 to v0.122.0
+				spec.Paths.Set(newPathURL, pathItem)
+				spec.Paths.Set(oldPathURL, nil)
 			}
 		}
 	}

@@ -259,7 +259,9 @@ func (sm *SpecMore) OperationMetas(inclTags []string) []OperationMeta {
 		return []OperationMeta{}
 	}
 	oms := []*OperationMeta{}
-	for url, path := range sm.Spec.Paths {
+	pathsMap := sm.Spec.Paths.Map()
+	for url, path := range pathsMap {
+		// for url, path := range sm.Spec.Paths {
 		oms = append(oms,
 			OperationToMeta(url, http.MethodConnect, path.Connect, inclTags),
 			OperationToMeta(url, http.MethodDelete, path.Delete, inclTags),
@@ -365,10 +367,14 @@ func (sm *SpecMore) OperationByPathMethod(path, method string) (*oas3.Operation,
 		return nil, err
 	}
 
-	pathItem, ok := sm.Spec.Paths[path]
-	if !ok {
+	pathItem := sm.Spec.Paths.Find(path)
+	if pathItem == nil {
 		return nil, nil
 	}
+	// pathItem, ok := sm.Spec.Paths[path]
+	// if !ok {
+	// 	return nil, nil
+	// }
 
 	return pathItem.GetOperation(method), nil
 }
@@ -379,13 +385,20 @@ func (sm *SpecMore) SetOperation(path, method string, op *oas3.Operation) {
 		path = "/" + path
 	}
 	if sm.Spec.Paths == nil {
-		sm.Spec.Paths = map[string]*oas3.PathItem{}
+		// sm.Spec.Paths = map[string]*oas3.PathItem{}
+		sm.Spec.Paths = oas3.NewPaths()
 	}
-	pathItem, ok := sm.Spec.Paths[path]
-	if !ok {
+	pathItem := sm.Spec.Paths.Find(path)
+	if pathItem == nil {
 		pathItem = &oas3.PathItem{}
 	}
-
+	/*
+		// code here is for getkin v0.121.0, broken in v0.122.0
+		pathItem, ok := sm.Spec.Paths[path]
+		if !ok {
+			pathItem = &oas3.PathItem{}
+		}
+	*/
 	method = strings.ToUpper(strings.TrimSpace(method))
 	switch method {
 	case http.MethodConnect:
@@ -407,7 +420,8 @@ func (sm *SpecMore) SetOperation(path, method string, op *oas3.Operation) {
 	case http.MethodTrace:
 		pathItem.Trace = op
 	}
-	sm.Spec.Paths[path] = pathItem
+	// sm.Spec.Paths[path] = pathItem // code here is for getkin v0.121.0, broken in v0.122.0
+	sm.Spec.Paths.Set(path, pathItem)
 }
 
 // Ontology returns a populated `Ontology` struct for the spec. If no spec

@@ -11,12 +11,21 @@ func (sm *SpecMore) StatusCodesHistogram() *histogram.HistogramSets {
 		return hsets
 	}
 	VisitOperations(sm.Spec, func(path, method string, op *oas3.Operation) {
-		if op == nil ||
-			op.Responses == nil ||
-			len(op.Responses) == 0 {
+		/*
+			if op == nil ||
+				op.Responses == nil ||
+				len(op.Responses) == 0 { // getkin v0.121.0 to v0.122.0
+				return
+			}
+		*/
+		if op == nil || op.Responses == nil {
 			return
 		}
-		for responseStatusCode := range op.Responses {
+		responsesMap := op.Responses.Map() // getkin v0.121.0 to v0.122.0
+		if len(responsesMap) == 0 {
+			return
+		}
+		for responseStatusCode := range responsesMap {
 			hsets.Add(path, method, responseStatusCode, 1, true)
 		}
 	})

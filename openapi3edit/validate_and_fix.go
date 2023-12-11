@@ -176,7 +176,9 @@ func (se *SpecEdit) ValidateFixOperationResponseTypes(fix bool) ([]*openapi3.Ope
 			if op == nil {
 				return
 			}
-			for _, resRef := range op.Responses {
+			respsMap := op.Responses.Map()
+			for _, resRef := range respsMap {
+				// for _, resRef := range op.Responses { // getkin v0.121.0 to v0.122.0
 				if resRef == nil || resRef.Value == nil {
 					continue
 				}

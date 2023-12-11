@@ -77,7 +77,9 @@ func (sm *SpecMore) PathMethods(generic bool) []string {
 	if sm.Spec == nil {
 		return endpoints
 	}
-	for url, pathItem := range sm.Spec.Paths {
+	pathsMap := sm.Spec.Paths.Map()
+	for url, pathItem := range pathsMap {
+		// for url, pathItem := range sm.Spec.Paths { // getkin v0.121.0 to v0.122.0
 		if generic {
 			url = PathVarsToGeneric(url)
 		}

@@ -1,6 +1,7 @@
 package openapi3
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"reflect"
@@ -147,9 +148,40 @@ func MergeWithTables(spec1, spec2 *Spec, specExtraNote string, mergeOpts *MergeO
 }
 
 func MergePaths(specMaster, specExtra *Spec) (*Spec, error) {
-	for url, pathItem := range specExtra.Paths {
-		if pathInfoMaster, ok := specMaster.Paths[url]; !ok || pathInfoMaster == nil {
-			specMaster.Paths[url] = &oas3.PathItem{}
+	// getkin v0.121.0 to v0.122.0 - new version
+	if specExtra == nil {
+		return specMaster, errors.New("spec extra cannot be nil")
+	}
+	addPathMap := specExtra.Paths.Map()
+	for addPathKey, addPathItem := range addPathMap {
+		if addPathItem == nil {
+			continue
+		}
+		srcPathItem := specMaster.Paths.Find(addPathKey)
+		if srcPathItem == nil {
+			specMaster.Paths.Set(addPathKey, addPathItem)
+			continue
+		}
+		srcPathItemMore := PathItemMore{PathItem: srcPathItem}
+		err := srcPathItemMore.AddPathItemOperations(addPathItem, false)
+		if err != nil {
+			return specMaster, err
+		}
+		specMaster.Paths.Set(addPathKey, srcPathItemMore.PathItem)
+	}
+
+	return specMaster, nil
+}
+
+/*
+func MergePathsOld(specMaster, specExtra *Spec) (*Spec, error) {
+	pathsMapExtra := specExtra.Paths.Map()
+	pathsMapMaster := specMaster.Paths.Map()
+	// for url, pathItem := range pathsMapExtra {
+	for url, pathItem := range pathsMapExtra {
+		if pathInfoMaster, ok := pathsMapMaster[url]; !ok || pathInfoMaster == nil {
+			// specMaster.Paths[url] = &oas3.PathItem{}
+			specMaster.Paths.Set(url, &oas3.PathItem{})
 		}
 		if pathItem.Connect != nil {
 			if specMaster.Paths[url].Connect == nil {
@@ -214,9 +246,11 @@ func MergePaths(specMaster, specExtra *Spec) (*Spec, error) {
 				return specMaster, fmt.Errorf("E_OPERATION_COLLISION_TRACE [%v]", pathItem.Trace.OperationID)
 			}
 		}
+
 	}
 	return specMaster, nil
 }
+*/
 
 func MergeParameters(specMaster, specExtra *Spec, specExtraNote string, mergeOpts *MergeOptions) (*Spec, error) {
 	if specMaster.Components.Parameters == nil {

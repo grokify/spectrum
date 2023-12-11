@@ -48,9 +48,12 @@ func (se *SpecEdit) DeleteOperations(delThis func(urlpath, method string, op *oa
 	if se.SpecMore.Spec == nil {
 		return
 	}
-	newPaths := oas3.Paths{}
+	// newPaths := oas3.Paths{} // getkin v0.121.0 to v0.122.0
+	newPaths := oas3.NewPaths()
 
-	for urlpath, pathItem := range se.SpecMore.Spec.Paths {
+	pathsMap := se.SpecMore.Spec.Paths.Map()
+	for urlpath, pathItem := range pathsMap {
+		// for urlpath, pathItem := range se.SpecMore.Spec.Paths { // getkin v0.121.0 to v0.122.0
 		newPathItem := oas3.PathItem{
 			// ExtensionProps: pathItem.ExtensionProps,
 			Extensions:  pathItem.Extensions,
@@ -87,7 +90,8 @@ func (se *SpecEdit) DeleteOperations(delThis func(urlpath, method string, op *oa
 			newPathItem.Trace = pathItem.Trace
 		}
 		if openapi3.PathItemHasEndpoints(&newPathItem) {
-			newPaths[urlpath] = &newPathItem
+			newPaths.Set(urlpath, &newPathItem)
+			// newPaths[urlpath] = &newPathItem // getkin v0.121.0 to v0.122.0
 		}
 	}
 	se.SpecMore.Spec.Paths = newPaths

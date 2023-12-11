@@ -101,7 +101,9 @@ func (se *SpecEdit) SchemaRefsModify(xf func(string) string) {
 			}
 		}
 		// Operation Responses
-		for _, respRef := range op.Responses {
+		respsMap := op.Responses.Map()
+		for _, respRef := range respsMap {
+			// for _, respRef := range op.Responses { // getkin v0.121.0 to v0.122.0
 			respRef.Ref = xf(respRef.Ref)
 			if respRef.Value == nil {
 				continue

@@ -63,7 +63,9 @@ func (rule RuleOperationXPropertyStringExist) ProcessSpec(spec *openapi3.Spec, p
 			return vios
 		}
 	}
-	for pathURL, pathItem := range spec.Paths {
+	pathsMap := spec.Paths.Map()
+	for pathURL, pathItem := range pathsMap {
+		// for pathURL, pathItem := range spec.Paths { // getkin v0.121.0 to v0.122.0
 		if pathItem == nil {
 			continue
 		}

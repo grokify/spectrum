@@ -168,22 +168,44 @@ func operationAddResponseBodySchemaRef(op *oas3.Operation, statusCode, descripti
 		return fmt.Errorf("status code [%s] or content type [%s] is empty", statusCode, contentType)
 	}
 	if op.Responses == nil {
-		op.Responses = oas3.Responses{}
+		// op.Responses = oas3.Responses{}
+		op.Responses = oas3.NewResponses() // getkin v0.121.0 to v0.122.0
 	}
-	if op.Responses[statusCode] == nil {
-		op.Responses[statusCode] = &oas3.ResponseRef{}
+	if op.Responses.Value(statusCode) == nil {
+		op.Responses.Set(statusCode, &oas3.ResponseRef{})
 	}
-	if len(op.Responses[statusCode].Ref) > 0 {
+
+	respRef := op.Responses.Value(statusCode) // getkin v0.121.0 to v0.122.0
+	if respRef == nil {
+		panic("resp ref should not be nil")
+	}
+	if len(respRef.Ref) > 0 {
 		return fmt.Errorf("response is a reference and not actual")
+	} else if respRef.Value == nil {
+		respRef.Value = &oas3.Response{}
+		// op.Responses[statusCode].Value = &oas3.Response{}
 	}
-	if op.Responses[statusCode].Value == nil {
-		op.Responses[statusCode].Value = &oas3.Response{}
+	respRef.Value.Description = &description
+	if respRef.Value.Content == nil {
+		respRef.Value.Content = oas3.NewContent()
 	}
-	op.Responses[statusCode].Value.Description = &description
-	if op.Responses[statusCode].Value.Content == nil {
-		op.Responses[statusCode].Value.Content = oas3.NewContent()
-	}
-	op.Responses[statusCode].Value.Content[contentType] = oas3.NewMediaType().WithSchemaRef(schemaRef)
+	respRef.Value.Content[contentType] = oas3.NewMediaType().WithSchemaRef(schemaRef)
+	/*
+		if op.Responses[statusCode] == nil {
+			op.Responses[statusCode] = &oas3.ResponseRef{}
+		}
+		if len(op.Responses[statusCode].Ref) > 0 {
+			return fmt.Errorf("response is a reference and not actual")
+		}
+		if op.Responses[statusCode].Value == nil {
+			op.Responses[statusCode].Value = &oas3.Response{}
+		}
+		op.Responses[statusCode].Value.Description = &description
+		if op.Responses[statusCode].Value.Content == nil {
+			op.Responses[statusCode].Value.Content = oas3.NewContent()
+		}
+		op.Responses[statusCode].Value.Content[contentType] = oas3.NewMediaType().WithSchemaRef(schemaRef)
+	*/
 	return nil
 }
 
