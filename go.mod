@@ -15,7 +15,7 @@ require (
 	github.com/rs/zerolog v1.31.0
 	github.com/valyala/fasthttp v1.51.0
 	github.com/valyala/quicktemplate v1.7.0
-	golang.org/x/exp v0.0.0-20231206192017-f3f8817b8deb
+	golang.org/x/exp v0.0.0-20231214170342-aacd6d4b4611
 	gopkg.in/yaml.v3 v3.0.1
 	sigs.k8s.io/yaml v1.4.0
 )
@@ -23,7 +23,7 @@ require (
 require (
 	github.com/andybalholm/brotli v1.0.6 // indirect
 	github.com/apex/gateway v1.1.2 // indirect
-	github.com/aws/aws-lambda-go v1.41.0 // indirect
+	github.com/aws/aws-lambda-go v1.42.0 // indirect
 	github.com/go-openapi/jsonpointer v0.20.0 // indirect
 	github.com/go-openapi/swag v0.22.4 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
