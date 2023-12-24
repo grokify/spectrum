@@ -8,14 +8,14 @@ require (
 	github.com/ake-persson/mapslice-json v0.0.0-20210720081907-22c8edf57807
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/getkin/kin-openapi v0.122.0
-	github.com/grokify/gocharts/v2 v2.16.1
-	github.com/grokify/mogo v0.62.5
-	github.com/grokify/xgo v0.7.1
+	github.com/grokify/gocharts/v2 v2.16.2
+	github.com/grokify/mogo v0.62.6
+	github.com/grokify/xgo v0.7.2
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.31.0
 	github.com/valyala/fasthttp v1.51.0
 	github.com/valyala/quicktemplate v1.7.0
-	golang.org/x/exp v0.0.0-20231214170342-aacd6d4b4611
+	golang.org/x/exp v0.0.0-20231219180239-dc181d75b848
 	gopkg.in/yaml.v3 v3.0.1
 	sigs.k8s.io/yaml v1.4.0
 )
@@ -23,9 +23,9 @@ require (
 require (
 	github.com/andybalholm/brotli v1.0.6 // indirect
 	github.com/apex/gateway v1.1.2 // indirect
-	github.com/aws/aws-lambda-go v1.42.0 // indirect
-	github.com/go-openapi/jsonpointer v0.20.0 // indirect
-	github.com/go-openapi/swag v0.22.4 // indirect
+	github.com/aws/aws-lambda-go v1.43.0 // indirect
+	github.com/go-openapi/jsonpointer v0.20.2 // indirect
+	github.com/go-openapi/swag v0.22.6 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/grokify/base36 v1.0.5 // indirect
 	github.com/huandu/xstrings v1.4.0 // indirect
