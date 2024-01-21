@@ -230,7 +230,9 @@ func (om *OperationMore) JSONPointers() map[string][]string {
 			}
 		}
 	}
-	return maputil.MapStringSliceCondenseSpace(schemaRefs, true, true)
+	mss := maputil.MapStringSlice(schemaRefs)
+	return mss.CondenseSpace(true, true)
+	// return maputil.MapStringSliceCondenseSpace(schemaRefs, true, true)
 }
 
 // SecurityScopes retrieves a flat list of security scopes for an operation.
