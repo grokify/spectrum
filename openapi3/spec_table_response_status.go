@@ -39,5 +39,6 @@ func (sm *SpecMore) WriteFileXLSXOperationStatusCodes(filename string) error {
 		TableName:           hsets.Name,
 		ColNameHistogramSet: "Method",
 		ColNameHistogram:    "Path",
+		InclBinCounts:       true,
 	})
 }
