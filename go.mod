@@ -8,8 +8,8 @@ require (
 	github.com/ake-persson/mapslice-json v0.0.0-20210720081907-22c8edf57807
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/getkin/kin-openapi v0.123.0
-	github.com/grokify/gocharts/v2 v2.17.1
-	github.com/grokify/mogo v0.63.0
+	github.com/grokify/gocharts/v2 v2.18.1
+	github.com/grokify/mogo v0.63.1
 	github.com/grokify/xgo v0.7.5
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.31.0
@@ -46,7 +46,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/richardlehane/mscfb v1.0.4 // indirect
 	github.com/richardlehane/msoleps v1.0.3 // indirect
-	github.com/rivo/uniseg v0.4.4 // indirect
+	github.com/rivo/uniseg v0.4.6 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/xuri/efp v0.0.0-20231025114914-d1ff6096ae53 // indirect
 	github.com/xuri/excelize/v2 v2.8.0 // indirect
