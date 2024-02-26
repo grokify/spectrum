@@ -13,7 +13,7 @@ require (
 	github.com/grokify/xgo v0.7.5
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.32.0
-	github.com/valyala/fasthttp v1.51.0
+	github.com/valyala/fasthttp v1.52.0
 	github.com/valyala/quicktemplate v1.7.0
 	golang.org/x/exp v0.0.0-20240119083558-1b970713d09a
 	gopkg.in/yaml.v3 v3.0.1
@@ -33,7 +33,7 @@ require (
 	github.com/invopop/yaml v0.2.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/klauspost/compress v1.17.5 // indirect
+	github.com/klauspost/compress v1.17.6 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
@@ -51,9 +51,9 @@ require (
 	github.com/xuri/efp v0.0.0-20231025114914-d1ff6096ae53 // indirect
 	github.com/xuri/excelize/v2 v2.8.0 // indirect
 	github.com/xuri/nfp v0.0.0-20230919160717-d98342af3f05 // indirect
-	golang.org/x/crypto v0.18.0 // indirect
-	golang.org/x/net v0.20.0 // indirect
-	golang.org/x/sys v0.16.0 // indirect
+	golang.org/x/crypto v0.19.0 // indirect
+	golang.org/x/net v0.21.0 // indirect
+	golang.org/x/sys v0.17.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	gonum.org/v1/gonum v0.14.0 // indirect
 )
