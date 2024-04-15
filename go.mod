@@ -10,7 +10,7 @@ require (
 	github.com/getkin/kin-openapi v0.123.0
 	github.com/grokify/gocharts/v2 v2.18.5
 	github.com/grokify/mogo v0.63.8
-	github.com/grokify/xgo v0.7.6
+	github.com/grokify/sogo v0.8.0
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.32.0
 	github.com/valyala/fasthttp v1.52.0
@@ -33,7 +33,7 @@ require (
 	github.com/invopop/yaml v0.2.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/klauspost/compress v1.17.7 // indirect
+	github.com/klauspost/compress v1.17.8 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect

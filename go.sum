@@ -42,8 +42,8 @@ github.com/grokify/gocharts/v2 v2.18.5 h1:N61QFDjZ1gLumkIG5JohofkyNp0YZsz1WO1lPh
 github.com/grokify/gocharts/v2 v2.18.5/go.mod h1:zah6HrJEOF9ftrnp2Xe2dCw5JNcJuqnHgpkLES0+6MQ=
 github.com/grokify/mogo v0.63.8 h1:m9Tuka6OrEXZEbd5fVWkiz2hcLU/na7IJaTBh/s3pO0=
 github.com/grokify/mogo v0.63.8/go.mod h1:az9vNjcZ88jLTs/pK0WJObPupFu+XzXl6EPrqEbqKyA=
-github.com/grokify/xgo v0.7.6 h1:SDMMFFjFMWPq9yZihTUFQ3kf7dkiKVLz40vkN51hOcs=
-github.com/grokify/xgo v0.7.6/go.mod h1:MyzjONiDEF/FNdOdYfCHC6f1td+W/B08L4WTRZhkuSA=
+github.com/grokify/sogo v0.8.0 h1:YegJOwnSK+99GQTV1gEKHrs/C2+5mrlf+fh/CGIddMI=
+github.com/grokify/sogo v0.8.0/go.mod h1:ZEjCfFPT7gD9oRizDL3N6Ep8jQ3Uh9OC2knIGCxmT8Y=
 github.com/huandu/xstrings v1.4.0 h1:D17IlohoQq4UcpqD7fDk80P7l+lwAmlFaBHgOipl2FU=
 github.com/huandu/xstrings v1.4.0/go.mod h1:y5/lhBue+AyNmUVz9RLU9xbLR0o4KIIExikq4ovT0aE=
 github.com/iancoleman/strcase v0.3.0 h1:nTXanmYxhfFAMjZL34Ov6gkzEsSJZ5DbhxWjvSASxEI=
@@ -59,8 +59,8 @@ github.com/json-iterator/go v1.1.12/go.mod h1:e30LSqwooZae/UwlEbR2852Gd8hjQvJoHm
 github.com/kisielk/errcheck v1.6.0/go.mod h1:pFxgyoBC7bSaBwPgfKdkLd5X25qrDl4LWUI2bnpBCr8=
 github.com/klauspost/compress v1.13.4/go.mod h1:8dP1Hq4DHOhN9w426knH3Rhby4rFm6D8eO+e+Dq5Gzg=
 github.com/klauspost/compress v1.13.5/go.mod h1:/3/Vjq9QcHkK5uEr5lBEmyoZ1iFhe47etQ6QUkpK6sk=
-github.com/klauspost/compress v1.17.7 h1:ehO88t2UGzQK66LMdE8tibEd1ErmzZjNEqWkjLAKQQg=
-github.com/klauspost/compress v1.17.7/go.mod h1:Di0epgTjJY877eYKx5yC51cX2A2Vl2ibi7bDH9ttBbw=
+github.com/klauspost/compress v1.17.8 h1:YcnTYrq7MikUT7k0Yb5eceMmALQPYBW/Xltxn0NAMnU=
+github.com/klauspost/compress v1.17.8/go.mod h1:Di0epgTjJY877eYKx5yC51cX2A2Vl2ibi7bDH9ttBbw=
 github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=
 github.com/kr/pretty v0.3.1/go.mod h1:hoEshYVHaxMs3cyo3Yncou5ZscifuDolrwPKZanG3xk=
 github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=
