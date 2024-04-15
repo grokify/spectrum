@@ -10,7 +10,7 @@ require (
 	github.com/getkin/kin-openapi v0.123.0
 	github.com/grokify/gocharts/v2 v2.18.5
 	github.com/grokify/mogo v0.63.8
-	github.com/grokify/xgo v0.7.6
+	github.com/grokify/xgo v0.7.8
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.32.0
 	github.com/valyala/fasthttp v1.52.0
