@@ -8,8 +8,8 @@ github.com/andybalholm/brotli v1.1.0/go.mod h1:sms7XGricyQI9K10gOSf56VKKWS4oLer5
 github.com/apex/gateway v1.1.2 h1:OWyLov8eaau8YhkYKkRuOAYqiUhpBJalBR1o+3FzX+8=
 github.com/apex/gateway v1.1.2/go.mod h1:AMTkVbz5u5Hvd6QOGhhg0JUrNgCcLVu3XNJOGntdoB4=
 github.com/aws/aws-lambda-go v1.17.0/go.mod h1:FEwgPLE6+8wcGBTe5cJN3JWurd1Ztm9zN4jsXsjzKKw=
-github.com/aws/aws-lambda-go v1.46.0 h1:UWVnvh2h2gecOlFhHQfIPQcD8pL/f7pVCutmFl+oXU8=
-github.com/aws/aws-lambda-go v1.46.0/go.mod h1:dpMpZgvWx5vuQJfBt0zqBha60q7Dd7RfgJv23DymV8A=
+github.com/aws/aws-lambda-go v1.47.0 h1:0H8s0vumYx/YKs4sE7YM0ktwL2eWse+kfopsRI1sXVI=
+github.com/aws/aws-lambda-go v1.47.0/go.mod h1:dpMpZgvWx5vuQJfBt0zqBha60q7Dd7RfgJv23DymV8A=
 github.com/buaazp/fasthttprouter v0.1.1 h1:4oAnN0C3xZjylvZJdP35cxfclyn4TYkW6Y+DSvS+h8Q=
 github.com/buaazp/fasthttprouter v0.1.1/go.mod h1:h/Ap5oRVLeItGKTVBb+heQPks+HdIUtGmI4H5WCYijM=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
@@ -42,8 +42,8 @@ github.com/grokify/gocharts/v2 v2.18.5 h1:N61QFDjZ1gLumkIG5JohofkyNp0YZsz1WO1lPh
 github.com/grokify/gocharts/v2 v2.18.5/go.mod h1:zah6HrJEOF9ftrnp2Xe2dCw5JNcJuqnHgpkLES0+6MQ=
 github.com/grokify/mogo v0.63.10 h1:E12zZXTehbl/2ejwZRlE9VpE0b75KlF3HIlasjyvgDs=
 github.com/grokify/mogo v0.63.10/go.mod h1:qqEBSGkFlK3gpeBT4OOgXu48ZJYfzCrd+BNLs4CGF8A=
-github.com/grokify/sogo v0.8.0 h1:YegJOwnSK+99GQTV1gEKHrs/C2+5mrlf+fh/CGIddMI=
-github.com/grokify/sogo v0.8.0/go.mod h1:ZEjCfFPT7gD9oRizDL3N6Ep8jQ3Uh9OC2knIGCxmT8Y=
+github.com/grokify/sogo v0.8.1 h1:R3Xci6+ChB7Z6QeUtjJoXX728L9J2kAI8K9GCoB4uRU=
+github.com/grokify/sogo v0.8.1/go.mod h1:TyfXU8/FiAMPjJzKn7RUKOQf2YiOD+cdgJVeMV41sNM=
 github.com/huandu/xstrings v1.4.0 h1:D17IlohoQq4UcpqD7fDk80P7l+lwAmlFaBHgOipl2FU=
 github.com/huandu/xstrings v1.4.0/go.mod h1:y5/lhBue+AyNmUVz9RLU9xbLR0o4KIIExikq4ovT0aE=
 github.com/iancoleman/strcase v0.3.0 h1:nTXanmYxhfFAMjZL34Ov6gkzEsSJZ5DbhxWjvSASxEI=

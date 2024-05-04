@@ -10,7 +10,7 @@ require (
 	github.com/getkin/kin-openapi v0.123.0
 	github.com/grokify/gocharts/v2 v2.18.5
 	github.com/grokify/mogo v0.63.10
-	github.com/grokify/sogo v0.8.0
+	github.com/grokify/sogo v0.8.1
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.32.0
 	github.com/valyala/fasthttp v1.52.0
@@ -23,7 +23,7 @@ require (
 require (
 	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/apex/gateway v1.1.2 // indirect
-	github.com/aws/aws-lambda-go v1.46.0 // indirect
+	github.com/aws/aws-lambda-go v1.47.0 // indirect
 	github.com/go-openapi/jsonpointer v0.21.0 // indirect
 	github.com/go-openapi/swag v0.23.0 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
