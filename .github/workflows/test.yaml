@@ -21,6 +21,6 @@ jobs:
       with:
         go-version: ${{ matrix.go-version }}
     - name: Checkout code
-      uses: actions/checkout@v4.1.4
+      uses: actions/checkout@v4.1.5
     - name: Run tests
       run: go test -v -covermode=count ./...
