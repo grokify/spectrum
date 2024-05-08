@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4.1.4
     - name: golangci-lint
-      uses: golangci/golangci-lint-action@v5.1.0
+      uses: golangci/golangci-lint-action@v6.0.1
       with:
         version: latest
         args: --timeout 3m --verbose
