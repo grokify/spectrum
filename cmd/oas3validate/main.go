@@ -77,8 +77,11 @@ func main() {
 		}
 	}
 
-	opsCount := sm.OperationIDs()
-	fmt.Printf("OP COUNT [%d]\n", len(opsCount))
+	opIDs := sm.OperationIDs()
+	fmt.Printf("OPERATION ID COUNT [%d]\n", len(opIDs))
+
+	endpoints := sm.PathMethods(true)
+	fmt.Printf("ENDPOINT COUNT [%d]\n", len(endpoints))
 
 	fmt.Println("DONE")
 }
