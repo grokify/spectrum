@@ -13,7 +13,7 @@ require (
 	github.com/grokify/sogo v0.8.2
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.32.0
-	github.com/valyala/fasthttp v1.53.0
+	github.com/valyala/fasthttp v1.54.0
 	github.com/valyala/quicktemplate v1.7.0
 	golang.org/x/exp v0.0.0-20240506185415-9bf2ced13842
 	gopkg.in/yaml.v3 v3.0.1
