@@ -1,16 +1,16 @@
 module github.com/grokify/spectrum
 
-go 1.22.0
+go 1.22.6
 
-toolchain go1.22.2
+toolchain go1.23.0
 
 require (
 	github.com/ake-persson/mapslice-json v0.0.0-20210720081907-22c8edf57807
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/getkin/kin-openapi v0.123.0
-	github.com/grokify/gocharts/v2 v2.19.8
-	github.com/grokify/mogo v0.64.9
-	github.com/grokify/sogo v0.8.9
+	github.com/grokify/gocharts/v2 v2.20.0
+	github.com/grokify/mogo v0.64.10
+	github.com/grokify/sogo v0.8.10
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/rs/zerolog v1.33.0
 	github.com/valyala/fasthttp v1.55.0
