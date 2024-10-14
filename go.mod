@@ -8,14 +8,14 @@ require (
 	github.com/ake-persson/mapslice-json v0.0.0-20210720081907-22c8edf57807
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/getkin/kin-openapi v0.123.0
-	github.com/grokify/gocharts/v2 v2.20.2
-	github.com/grokify/mogo v0.64.12
+	github.com/grokify/gocharts/v2 v2.20.3
+	github.com/grokify/mogo v0.65.0
 	github.com/grokify/sogo v0.8.11
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/rs/zerolog v1.33.0
 	github.com/valyala/fasthttp v1.56.0
 	github.com/valyala/quicktemplate v1.8.0
-	golang.org/x/exp v0.0.0-20241004190924-225e2abe05e6
+	golang.org/x/exp v0.0.0-20241009180824-f66d83c29e7c
 	gopkg.in/yaml.v3 v3.0.1
 	sigs.k8s.io/yaml v1.4.0
 )
