@@ -39,8 +39,8 @@ github.com/grokify/gocharts/v2 v2.21.1 h1:G2MJSOVhU+Zp7t4GtIHK2Q6OehsQC3eBwqVNdn
 github.com/grokify/gocharts/v2 v2.21.1/go.mod h1:thA3ZSYHWtlrf7soeTZi8IsUi6cFYw9t37+n20HwYXY=
 github.com/grokify/mogo v0.66.0 h1:lWsbVYM0oJUpuMfA4mdJp+c2k1aRlLky34b2T7l/ehU=
 github.com/grokify/mogo v0.66.0/go.mod h1:npug5+hF1jiAxt8MNWvwU8f+K39Dwp71gJv3lxsIAkM=
-github.com/grokify/sogo v0.8.14 h1:81h+TqKWPsupyL0Gnz+MPYjFQ7pFWVMGZgQj76y4g8s=
-github.com/grokify/sogo v0.8.14/go.mod h1:idLTkVoZo9USd61j533eEoVAUBq/btadK1OtPaT0+7E=
+github.com/grokify/sogo v0.8.15 h1:oIeH78slZZ4Ej5kJLbdLKtc/T3zUwJkg2VLMaT6cP50=
+github.com/grokify/sogo v0.8.15/go.mod h1:TNz6wfwLYPPmTHC4gTandKdL58IgWzR1s87kQyUuSME=
 github.com/huandu/xstrings v1.5.0 h1:2ag3IFq9ZDANvthTwTiqSSZLjDc+BedvHPAp5tJy2TI=
 github.com/huandu/xstrings v1.5.0/go.mod h1:y5/lhBue+AyNmUVz9RLU9xbLR0o4KIIExikq4ovT0aE=
 github.com/iancoleman/strcase v0.3.0 h1:nTXanmYxhfFAMjZL34Ov6gkzEsSJZ5DbhxWjvSASxEI=
