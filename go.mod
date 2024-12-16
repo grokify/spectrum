@@ -8,8 +8,8 @@ require (
 	github.com/ake-persson/mapslice-json v0.0.0-20210720081907-22c8edf57807
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/getkin/kin-openapi v0.123.0
-	github.com/grokify/gocharts/v2 v2.21.1
-	github.com/grokify/mogo v0.66.1
+	github.com/grokify/gocharts/v2 v2.21.2
+	github.com/grokify/mogo v0.66.2
 	github.com/grokify/sogo v0.8.15
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/rs/zerolog v1.33.0
