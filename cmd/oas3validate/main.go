@@ -56,7 +56,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	ops2a := maputil.RecordSet(ops2)
+	ops2a := maputil.Records(ops2)
 
 	md := ops2a.Markdown("1. Count: ", ", Category: ", true, true)
 	fmt.Println(md)
