@@ -9,7 +9,6 @@ import (
 	"github.com/grokify/gocharts/v2/data/histogram"
 	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/grokify/mogo/net/urlutil"
-	"github.com/grokify/mogo/type/maputil"
 	"github.com/grokify/spectrum/openapi3"
 	flags "github.com/jessevdk/go-flags"
 )
@@ -56,9 +55,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	ops2a := maputil.Records(ops2)
-
-	md := ops2a.Markdown("1. Count: ", ", Category: ", true, true)
+	md := ops2.Markdown("1. Count: ", ", Category: ", true, true)
 	fmt.Println(md)
 	opts.XlsxWrite = strings.TrimSpace(opts.XlsxWrite)
 	if len(opts.XlsxWrite) > 0 {

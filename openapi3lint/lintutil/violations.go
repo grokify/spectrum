@@ -182,10 +182,10 @@ func (vlrs *ViolationLocationsByRuleSet) Condense() {
 	}
 }
 
-func (vlrs *ViolationLocationsByRuleSet) Count() uint {
+func (vlrs *ViolationLocationsByRuleSet) Count() int {
 	count := 0
 	for _, vals := range vlrs.ViolationLocationsByRule {
 		count += len(vals)
 	}
-	return uint(count)
+	return count
 }

@@ -561,10 +561,9 @@ func (sm *SpecMore) SchemaRefSet(schemaName string, schemaRef *oas3.SchemaRef) e
 	return nil
 }
 
-// ServerURL returns the OAS3 Spec URL for the index
-// specified.
-func (sm *SpecMore) ServerURL(index uint) string {
-	if int(index)+1 > len(sm.Spec.Servers) {
+// ServerURL returns the OAS3 Spec URL for the index specified.
+func (sm *SpecMore) ServerURL(index int) string {
+	if index < 0 || ((index + 1) > len(sm.Spec.Servers)) {
 		return ""
 	}
 	server := sm.Spec.Servers[index]
@@ -572,9 +571,9 @@ func (sm *SpecMore) ServerURL(index uint) string {
 }
 
 // ServerURLBasePath extracts the base path from a OAS URL which can include variables.
-func (sm *SpecMore) ServerURLBasePath(index uint) (string, error) {
+func (sm *SpecMore) ServerURLBasePath(index int) (string, error) {
 	serverURL := sm.ServerURL(index)
-	if len(serverURL) == 0 {
+	if serverURL == "" {
 		return "", nil
 	}
 	serverURLParsed, err := urlutil.ParseURLTemplate(serverURL)
