@@ -6,6 +6,7 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/mogo/encoding/jsonpointer"
+	"github.com/grokify/mogo/type/stringsutil"
 )
 
 func SchemaPointerExpand(prefix, schemaName string) string {
@@ -69,13 +70,18 @@ func NewTypesRef(t ...string) *oas3.Types {
 // It returns false if `*oas3.Types` is false, or `type` an empty slice, or
 // none of the supplied types match. `oas3` is `github.com/getkin/kin-openapi/openapi3`.
 func TypesRefIs(t *oas3.Types, types ...string) bool {
-	if t == nil {
-		return false
+	types = stringsutil.SliceCondenseSpace(types, true, false)
+	if t == nil || len(*t) == 0 {
+		if len(types) == 0 {
+			return true
+		} else {
+			return false
+		}
 	} else if len(types) == 0 {
 		return false
 	}
-	for _, ty := range types {
-		if t.Is(ty) {
+	for _, typ := range types {
+		if t.Is(typ) {
 			return true
 		}
 	}
@@ -88,9 +94,7 @@ func TypesRefString(t *oas3.Types) string {
 		return ""
 	} else if len(*t) != 1 {
 		return ""
+	} else {
+		return (*t)[0]
 	}
-	for _, k := range *t {
-		return k
-	}
-	return ""
 }
