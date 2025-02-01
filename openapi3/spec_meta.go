@@ -54,13 +54,11 @@ type SpecMeta struct {
 
 func ReadSpecMetasDir(dir string, rx *regexp.Regexp) (SpecMetas, error) {
 	metas := SpecMetas{Metas: []SpecMeta{}}
-	entries, err := osutil.ReadDirMore(dir, rx, false, true, false)
-
-	if err != nil {
+	if entries, err := osutil.ReadDirMore(dir, rx, false, true, false); err != nil {
 		return metas, err
+	} else {
+		return ReadSpecMetasFiles(entries.Names(dir))
 	}
-
-	return ReadSpecMetasFiles(entries.Names(dir))
 }
 
 func ReadSpecMetasFiles(files []string) (SpecMetas, error) {

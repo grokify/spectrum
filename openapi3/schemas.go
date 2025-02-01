@@ -45,14 +45,13 @@ func AdditionalPropertiesAllowed(aprops oas3.AdditionalProperties) bool {
 func AdditionalPropertiesExists(props oas3.AdditionalProperties) bool {
 	if props.Has == nil || !*props.Has || props.Schema == nil {
 		return false
-	}
-	if strings.TrimSpace(props.Schema.Ref) != "" {
+	} else if strings.TrimSpace(props.Schema.Ref) != "" {
+		return true
+	} else if props.Schema.Value == nil {
+		return false
+	} else {
 		return true
 	}
-	if props.Schema.Value == nil {
-		return false
-	}
-	return true
 }
 
 // NewTypes returns a value that is suitable for `oas3.Schema.Value.Type`.
@@ -90,9 +89,7 @@ func TypesRefIs(t *oas3.Types, types ...string) bool {
 
 // TypesRefString returns a string if `oas3.Types` is not nil and has a single type.
 func TypesRefString(t *oas3.Types) string {
-	if t == nil {
-		return ""
-	} else if len(*t) != 1 {
+	if t == nil || len(*t) != 1 {
 		return ""
 	} else {
 		return (*t)[0]
