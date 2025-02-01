@@ -37,14 +37,14 @@ func (se *SpecEdit) SchemasFlattenSchemaRef(baseName, schName string, schRef *oa
 		if propRef == nil || propRef.Value == nil {
 			continue
 		}
-		if propRef.Value.Type == openapi3.TypeArray {
+		if openapi3.TypesRefIs(propRef.Value.Type, openapi3.TypeArray) {
 			itemsRef := propRef.Value.Items
 			if itemsRef == nil {
 				continue
 			}
 			itemsRef.Ref = strings.TrimSpace(itemsRef.Ref)
 			if itemsRef.Value != nil &&
-				(itemsRef.Value.Type == openapi3.TypeArray || itemsRef.Value.Type == openapi3.TypeObject) {
+				(openapi3.TypesRefIs(itemsRef.Value.Type, openapi3.TypeArray, openapi3.TypeObject)) {
 				if len(itemsRef.Ref) > 0 {
 					propRef.Value.Items = oas3.NewSchemaRef(itemsRef.Ref, nil)
 				} else {
@@ -61,7 +61,7 @@ func (se *SpecEdit) SchemasFlattenSchemaRef(baseName, schName string, schRef *oa
 				//itemsRef.Ref = openapi3.PointerComponentsSchemas + "/" + newSchemaName
 			}
 			//} else if propRef.Value.Type == openapi3.TypeObject {
-		} else if propRef.Value.Type == openapi3.TypeObject {
+		} else if openapi3.TypesRefIs(propRef.Value.Type, openapi3.TypeObject) {
 			if len(propRef.Value.Properties) > 0 {
 				newSchemaName := basePlusSchName + stringsutil.ToUpperFirst(propName, false)
 				if _, ok := spec.Components.Schemas[newSchemaName]; ok {
@@ -95,7 +95,7 @@ func (se *SpecEdit) SchemaRefsFlatten() error {
 			}
 			// visitSchemaRefFunc(propSchemaName, propSchemaRef)
 			if len(propSchemaRef.Ref) == 0 && propSchemaRef.Value != nil {
-				if propSchemaRef.Value.Type == openapi3.TypeObject || propSchemaRef.Value.Type == openapi3.TypeArray {
+				if openapi3.TypesRefIs(propSchemaRef.Value.Type, openapi3.TypeObject, openapi3.TypeArray) {
 					newRootSchemaName := propSchemaName
 					if _, ok := spec.Components.Schemas[newRootSchemaName]; ok {
 						newRootSchemaName = schName + stringsutil.ToUpperFirst(newRootSchemaName, false)

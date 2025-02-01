@@ -54,14 +54,12 @@ func (rule RuleSchemaPropEnumStyle) ProcessSpec(spec *openapi3.Spec, pointerBase
 	vios := []lintutil.PolicyViolation{}
 
 	for schName, schRef := range spec.Components.Schemas {
-		if schRef == nil || schRef.Value == nil ||
-			schRef.Value.Type != openapi3.TypeObject {
+		if schRef == nil || schRef.Value == nil || !openapi3.TypesRefIs(schRef.Value.Type, openapi3.TypeObject) {
 			continue
 		}
 
 		for propName, propRef := range schRef.Value.Properties {
-			if propRef.Value == nil ||
-				propRef.Value.Type != "string" ||
+			if propRef.Value == nil || !openapi3.TypesRefIs(propRef.Value.Type, openapi3.TypeString) ||
 				len(propRef.Value.Enum) == 0 {
 				continue
 			}

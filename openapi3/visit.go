@@ -21,25 +21,30 @@ func VisitTypesFormats(spec *Spec, visitTypeFormat func(jsonPointerRoot, oasType
 			continue
 		}
 		for propName, propRef := range schemaRef.Value.Properties {
-			if propRef.Value == nil {
+			if propRef.Value == nil || propRef.Value.Type == nil {
 				continue
 			}
-			visitTypeFormat(
-				fmt.Sprintf(jPtrSchemaPropertyFormat, schemaName, propName),
-				propRef.Value.Type,
-				propRef.Value.Format)
+			for _, t := range *propRef.Value.Type {
+				visitTypeFormat(
+					fmt.Sprintf(jPtrSchemaPropertyFormat, schemaName, propName),
+					t,
+					propRef.Value.Format)
+			}
 		}
 	}
 	for paramName, paramRef := range spec.Components.Parameters {
 		if paramRef.Value == nil ||
 			paramRef.Value.Schema == nil ||
-			paramRef.Value.Schema.Value == nil {
+			paramRef.Value.Schema.Value == nil ||
+			paramRef.Value.Schema.Value.Type == nil {
 			continue
 		}
-		visitTypeFormat(
-			fmt.Sprintf(jPtrParamFormat, paramName),
-			paramRef.Value.Schema.Value.Type,
-			paramRef.Value.Schema.Value.Format)
+		for _, t := range *paramRef.Value.Schema.Value.Type {
+			visitTypeFormat(
+				fmt.Sprintf(jPtrParamFormat, paramName),
+				t,
+				paramRef.Value.Schema.Value.Format)
+		}
 	}
 	VisitOperations(
 		spec,
@@ -50,14 +55,17 @@ func VisitTypesFormats(spec *Spec, visitTypeFormat func(jsonPointerRoot, oasType
 			for i, paramRef := range op.Parameters {
 				if paramRef.Value == nil ||
 					paramRef.Value.Schema == nil ||
-					paramRef.Value.Schema.Value == nil {
+					paramRef.Value.Schema.Value == nil ||
+					paramRef.Value.Schema.Value.Type == nil {
 					continue
 				}
-				visitTypeFormat(
-					jsonpointer.PointerSubEscapeAll(
-						"#/paths/%s/%s/parameters/%d/schema", path, strings.ToLower(method), i),
-					paramRef.Value.Schema.Value.Type,
-					paramRef.Value.Schema.Value.Format)
+				for _, t := range *paramRef.Value.Schema.Value.Type {
+					visitTypeFormat(
+						jsonpointer.PointerSubEscapeAll(
+							"#/paths/%s/%s/parameters/%d/schema", path, strings.ToLower(method), i),
+						t,
+						paramRef.Value.Schema.Value.Format)
+				}
 			}
 		},
 	)

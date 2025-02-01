@@ -90,7 +90,7 @@ func (se *SpecEdit) ValidateFixOperationPathParameters(fix bool) ([]*openapi3.Op
 								Required: true,
 								Schema: &oas3.SchemaRef{
 									Value: &oas3.Schema{
-										Type: "string",
+										Type: openapi3.NewTypesRef(openapi3.TypeString),
 									},
 								},
 							},
@@ -190,7 +190,7 @@ func (se *SpecEdit) ValidateFixOperationResponseTypes(fix bool) ([]*openapi3.Ope
 						if len(schemaRef.Ref) == 0 {
 							schema := schemaRef.Value
 							schemaType := schema.Type
-							if fix && (schemaType == openapi3.TypeString || schemaType == openapi3.TypeInteger) {
+							if fix && openapi3.TypesRefIs(schemaType, openapi3.TypeString, openapi3.TypeInteger) {
 								delete(response.Value.Content, mediaTypeOrig)
 								if mtRefTry, ok := response.Value.Content[httputilmore.ContentTypeTextPlain]; ok {
 									if !reflect.DeepEqual(mtRef, mtRefTry) {
@@ -202,7 +202,7 @@ func (se *SpecEdit) ValidateFixOperationResponseTypes(fix bool) ([]*openapi3.Ope
 								} else {
 									response.Value.Content[httputilmore.ContentTypeTextPlain] = mtRef
 								}
-							} else if schemaType != openapi3.TypeObject && schemaType != openapi3.TypeArray {
+							} else if !openapi3.TypesRefIs(schemaType, openapi3.TypeObject, openapi3.TypeArray) {
 								om := openapi3.OperationToMeta(path, method, op, []string{})
 								om.MetaNotes = append(om.MetaNotes,
 									fmt.Sprintf("E_BAD_MIME_TYPE_AND_SCHEMA MT[%s] type[%s]", mediaType, schemaType))

@@ -197,7 +197,7 @@ func (se *SpecEdit) SchemaSetAdditionalPropertiesTrue(pointerBase string) []stri
 		return mods
 	}
 	for schName, schRef := range se.SpecMore.Spec.Components.Schemas {
-		if schRef == nil || schRef.Value == nil || schRef.Value.Type != openapi3.TypeObject {
+		if schRef == nil || schRef.Value == nil || !openapi3.TypesRefIs(schRef.Value.Type, openapi3.TypeObject) {
 			continue
 		}
 		/*
@@ -215,7 +215,7 @@ func (se *SpecEdit) SchemaSetAdditionalPropertiesTrue(pointerBase string) []stri
 			mods = append(mods, fmt.Sprintf("%s%s/%s", pointerBase, openapi3.PointerComponentsSchemas, schName))
 		}
 		for propName, propRef := range schRef.Value.Properties {
-			if propRef == nil || propRef.Value == nil || propRef.Value.Type != openapi3.TypeObject {
+			if propRef == nil || propRef.Value == nil || !openapi3.TypesRefIs(propRef.Value.Type, openapi3.TypeObject) {
 				continue
 			}
 			/*

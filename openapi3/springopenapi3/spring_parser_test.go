@@ -2,6 +2,8 @@ package springopenapi3
 
 import (
 	"testing"
+
+	"github.com/grokify/spectrum/openapi3"
 )
 
 var parseLineTests = []struct {
@@ -32,7 +34,7 @@ func TestParseLine(t *testing.T) {
 			t.Errorf("fromspring.ParseSpringLineToSchema() [%v]", err)
 		}
 		schema := schemaRef.Value
-		if tt.oasName != name || tt.oasType != schema.Type || tt.oasFormat != schema.Format {
+		if tt.oasName != name || tt.oasType != openapi3.TypesRefString(schema.Type) || tt.oasFormat != schema.Format {
 			t.Errorf(`fromspring.ParseSpringLineToSchema("%s") MISMATCH W[%v]G[%v] [%v][%v] [%v][%v]`, tt.v, tt.oasName, name, tt.oasType, schema.Type, tt.oasFormat, schema.Format)
 		}
 		//fmtutil.PrintJSON(schema)

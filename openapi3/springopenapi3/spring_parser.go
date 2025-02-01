@@ -69,7 +69,7 @@ func lineToBoolDef(line string) (string, oas3.Schema) {
 		propName := m1[0][1]
 		boolDefaultVal := m1[0][2]
 		sch := oas3.Schema{
-			Type: openapi3.TypeBoolean}
+			Type: openapi3.NewTypesRef(openapi3.TypeBoolean)}
 		if boolDefaultVal == "true" {
 			sch.Default = true
 		} else {
@@ -92,7 +92,7 @@ func lineToIntOrLongDef(line string) (string, oas3.Schema, error) {
 			return "", oas3.Schema{}, err
 		}
 		sch := oas3.Schema{
-			Type:    openapi3.TypeInteger,
+			Type:    openapi3.NewTypesRef(openapi3.TypeInteger),
 			Default: defaultVal}
 		if intOrLong == "long" {
 			sch.Format = FormatIntegerInt64
@@ -108,7 +108,7 @@ func lineToStringDef(line string) (string, oas3.Schema) {
 	if len(m1) > 0 {
 		propName := m1[0][1]
 		sch := oas3.Schema{
-			Type:    openapi3.TypeString,
+			Type:    openapi3.NewTypesRef(openapi3.TypeString),
 			Default: strings.TrimSpace(m1[0][2])}
 		return propName, sch
 	}
@@ -128,18 +128,18 @@ func lineToArrayDef(line string, explicitCustomTypes []string) (string, *oas3.Sc
 		switch javaTypeLc {
 		case openapi3.TypeInteger:
 			sch := oas3.Schema{
-				Type: openapi3.TypeArray,
+				Type: openapi3.NewTypesRef(openapi3.TypeArray),
 				Items: oas3.NewSchemaRef("",
 					&oas3.Schema{
-						Type: openapi3.TypeInteger})}
+						Type: openapi3.NewTypesRef(openapi3.TypeInteger)})}
 			sr := oas3.NewSchemaRef("", &sch)
 			return propName, sr
 		case openapi3.TypeString:
 			sch := oas3.Schema{
-				Type: openapi3.TypeArray,
+				Type: openapi3.NewTypesRef(openapi3.TypeArray),
 				Items: oas3.NewSchemaRef("",
 					&oas3.Schema{
-						Type: openapi3.TypeString})}
+						Type: openapi3.NewTypesRef(openapi3.TypeString)})}
 			sr := oas3.NewSchemaRef("", &sch)
 			return propName, sr
 		default:
@@ -215,22 +215,22 @@ func ParseSpringLineToSchemaRef(line string, explicitCustomTypes []string) (stri
 	schemaRef := &oas3.SchemaRef{}
 	switch javaTypeLc {
 	case openapi3.TypeBoolean:
-		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: openapi3.TypeBoolean})
+		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: openapi3.NewTypesRef(openapi3.TypeBoolean)})
 	case "date":
 		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{
-			Type: openapi3.TypeString, Format: FormatStringDate})
+			Type: openapi3.NewTypesRef(openapi3.TypeString), Format: FormatStringDate})
 	case "datetime":
 		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{
-			Type:        openapi3.TypeString,
+			Type:        openapi3.NewTypesRef(openapi3.TypeString),
 			Description: "Date-time in Java format. Example: `2019-01-01T01:01:01.000+0000`. Note this is not compatible with RFC-3339 which is used by OpenAPI 3.0 Spec because it doesn't have a `:` between hours and minutes.",
 		})
 	case openapi3.TypeInteger:
-		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: openapi3.TypeInteger})
+		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: openapi3.NewTypesRef(openapi3.TypeInteger)})
 	case "long":
 		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{
-			Type: openapi3.TypeInteger, Format: FormatIntegerInt64})
+			Type: openapi3.NewTypesRef(openapi3.TypeInteger), Format: FormatIntegerInt64})
 	case openapi3.TypeString:
-		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: openapi3.TypeString})
+		schemaRef = oas3.NewSchemaRef("", &oas3.Schema{Type: openapi3.NewTypesRef(openapi3.TypeString)})
 	default:
 		found := false
 		for _, exType := range explicitCustomTypes {
@@ -287,20 +287,20 @@ func ParseSpringLineToSchema(line string) (string, *oas3.Schema, error) {
 	javaTypeLc := strings.ToLower(strings.TrimSpace(m2a[1]))
 	switch javaTypeLc {
 	case openapi3.TypeBoolean:
-		sch.Type = openapi3.TypeBoolean
+		sch.Type = openapi3.NewTypesRef(openapi3.TypeBoolean)
 	case openapi3.FormatDate:
-		sch.Type = openapi3.TypeString
+		sch.Type = openapi3.NewTypesRef(openapi3.TypeString)
 		sch.Format = FormatStringDate
 	case "datetime":
-		sch.Type = openapi3.TypeString
+		sch.Type = openapi3.NewTypesRef(openapi3.TypeString)
 		sch.Format = FormatStringDateTime
 	case openapi3.TypeInteger:
-		sch.Type = openapi3.TypeInteger
+		sch.Type = openapi3.NewTypesRef(openapi3.TypeInteger)
 	case "long":
-		sch.Type = openapi3.TypeInteger
+		sch.Type = openapi3.NewTypesRef(openapi3.TypeInteger)
 		sch.Format = FormatIntegerInt64
 	case openapi3.TypeString:
-		sch.Type = openapi3.TypeString
+		sch.Type = openapi3.NewTypesRef(openapi3.TypeString)
 	default:
 		panic(fmt.Sprintf("TYPE [%v] LINE [%v]", javaTypeLc, line))
 	}

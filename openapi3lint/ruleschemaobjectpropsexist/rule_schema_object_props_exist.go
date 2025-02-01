@@ -33,7 +33,7 @@ func (rule RuleSchemaObjectPropsExist) ProcessSpec(spec *openapi3.Spec, pointerB
 	vios := []lintutil.PolicyViolation{}
 
 	for schName, schRef := range spec.Components.Schemas {
-		if schRef == nil || schRef.Value == nil || schRef.Value.Type != openapi3.TypeObject {
+		if schRef == nil || schRef.Value == nil || !openapi3.TypesRefIs(schRef.Value.Type, openapi3.TypeObject) {
 			continue
 		}
 		/*
@@ -56,7 +56,7 @@ func (rule RuleSchemaObjectPropsExist) ProcessSpec(spec *openapi3.Spec, pointerB
 					pointerBase, schName)})
 		}
 		for propName, propRef := range schRef.Value.Properties {
-			if propRef == nil || propRef.Value == nil || propRef.Value.Type != openapi3.TypeObject {
+			if propRef == nil || propRef.Value == nil || !openapi3.TypesRefIs(propRef.Value.Type, openapi3.TypeObject) {
 				continue
 			}
 			/*

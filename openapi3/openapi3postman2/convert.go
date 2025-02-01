@@ -343,21 +343,21 @@ func schemaToString(schemaRef *oas3.SchemaRef) string {
 	}
 	schema := schemaRef.Value
 	parts := []string{}
-	schema.Type = strings.TrimSpace(schema.Type)
+	schemaType := strings.ToLower(strings.TrimSpace(openapi3.TypesRefString(schema.Type)))
 	schema.Format = strings.TrimSpace(schema.Format)
-	if len(schema.Type) > 0 {
-		parts = append(parts, schema.Type)
+	if schemaType != "" {
+		parts = append(parts, schemaType)
 	}
 	if len(schema.Format) > 0 {
 		parts = append(parts, schema.Format)
 	}
-	if strings.ToLower(schema.Type) == "array" {
+	if schemaType == openapi3.TypeArray {
 		if schema.Items != nil && schema.Items.Value != nil {
-			parts = append(parts, schema.Items.Value.Type)
+			parts = append(parts, openapi3.TypesRefString(schema.Items.Value.Type))
 		}
 	}
 	if len(parts) > 0 {
-		if len(parts) == 2 && parts[0] == "array" && parts[1] == "string" {
+		if len(parts) == 2 && parts[0] == openapi3.TypeArray && parts[1] == openapi3.TypeString {
 			parts = append(parts, "csv")
 		}
 		return "<" + strings.Join(parts, ".") + ">"
