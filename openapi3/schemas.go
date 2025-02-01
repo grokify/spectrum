@@ -53,3 +53,44 @@ func AdditionalPropertiesExists(props oas3.AdditionalProperties) bool {
 	}
 	return true
 }
+
+// NewTypes returns a value that is suitable for `oas3.Schema.Value.Type`.
+// In `0.123.0` and earlier, this is a `string`. In `0.124.0` and later, this is
+// of type `oas3.Types`. `oas3` is `github.com/getkin/kin-openapi/openapi3`.
+func NewTypesRef(t ...string) *oas3.Types {
+	ot := oas3.Types{}
+	for _, ti := range t {
+		ot = append(ot, ti)
+	}
+	return &ot
+}
+
+// TypesRefIs returns if the supplied `*oas3.Types` is any of the supplied values.
+// It returns false if `*oas3.Types` is false, or `type` an empty slice, or
+// none of the supplied types match. `oas3` is `github.com/getkin/kin-openapi/openapi3`.
+func TypesRefIs(t *oas3.Types, types ...string) bool {
+	if t == nil {
+		return false
+	} else if len(types) == 0 {
+		return false
+	}
+	for _, ty := range types {
+		if t.Is(ty) {
+			return true
+		}
+	}
+	return false
+}
+
+// TypesRefString returns a string if `oas3.Types` is not nil and has a single type.
+func TypesRefString(t *oas3.Types) string {
+	if t == nil {
+		return ""
+	} else if len(*t) != 1 {
+		return ""
+	}
+	for _, k := range *t {
+		return k
+	}
+	return ""
+}
