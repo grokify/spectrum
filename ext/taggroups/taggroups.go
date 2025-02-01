@@ -12,8 +12,9 @@ import (
 )
 
 const (
-	XTagGroupsPropertyName      = "x-tagGroups" // Redocly format
-	XTagGroupsPropertyNameKebab = "x-tag-groups"
+	XTagGroupsPropertyNameRedocly = "x-tagGroups"  // Redocly format
+	XTagGroupsPropertyNameKebab   = "x-tag-groups" // Alternate format
+	XTagGroupsPropertyName        = XTagGroupsPropertyNameRedocly
 )
 
 type TagGroupSet struct {
