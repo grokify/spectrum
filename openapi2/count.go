@@ -82,11 +82,11 @@ func WriteEndpointCountCSV(filename string, hset histogram.HistogramSet) error {
 		}
 	}
 	writer.Flush()
-	err = writer.Error()
-	if err != nil {
+	if err = writer.Error(); err != nil {
 		return err
+	} else {
+		return file.Close()
 	}
-	return file.Close()
 }
 
 // EndpointCount returns a count of the endpoints for a specification.

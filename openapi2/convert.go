@@ -34,9 +34,9 @@ func ConvertOAS2FileToOAS3File(oas2file, oas3file string, perm os.FileMode, pret
 		}
 		return os.WriteFile(oas3file, bytes, perm)
 	}
-	bytes, err := oas3.MarshalJSON()
-	if err != nil {
+	if bytes, err := oas3.MarshalJSON(); err != nil {
 		return err
+	} else {
+		return os.WriteFile(oas3file, bytes, perm)
 	}
-	return os.WriteFile(oas3file, bytes, perm)
 }
