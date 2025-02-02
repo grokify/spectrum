@@ -2,6 +2,7 @@ Spectrum - OpenAPI Spec SDK and Postman Converter
 =================================================
 
 [![Build Status][build-status-svg]][build-status-url]
+[![Lint Status][lint-status-svg]][lint-status-url]
 [![Go Report Card][goreport-svg]][goreport-url]
 [![Docs][docs-godoc-svg]][docs-godoc-url]
 [![LOC][loc-svg]][repo-url]
@@ -137,6 +138,8 @@ To set your environment variables, use the Settings Gear icon and then click "Ma
 
  [build-status-svg]: https://github.com/grokify/spectrum/workflows/test/badge.svg
  [build-status-url]: https://github.com/grokify/spectrum/actions/workflows/test.yaml
+ [lint-status-svg]: https://github.com/grokify/spectrum/workflows/lint/badge.svg
+ [lint-status-url]: https://github.com/grokify/spectrum/actions/workflows/lint.yaml
  [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/spectrum
  [goreport-url]: https://goreportcard.com/report/github.com/grokify/spectrum
  [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/spectrum
