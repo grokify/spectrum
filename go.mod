@@ -6,11 +6,11 @@ require (
 	github.com/ake-persson/mapslice-json v0.0.0-20210720081907-22c8edf57807
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/getkin/kin-openapi v0.131.0
-	github.com/grokify/gocharts/v2 v2.22.3
-	github.com/grokify/mogo v0.68.1
-	github.com/grokify/sogo v0.10.3
+	github.com/grokify/gocharts/v2 v2.22.4
+	github.com/grokify/mogo v0.68.2
+	github.com/grokify/sogo v0.10.4
 	github.com/jessevdk/go-flags v1.6.1
-	github.com/rs/zerolog v1.33.0
+	github.com/rs/zerolog v1.34.0
 	github.com/valyala/fasthttp v1.59.0
 	github.com/valyala/quicktemplate v1.8.0
 	golang.org/x/exp v0.0.0-20250305212735-054e65f0b394
@@ -22,8 +22,8 @@ require (
 	github.com/andybalholm/brotli v1.1.1 // indirect
 	github.com/apex/gateway v1.1.2 // indirect
 	github.com/aws/aws-lambda-go v1.47.0 // indirect
-	github.com/go-openapi/jsonpointer v0.21.0 // indirect
-	github.com/go-openapi/swag v0.23.0 // indirect
+	github.com/go-openapi/jsonpointer v0.21.1 // indirect
+	github.com/go-openapi/swag v0.23.1 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/grokify/base36 v1.0.5 // indirect
 	github.com/huandu/xstrings v1.5.0 // indirect
@@ -55,5 +55,5 @@ require (
 	golang.org/x/net v0.37.0 // indirect
 	golang.org/x/sys v0.31.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
-	gonum.org/v1/gonum v0.15.1 // indirect
+	gonum.org/v1/gonum v0.16.0 // indirect
 )
