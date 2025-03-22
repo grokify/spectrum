@@ -94,36 +94,38 @@ type ValidationStatus struct {
 	OpenAPI string
 }
 
-/*
-status: false
-message: |-
-  expected Object {
-    title: 'Medium API',
-    description: 'Articles that matter on social publishing platform'
-  } to have key version
-  	missing keys: version
-context: "#/info"
-openapi: 3.0.0
-*/
-
 func validateMore(spec *Spec) (ValidationStatus, error) {
-	version := strings.TrimSpace(spec.Info.Version)
-	if len(strings.TrimSpace(version)) == 0 {
-		version = OASVersionDefault
+	vs := ValidationStatus{}
+	if spec == nil {
+		return vs, ErrSpecNotSet
 	}
-	vs := ValidationStatus{OpenAPI: version}
-	if len(version) == 0 {
-		jdata, err := jsonutil.MarshalSimple(spec.Info, "", "  ")
-		if err != nil {
-			return vs, err
-		}
+	version := ""
+	if spec.Info == nil {
 		vs := ValidationStatus{
 			Context: "#/info",
-			Message: fmt.Sprintf("expect Object %s to have key version\nmissing keys:version", string(jdata)),
-			OpenAPI: "3.0.0"}
-		return vs, fmt.Errorf("E_OPENAPI3_MISSING_KEY [%s]", "info/version")
+			Message: "expect spec to have info object)",
+			OpenAPI: spec.OpenAPI}
+		return vs, fmt.Errorf("E_OPENAPI3_MISSING_KEY [%s]", "info")
+	} else {
+		version = strings.TrimSpace(spec.Info.Version)
+		if len(strings.TrimSpace(version)) == 0 {
+			version = OASVersionDefault
+		}
+		vs.OpenAPI = version
+
+		if len(version) == 0 {
+			jdata, err := jsonutil.MarshalSimple(spec.Info, "", "  ")
+			if err != nil {
+				return vs, err
+			}
+			vs := ValidationStatus{
+				Context: "#/info",
+				Message: fmt.Sprintf("expect Object %s to have key version\nmissing keys:version", string(jdata)),
+				OpenAPI: spec.OpenAPI}
+			return vs, fmt.Errorf("E_OPENAPI3_MISSING_KEY [%s]", "info/version")
+		}
+		vs.Status = true
 	}
-	vs.Status = true
 	return vs, nil
 }
 
