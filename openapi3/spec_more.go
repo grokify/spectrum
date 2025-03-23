@@ -13,7 +13,7 @@ import (
 	"github.com/grokify/gocharts/v2/data/histogram"
 	"github.com/grokify/gocharts/v2/data/table"
 	"github.com/grokify/gocharts/v2/data/table/tabulator"
-	"github.com/grokify/mogo/encoding/jsonutil"
+	"github.com/grokify/mogo/encoding/jsonutil/jsonraw"
 	"github.com/grokify/mogo/net/http/httputilmore"
 	"github.com/grokify/mogo/net/http/pathmethod"
 	"github.com/grokify/mogo/net/urlutil"
@@ -738,7 +738,7 @@ func (sm *SpecMore) MarshalJSON(prefix, indent string) ([]byte, error) {
 	}
 
 	if len(prefix) > 0 || len(indent) > 0 {
-		return jsonutil.IndentBytes(bytes, prefix, indent)
+		return jsonraw.IndentBytes(bytes, prefix, indent)
 	}
 
 	return bytes, nil
