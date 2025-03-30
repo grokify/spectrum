@@ -44,13 +44,14 @@ func (rule RuleSchemaReferences) ProcessSpec(spec *openapi3.Spec, pointerBase st
 	if err != nil {
 		return violations
 	}
-	if rule.name == lintutil.RulenameSchemaHasReference {
+	switch rule.name {
+	case lintutil.RulenameSchemaHasReference:
 		for _, schemaName := range schemaNoRef {
 			violations = append(violations, lintutil.PolicyViolation{
 				RuleName: lintutil.RulenameSchemaHasReference,
 				Location: openapi3.SchemaPointerExpand(pointerBase, schemaName)})
 		}
-	} else if rule.name == lintutil.RulenameSchemaReferenceHasSchema {
+	case lintutil.RulenameSchemaReferenceHasSchema:
 		for _, schemaName := range refNoSchema {
 			violations = append(violations, lintutil.PolicyViolation{
 				RuleName: lintutil.RulenameSchemaReferenceHasSchema,

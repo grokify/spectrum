@@ -211,13 +211,13 @@ func postmanAddItemToFolder(pman postman2.Collection, pmItem *postman2.Item, pmF
 }
 */
 
-func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *openapi3.Spec, oasUrl string, method string, operation *oas3.Operation) (*postman2.Item, error) {
-	pmUrl := BuildPostmanURL(cfg, oas3spec, oasUrl, operation)
+func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *openapi3.Spec, oasURL string, method string, operation *oas3.Operation) (*postman2.Item, error) {
+	pmURL := BuildPostmanURL(cfg, oas3spec, oasURL, operation)
 	item := &postman2.Item{
 		Name: operation.Summary,
 		Request: &postman2.Request{
 			Method: strings.ToUpper(method),
-			URL:    &pmUrl,
+			URL:    &pmURL,
 		},
 	}
 
@@ -247,7 +247,7 @@ func Openapi3OperationToPostman2APIItem(cfg Configuration, oas3spec *openapi3.Sp
 	}
 
 	if cfg.RequestBodyFunc != nil {
-		bodyString := strings.TrimSpace(cfg.RequestBodyFunc(oasUrl))
+		bodyString := strings.TrimSpace(cfg.RequestBodyFunc(oasURL))
 		if len(bodyString) > 0 {
 			item.Request.Body = &postman2.RequestBody{
 				Mode: "raw",
@@ -272,18 +272,18 @@ func BuildPostmanURL(cfg Configuration, spec *openapi3.Spec, specPath string, op
 	}
 	overrideServerURL := urlutil.JoinAbsolute(partsOverrideURL...)
 
-	specURLString := openapi3.BuildApiURLOAS(specServerURL, overrideServerURL, specPath)
+	specURLString := openapi3.BuildAPIURLOAS(specServerURL, overrideServerURL, specPath)
 	pmanURLString := postman2.APIURLOasToPostman(specURLString)
 	pmanURL := postman2.NewURL(pmanURLString)
 	pmanURL = PostmanURLAddDefaultsOAS3(pmanURL, operation)
 	return pmanURL
 }
 
-var postmanUrlDefaultsRx *regexp.Regexp = regexp.MustCompile(`^\s*(:(.+))\s*$`)
+var postmanURLDefaultsRx *regexp.Regexp = regexp.MustCompile(`^\s*(:(.+))\s*$`)
 
 func PostmanURLAddDefaultsOAS3(pmanURL postman2.URL, operation *oas3.Operation) postman2.URL {
 	for _, part := range pmanURL.Path {
-		match := postmanUrlDefaultsRx.FindAllStringSubmatch(part, -1)
+		match := postmanURLDefaultsRx.FindAllStringSubmatch(part, -1)
 		if len(match) > 0 {
 			baseVariable := match[0][2]
 			var defaultValue interface{}

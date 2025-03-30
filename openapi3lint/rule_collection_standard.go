@@ -48,10 +48,10 @@ func (std RuleCollectionStandard) RuleExists(ruleName string) bool {
 func (std RuleCollectionStandard) RuleNames() []string {
 	rulenames := []string{
 		lintutil.RulenameDatatypeIntFormatStandardExist,
-		lintutil.RulenameOpIdStyleCamelCase,
-		lintutil.RulenameOpIdStyleKebabCase,
-		lintutil.RulenameOpIdStylePascalCase,
-		lintutil.RulenameOpIdStyleSnakeCase,
+		lintutil.RulenameOpIDStyleCamelCase,
+		lintutil.RulenameOpIDStyleKebabCase,
+		lintutil.RulenameOpIDStylePascalCase,
+		lintutil.RulenameOpIDStyleSnakeCase,
 		lintutil.RulenameOpSummaryExist,
 		lintutil.RulenameOpSummaryStyleFirstUpperCase,
 		lintutil.RulenamePathParamStyleCamelCase,
@@ -77,13 +77,13 @@ func (std RuleCollectionStandard) Rule(name string) (Rule, error) {
 	case lintutil.RulenameDatatypeIntFormatStandardExist:
 		return ruleintstdformat.NewRule(), nil
 
-	case lintutil.RulenameOpIdStyleCamelCase:
+	case lintutil.RulenameOpIDStyleCamelCase:
 		return ruleopidstyle.NewRule(stringcase.CamelCase)
-	case lintutil.RulenameOpIdStyleKebabCase:
+	case lintutil.RulenameOpIDStyleKebabCase:
 		return ruleopidstyle.NewRule(stringcase.KebabCase)
-	case lintutil.RulenameOpIdStylePascalCase:
+	case lintutil.RulenameOpIDStylePascalCase:
 		return ruleopidstyle.NewRule(stringcase.PascalCase)
-	case lintutil.RulenameOpIdStyleSnakeCase:
+	case lintutil.RulenameOpIDStyleSnakeCase:
 		return ruleopidstyle.NewRule(stringcase.SnakeCase)
 
 	case lintutil.RulenameOpSummaryExist:

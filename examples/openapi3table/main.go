@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 
 	"github.com/grokify/gocharts/v2/data/table/tabulator"
 	"github.com/grokify/spectrum/openapi3"
@@ -32,12 +32,15 @@ func main() {
 		PageLink:   "https://developers.ringcentral.com",
 		TableDomID: "apitable",
 		ColumnSet:  ColumnTexts()}
-	pageParams.AddSpec(spec)
+	err = pageParams.AddSpec(spec)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	pageHTML := openapi3html.SpectrumUIPage(pageParams)
 
 	filename := "api-regisry.html"
-	err = ioutil.WriteFile(filename, []byte(pageHTML), 0644)
+	err = os.WriteFile(filename, []byte(pageHTML), 0600)
 	if err != nil {
 		log.Fatal(err)
 	}

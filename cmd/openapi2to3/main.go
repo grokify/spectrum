@@ -33,9 +33,11 @@ func main() {
 		log.Fatalf("E_INPUT_FILE_IS_NOT_NONEMPTY_FILE [%v]", opts.OAS2File)
 	}
 
-	wantPretty := false
+	var wantPretty bool
 	if len(opts.Pretty) > 0 {
 		wantPretty = true
+	} else {
+		wantPretty = false
 	}
 
 	err = openapi2.ConvertOAS2FileToOAS3File(opts.OAS2File, opts.OAS3File, 0644, wantPretty)

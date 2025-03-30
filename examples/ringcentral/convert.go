@@ -25,28 +25,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if 1 == 1 {
-		spec, err := openapi3.ReadFile(opts.OpenAPISpec, true)
-		if err != nil {
-			log.Fatal(err)
-		}
-		sm := openapi3.SpecMore{Spec: spec}
-		if 1 == 1 {
-			err := sm.SchemaPropertiesWithoutDescriptionsWriteFile("rc-platform.yml.schema-properties_missing-descriptions.txt")
-			if err != nil {
-				log.Fatal(err)
-			}
-		}
-		if 1 == 1 {
-			err := sm.OperationParametersWithoutDescriptionsWriteFile("rc-platform.yml.op-params_missing-descriptions.txt")
-			if err != nil {
-				log.Fatal(err)
-			}
-
-		}
-		panic("ZZZ")
-	}
-
 	cfg := openapi2postman2.Configuration{
 		PostmanURLBase: "{{RINGCENTRAL_SERVER_URL}}",
 		PostmanHeaders: []postman2.Header{{
@@ -63,4 +41,22 @@ func main() {
 	}
 
 	fmt.Println("DONE")
+}
+
+func ReadFile(filename string) {
+	spec, err := openapi3.ReadFile(filename, true)
+	if err != nil {
+		log.Fatal(err)
+	}
+	sm := openapi3.SpecMore{Spec: spec}
+
+	err = sm.SchemaPropertiesWithoutDescriptionsWriteFile("rc-platform.yml.schema-properties_missing-descriptions.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = sm.OperationParametersWithoutDescriptionsWriteFile("rc-platform.yml.op-params_missing-descriptions.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
 }

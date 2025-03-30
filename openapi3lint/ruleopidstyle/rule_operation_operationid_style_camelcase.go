@@ -10,43 +10,43 @@ import (
 	"github.com/grokify/spectrum/openapi3lint/lintutil"
 )
 
-type RuleOperationOperationIdStyle struct {
+type RuleOperationOperationIDStyle struct {
 	name       string
 	stringCase string
 }
 
-func NewRule(requiredStringCase string) (RuleOperationOperationIdStyle, error) {
+func NewRule(requiredStringCase string) (RuleOperationOperationIDStyle, error) {
 	canonicalCase, err := stringcase.Parse(requiredStringCase)
 	if err != nil {
-		return RuleOperationOperationIdStyle{},
+		return RuleOperationOperationIDStyle{},
 			fmt.Errorf("invalid string case [%s]", requiredStringCase)
 	}
-	rule := RuleOperationOperationIdStyle{
+	rule := RuleOperationOperationIDStyle{
 		stringCase: canonicalCase}
 	switch canonicalCase {
 	case stringcase.CamelCase:
-		rule.name = lintutil.RulenameOpIdStyleCamelCase
+		rule.name = lintutil.RulenameOpIDStyleCamelCase
 	case stringcase.KebabCase:
-		rule.name = lintutil.RulenameOpIdStyleKebabCase
+		rule.name = lintutil.RulenameOpIDStyleKebabCase
 	case stringcase.PascalCase:
-		rule.name = lintutil.RulenameOpIdStylePascalCase
+		rule.name = lintutil.RulenameOpIDStylePascalCase
 	case stringcase.SnakeCase:
-		rule.name = lintutil.RulenameOpIdStyleSnakeCase
+		rule.name = lintutil.RulenameOpIDStyleSnakeCase
 	default:
 		return rule, fmt.Errorf("invalid string case [%s]", canonicalCase)
 	}
 	return rule, nil
 }
 
-func (rule RuleOperationOperationIdStyle) Name() string {
+func (rule RuleOperationOperationIDStyle) Name() string {
 	return rule.name
 }
 
-func (rule RuleOperationOperationIdStyle) Scope() string {
+func (rule RuleOperationOperationIDStyle) Scope() string {
 	return lintutil.ScopeOperation
 }
 
-func (rule RuleOperationOperationIdStyle) ProcessOperation(spec *openapi3.Spec, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
+func (rule RuleOperationOperationIDStyle) ProcessOperation(spec *openapi3.Spec, op *oas3.Operation, opPointer, path, method string) []lintutil.PolicyViolation {
 	if spec == nil || op == nil || len(op.OperationID) == 0 {
 		return nil
 	}
@@ -65,6 +65,6 @@ func (rule RuleOperationOperationIdStyle) ProcessOperation(spec *openapi3.Spec, 
 	return []lintutil.PolicyViolation{vio}
 }
 
-func (rule RuleOperationOperationIdStyle) ProcessSpec(spec *openapi3.Spec, pointerBase string) []lintutil.PolicyViolation {
+func (rule RuleOperationOperationIDStyle) ProcessSpec(spec *openapi3.Spec, pointerBase string) []lintutil.PolicyViolation {
 	return []lintutil.PolicyViolation{}
 }

@@ -15,7 +15,7 @@ type Paths struct {
 
 func (p Paths) PathKeys() []string {
 	var paths []string
-	pathsMap := p.Paths.Map()
+	pathsMap := p.Map()
 	for k := range pathsMap {
 		paths = append(paths, k)
 	}

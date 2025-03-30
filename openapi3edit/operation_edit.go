@@ -26,10 +26,10 @@ func NewOperationEdit(opPath, opMethod string, op *oas3.Operation) OperationEdit
 
 func (ope *OperationEdit) SetExternalDocs(docURL, docDescription string, preserveIfReqEmpty bool) error {
 	// return operationAddExternalDocs(ope.OperationMore.Operation, docURL, docDescription, preserveIfReqEmpty)
-	if ope.OperationMore.Operation == nil {
+	if ope.Operation == nil {
 		return openapi3.ErrOperationNotSet
 	}
-	op := ope.OperationMore.Operation
+	op := ope.Operation
 	docURL = strings.TrimSpace(docURL)
 	docDescription = strings.TrimSpace(docDescription)
 	if len(docURL) > 0 || len(docDescription) > 0 {
@@ -53,10 +53,10 @@ func (ope *OperationEdit) SetExternalDocs(docURL, docDescription string, preserv
 }
 
 func (ope *OperationEdit) SetRequestBodyAttrs(description string, required bool) error {
-	if ope.OperationMore.Operation == nil {
+	if ope.Operation == nil {
 		return openapi3.ErrOperationNotSet
 	}
-	op := ope.OperationMore.Operation
+	op := ope.Operation
 	if op.RequestBody == nil {
 		op.RequestBody = &oas3.RequestBodyRef{}
 	}
@@ -70,10 +70,10 @@ func (ope *OperationEdit) SetRequestBodyAttrs(description string, required bool)
 }
 
 func (ope *OperationEdit) SetRequestBodySchemaRef(mediaType string, schemaRef *oas3.SchemaRef) error {
-	if ope.OperationMore.Operation == nil {
+	if ope.Operation == nil {
 		return openapi3.ErrOperationNotSet
 	}
-	op := ope.OperationMore.Operation
+	op := ope.Operation
 	mediaType = strings.TrimSpace(mediaType)
 	if op.RequestBody == nil {
 		op.RequestBody = &oas3.RequestBodyRef{}
@@ -88,10 +88,10 @@ func (ope *OperationEdit) SetRequestBodySchemaRef(mediaType string, schemaRef *o
 
 // AddSecurityRequirement adds a scheme name and value to an operation.
 func (ope *OperationEdit) AddSecurityRequirement(schemeName string, schemeValue []string) error {
-	if ope.OperationMore.Operation == nil {
+	if ope.Operation == nil {
 		return openapi3.ErrOperationNotSet
 	}
-	op := ope.OperationMore.Operation
+	op := ope.Operation
 	if op.Security == nil {
 		op.Security = &oas3.SecurityRequirements{}
 	}
@@ -109,17 +109,17 @@ func (ope *OperationEdit) SetRequestBodySchemaRefMore(description string, requir
 */
 
 func (ope *OperationEdit) SetResponseBodySchemaRefMore(statusCode, description, contentType string, schemaRef *oas3.SchemaRef) error {
-	return operationAddResponseBodySchemaRef(ope.OperationMore.Operation, statusCode, description, contentType, schemaRef)
+	return operationAddResponseBodySchemaRef(ope.Operation, statusCode, description, contentType, schemaRef)
 }
 
 func (ope *OperationEdit) AddToSpec(spec *openapi3.Spec, force bool) (bool, error) {
 	sm := openapi3.SpecMore{Spec: spec}
-	op, err := sm.OperationByPathMethod(ope.OperationMore.Path, ope.OperationMore.Method)
+	op, err := sm.OperationByPathMethod(ope.Path, ope.Method)
 	if err != nil {
 		return false, err
 	}
 	if op == nil || force {
-		spec.AddOperation(ope.OperationMore.Path, ope.OperationMore.Method, ope.OperationMore.Operation)
+		spec.AddOperation(ope.Path, ope.Method, ope.Operation)
 		return true, nil
 	}
 	return false, nil

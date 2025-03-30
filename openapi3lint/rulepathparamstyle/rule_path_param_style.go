@@ -58,14 +58,14 @@ func (rule RulePathParamStyle) ProcessSpec(spec *openapi3.Spec, pointerBase stri
 	vios := []lintutil.PolicyViolation{}
 
 	pathsMap := spec.Paths.Map()
-	for pathUrl := range pathsMap {
-		// for pathUrl := range spec.Paths { // getkin v0.121.0 to v0.122.0
-		m := rxParams.FindAllStringSubmatch(pathUrl, -1)
+	for pathURL := range pathsMap {
+		// for pathURL := range spec.Paths { // getkin v0.121.0 to v0.122.0
+		m := rxParams.FindAllStringSubmatch(pathURL, -1)
 		if len(m) == 0 {
 			continue
 		}
 		jsPtr := jsonpointer.PointerSubEscapeAll("%s#/paths/%s",
-			pointerBase, pathUrl)
+			pointerBase, pathURL)
 		for _, mi := range m {
 			isWantCase, err := stringcase.IsCase(rule.stringCase, mi[1])
 			if err != nil {

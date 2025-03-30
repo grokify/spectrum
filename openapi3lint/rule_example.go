@@ -7,7 +7,7 @@ import (
 
 func RulesConfigExample1() map[string]RuleConfig {
 	rules := map[string]RuleConfig{
-		lintutil.RulenameOpIdStyleCamelCase:            {},
+		lintutil.RulenameOpIDStyleCamelCase:            {},
 		lintutil.RulenameOpSummaryExist:                {},
 		lintutil.RulenameOpSummaryStyleFirstUpperCase:  {},
 		lintutil.RulenamePathParamStylePascalCase:      {},

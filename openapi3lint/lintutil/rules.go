@@ -3,12 +3,12 @@ package lintutil
 const (
 	RulenameDatatypeIntFormatStandardExist = "datatype-int-format-standard-exist"
 	RuleOpDescExist                        = "operation-description-exist"
-	RuleOpIdExist                          = "operation-operationid-exist"
+	RuleOpIDExist                          = "operation-operationid-exist"
 
-	RulenameOpIdStyleCamelCase  = "operation-operationid-style-camelcase"
-	RulenameOpIdStyleKebabCase  = "operation-operationid-style-kebabcase"
-	RulenameOpIdStylePascalCase = "operation-operationid-style-pascalcase"
-	RulenameOpIdStyleSnakeCase  = "operation-operationid-style-snakecase"
+	RulenameOpIDStyleCamelCase  = "operation-operationid-style-camelcase"
+	RulenameOpIDStyleKebabCase  = "operation-operationid-style-kebabcase"
+	RulenameOpIDStylePascalCase = "operation-operationid-style-pascalcase"
+	RulenameOpIDStyleSnakeCase  = "operation-operationid-style-snakecase"
 
 	RulenameSchemaNameStylePascalCase = "schema-name-style-pascalcase"
 	RulenameSchemaHasReference        = "schema-has-reference"

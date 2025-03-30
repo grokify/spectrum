@@ -137,19 +137,19 @@ func (tod *TagOnologyData) Equal(data TagOnologyData) ([]string, bool) {
 }
 
 func (to *TagOnology) SpecFilename() string {
-	casefunc := stringcase.FuncToWantCaseOrDefault(to.Ontology.SpecFileCase, DefaultCaseToFunc)
+	casefunc := stringcase.FuncToWantCaseOrDefault(to.SpecFileCase, DefaultCaseToFunc)
 	resourceName := to.ResourceNameSingular
-	if to.Ontology.SpecFileResourceIsPlural {
+	if to.SpecFileResourceIsPlural {
 		resourceName = to.ResourceNamePlural
 	}
 	filename := resourceName
-	if len(to.Ontology.SpecFilePrefix) > 0 {
-		filename = to.Ontology.SpecFilePrefix + " " + filename
+	if len(to.SpecFilePrefix) > 0 {
+		filename = to.SpecFilePrefix + " " + filename
 	}
-	if len(to.Ontology.SpecFileSuffix) > 0 {
-		filename = filename + " " + to.Ontology.SpecFileSuffix
+	if len(to.SpecFileSuffix) > 0 {
+		filename = filename + " " + to.SpecFileSuffix
 	}
-	return casefunc(filename) + to.Ontology.SpecFileExt
+	return casefunc(filename) + to.SpecFileExt
 }
 
 func (to *TagOnology) ResourcePathVar() string {
@@ -157,18 +157,18 @@ func (to *TagOnology) ResourcePathVar() string {
 	if len(resourceNameSingle) == 0 {
 		resourceNameSingle = to.ResourceNameSingular
 	}
-	casefunc := stringcase.FuncToWantCaseOrDefault(to.Ontology.PathVarCase, DefaultCaseToFunc)
-	return casefunc(to.Ontology.PathIDPrefix + " " + resourceNameSingle + " " + to.Ontology.PathIDSuffix)
+	casefunc := stringcase.FuncToWantCaseOrDefault(to.PathVarCase, DefaultCaseToFunc)
+	return casefunc(to.PathIDPrefix + " " + resourceNameSingle + " " + to.PathIDSuffix)
 }
 
 func (to *TagOnology) ResourceSchemaNameRequest() string {
-	casefunc := stringcase.FuncToWantCaseOrDefault(to.Ontology.SchemaNameCase, DefaultCaseToFunc)
+	casefunc := stringcase.FuncToWantCaseOrDefault(to.SchemaNameCase, DefaultCaseToFunc)
 	return casefunc(to.ResourceNameSingular)
 }
 
 func (to *TagOnology) ResourceSchemaNameResponse() string {
-	casefunc := stringcase.FuncToWantCaseOrDefault(to.Ontology.SchemaNameCase, DefaultCaseToFunc)
-	return casefunc(to.ResourceNameSingular + " " + to.Ontology.SchemaNameReponseSuffix)
+	casefunc := stringcase.FuncToWantCaseOrDefault(to.SchemaNameCase, DefaultCaseToFunc)
+	return casefunc(to.ResourceNameSingular + " " + to.SchemaNameReponseSuffix)
 }
 
 func (to *TagOnology) CreateSummary() string { return to.ActionSummary(ActionCreateDescription, false) }
@@ -193,7 +193,7 @@ func (to *TagOnology) DeleteOperationID() string { return to.ActionOperationID(A
 func (to *TagOnology) ListOperationID() string   { return to.ActionOperationID(ActionList, true) }
 
 func (to *TagOnology) ActionOperationID(action string, plural bool) string {
-	xcasefuncOpID := stringcase.FuncToWantCaseOrNoOp(to.Ontology.OperationIDCase)
+	xcasefuncOpID := stringcase.FuncToWantCaseOrNoOp(to.OperationIDCase)
 	if plural {
 		return xcasefuncOpID(strings.Join([]string{action, to.ResourceNamePlural}, " "))
 	}

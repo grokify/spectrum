@@ -110,9 +110,9 @@ type Request struct {
 }
 
 func (req *Request) ToCanonical() postman2.Request {
-	pmUrl := postman2.NewURL(req.URL)
+	pmURL := postman2.NewURL(req.URL)
 	return postman2.Request{
-		URL:         &pmUrl,
+		URL:         &pmURL,
 		Method:      req.Method,
 		Header:      req.Header,
 		Body:        &req.Body,

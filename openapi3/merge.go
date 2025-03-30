@@ -326,10 +326,11 @@ func MergeSchemas(specMaster, specExtra *Spec, specExtraNote string, mergeOpts *
 				checkCollisionResult := mergeOpts.CheckSchemaCollision(schemaName, schemaMaster, schemaExtra, specExtraNote)
 				if checkCollisionResult != CollisionCheckSame &&
 					mergeOpts.CollisionCheckResult != CollisionCheckSkip {
-					if mergeOpts.CollisionCheckResult == CollisionCheckOverwrite {
+					switch mergeOpts.CollisionCheckResult {
+					case CollisionCheckOverwrite:
 						delete(specMaster.Components.Schemas, schemaName)
 						specMaster.Components.Schemas[schemaName] = schemaExtra
-					} else if mergeOpts.CollisionCheckResult == CollisionCheckError {
+					case CollisionCheckError:
 						return nil, fmt.Errorf("E_SCHEMA_COLLISION [%v] EXTRA_SPEC [%s]", schemaName, specExtraNote)
 					}
 				}
