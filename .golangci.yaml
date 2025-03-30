@@ -1,24 +1,43 @@
+version: "2"
 linters:
   enable:
     - dogsled
     - dupl
-    - gofmt
-    - goimports
     - gosec
     - misspell
     - nakedret
-    - stylecheck
+    - staticcheck
     - unconvert
     - unparam
     - whitespace
-linters-settings:
-  stylecheck:
-    checks:
-      - all
-      - '-ST1003' # disable uppercase acronyms, like Google Go SDK
-issues:
-  exclude-rules:
-    - path: openapi2/copy.go
-      text: "`copyOrIgnoreEndpoint` - `path` is unused"
-    - path: openapi2/copy.go
-      text: "`copyOrIgnoreEndpoint` - `specOld` is unused"
+  settings:
+    staticcheck:
+      checks:
+        - -ST1003
+        - all
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - path: openapi2/copy.go
+        text: '`copyOrIgnoreEndpoint` - `path` is unused'
+      - path: openapi2/copy.go
+        text: '`copyOrIgnoreEndpoint` - `specOld` is unused'
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
