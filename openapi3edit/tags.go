@@ -7,6 +7,7 @@ import (
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/mogo/type/stringsutil"
+	"github.com/grokify/mogo/type/strslices"
 	"github.com/grokify/spectrum/openapi3"
 )
 
@@ -161,7 +162,7 @@ func (tmo *TagsModifyOpts) ModifyTagsOperationFunc(path, method string, op *oas3
 	for tagTry, urlSuffixes := range tmo.TagURLsMap {
 		tags := strings.Split(tagTry, ",")
 		tags = stringsutil.SliceCondenseSpace(tags, true, false)
-		if stringsutil.SliceIndexMore(
+		if strslices.IndexMore(
 			urlSuffixes,
 			path, true, true, stringsutil.MatchStringSuffix) > -1 {
 			op.Tags = tags
