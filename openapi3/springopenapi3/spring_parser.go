@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
-	"github.com/grokify/mogo/type/stringsutil"
+	"github.com/grokify/mogo/type/strslices"
 	"github.com/grokify/spectrum/openapi3"
 )
 
@@ -333,6 +333,6 @@ func ParseSpringCodeColumnsRaw(input []string) [][]string {
 			columns = append(columns, curLines)
 		}
 	}
-	columns = stringsutil.Slice2FilterLinesHaveIndex(columns, "@Column", 0)
+	columns = strslices.SoSFilterLinesHaveIndex(columns, "@Column", 0)
 	return columns
 }
