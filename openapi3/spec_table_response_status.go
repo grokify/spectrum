@@ -35,7 +35,7 @@ func (sm *SpecMore) StatusCodesHistogram() *histogram.HistogramSets {
 func (sm *SpecMore) WriteFileXLSXOperationStatusCodes(filename string) error {
 	hsets := sm.StatusCodesHistogram()
 	// return hsets.WriteXLSXPivot(filename, hsets.Name, "Method", "Path", "", "")
-	return hsets.WriteXLSXPivot(filename, histogram.TablePivotOpts{
+	return hsets.WriteXLSXPivot(filename, histogram.SetsTablePivotOpts{
 		TableName:           hsets.Name,
 		ColNameHistogramSet: "Method",
 		ColNameHistogram:    "Path",
