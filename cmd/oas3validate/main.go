@@ -1,8 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"log"
+	"log/slog"
 	"os"
 	"strings"
 
@@ -23,7 +22,8 @@ func main() {
 	var opts Options
 	_, err := flags.Parse(&opts)
 	if err != nil {
-		log.Fatal(err)
+		slog.Error(err.Error())
+		os.Exit(1)
 	}
 
 	var spec *openapi3.Spec
@@ -33,35 +33,43 @@ func main() {
 	} else {
 		spec, err = openapi3.ReadFile(opts.SpecFileOAS3, true)
 	}
-
 	if err != nil {
-		log.Fatal(err)
+		slog.Error(err.Error())
+		os.Exit(2)
 	}
 
 	sm := openapi3.SpecMore{Spec: spec}
 
-	log.Printf(
-		"S_SPEC_VALID File [%s] Title [%s] Op Count [%d]",
-		opts.SpecFileOAS3, spec.Info.Title, sm.OperationsCount())
+	slog.Info(
+		"validSpecInfo",
+		"filename", opts.SpecFileOAS3,
+		"title", spec.Info.Title,
+		"opsCount", sm.OperationsCount())
 
 	sortBy := histogram.SortValueDesc
 	ops := sm.OperationCountsByTag()
-	ops.WriteTableASCII(os.Stdout,
+	err = ops.WriteTableASCII(os.Stdout,
 		[]string{"Tag", "Operation Count"}, sortBy, true)
+	if err != nil {
+		slog.Error(err.Error())
+		os.Exit(3)
+	}
 
 	ops2 := ops.ItemCounts(sortBy)
 	err = fmtutil.PrintJSON(ops2)
 	if err != nil {
-		log.Fatal(err)
+		slog.Error(err.Error())
+		os.Exit(3)
 	}
 
 	md := ops2.Markdown("1. Count: ", ", Category: ", true, true)
-	fmt.Println(md)
+	slog.Info(md)
 	opts.XlsxWrite = strings.TrimSpace(opts.XlsxWrite)
 	if len(opts.XlsxWrite) > 0 {
 		err := sm.WriteFileXLSX(opts.XlsxWrite, nil, nil, nil)
 		if err != nil {
-			log.Fatal(err)
+			slog.Error(err.Error())
+			os.Exit(4)
 		}
 	}
 
@@ -70,15 +78,17 @@ func main() {
 		err := sm.WriteFileXLSXOperationStatusCodes(
 			opts.WriteOpStatusCodeXlsx)
 		if err != nil {
-			log.Fatal(err)
+			slog.Error(err.Error())
+			os.Exit(5)
 		}
 	}
 
 	opIDs := sm.OperationIDs()
-	fmt.Printf("OPERATION ID COUNT [%d]\n", len(opIDs))
+	slog.Info("operationIDs", "count", len(opIDs))
 
 	endpoints := sm.PathMethods(true)
-	fmt.Printf("ENDPOINT COUNT [%d]\n", len(endpoints))
+	slog.Info("endpoints", "count", len(endpoints))
 
-	fmt.Println("DONE")
+	slog.Info("DONE")
+	os.Exit(0)
 }
