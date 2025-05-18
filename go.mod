@@ -10,7 +10,7 @@ require (
 	github.com/getkin/kin-openapi v0.132.0
 	github.com/grokify/gocharts/v2 v2.24.7
 	github.com/grokify/mogo v0.69.3
-	github.com/grokify/sogo v0.10.13
+	github.com/grokify/sogo v0.10.14
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/qdm12/reprint v0.0.0-20200326205758-722754a53494
 	github.com/rs/zerolog v1.34.0
@@ -45,16 +45,17 @@ require (
 	github.com/oasdiff/yaml v0.0.0-20250309154309-f31be36b4037 // indirect
 	github.com/oasdiff/yaml3 v0.0.0-20250309153720-d2182401db90 // indirect
 	github.com/olekukonko/errors v1.1.0 // indirect
-	github.com/olekukonko/ll v0.0.6-0.20250511102614-9564773e9d27 // indirect
-	github.com/olekukonko/tablewriter v1.0.2 // indirect
+	github.com/olekukonko/ll v0.0.7 // indirect
+	github.com/olekukonko/tablewriter v1.0.5 // indirect
 	github.com/perimeterx/marshmallow v1.1.5 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/richardlehane/mscfb v1.0.4 // indirect
 	github.com/richardlehane/msoleps v1.0.4 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
+	github.com/tiendc/go-deepcopy v1.6.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/xuri/efp v0.0.1 // indirect
-	github.com/xuri/excelize/v2 v2.9.0 // indirect
+	github.com/xuri/excelize/v2 v2.9.1 // indirect
 	github.com/xuri/nfp v0.0.1 // indirect
 	golang.org/x/crypto v0.38.0 // indirect
 	golang.org/x/image v0.27.0 // indirect
