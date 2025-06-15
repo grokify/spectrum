@@ -9,7 +9,7 @@ require (
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/getkin/kin-openapi v0.132.0
 	github.com/grokify/gocharts/v2 v2.24.11
-	github.com/grokify/mogo v0.70.5
+	github.com/grokify/mogo v0.70.8
 	github.com/grokify/sogo v0.11.5
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/qdm12/reprint v0.0.0-20200326205758-722754a53494
