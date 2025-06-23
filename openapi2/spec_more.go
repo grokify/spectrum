@@ -11,31 +11,31 @@ type SpecMore struct {
 	Spec *Spec
 }
 
-func (m *SpecMore) Meta() *spectrum.SpecMeta {
+func (sm *SpecMore) Meta() *spectrum.SpecMeta {
 	meta := spectrum.NewSpecMeta()
-	if m.Spec == nil {
+	if sm.Spec == nil {
 		return meta
 	}
-	meta.Names = m.Names()
+	meta.Names = sm.Names()
 	meta.Inflate()
 	return meta
 }
 
-func (more *SpecMore) Names() spectrum.SpecMetaNames {
+func (sm *SpecMore) Names() spectrum.SpecMetaNames {
 	out := spectrum.SpecMetaNames{
-		Endpoints: more.Endpoints(),
-		Models:    more.ModelNames(),
-		Paths:     more.PathNames(),
+		Endpoints: sm.Endpoints(),
+		Models:    sm.ModelNames(),
+		Paths:     sm.PathNames(),
 	}
 	return out
 }
 
-func (more *SpecMore) Endpoints() []string {
+func (sm *SpecMore) Endpoints() []string {
 	var out []string
-	if more.Spec == nil {
+	if sm.Spec == nil {
 		return out
 	}
-	for k, pathItem := range more.Spec.Paths {
+	for k, pathItem := range sm.Spec.Paths {
 		if pathItem.Delete != nil {
 			out = append(out, spectrum.EndpointString(http.MethodDelete, k))
 		}
@@ -62,18 +62,18 @@ func (more *SpecMore) Endpoints() []string {
 	return out
 }
 
-func (more *SpecMore) ModelNames() []string {
+func (sm *SpecMore) ModelNames() []string {
 	var out []string
-	for k := range more.Spec.Definitions {
+	for k := range sm.Spec.Definitions {
 		out = append(out, k)
 	}
 	sort.Strings(out)
 	return out
 }
 
-func (more *SpecMore) PathNames() []string {
+func (sm *SpecMore) PathNames() []string {
 	var out []string
-	for k := range more.Spec.Paths {
+	for k := range sm.Spec.Paths {
 		out = append(out, k)
 	}
 	sort.Strings(out)
