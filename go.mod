@@ -18,7 +18,7 @@ require (
 	github.com/valyala/quicktemplate v1.8.0
 	golang.org/x/exp v0.0.0-20250718183923-645b1fa84792
 	gopkg.in/yaml.v3 v3.0.1
-	sigs.k8s.io/yaml v1.5.0
+	sigs.k8s.io/yaml v1.6.0
 )
 
 require (
