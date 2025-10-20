@@ -297,7 +297,7 @@ func (sm *SpecMore) OperationsCount() int {
 // OperationCountsByTag returns a histogram for operations by tag.
 func (sm *SpecMore) OperationCountsByTag() *histogram.Histogram {
 	hist := histogram.NewHistogram("Operation Counts by Tag")
-	hist.Bins = sm.TagsMap(&TagsOpts{InclOps: true})
+	hist.Items = sm.TagsMap(&TagsOpts{InclOps: true})
 	hist.Inflate()
 	return hist
 }

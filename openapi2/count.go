@@ -64,14 +64,14 @@ func WriteEndpointCountCSV(filename string, hset histogram.HistogramSet) error {
 	if err != nil {
 		return err
 	}
-	for tagName, hist := range hset.HistogramMap {
+	for tagName, hist := range hset.Items {
 		hist.Inflate()
-		for endpoint := range hist.Bins {
+		for endpoint := range hist.Items {
 			parts := strings.Split(endpoint, " ")
 			if len(parts) >= 2 {
 				row := []string{
 					tagName,
-					strconv.Itoa(len(hist.Bins)),
+					strconv.Itoa(len(hist.Items)),
 					strings.ToUpper(parts[0]),
 					strings.Join(parts[1:], " ")}
 				err := writer.Write(row)
