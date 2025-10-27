@@ -9,14 +9,14 @@ require (
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/getkin/kin-openapi v0.133.0
 	github.com/grokify/gocharts/v2 v2.26.0
-	github.com/grokify/mogo v0.71.3
+	github.com/grokify/mogo v0.71.7
 	github.com/grokify/sogo v0.12.7
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/qdm12/reprint v0.0.0-20200326205758-722754a53494
 	github.com/rs/zerolog v1.34.0
 	github.com/valyala/fasthttp v1.68.0
 	github.com/valyala/quicktemplate v1.8.0
-	golang.org/x/exp v0.0.0-20251017212417-90e834f514db
+	golang.org/x/exp v0.0.0-20251023183803-a4bb9ffd2546
 	gopkg.in/yaml.v3 v3.0.1
 	sigs.k8s.io/yaml v1.6.0
 )
