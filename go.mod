@@ -8,8 +8,8 @@ require (
 	github.com/ake-persson/mapslice-json v0.0.0-20210720081907-22c8edf57807
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/getkin/kin-openapi v0.133.0
-	github.com/grokify/gocharts/v2 v2.26.1
-	github.com/grokify/mogo v0.71.7
+	github.com/grokify/gocharts/v2 v2.26.2
+	github.com/grokify/mogo v0.71.8
 	github.com/grokify/sogo v0.12.9
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/qdm12/reprint v0.0.0-20200326205758-722754a53494
@@ -65,7 +65,7 @@ require (
 	golang.org/x/crypto v0.43.0 // indirect
 	golang.org/x/image v0.32.0 // indirect
 	golang.org/x/net v0.46.0 // indirect
-	golang.org/x/sys v0.37.0 // indirect
+	golang.org/x/sys v0.38.0 // indirect
 	golang.org/x/text v0.30.0 // indirect
 	gonum.org/v1/gonum v0.16.0 // indirect
 )
