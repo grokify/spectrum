@@ -10,7 +10,7 @@ require (
 	github.com/getkin/kin-openapi v0.133.0
 	github.com/grokify/gocharts/v2 v2.26.6
 	github.com/grokify/mogo v0.72.0
-	github.com/grokify/sogo v0.12.11
+	github.com/grokify/sogo v0.12.12
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/qdm12/reprint v0.0.0-20200326205758-722754a53494
 	github.com/rs/zerolog v1.34.0
