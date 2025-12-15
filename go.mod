@@ -9,14 +9,14 @@ require (
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/getkin/kin-openapi v0.133.0
 	github.com/grokify/gocharts/v2 v2.26.6
-	github.com/grokify/mogo v0.72.0
+	github.com/grokify/mogo v0.72.3
 	github.com/grokify/sogo v0.12.12
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/qdm12/reprint v0.0.0-20200326205758-722754a53494
 	github.com/rs/zerolog v1.34.0
 	github.com/valyala/fasthttp v1.68.0
 	github.com/valyala/quicktemplate v1.8.0
-	golang.org/x/exp v0.0.0-20251125195548-87e1e737ad39
+	golang.org/x/exp v0.0.0-20251209150349-8475f28825e9
 	gopkg.in/yaml.v3 v3.0.1
 	sigs.k8s.io/yaml v1.6.0
 )
@@ -62,10 +62,10 @@ require (
 	github.com/xuri/excelize/v2 v2.10.0 // indirect
 	github.com/xuri/nfp v0.0.2-0.20250530014748-2ddeb826f9a9 // indirect
 	go.yaml.in/yaml/v2 v2.4.3 // indirect
-	golang.org/x/crypto v0.45.0 // indirect
-	golang.org/x/image v0.33.0 // indirect
-	golang.org/x/net v0.47.0 // indirect
-	golang.org/x/sys v0.38.0 // indirect
-	golang.org/x/text v0.31.0 // indirect
+	golang.org/x/crypto v0.46.0 // indirect
+	golang.org/x/image v0.34.0 // indirect
+	golang.org/x/net v0.48.0 // indirect
+	golang.org/x/sys v0.39.0 // indirect
+	golang.org/x/text v0.32.0 // indirect
 	gonum.org/v1/gonum v0.16.0 // indirect
 )
