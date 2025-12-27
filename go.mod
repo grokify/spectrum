@@ -10,7 +10,7 @@ require (
 	github.com/getkin/kin-openapi v0.133.0
 	github.com/grokify/gocharts/v2 v2.26.7
 	github.com/grokify/mogo v0.72.3
-	github.com/grokify/sogo v0.12.12
+	github.com/grokify/sogo v0.13.0
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/qdm12/reprint v0.0.0-20200326205758-722754a53494
 	github.com/rs/zerolog v1.34.0
@@ -24,7 +24,7 @@ require (
 require (
 	github.com/andybalholm/brotli v1.2.0 // indirect
 	github.com/apex/gateway v1.1.2 // indirect
-	github.com/aws/aws-lambda-go v1.50.0 // indirect
+	github.com/aws/aws-lambda-go v1.51.0 // indirect
 	github.com/clipperhouse/displaywidth v0.6.1 // indirect
 	github.com/clipperhouse/stringish v0.1.1 // indirect
 	github.com/clipperhouse/uax29/v2 v2.3.0 // indirect
@@ -37,7 +37,7 @@ require (
 	github.com/iancoleman/strcase v0.3.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/klauspost/compress v1.18.1 // indirect
+	github.com/klauspost/compress v1.18.2 // indirect
 	github.com/mailru/easyjson v0.9.1 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
