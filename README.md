@@ -5,7 +5,6 @@ Spectrum - OpenAPI Spec SDK and Postman Converter
 [![Lint Status][lint-status-svg]][lint-status-url]
 [![Go Report Card][goreport-svg]][goreport-url]
 [![Docs][docs-godoc-svg]][docs-godoc-url]
-[![LOC][loc-svg]][repo-url]
 [![License][license-svg]][license-url]
 
 Spectrum is a multi-purpose OpenAPI Spec SDK that includes enhanced Postman conversion. Most of the OpenAPI Spec SDK is designed to support OAS3. Some functionality for OAS2 exists.
