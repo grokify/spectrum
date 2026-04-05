@@ -11,7 +11,7 @@ require (
 	github.com/grokify/sogo v0.14.0
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/qdm12/reprint v0.0.0-20200326205758-722754a53494
-	github.com/rs/zerolog v1.34.0
+	github.com/rs/zerolog v1.35.0
 	github.com/valyala/fasthttp v1.69.0
 	github.com/valyala/quicktemplate v1.8.0
 	golang.org/x/exp v0.0.0-20260312153236-7ab1446f8b90
