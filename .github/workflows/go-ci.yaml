@@ -1,0 +1,25 @@
+name: Go CI
+permissions:
+  contents: read
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.go'
+      - 'go.mod'
+      - 'go.sum'
+      - '.github/workflows/go-ci.yaml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '**.go'
+      - 'go.mod'
+      - 'go.sum'
+      - '.github/workflows/go-ci.yaml'
+  workflow_dispatch:
+
+jobs:
+  ci:
+    uses: grokify/.github/.github/workflows/go-ci.yaml@main

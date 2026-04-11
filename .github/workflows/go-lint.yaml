@@ -1,0 +1,27 @@
+name: Go Lint
+permissions:
+  contents: read
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.go'
+      - 'go.mod'
+      - 'go.sum'
+      - '.golangci.yml'
+      - '.github/workflows/go-lint.yaml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '**.go'
+      - 'go.mod'
+      - 'go.sum'
+      - '.golangci.yml'
+      - '.github/workflows/go-lint.yaml'
+  workflow_dispatch:
+
+jobs:
+  lint:
+    uses: grokify/.github/.github/workflows/go-lint.yaml@main

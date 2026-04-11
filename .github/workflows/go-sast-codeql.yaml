@@ -1,0 +1,29 @@
+name: Go SAST (CodeQL)
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.go'
+      - 'go.mod'
+      - 'go.sum'
+      - '.github/workflows/go-sast-codeql.yaml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '**.go'
+      - 'go.mod'
+      - 'go.sum'
+      - '.github/workflows/go-sast-codeql.yaml'
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  sast:
+    uses: grokify/.github/.github/workflows/go-sast-codeql.yaml@main
