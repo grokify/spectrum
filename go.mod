@@ -14,7 +14,7 @@ require (
 	github.com/rs/zerolog v1.35.0
 	github.com/valyala/fasthttp v1.70.0
 	github.com/valyala/quicktemplate v1.8.0
-	golang.org/x/exp v0.0.0-20260312153236-7ab1446f8b90
+	golang.org/x/exp v0.0.0-20260410095643-746e56fc9e2f
 	gopkg.in/yaml.v3 v3.0.1
 	sigs.k8s.io/yaml v1.6.0
 )
@@ -27,8 +27,8 @@ require (
 	github.com/clipperhouse/displaywidth v0.11.0 // indirect
 	github.com/clipperhouse/uax29/v2 v2.7.0 // indirect
 	github.com/fatih/color v1.18.0 // indirect
-	github.com/go-openapi/jsonpointer v0.22.4 // indirect
-	github.com/go-openapi/swag/jsonname v0.25.4 // indirect
+	github.com/go-openapi/jsonpointer v0.21.0 // indirect
+	github.com/go-openapi/swag v0.23.0 // indirect
 	github.com/goccy/go-json v0.10.6 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/grokify/base36 v1.0.5 // indirect
@@ -37,7 +37,7 @@ require (
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.18.5 // indirect
-	github.com/mailru/easyjson v0.9.1 // indirect
+	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.21 // indirect
@@ -56,11 +56,11 @@ require (
 	github.com/richardlehane/msoleps v1.0.6 // indirect
 	github.com/tiendc/go-deepcopy v1.7.2 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
-	github.com/woodsbury/decimal128 v1.4.0 // indirect
+	github.com/woodsbury/decimal128 v1.3.0 // indirect
 	github.com/xuri/efp v0.0.1 // indirect
 	github.com/xuri/excelize/v2 v2.10.1 // indirect
 	github.com/xuri/nfp v0.0.2-0.20250530014748-2ddeb826f9a9 // indirect
-	go.yaml.in/yaml/v2 v2.4.3 // indirect
+	go.yaml.in/yaml/v2 v2.4.2 // indirect
 	golang.org/x/crypto v0.49.0 // indirect
 	golang.org/x/image v0.38.0 // indirect
 	golang.org/x/net v0.52.0 // indirect
