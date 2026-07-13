@@ -5,7 +5,7 @@ go 1.26.0
 require (
 	github.com/ake-persson/mapslice-json v0.0.0-20210720081907-22c8edf57807
 	github.com/buaazp/fasthttprouter v0.1.1
-	github.com/getkin/kin-openapi v0.140.0
+	github.com/getkin/kin-openapi v0.142.0
 	github.com/grokify/gocharts/v2 v2.27.0
 	github.com/grokify/mogo v0.74.6
 	github.com/grokify/sogo v0.15.0
@@ -39,8 +39,8 @@ require (
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.22 // indirect
 	github.com/mattn/go-runewidth v0.0.23 // indirect
-	github.com/oasdiff/yaml v0.1.0 // indirect
-	github.com/oasdiff/yaml3 v0.0.13 // indirect
+	github.com/oasdiff/yaml v0.1.1 // indirect
+	github.com/oasdiff/yaml3 v0.0.14 // indirect
 	github.com/olekukonko/cat v0.0.0-20250911104152-50322a0618f6 // indirect
 	github.com/olekukonko/errors v1.2.0 // indirect
 	github.com/olekukonko/ll v0.1.7 // indirect
