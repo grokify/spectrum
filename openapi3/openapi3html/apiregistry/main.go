@@ -59,7 +59,7 @@ func (svr *Server) HandleAPIRegistryAnyEngine(aRes anyhttp.Response, aReq anyhtt
 		logutil.PrintErr(SetResponseError(aRes, "No OpenAPI 3.0 Spec URL"))
 		return
 	}
-	resp, err := http.Get(specURL) // #nosec G107
+	resp, err := http.Get(specURL) //nolint:gosec // G704: fetching an arbitrary user-supplied OpenAPI spec URL is this endpoint's intended purpose
 	if err != nil || resp.StatusCode > 299 {
 		logutil.PrintErr(SetResponseError(aRes, err.Error()))
 		return
