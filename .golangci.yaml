@@ -11,6 +11,9 @@ linters:
     - unparam
     - whitespace
   settings:
+    govet:
+      disable:
+        - inline
     staticcheck:
       checks:
         - -ST1003
