@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Custom Rules - Spectrum</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Custom Rules";
+        var mkdocs_page_input_path = "openapi3lint/custom_rules.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Spectrum
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">OpenAPI3Edit</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../openapi3/inspect/missing_descriptions/">Missing Descriptions</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">OpenAPI3Lint</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Custom Rules</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#custom-rules">Custom Rules</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#rule-interface">Rule Interface</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#functions">Functions</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#rule-collection">Rule Collection</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Spectrum</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">OpenAPI3Lint</li>
+      <li class="breadcrumb-item active">Custom Rules</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/grokify/spectrum/tree/master/docs/openapi3lint/custom_rules.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="openapi3lint-custom-rules">OpenAPI3Lint - Custom Rules</h1>
+<p>Ther eare two parttst of using custom rules:</p>
+<ol>
+<li>Custom Rule</li>
+<li>Custom Rule Collection</li>
+</ol>
+<p>Simple rules can be used directly with the simple Rule Collection, <code>RuleCollectionSimple</code>, however, more complex rules can be built using custom Rule Collections. Complex rules allow multiple rule names to be used with a single rule definition, with the Rule Collection handling the instantiation.</p>
+<h2 id="custom-rules">Custom Rules</h2>
+<p>Custom rules are created using the <code>Rule</code> interface. After implementing aa custom rule, load it into a <code>Policy</code> to execute.</p>
+<p>Use <code>Policy.AddRule(rule Rule, errorOnCollision bool)</code> to add a rule.</p>
+<h3 id="rule-interface">Rule Interface</h3>
+<p>A rule has the following interface:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Rule</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Name</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">    </span><span class="nx">Scope</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">    </span><span class="nx">Severity</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">    </span><span class="nx">ProcessSpec</span><span class="p">(</span><span class="nx">spec</span><span class="w"> </span><span class="o">*</span><span class="nx">oas3</span><span class="p">.</span><span class="nx">Swagger</span><span class="p">,</span><span class="w"> </span><span class="nx">pointerBase</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="nx">lintutil</span><span class="p">.</span><span class="nx">PolicyViolationsSets</span>
+<span class="w">    </span><span class="nx">ProcessOperation</span><span class="p">(</span><span class="nx">spec</span><span class="w"> </span><span class="o">*</span><span class="nx">oas3</span><span class="p">.</span><span class="nx">Swagger</span><span class="p">,</span><span class="w"> </span><span class="nx">op</span><span class="w"> </span><span class="o">*</span><span class="nx">oas3</span><span class="p">.</span><span class="nx">Operation</span><span class="p">,</span><span class="w"> </span><span class="nx">opPointer</span><span class="p">,</span><span class="w"> </span><span class="nx">path</span><span class="p">,</span><span class="w"> </span><span class="nx">method</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">[]</span><span class="nx">lintutil</span><span class="p">.</span><span class="nx">PolicyViolation</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h4 id="functions">Functions</h4>
+<ul>
+<li><code>Name()</code> should return the name of a rule in kebab case.</li>
+<li><code>Scope()</code> should return the type of object / property operated on. This affects the processing function provided. As of now, <code>operation</code> and <code>specfication</code> are supported.</li>
+<li><code>Severity()</code> should return a syslog like severity level supported by <code>github.com/grokify/mogo/log/severity</code>. This should be updated for the <code>Policy</code> used.</li>
+<li><code>ProcessSpec(spec *oas3.Swagger, pointerBase string)</code> is a function to process a rule at the top specfication level. <code>pointerBase</code> is used to provide JSON Pointer info before the <code>#</code>. This is executed when <code>Scope()</code> is set to <code>specification</code>.</li>
+<li><code>ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string)</code> is executed when <code>Scope()</code> is set to <code>operation</code>.</li>
+</ul>
+<h2 id="rule-collection">Rule Collection</h2>
+<div class="codehilite"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">RuleCollection</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Name</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">    </span><span class="nx">RuleNames</span><span class="p">()</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span>
+<span class="w">    </span><span class="nx">RuleExists</span><span class="p">(</span><span class="nx">ruleName</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">bool</span>
+<span class="w">    </span><span class="nx">Rule</span><span class="p">(</span><span class="nx">ruleName</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">Rule</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../" class="btn btn-neutral float-left" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/grokify/spectrum" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

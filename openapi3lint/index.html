@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Overview - Spectrum</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Overview";
+        var mkdocs_page_input_path = "openapi3lint.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Spectrum
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">OpenAPI3Edit</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../openapi3/inspect/missing_descriptions/">Missing Descriptions</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">OpenAPI3Lint</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Overview</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#standard-rules">Standard Rules</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#command-line-application">Command Line Application</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#policy-file-format">Policy File Format</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#severity-levels">Severity Levels</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#standard-rules-list">Standard Rules List</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#custom-rules">Custom Rules</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#rule-interface">Rule Interface</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="custom_rules/">Custom Rules</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Spectrum</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">OpenAPI3Lint</li>
+      <li class="breadcrumb-item active">Overview</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/grokify/spectrum/tree/master/docs/openapi3lint.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="openapi3lint">OpenAPI3Lint</h1>
+<p><code>openapi3lint</code> is a linting tool for OpenAPI 3 specifications using Go.</p>
+<p>Features include:</p>
+<ul>
+<li>Standard and custom rules</li>
+<li>Violation locations by JSON Schema pointer, including file/URL roots</li>
+<li>Violation locations grouped by rule</li>
+</ul>
+<p>It is designed to scale to a large set of APIs split across many files and support asynchronous resolution, e.g. the results will still be valid if the files change.</p>
+<h2 id="standard-rules">Standard Rules</h2>
+<h3 id="command-line-application">Command Line Application</h3>
+<p>Standard rules can be executed through the <code>cmd/oas3lint</code> CLI program. It takes two parameters:</p>
+<ul>
+<li><code>-i</code> for the OAS3 specification file or diectory. If a directory, it will ead in all JSON/YAML/YML extension files.</li>
+<li><code>-p</code> for the linter Policy config file.</li>
+<li><code>-s</code> is optional and used to select the severity level used. If none is selected, <code>error</code> is used.</li>
+</ul>
+<h3 id="policy-file-format">Policy File Format</h3>
+<p>The Policy file uses the following syntax:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;rules&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;datatype-int-format-int32-int64&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;severity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;off&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;operation-operationid-style-camelcase&quot;</span><span class="p">:{</span>
+<span class="w">            </span><span class="nt">&quot;severity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;error&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="severity-levels">Severity Levels</h3>
+<p><code>openapi3lint</code> uses Syslog-like severity levels defined in <code>github.com/grokify/mogo/log/severity</code>, including:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">SeverityDisabled</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;disabled&quot;</span>
+<span class="w">    </span><span class="nx">SeverityEmergency</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;emerg&quot;</span>
+<span class="w">    </span><span class="nx">SeverityAlert</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;alert&quot;</span>
+<span class="w">    </span><span class="nx">SeverityCritical</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;crit&quot;</span>
+<span class="w">    </span><span class="nx">SeverityError</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;err&quot;</span>
+<span class="w">    </span><span class="nx">SeverityWarning</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;warning&quot;</span>
+<span class="w">    </span><span class="nx">SeverityNotice</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;notice&quot;</span>
+<span class="w">    </span><span class="nx">SeverityInformational</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;info&quot;</span>
+<span class="w">    </span><span class="nx">SeverityDebug</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;debug&quot;</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>The following aliases can be used:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">mapStringSeverity</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
+<span class="w">    </span><span class="s">&quot;disabled&quot;</span><span class="p">:</span><span class="w">      </span><span class="nx">SeverityDisabled</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;disable&quot;</span><span class="p">:</span><span class="w">       </span><span class="nx">SeverityDisabled</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;off&quot;</span><span class="p">:</span><span class="w">           </span><span class="nx">SeverityDisabled</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;emergency&quot;</span><span class="p">:</span><span class="w">     </span><span class="nx">SeverityEmergency</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;emerg&quot;</span><span class="p">:</span><span class="w">         </span><span class="nx">SeverityEmergency</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;panic&quot;</span><span class="p">:</span><span class="w">         </span><span class="nx">SeverityEmergency</span><span class="p">,</span><span class="w"> </span><span class="c1">// deprecated by syslog</span>
+<span class="w">    </span><span class="s">&quot;exception&quot;</span><span class="p">:</span><span class="w">     </span><span class="nx">SeverityEmergency</span><span class="p">,</span><span class="w"> </span><span class="c1">// used by PostgreSQL</span>
+<span class="w">    </span><span class="s">&quot;alert&quot;</span><span class="p">:</span><span class="w">         </span><span class="nx">SeverityAlert</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;critical&quot;</span><span class="p">:</span><span class="w">      </span><span class="nx">SeverityCritical</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;crit&quot;</span><span class="p">:</span><span class="w">          </span><span class="nx">SeverityCritical</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;error&quot;</span><span class="p">:</span><span class="w">         </span><span class="nx">SeverityError</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;err&quot;</span><span class="p">:</span><span class="w">           </span><span class="nx">SeverityError</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;warning&quot;</span><span class="p">:</span><span class="w">       </span><span class="nx">SeverityWarning</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;warn&quot;</span><span class="p">:</span><span class="w">          </span><span class="nx">SeverityWarning</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;notice&quot;</span><span class="p">:</span><span class="w">        </span><span class="nx">SeverityNotice</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;informational&quot;</span><span class="p">:</span><span class="w"> </span><span class="nx">SeverityInformational</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;info&quot;</span><span class="p">:</span><span class="w">          </span><span class="nx">SeverityInformational</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;debug&quot;</span><span class="p">:</span><span class="w">         </span><span class="nx">SeverityDebug</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;hint&quot;</span><span class="p">:</span><span class="w">          </span><span class="nx">SeverityDebug</span><span class="p">,</span><span class="w"> </span><span class="c1">// used by Spectral</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="standard-rules-list">Standard Rules List</h3>
+<p>The following standard rules are built into the <code>openapi3lint</code>. More are coming soon and this is under active development. Existing proof-of-concept rules are being refactored to use the new interface.</p>
+<ul>
+<li><code>datatype-int-format-int32-int64</code>: reports if <code>type: integer</code> doesn't have a standard <code>format</code> set to <code>int32</code> or <code>int64</code></li>
+<li><code>operation-operationid-style-camelcase</code>: reports if <code>operationId</code> is not camel case</li>
+<li><code>operation-operationid-style-kebabcase</code>: reports if <code>operationId</code> is not kebab case</li>
+<li><code>operation-operationid-style-pascalcase</code>: reports if <code>operationId</code> is not pascal case</li>
+<li><code>operation-operationid-style-snakecase</code>: reports if <code>operationId</code> is not snake case</li>
+</ul>
+<h2 id="custom-rules">Custom Rules</h2>
+<p>Custom rules are created using the <code>Rule</code> interface. After implementing aa custom rule, load it into a <code>Policy</code> to execute.</p>
+<p>Use <code>Policy.AddRule(rule Rule, errorOnCollision bool)</code> to add a rule.</p>
+<h3 id="rule-interface">Rule Interface</h3>
+<p>A rule has the following interface:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Rule</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Name</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">    </span><span class="nx">Scope</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">    </span><span class="nx">Severity</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">    </span><span class="nx">ProcessSpec</span><span class="p">(</span><span class="nx">spec</span><span class="w"> </span><span class="o">*</span><span class="nx">oas3</span><span class="p">.</span><span class="nx">Swagger</span><span class="p">,</span><span class="w"> </span><span class="nx">pointerBase</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="nx">lintutil</span><span class="p">.</span><span class="nx">PolicyViolationsSets</span>
+<span class="w">    </span><span class="nx">ProcessOperation</span><span class="p">(</span><span class="nx">spec</span><span class="w"> </span><span class="o">*</span><span class="nx">oas3</span><span class="p">.</span><span class="nx">Swagger</span><span class="p">,</span><span class="w"> </span><span class="nx">op</span><span class="w"> </span><span class="o">*</span><span class="nx">oas3</span><span class="p">.</span><span class="nx">Operation</span><span class="p">,</span><span class="w"> </span><span class="nx">opPointer</span><span class="p">,</span><span class="w"> </span><span class="nx">path</span><span class="p">,</span><span class="w"> </span><span class="nx">method</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">[]</span><span class="nx">lintutil</span><span class="p">.</span><span class="nx">PolicyViolation</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Functions:</p>
+<ul>
+<li><code>Name()</code> should return the name of a rule in kebab case.</li>
+<li><code>Scope()</code> should return the type of object / property operated on. This affects the processing function provided. As of now, <code>operation</code> and <code>specfication</code> are supported.</li>
+<li><code>Severity()</code> should return a syslog like severity level supported by <code>github.com/grokify/mogo/log/severity</code>. This should be updated for the <code>Policy</code> used.</li>
+<li><code>ProcessSpec(spec *oas3.Swagger, pointerBase string)</code> is a function to process a rule at the top specfication level. <code>pointerBase</code> is used to provide JSON Pointer info before the <code>#</code>. This is executed when <code>Scope()</code> is set to <code>specification</code>.</li>
+<li><code>ProcessOperation(spec *oas3.Swagger, op *oas3.Operation, opPointer, path, method string)</code> is executed when <code>Scope()</code> is set to <code>operation</code>.</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../openapi3/inspect/missing_descriptions/" class="btn btn-neutral float-left" title="Missing Descriptions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="custom_rules/" class="btn btn-neutral float-right" title="Custom Rules">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/grokify/spectrum" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../openapi3/inspect/missing_descriptions/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="custom_rules/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
