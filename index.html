@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="OpenAPI specification toolkit for Go — read, inspect, compare, merge, lint, and convert specs." />
       <link rel="shortcut icon" href="img/favicon.ico" />
     <title>Spectrum</title>
     <link rel="stylesheet" href="css/theme.css" />
@@ -42,19 +42,62 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Home</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#what-it-does">What it does</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#openapi-3">OpenAPI 3</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#openapi-2-swagger">OpenAPI 2 (Swagger)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting started</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#user-guide">User guide</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#linting">Linting</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cli-reference">CLI reference</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#releases">Releases</a>
+    </li>
     </ul>
                 </li>
               </ul>
-              <p class="caption"><span class="caption-text">OpenAPI3Edit</span></p>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="getting-started/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="guide/inspect/">Inspecting Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="guide/compare/">Comparing Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="guide/merge/">Merging Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="guide/convert/">Converting Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="openapi3_fix/">Fixing Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="recommendations_openapi3/">Recommendations</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="openapi3/inspect/missing_descriptions/">Missing Descriptions</a>
                   </li>
               </ul>
-              <p class="caption"><span class="caption-text">OpenAPI3Lint</span></p>
+              <p class="caption"><span class="caption-text">Linting</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="openapi3lint/">Overview</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="openapi3lint/custom_rules/">Custom Rules</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="cli/">CLI Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Releases</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="releases/v1.21.0/">v1.21.0</a>
                   </li>
               </ul>
       </div>
@@ -73,7 +116,7 @@
     <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
       <li class="breadcrumb-item active">Home</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/grokify/spectrum/tree/master/docs/index.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/grokify/spectrum/tree/main/docs/index.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -81,27 +124,60 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="spectrum-openapi-spec-utility">Spectrum - OpenAPI Spec Utility</h1>
-<p>Spectrum is a multi-purpose OpenAPI speec utility.</p>
-<p>It can perform the following:</p>
-<p>OpenAPI Spec 3</p>
+                <h1 id="spectrum">Spectrum<a class="headerlink" href="#spectrum" title="Permanent link">&para;</a></h1>
+<p>Spectrum is a multi-purpose OpenAPI specification toolkit for Go. It wraps
+<a href="https://github.com/getkin/kin-openapi"><code>getkin/kin-openapi</code></a> with convenience
+methods for reading, inspecting, comparing, merging, linting, editing, and
+converting OpenAPI specs — as an importable library and as a set of CLIs.</p>
+<h2 id="what-it-does">What it does<a class="headerlink" href="#what-it-does" title="Permanent link">&para;</a></h2>
+<h3 id="openapi-3">OpenAPI 3<a class="headerlink" href="#openapi-3" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Convert to Postman Collection v2</li>
-<li>Merge Multiple OAS3 Specs</li>
-<li>Validate OAS3 Specs</li>
-<li>Programmatically examine and modify OAS3 Specs</li>
-<li>Programmatically fix OAS3 Specs</li>
+<li><strong>Read &amp; parse</strong> JSON or YAML specs into a rich <code>SpecMore</code> wrapper</li>
+<li><strong>Inspect</strong> operations, schemas, parameters, and spec metadata</li>
+<li><strong>Compare</strong> two specs — intersection and diff across endpoints, operation IDs, and schema names</li>
+<li><strong>Merge</strong> multiple specs into one</li>
+<li><strong>Lint</strong> against configurable rule policies</li>
+<li><strong>Fix</strong> and programmatically edit specs</li>
+<li><strong>Validate</strong> specs</li>
+<li><strong>Convert</strong> to Postman Collection v2</li>
 </ul>
-<p>OpenAPI Spec 2</p>
+<h3 id="openapi-2-swagger">OpenAPI 2 (Swagger)<a class="headerlink" href="#openapi-2-swagger" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Convert to Postman Collection v2</li>
-<li>Merge Multiple OAS2 Specs</li>
+<li><strong>Convert</strong> OAS2 → OAS3</li>
+<li><strong>Convert</strong> OAS2 → Postman Collection v2</li>
+<li><strong>Merge</strong> multiple OAS2 specs</li>
+</ul>
+<h2 id="getting-started">Getting started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="getting-started/">Getting Started</a> — install the library and CLIs, read and inspect your first spec</li>
+</ul>
+<h2 id="user-guide">User guide<a class="headerlink" href="#user-guide" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="guide/inspect/">Inspecting specs</a> — operations, schemas, and metadata via <code>SpecMore</code></li>
+<li><a href="guide/compare/">Comparing specs</a> — intersection and diff</li>
+<li><a href="guide/merge/">Merging specs</a> — combine multiple specs</li>
+<li><a href="guide/convert/">Converting specs</a> — OAS2 → OAS3, OpenAPI → Postman, CSV export</li>
+<li><a href="openapi3_fix/">Fixing specs</a> — programmatic fixes</li>
+<li><a href="recommendations_openapi3/">Recommendations</a> — authoring guidance</li>
+</ul>
+<h2 id="linting">Linting<a class="headerlink" href="#linting" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="openapi3lint/">Overview</a></li>
+<li><a href="openapi3lint/custom_rules/">Custom rules</a></li>
+</ul>
+<h2 id="cli-reference">CLI reference<a class="headerlink" href="#cli-reference" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="cli/">Command-line tools</a> — <code>oas2meta</code>, <code>oas3diff</code>, <code>oas3validate</code>, <code>oas3lint</code>, <code>openapi2to3</code>, <code>openapi2postman</code>, <code>openapi2csv</code></li>
+</ul>
+<h2 id="releases">Releases<a class="headerlink" href="#releases" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="releases/v1.21.0/">v1.21.0</a></li>
 </ul>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="openapi3/inspect/missing_descriptions/" class="btn btn-neutral float-right" title="Missing Descriptions">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="getting-started/" class="btn btn-neutral float-right" title="Getting Started">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -129,7 +205,7 @@
     
     
     
-      <span><a href="openapi3/inspect/missing_descriptions/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="getting-started/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
@@ -149,5 +225,5 @@
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2026-08-23 08:07:49.277562+00:00
+Build Date UTC : 2026-08-24 08:27:16.527019+00:00
 -->

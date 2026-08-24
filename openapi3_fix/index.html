@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>OpenAPI 3 Specs Auto-Fixer - Spectrum</title>
+    <title>Fixing Specs - Spectrum</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "OpenAPI 3 Specs Auto-Fixer";
+        var mkdocs_page_name = "Fixing Specs";
         var mkdocs_page_input_path = "openapi3_fix.md";
         var mkdocs_page_url = null;
       </script>
@@ -43,16 +43,49 @@
                 <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
                 </li>
               </ul>
-              <p class="caption"><span class="caption-text">OpenAPI3Edit</span></p>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../getting-started/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/inspect/">Inspecting Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/compare/">Comparing Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/merge/">Merging Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/convert/">Converting Specs</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Fixing Specs</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#path-parameters-examination-and-resolution">Path Parameters - Examination and Resolution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#response-type-examination-and-resolution">Response Type - Examination and Resolution</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#move-request-bodies">Move Request Bodies</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../recommendations_openapi3/">Recommendations</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../openapi3/inspect/missing_descriptions/">Missing Descriptions</a>
                   </li>
               </ul>
-              <p class="caption"><span class="caption-text">OpenAPI3Lint</span></p>
+              <p class="caption"><span class="caption-text">Linting</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../openapi3lint/">Overview</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../openapi3lint/custom_rules/">Custom Rules</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../cli/">CLI Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Releases</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../releases/v1.21.0/">v1.21.0</a>
                   </li>
               </ul>
       </div>
@@ -69,9 +102,10 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">OpenAPI 3 Specs Auto-Fixer</li>
+          <li class="breadcrumb-item">User Guide</li>
+      <li class="breadcrumb-item active">Fixing Specs</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/grokify/spectrum/tree/master/docs/openapi3_fix.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/grokify/spectrum/tree/main/docs/openapi3_fix.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -79,11 +113,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="openapi-3-specs-auto-fixer">OpenAPI 3 Specs Auto-Fixer</h1>
+                <h1 id="openapi-3-specs-auto-fixer">OpenAPI 3 Specs Auto-Fixer<a class="headerlink" href="#openapi-3-specs-auto-fixer" title="Permanent link">&para;</a></h1>
 <p>In addition to enabling introspection and programmatic modification of
 OpenAPI 3 specifications, Spectrum can automatically fix/update some
 issues with specs.</p>
-<h2 id="path-parameters-examination-and-resolution">Path Parameters - Examination and Resolution</h2>
+<h2 id="path-parameters-examination-and-resolution">Path Parameters - Examination and Resolution<a class="headerlink" href="#path-parameters-examination-and-resolution" title="Permanent link">&para;</a></h2>
 <p>Path parameters are required to be defined. The following will identify or
 automatically add add operation path parameters if they are missing. It
 will also move path parameters to the top of the parameter list and maintain
@@ -97,7 +131,7 @@ maintain their original order.</p>
 <span class="p">}</span>
 </code></pre></div>
 
-<h2 id="response-type-examination-and-resolution">Response Type - Examination and Resolution</h2>
+<h2 id="response-type-examination-and-resolution">Response Type - Examination and Resolution<a class="headerlink" href="#response-type-examination-and-resolution" title="Permanent link">&para;</a></h2>
 <p>Sometimes a spec can be misdefined to use a <code>application/json</code> response MIME
 type when the schema returned doesn't support JSON, e.g. with the type is
 <code>string</code> or <code>integer</code>. The following will examine and optionally update the
@@ -111,7 +145,7 @@ as <code>application/json</code> or some other incompatible MIME type.</p>
 <span class="p">}</span>
 </code></pre></div>
 
-<h2 id="move-request-bodies">Move Request Bodies</h2>
+<h2 id="move-request-bodies">Move Request Bodies<a class="headerlink" href="#move-request-bodies" title="Permanent link">&para;</a></h2>
 <p>Some OpenAPI 3 spec defintions can use request body references like the following
 which may not be supported by all tools.</p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
@@ -148,6 +182,10 @@ and MIME types are specified directly in the operation definition.</p>
               
             </div>
           </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../guide/convert/" class="btn btn-neutral float-left" title="Converting Specs"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../recommendations_openapi3/" class="btn btn-neutral float-right" title="Recommendations">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
 
   <hr/>
 
@@ -173,6 +211,10 @@ and MIME types are specified directly in the operation definition.</p>
         </span>
     
     
+      <span><a href="../guide/convert/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../recommendations_openapi3/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

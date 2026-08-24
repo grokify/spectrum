@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Merging Specs - Spectrum</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Merging Specs";
+        var mkdocs_page_input_path = "guide/merge.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Spectrum
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../getting-started/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../inspect/">Inspecting Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../compare/">Comparing Specs</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Merging Specs</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#merge-files">Merge files</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#merge-a-directory">Merge a directory</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#merge-two-specs">Merge two specs</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#options">Options</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../convert/">Converting Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../openapi3_fix/">Fixing Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../recommendations_openapi3/">Recommendations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../openapi3/inspect/missing_descriptions/">Missing Descriptions</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Linting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../openapi3lint/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../openapi3lint/custom_rules/">Custom Rules</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../cli/">CLI Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Releases</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../releases/v1.21.0/">v1.21.0</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Spectrum</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">User Guide</li>
+      <li class="breadcrumb-item active">Merging Specs</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/grokify/spectrum/tree/main/docs/guide/merge.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="merging-specs">Merging Specs<a class="headerlink" href="#merging-specs" title="Permanent link">&para;</a></h1>
+<p>Spectrum merges multiple OpenAPI 3 specs into a single spec — useful for
+assembling one API document from per-service or per-domain fragments.</p>
+<h2 id="merge-files">Merge files<a class="headerlink" href="#merge-files" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="nx">merged</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">openapi3</span><span class="p">.</span><span class="nx">MergeFiles</span><span class="p">(</span>
+<span class="w">    </span><span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;users.yaml&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;orders.yaml&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;billing.yaml&quot;</span><span class="p">},</span>
+<span class="w">    </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="c1">// *MergeOptions, or nil for defaults</span>
+<span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2 id="merge-a-directory">Merge a directory<a class="headerlink" href="#merge-a-directory" title="Permanent link">&para;</a></h2>
+<p>Merge every spec in a directory:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">merged</span><span class="p">,</span><span class="w"> </span><span class="nx">count</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">openapi3</span><span class="p">.</span><span class="nx">MergeDirectory</span><span class="p">(</span><span class="s">&quot;specs/&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;merged %d specs\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">count</span><span class="p">)</span>
+</code></pre></div>
+
+<h2 id="merge-two-specs">Merge two specs<a class="headerlink" href="#merge-two-specs" title="Permanent link">&para;</a></h2>
+<p><code>Merge</code> combines a master spec with an extra spec. The <code>specExtraNote</code> is used to
+annotate provenance of the merged-in content:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">merged</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">openapi3</span><span class="p">.</span><span class="nx">Merge</span><span class="p">(</span><span class="nx">master</span><span class="p">,</span><span class="w"> </span><span class="nx">extra</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;from orders service&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+</code></pre></div>
+
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">&para;</a></h2>
+<p>Pass <code>*MergeOptions</code> to control conflict handling. A skip-on-collision policy is
+available via <code>NewMergeOptionsSkip()</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">opts</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">openapi3</span><span class="p">.</span><span class="nx">NewMergeOptionsSkip</span><span class="p">()</span>
+<span class="nx">merged</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">openapi3</span><span class="p">.</span><span class="nx">MergeFiles</span><span class="p">(</span><span class="nx">files</span><span class="p">,</span><span class="w"> </span><span class="nx">opts</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Finer-grained helpers exist when you only need to merge a subset:
+<code>MergePaths</code>, <code>MergeParameters</code>, <code>MergeResponses</code>, <code>MergeSchemas</code>, and
+<code>MergeTags</code>.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../compare/" class="btn btn-neutral float-left" title="Comparing Specs"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../convert/" class="btn btn-neutral float-right" title="Converting Specs">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/grokify/spectrum" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../compare/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../convert/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

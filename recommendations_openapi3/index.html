@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>OpenAPI 3 Spec - Spectrum</title>
+    <title>Recommendations - Spectrum</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "OpenAPI 3 Spec";
+        var mkdocs_page_name = "Recommendations";
         var mkdocs_page_input_path = "recommendations_openapi3.md";
         var mkdocs_page_url = null;
       </script>
@@ -43,16 +43,55 @@
                 <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
                 </li>
               </ul>
-              <p class="caption"><span class="caption-text">OpenAPI3Edit</span></p>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../getting-started/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/inspect/">Inspecting Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/compare/">Comparing Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/merge/">Merging Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/convert/">Converting Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../openapi3_fix/">Fixing Specs</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Recommendations</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#operation">Operation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#operation-parameter">Operation Parameter</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#schema">Schema</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#schema-property">Schema Property</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../openapi3/inspect/missing_descriptions/">Missing Descriptions</a>
                   </li>
               </ul>
-              <p class="caption"><span class="caption-text">OpenAPI3Lint</span></p>
+              <p class="caption"><span class="caption-text">Linting</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../openapi3lint/">Overview</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../openapi3lint/custom_rules/">Custom Rules</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../cli/">CLI Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Releases</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../releases/v1.21.0/">v1.21.0</a>
                   </li>
               </ul>
       </div>
@@ -69,9 +108,10 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">OpenAPI 3 Spec</li>
+          <li class="breadcrumb-item">User Guide</li>
+      <li class="breadcrumb-item active">Recommendations</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/grokify/spectrum/tree/master/docs/recommendations_openapi3.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/grokify/spectrum/tree/main/docs/recommendations_openapi3.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -79,9 +119,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="openapi-3-spec">OpenAPI 3 Spec</h1>
+                <h1 id="openapi-3-spec">OpenAPI 3 Spec<a class="headerlink" href="#openapi-3-spec" title="Permanent link">&para;</a></h1>
 <p>This document is a recommended set of minimal OpenAPI 3 spec properties so that a spec can be used by various ecosystem tools such as API References, API Explorers and Client SDK generators.</p>
-<h2 id="operation">Operation</h2>
+<h2 id="operation">Operation<a class="headerlink" href="#operation" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -118,7 +158,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="operation-parameter">Operation Parameter</h3>
+<h3 id="operation-parameter">Operation Parameter<a class="headerlink" href="#operation-parameter" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -160,7 +200,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="schema">Schema</h2>
+<h2 id="schema">Schema<a class="headerlink" href="#schema" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -177,7 +217,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="schema-property">Schema Property</h3>
+<h3 id="schema-property">Schema Property<a class="headerlink" href="#schema-property" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -207,6 +247,10 @@
               
             </div>
           </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../openapi3_fix/" class="btn btn-neutral float-left" title="Fixing Specs"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../openapi3/inspect/missing_descriptions/" class="btn btn-neutral float-right" title="Missing Descriptions">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
 
   <hr/>
 
@@ -232,6 +276,10 @@
         </span>
     
     
+      <span><a href="../openapi3_fix/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../openapi3/inspect/missing_descriptions/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

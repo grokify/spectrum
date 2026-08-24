@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>CLI Reference - Spectrum</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "CLI Reference";
+        var mkdocs_page_input_path = "cli.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Spectrum
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../getting-started/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/inspect/">Inspecting Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/compare/">Comparing Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/merge/">Merging Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/convert/">Converting Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../openapi3_fix/">Fixing Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../recommendations_openapi3/">Recommendations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../openapi3/inspect/missing_descriptions/">Missing Descriptions</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Linting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../openapi3lint/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../openapi3lint/custom_rules/">Custom Rules</a>
+                  </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">CLI Reference</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#oas3diff">oas3diff</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#oas2meta">oas2meta</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#oas3validate">oas3validate</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#oas3lint">oas3lint</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#openapi2to3">openapi2to3</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#openapi2postman">openapi2postman</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#openapi2csv">openapi2csv</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Releases</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../releases/v1.21.0/">v1.21.0</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Spectrum</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">CLI Reference</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/grokify/spectrum/tree/main/docs/cli.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="cli-reference">CLI Reference<a class="headerlink" href="#cli-reference" title="Permanent link">&para;</a></h1>
+<p>Spectrum ships several command-line tools under <code>cmd/</code>. Install any of them with:</p>
+<div class="codehilite"><pre><span></span><code>go<span class="w"> </span>install<span class="w"> </span>github.com/grokify/spectrum/cmd/&lt;name&gt;@latest
+</code></pre></div>
+
+<p>Most tools use flags (via <code>go-flags</code>); pass <code>--help</code> to any command for the
+authoritative list.</p>
+<h2 id="oas3diff">oas3diff<a class="headerlink" href="#oas3diff" title="Permanent link">&para;</a></h2>
+<p>Diff two OpenAPI 3 specs (JSON or YAML) across endpoints, operation IDs, and
+schema names. <em>(Added in v1.21.0.)</em></p>
+<div class="codehilite"><pre><span></span><code>oas3diff<span class="w"> </span>&lt;spec1&gt;<span class="w"> </span>&lt;spec2&gt;
+</code></pre></div>
+
+<p>Positional arguments; see <a href="../guide/compare/">Comparing specs</a>.</p>
+<h2 id="oas2meta">oas2meta<a class="headerlink" href="#oas2meta" title="Permanent link">&para;</a></h2>
+<p>Print metadata (endpoints, operation IDs, schema names) for one or more specs as
+JSON.</p>
+<div class="codehilite"><pre><span></span><code>oas2meta<span class="w"> </span>&lt;spec1&gt;<span class="w"> </span><span class="o">[</span>&lt;spec2&gt;<span class="w"> </span>...<span class="o">]</span>
+</code></pre></div>
+
+<h2 id="oas3validate">oas3validate<a class="headerlink" href="#oas3validate" title="Permanent link">&para;</a></h2>
+<p>Validate an OAS3 spec, optionally writing an operation/status-code report to XLSX.</p>
+<div class="codehilite"><pre><span></span><code>oas3validate<span class="w"> </span>-s<span class="w"> </span>openapi.yaml
+oas3validate<span class="w"> </span>-s<span class="w"> </span>openapi.yaml<span class="w"> </span>-x<span class="w"> </span>report.xlsx
+</code></pre></div>
+
+<ul>
+<li><code>-s</code>, <code>--specfile</code> — input OAS3 spec (required)</li>
+<li><code>-x</code>, <code>--xlsxwrite</code> — write an XLSX report</li>
+<li><code>--writeopstatus</code> — write an operation status-code report</li>
+</ul>
+<h2 id="oas3lint">oas3lint<a class="headerlink" href="#oas3lint" title="Permanent link">&para;</a></h2>
+<p>Lint an OAS3 spec (or directory) against a rule policy file.</p>
+<div class="codehilite"><pre><span></span><code>oas3lint<span class="w"> </span>-p<span class="w"> </span>policy.json<span class="w"> </span>-i<span class="w"> </span>openapi.yaml
+oas3lint<span class="w"> </span>-p<span class="w"> </span>policy.json<span class="w"> </span>-i<span class="w"> </span>./specs<span class="w"> </span>-s<span class="w"> </span>error
+</code></pre></div>
+
+<ul>
+<li><code>-p</code>, <code>--policyfile</code> — lint policy file (required)</li>
+<li><code>-i</code>, <code>--inputspec</code> — input spec file or directory</li>
+<li><code>-s</code>, <code>--severity</code> — severity level filter</li>
+</ul>
+<p>See <a href="../openapi3lint/">Linting</a> and <a href="../openapi3lint/custom_rules/">Custom rules</a>.</p>
+<h2 id="openapi2to3">openapi2to3<a class="headerlink" href="#openapi2to3" title="Permanent link">&para;</a></h2>
+<p>Convert an OAS2 (Swagger) file to OAS3.</p>
+<div class="codehilite"><pre><span></span><code>openapi2to3<span class="w"> </span>-i<span class="w"> </span>swagger.json<span class="w"> </span>-o<span class="w"> </span>openapi.json<span class="w"> </span>-p
+</code></pre></div>
+
+<ul>
+<li><code>-i</code>, <code>--input</code> — input OAS2 file (required)</li>
+<li><code>-o</code>, <code>--output</code> — output OAS3 file (required)</li>
+<li><code>-p</code>, <code>--pretty</code> — pretty-print output</li>
+</ul>
+<h2 id="openapi2postman">openapi2postman<a class="headerlink" href="#openapi2postman" title="Permanent link">&para;</a></h2>
+<p>Convert a Swagger/OAS2 spec to a Postman Collection v2, optionally merging onto a
+base Postman file.</p>
+<div class="codehilite"><pre><span></span><code>openapi2postman<span class="w"> </span>-s<span class="w"> </span>swagger.json<span class="w"> </span>-p<span class="w"> </span>collection.postman.json
+</code></pre></div>
+
+<ul>
+<li><code>-s</code>, <code>--swagger</code> — input Swagger file (required)</li>
+<li><code>-p</code>, <code>--postman</code> — output Postman file (required)</li>
+<li><code>-b</code>, <code>--base</code> — base Postman file to merge onto</li>
+</ul>
+<h2 id="openapi2csv">openapi2csv<a class="headerlink" href="#openapi2csv" title="Permanent link">&para;</a></h2>
+<p>Scan a directory of specs and export an operations table to CSV.</p>
+<div class="codehilite"><pre><span></span><code>openapi2csv<span class="w"> </span>-d<span class="w"> </span>./specs<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;\.json$&#39;</span><span class="w"> </span>-o<span class="w"> </span>operations.csv
+</code></pre></div>
+
+<ul>
+<li><code>-d</code>, <code>--dir</code> — source directory (required)</li>
+<li><code>-r</code>, <code>--regexp</code> — filename match regexp (required)</li>
+<li><code>-o</code>, <code>--output</code> — output CSV file (required)</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../openapi3lint/custom_rules/" class="btn btn-neutral float-left" title="Custom Rules"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../releases/v1.21.0/" class="btn btn-neutral float-right" title="v1.21.0">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/grokify/spectrum" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../openapi3lint/custom_rules/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../releases/v1.21.0/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

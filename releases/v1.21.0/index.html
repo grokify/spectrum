@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>v1.21.0 - Spectrum</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "v1.21.0";
+        var mkdocs_page_input_path = "releases/v1.21.0.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Spectrum
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../getting-started/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../guide/inspect/">Inspecting Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../guide/compare/">Comparing Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../guide/merge/">Merging Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../guide/convert/">Converting Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../openapi3_fix/">Fixing Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../recommendations_openapi3/">Recommendations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../openapi3/inspect/missing_descriptions/">Missing Descriptions</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Linting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../openapi3lint/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../openapi3lint/custom_rules/">Custom Rules</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../cli/">CLI Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Releases</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">v1.21.0</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#highlights">Highlights</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#new-features">New Features</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#openapi3specmetadatadiff">openapi3.SpecMetadataDiff</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#oas3diff-cli">oas3diff CLI</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#upgrade">Upgrade</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Spectrum</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Releases</li>
+      <li class="breadcrumb-item active">v1.21.0</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/grokify/spectrum/tree/main/docs/releases/v1.21.0.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="release-notes-v1210">Release Notes v1.21.0<a class="headerlink" href="#release-notes-v1210" title="Permanent link">&para;</a></h1>
+<p>Adds general-purpose OpenAPI 3 <strong>spec diffing</strong> to the <code>openapi3</code> package, plus a matching <code>oas3diff</code> CLI. Compare two specs across endpoints, operation IDs, and schema names to spot version drift, verify a migration lost no coverage, or measure what a newer spec adds. This is an additive, backward-compatible release.</p>
+<h2 id="highlights">Highlights<a class="headerlink" href="#highlights" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Spec diffing</strong> (<code>openapi3.SpecsDiff</code>): report the endpoints, operation IDs, and schema names unique to each of two specs, and those shared.</li>
+<li><strong>Rename-aware endpoint comparison</strong>: endpoints are compared generically (path variables normalized), so an <code>operationId</code> rename does not hide the fact that the same endpoint exists in both specs.</li>
+<li><strong><code>oas3diff</code> CLI</strong>: diff two specs (JSON or YAML) from the command line.</li>
+</ul>
+<h2 id="new-features">New Features<a class="headerlink" href="#new-features" title="Permanent link">&para;</a></h2>
+<h3 id="openapi3specmetadatadiff"><code>openapi3.SpecMetadataDiff</code><a class="headerlink" href="#openapi3specmetadatadiff" title="Permanent link">&para;</a></h3>
+<p>The diff is modeled as the complement of the existing <code>Intersection</code> API, reusing <code>SpecMetadata{Endpoints, OperationIDs, SchemaNames}</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+
+<span class="w">    </span><span class="s">&quot;github.com/grokify/spectrum/openapi3&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Reads JSON or YAML.</span>
+<span class="w">    </span><span class="nx">diff</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">openapi3</span><span class="p">.</span><span class="nx">ReadSpecsDiff</span><span class="p">(</span><span class="s">&quot;v1.json&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;v2.yaml&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="nx">diff</span><span class="p">.</span><span class="nx">String</span><span class="p">())</span>
+
+<span class="w">    </span><span class="c1">// Or drive it programmatically:</span>
+<span class="w">    </span><span class="c1">//   d := openapi3.SpecsDiff(spec1, spec2)</span>
+<span class="w">    </span><span class="c1">//   d.OnlyInSpec1.Endpoints  // endpoints only in spec 1 (lost coverage)</span>
+<span class="w">    </span><span class="c1">//   d.OnlyInSpec2.SchemaNames // schemas only in spec 2 (added)</span>
+<span class="w">    </span><span class="c1">//   d.Both.OperationIDs       // shared operation IDs</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">diff</span><span class="p">.</span><span class="nx">IsEmpty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;specs are equivalent across all dimensions&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>API surface:</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SpecsDiff(spec1, spec2 *Spec) SpecMetadataDiff</code></td>
+<td>Diff two parsed specs.</td>
+</tr>
+<tr>
+<td><code>ReadSpecsDiff(file1, file2 string, validate bool)</code></td>
+<td>Read (JSON or YAML) and diff.</td>
+</tr>
+<tr>
+<td><code>SpecMetadata.Diff(md2) SpecMetadataDiff</code></td>
+<td>Three-way compare (only-in-1, only-in-2, both).</td>
+</tr>
+<tr>
+<td><code>SpecMetadata.Difference(md2) SpecMetadata</code></td>
+<td>Set-minus per dimension.</td>
+</tr>
+<tr>
+<td><code>SpecMetadataDiff.String()</code> / <code>IsEmpty()</code> / <code>Sort()</code></td>
+<td>Report and inspect.</td>
+</tr>
+</tbody>
+</table>
+<p>Endpoints are the generic <code>path method</code> strings from <code>SpecMore.PathMethods(true)</code>, so parameter-name and <code>operationId</code> renames never create false differences.</p>
+<h3 id="oas3diff-cli"><code>oas3diff</code> CLI<a class="headerlink" href="#oas3diff-cli" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>go<span class="w"> </span>install<span class="w"> </span>github.com/grokify/spectrum/cmd/oas3diff@latest
+
+oas3diff<span class="w"> </span>spec-v1.json<span class="w"> </span>spec-v2.yaml
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>Endpoints: 9 in both, 1 only in spec 1, 60 only in spec 2
+  - only in spec 1: /products/{}/releases/{} PUT
+  + only in spec 2: /epics GET
+  + only in spec 2: /goals GET
+  ...
+OperationIDs: ...
+SchemaNames: ...
+</code></pre></div>
+
+<h2 id="upgrade">Upgrade<a class="headerlink" href="#upgrade" title="Permanent link">&para;</a></h2>
+<p>Purely additive — no existing exported signature changed or was removed. Upgrade with:</p>
+<div class="codehilite"><pre><span></span><code>go<span class="w"> </span>get<span class="w"> </span>github.com/grokify/spectrum@v1.21.0
+</code></pre></div>
+
+<p>See the <a href="https://github.com/grokify/spectrum/blob/main/CHANGELOG.md">CHANGELOG</a> for the full list of changes.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../cli/" class="btn btn-neutral float-left" title="CLI Reference"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/grokify/spectrum" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../../cli/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -43,12 +43,28 @@
                 <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
                 </li>
               </ul>
-              <p class="caption"><span class="caption-text">OpenAPI3Edit</span></p>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../getting-started/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/inspect/">Inspecting Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/compare/">Comparing Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/merge/">Merging Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/convert/">Converting Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../openapi3_fix/">Fixing Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../recommendations_openapi3/">Recommendations</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../openapi3/inspect/missing_descriptions/">Missing Descriptions</a>
                   </li>
               </ul>
-              <p class="caption"><span class="caption-text">OpenAPI3Lint</span></p>
+              <p class="caption"><span class="caption-text">Linting</span></p>
               <ul class="current">
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">Overview</a>
     <ul class="current">
@@ -75,6 +91,15 @@
                   <li class="toctree-l1"><a class="reference internal" href="custom_rules/">Custom Rules</a>
                   </li>
               </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../cli/">CLI Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Releases</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../releases/v1.21.0/">v1.21.0</a>
+                  </li>
+              </ul>
       </div>
     </div>
     </nav>
@@ -89,10 +114,10 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">OpenAPI3Lint</li>
+          <li class="breadcrumb-item">Linting</li>
       <li class="breadcrumb-item active">Overview</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/grokify/spectrum/tree/master/docs/openapi3lint.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/grokify/spectrum/tree/main/docs/openapi3lint.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -100,7 +125,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="openapi3lint">OpenAPI3Lint</h1>
+                <h1 id="openapi3lint">OpenAPI3Lint<a class="headerlink" href="#openapi3lint" title="Permanent link">&para;</a></h1>
 <p><code>openapi3lint</code> is a linting tool for OpenAPI 3 specifications using Go.</p>
 <p>Features include:</p>
 <ul>
@@ -109,15 +134,15 @@
 <li>Violation locations grouped by rule</li>
 </ul>
 <p>It is designed to scale to a large set of APIs split across many files and support asynchronous resolution, e.g. the results will still be valid if the files change.</p>
-<h2 id="standard-rules">Standard Rules</h2>
-<h3 id="command-line-application">Command Line Application</h3>
+<h2 id="standard-rules">Standard Rules<a class="headerlink" href="#standard-rules" title="Permanent link">&para;</a></h2>
+<h3 id="command-line-application">Command Line Application<a class="headerlink" href="#command-line-application" title="Permanent link">&para;</a></h3>
 <p>Standard rules can be executed through the <code>cmd/oas3lint</code> CLI program. It takes two parameters:</p>
 <ul>
 <li><code>-i</code> for the OAS3 specification file or diectory. If a directory, it will ead in all JSON/YAML/YML extension files.</li>
 <li><code>-p</code> for the linter Policy config file.</li>
 <li><code>-s</code> is optional and used to select the severity level used. If none is selected, <code>error</code> is used.</li>
 </ul>
-<h3 id="policy-file-format">Policy File Format</h3>
+<h3 id="policy-file-format">Policy File Format<a class="headerlink" href="#policy-file-format" title="Permanent link">&para;</a></h3>
 <p>The Policy file uses the following syntax:</p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;rules&quot;</span><span class="p">:{</span>
@@ -131,7 +156,7 @@
 <span class="p">}</span>
 </code></pre></div>
 
-<h3 id="severity-levels">Severity Levels</h3>
+<h3 id="severity-levels">Severity Levels<a class="headerlink" href="#severity-levels" title="Permanent link">&para;</a></h3>
 <p><code>openapi3lint</code> uses Syslog-like severity levels defined in <code>github.com/grokify/mogo/log/severity</code>, including:</p>
 <div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="p">(</span>
 <span class="w">    </span><span class="nx">SeverityDisabled</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;disabled&quot;</span>
@@ -170,7 +195,7 @@
 <span class="p">}</span>
 </code></pre></div>
 
-<h3 id="standard-rules-list">Standard Rules List</h3>
+<h3 id="standard-rules-list">Standard Rules List<a class="headerlink" href="#standard-rules-list" title="Permanent link">&para;</a></h3>
 <p>The following standard rules are built into the <code>openapi3lint</code>. More are coming soon and this is under active development. Existing proof-of-concept rules are being refactored to use the new interface.</p>
 <ul>
 <li><code>datatype-int-format-int32-int64</code>: reports if <code>type: integer</code> doesn't have a standard <code>format</code> set to <code>int32</code> or <code>int64</code></li>
@@ -179,10 +204,10 @@
 <li><code>operation-operationid-style-pascalcase</code>: reports if <code>operationId</code> is not pascal case</li>
 <li><code>operation-operationid-style-snakecase</code>: reports if <code>operationId</code> is not snake case</li>
 </ul>
-<h2 id="custom-rules">Custom Rules</h2>
+<h2 id="custom-rules">Custom Rules<a class="headerlink" href="#custom-rules" title="Permanent link">&para;</a></h2>
 <p>Custom rules are created using the <code>Rule</code> interface. After implementing aa custom rule, load it into a <code>Policy</code> to execute.</p>
 <p>Use <code>Policy.AddRule(rule Rule, errorOnCollision bool)</code> to add a rule.</p>
-<h3 id="rule-interface">Rule Interface</h3>
+<h3 id="rule-interface">Rule Interface<a class="headerlink" href="#rule-interface" title="Permanent link">&para;</a></h3>
 <p>A rule has the following interface:</p>
 <div class="codehilite"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Rule</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nx">Name</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span>
