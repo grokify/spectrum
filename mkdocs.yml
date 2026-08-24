@@ -1,17 +1,31 @@
 site_name: Spectrum
+site_description: OpenAPI specification toolkit for Go — read, inspect, compare, merge, lint, and convert specs.
 repo_url: https://github.com/grokify/spectrum
-edit_uri: tree/master/docs
+edit_uri: tree/main/docs
 docs_dir: docs
 theme: readthedocs
 
 markdown_extensions:
   - codehilite:
       linenums: "None"
+  - admonition
+  - toc:
+      permalink: true
 
 nav:
     - Home: index.md
-    - OpenAPI3Edit:
+    - Getting Started: getting-started.md
+    - User Guide:
+        - Inspecting Specs: guide/inspect.md
+        - Comparing Specs: guide/compare.md
+        - Merging Specs: guide/merge.md
+        - Converting Specs: guide/convert.md
+        - Fixing Specs: openapi3_fix.md
+        - Recommendations: recommendations_openapi3.md
         - Missing Descriptions: openapi3/inspect/missing_descriptions.md
-    - OpenAPI3Lint:
+    - Linting:
         - Overview: openapi3lint.md
         - Custom Rules: openapi3lint/custom_rules.md
+    - CLI Reference: cli.md
+    - Releases:
+        - v1.21.0: releases/v1.21.0.md
