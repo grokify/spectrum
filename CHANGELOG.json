@@ -1,0 +1,6129 @@
+{
+  "irVersion": "1.0",
+  "project": "spectrum",
+  "repository": "https://github.com/grokify/spectrum",
+  "versioning": "semver",
+  "commitConvention": "conventional",
+  "releases": [
+    {
+      "version": "v1.21.0",
+      "date": "2026-08-23",
+      "commit": "043bb5a",
+      "highlights": [
+        {
+          "description": "New OpenAPI 3 spec diffing: compare two specs across endpoints, operation IDs, and schema names, with a matching `oas3diff` CLI. Endpoints are compared generically (path variables normalized) so operationId renames do not mask shared endpoints.",
+          "commit": "ba7e914"
+        }
+      ],
+      "added": [
+        {
+          "description": "`openapi3.SpecMetadataDiff` with `SpecsDiff`, `ReadSpecsDiff`, and `SpecMetadata.Diff`/`Difference` to report the endpoints, operation IDs, and schema names unique to each of two specs and those shared",
+          "commit": "ba7e914"
+        },
+        {
+          "description": "`cmd/oas3diff` CLI to diff two OpenAPI 3 specs (JSON or YAML), following the `cmd/oas2meta` convention",
+          "commit": "3bd1212"
+        }
+      ],
+      "tests": [
+        {
+          "description": "Cover `SpecsDiff` across endpoints, operation IDs, and schema names, including that a renamed operationId on a shared endpoint is not reported as an endpoint difference",
+          "commit": "a11d134"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "`go mod`: update dependencies",
+          "commit": "771a1c2"
+        }
+      ]
+    },
+    {
+      "version": "v1.20.7",
+      "date": "2026-08-23",
+      "fixed": [
+        {
+          "description": "replace stale nosec comment with gosec G704 nolint",
+          "commit": "a7a319a"
+        },
+        {
+          "description": "quote logged error to prevent log injection",
+          "commit": "9759f0d"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #389 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.74.7",
+          "issue": "389",
+          "commit": "930af95"
+        },
+        {
+          "description": "Merge pull request #390 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.147.0",
+          "issue": "390",
+          "commit": "749a5e7"
+        },
+        {
+          "description": "Merge pull request #388 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.146.0",
+          "issue": "388",
+          "commit": "3a149d2"
+        },
+        {
+          "description": "Merge pull request #386 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.73.0",
+          "issue": "386",
+          "commit": "0e46854"
+        },
+        {
+          "description": "Merge pull request #382 from grokify/dependabot/go_modules/github.com/xuri/excelize/v2-2.11.0",
+          "issue": "382",
+          "commit": "2e0c8fb"
+        },
+        {
+          "description": "Merge pull request #385 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.144.0",
+          "issue": "385",
+          "commit": "32caecf"
+        },
+        {
+          "description": "Merge pull request #380 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.72.0",
+          "issue": "380",
+          "commit": "38b5403"
+        },
+        {
+          "description": "Merge pull request #379 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.74.6",
+          "issue": "379",
+          "commit": "f8b079c"
+        },
+        {
+          "description": "Merge pull request #378 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.140.0",
+          "issue": "378",
+          "commit": "c26defb"
+        },
+        {
+          "description": "Merge pull request #372 from grokify/dependabot/go_modules/github.com/grokify/sogo-0.15.0",
+          "issue": "372",
+          "commit": "64fda95"
+        },
+        {
+          "description": "Merge pull request #377 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.139.0",
+          "issue": "377",
+          "commit": "eab72d0"
+        },
+        {
+          "description": "Merge pull request #374 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.71.0",
+          "issue": "374",
+          "commit": "8dd0558"
+        },
+        {
+          "description": "Merge pull request #375 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.138.0",
+          "issue": "375",
+          "commit": "75adb1c"
+        },
+        {
+          "description": "Merge pull request #371 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.137.0",
+          "issue": "371",
+          "commit": "69356f1"
+        },
+        {
+          "description": "Merge pull request #368 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.74.2",
+          "issue": "368",
+          "commit": "abfa379"
+        },
+        {
+          "description": "Merge pull request #369 from grokify/dependabot/go_modules/github.com/rs/zerolog-1.35.1",
+          "issue": "369",
+          "commit": "534d441"
+        },
+        {
+          "description": "Merge pull request #365 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.74.1",
+          "issue": "365",
+          "commit": "089fc96"
+        },
+        {
+          "description": "Merge pull request #367 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.135.0",
+          "issue": "367",
+          "commit": "d3203d6"
+        },
+        {
+          "description": "Merge pull request #366 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.70.0",
+          "issue": "366",
+          "commit": "f2820de"
+        },
+        {
+          "description": "Merge pull request #362 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.74.0",
+          "issue": "362",
+          "commit": "c7a79f4"
+        },
+        {
+          "description": "Merge pull request #364 from grokify/dependabot/go_modules/github.com/rs/zerolog-1.35.0",
+          "issue": "364",
+          "commit": "a73062c"
+        },
+        {
+          "description": "Merge pull request #363 from grokify/dependabot/go_modules/golang.org/x/image-0.38.0",
+          "issue": "363",
+          "commit": "885f08e"
+        },
+        {
+          "description": "Merge pull request #361 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.27.0",
+          "issue": "361",
+          "commit": "bb1987e"
+        },
+        {
+          "description": "Merge pull request #359 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.73.4",
+          "issue": "359",
+          "commit": "9bd6cd5"
+        },
+        {
+          "description": "Merge pull request #357 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.73.2",
+          "issue": "357",
+          "commit": "49d9a41"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "`README.md`: update shields",
+          "commit": "85e9813"
+        },
+        {
+          "description": "`README.md`: update shields",
+          "commit": "c937bd9"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.146.0 to 0.147.0",
+          "commit": "df7ad5b"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.74.6 to 0.74.7",
+          "commit": "fc24a4f"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.144.0 to 0.146.0",
+          "commit": "d66323d"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.72.0 to 1.73.0",
+          "commit": "57309ae"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.140.0 to 0.144.0",
+          "commit": "ee27c70"
+        },
+        {
+          "description": "bump github.com/xuri/excelize/v2 from 2.10.1 to 2.11.0",
+          "commit": "d8fa67f"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.71.0 to 1.72.0",
+          "commit": "eace06a"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.74.4 to 0.74.6",
+          "commit": "c88ed3b"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.139.0 to 0.140.0",
+          "commit": "f5bce32"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.138.0 to 0.139.0",
+          "commit": "39b712a"
+        },
+        {
+          "description": "bump github.com/grokify/sogo from 0.14.0 to 0.15.0",
+          "commit": "25c144e"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.137.0 to 0.138.0",
+          "commit": "2c3c2b6"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.70.0 to 1.71.0",
+          "commit": "7b03408"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.135.0 to 0.137.0",
+          "commit": "4c596f1"
+        },
+        {
+          "description": "bump github.com/rs/zerolog from 1.35.0 to 1.35.1",
+          "commit": "1b40774"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.74.1 to 0.74.2",
+          "commit": "d3c34a5"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.74.0 to 0.74.1",
+          "commit": "16aa411"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.133.0 to 0.135.0",
+          "commit": "7aa37bb"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.69.0 to 1.70.0",
+          "commit": "40ea46b"
+        },
+        {
+          "description": "bump github.com/rs/zerolog from 1.34.0 to 1.35.0",
+          "commit": "d7b280d"
+        },
+        {
+          "description": "bump golang.org/x/image from 0.37.0 to 0.38.0",
+          "commit": "85b0357"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.73.4 to 0.74.0",
+          "commit": "f09d273"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.26.9 to 2.27.0",
+          "commit": "0c8cfc0"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.73.2 to 0.73.4",
+          "commit": "d17b645"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.73.1 to 0.73.2",
+          "commit": "ea16f9c"
+        }
+      ],
+      "internal": [
+        {
+          "description": "disable govet inline analyzer false positives",
+          "commit": "62abe1e"
+        },
+        {
+          "description": "`go mod`: update dependencies",
+          "commit": "acb2698"
+        },
+        {
+          "description": "update years",
+          "commit": "1ed4377"
+        },
+        {
+          "description": "`go mod`: update dependencies",
+          "commit": "cb4e447"
+        },
+        {
+          "description": "`workflows`: move to shared workflows",
+          "commit": "b7caf37"
+        }
+      ]
+    },
+    {
+      "version": "v1.20.6",
+      "date": "2026-02-14",
+      "dependencies": [
+        {
+          "description": "Merge pull request #356 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.73.0",
+          "issue": "356",
+          "commit": "74efb68"
+        },
+        {
+          "description": "Merge pull request #354 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.26.8",
+          "issue": "354",
+          "commit": "891af80"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/grokify/mogo from 0.72.6 to 0.73.0",
+          "commit": "d946426"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.26.7 to 2.26.8",
+          "commit": "649565c"
+        }
+      ],
+      "internal": [
+        {
+          "description": "`go mod`: udpate dependencies",
+          "commit": "adfc6c9"
+        }
+      ]
+    },
+    {
+      "version": "v1.20.5",
+      "date": "2026-01-25",
+      "dependencies": [
+        {
+          "description": "Merge pull request #353 from grokify/dependabot/github_actions/actions/checkout-6.0.2",
+          "issue": "353",
+          "commit": "010f8d8"
+        },
+        {
+          "description": "Merge pull request #352 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.72.6",
+          "issue": "352",
+          "commit": "2d9af90"
+        },
+        {
+          "description": "Merge pull request #351 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.69.0",
+          "issue": "351",
+          "commit": "175c6c9"
+        },
+        {
+          "description": "Merge pull request #347 from grokify/dependabot/go_modules/github.com/grokify/sogo-0.13.0",
+          "issue": "347",
+          "commit": "e2b6607"
+        },
+        {
+          "description": "Merge pull request #349 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.26.7",
+          "issue": "349",
+          "commit": "2fe22db"
+        },
+        {
+          "description": "Merge pull request #342 from grokify/dependabot/go_modules/github.com/grokify/sogo-0.12.12",
+          "issue": "342",
+          "commit": "b8ee0ee"
+        },
+        {
+          "description": "Merge pull request #345 from grokify/dependabot/github_actions/actions/checkout-6.0.1",
+          "issue": "345",
+          "commit": "8910d98"
+        },
+        {
+          "description": "Merge pull request #344 from grokify/dependabot/github_actions/golangci/golangci-lint-action-9.2.0",
+          "issue": "344",
+          "commit": "a6619ee"
+        },
+        {
+          "description": "Merge pull request #341 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.26.6",
+          "issue": "341",
+          "commit": "6e5f13a"
+        },
+        {
+          "description": "Merge pull request #340 from grokify/dependabot/github_actions/golangci/golangci-lint-action-9.1.0",
+          "issue": "340",
+          "commit": "db92714"
+        },
+        {
+          "description": "Merge pull request #339 from grokify/dependabot/github_actions/actions/checkout-6.0.0",
+          "issue": "339",
+          "commit": "a2b8f1c"
+        },
+        {
+          "description": "Merge pull request #333 from grokify/dependabot/github_actions/golangci/golangci-lint-action-9.0.0",
+          "issue": "333",
+          "commit": "a6120f3"
+        },
+        {
+          "description": "Merge pull request #335 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.26.4",
+          "issue": "335",
+          "commit": "4b71957"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump actions/checkout from 6.0.1 to 6.0.2",
+          "commit": "1f2d950"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.72.3 to 0.72.6",
+          "commit": "4409e44"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.68.0 to 1.69.0",
+          "commit": "8f08eb4"
+        },
+        {
+          "description": "bump github.com/grokify/sogo from 0.12.12 to 0.13.0",
+          "commit": "6826a1e"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.26.6 to 2.26.7",
+          "commit": "c1b1966"
+        },
+        {
+          "description": "bump github.com/grokify/sogo from 0.12.11 to 0.12.12",
+          "commit": "5d563c3"
+        },
+        {
+          "description": "bump actions/checkout from 6.0.0 to 6.0.1",
+          "commit": "8a0665f"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 9.1.0 to 9.2.0",
+          "commit": "e6bcf34"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.26.5 to 2.26.6",
+          "commit": "beebd3a"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 9.0.0 to 9.1.0",
+          "commit": "f848078"
+        },
+        {
+          "description": "bump actions/checkout from 5.0.0 to 6.0.0",
+          "commit": "e46849a"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.26.1 to 2.26.4",
+          "commit": "ff9e47b"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 8.0.0 to 9.0.0",
+          "commit": "621b241"
+        }
+      ],
+      "internal": [
+        {
+          "description": "`go mod`: update dependencies",
+          "commit": "91b086b"
+        },
+        {
+          "description": "update shields",
+          "commit": "3863b6b"
+        },
+        {
+          "description": "`go.mod`: update deps",
+          "commit": "3cb9db3"
+        }
+      ]
+    },
+    {
+      "version": "v1.20.4",
+      "date": "2025-10-30",
+      "dependencies": [
+        {
+          "description": "Merge pull request #329 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.71.7",
+          "issue": "329",
+          "commit": "7f23a2c"
+        },
+        {
+          "description": "Merge pull request #328 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.68.0",
+          "issue": "328",
+          "commit": "958316f"
+        },
+        {
+          "description": "Merge pull request #327 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.25.5",
+          "issue": "327",
+          "commit": "01e3341"
+        },
+        {
+          "description": "Merge pull request #320 from grokify/dependabot/go_modules/github.com/grokify/sogo-0.12.6",
+          "issue": "320",
+          "commit": "366ac8c"
+        },
+        {
+          "description": "Merge pull request #323 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.25.4",
+          "issue": "323",
+          "commit": "3aa20d2"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/grokify/mogo from 0.71.3 to 0.71.7",
+          "commit": "9b5602d"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.67.0 to 1.68.0",
+          "commit": "6b3749b"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.25.4 to 2.25.5",
+          "commit": "be5abde"
+        },
+        {
+          "description": "bump github.com/grokify/sogo from 0.12.5 to 0.12.6",
+          "commit": "19e049a"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.25.1 to 2.25.4",
+          "commit": "789c09a"
+        }
+      ],
+      "internal": [
+        {
+          "description": "`go mod`: update",
+          "commit": "63023ab"
+        },
+        {
+          "description": "`go mod`: update",
+          "commit": "f2fdb28"
+        }
+      ]
+    },
+    {
+      "version": "v1.20.3",
+      "date": "2025-09-14",
+      "dependencies": [
+        {
+          "description": "Merge pull request #308 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.133.0",
+          "issue": "308",
+          "commit": "5cd90f7"
+        },
+        {
+          "description": "Merge pull request #311 from grokify/dependabot/go_modules/github.com/grokify/sogo-0.12.1",
+          "issue": "311",
+          "commit": "314b6a4"
+        },
+        {
+          "description": "Merge pull request #312 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.24.19",
+          "issue": "312",
+          "commit": "edaa57c"
+        },
+        {
+          "description": "Merge pull request #303 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.65.0",
+          "issue": "303",
+          "commit": "9e72b6f"
+        },
+        {
+          "description": "Merge pull request #302 from grokify/dependabot/github_actions/actions/checkout-5.0.0",
+          "issue": "302",
+          "commit": "7f1fa1e"
+        },
+        {
+          "description": "Merge pull request #301 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.70.16",
+          "issue": "301",
+          "commit": "ceb9b38"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.132.0 to 0.133.0",
+          "commit": "4d4ebcf"
+        },
+        {
+          "description": "bump github.com/grokify/sogo from 0.11.9 to 0.12.1",
+          "commit": "4b0c328"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.24.17 to 2.24.19",
+          "commit": "e6e4880"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.64.0 to 1.65.0",
+          "commit": "c2b04c1"
+        },
+        {
+          "description": "bump actions/checkout from 4.2.2 to 5.0.0",
+          "commit": "154b82f"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.70.15 to 0.70.16",
+          "commit": "890ce36"
+        }
+      ],
+      "internal": [
+        {
+          "description": "`go mod`: update",
+          "commit": "0c4350f"
+        },
+        {
+          "description": "`go build`: update `actions/setup-go`",
+          "commit": "0d8188f"
+        },
+        {
+          "description": "`go build`: update go versions",
+          "commit": "8c04077"
+        },
+        {
+          "description": "`go mod`: update",
+          "commit": "b2eb2a0"
+        }
+      ]
+    },
+    {
+      "version": "v1.20.2",
+      "date": "2025-08-03",
+      "dependencies": [
+        {
+          "description": "Merge pull request #300 from grokify/dependabot/go_modules/sigs.k8s.io/yaml-1.6.0",
+          "issue": "300",
+          "commit": "22acdaa"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump sigs.k8s.io/yaml from 1.5.0 to 1.6.0",
+          "commit": "5f3ca2d"
+        }
+      ],
+      "internal": [
+        {
+          "description": "`go mod`: update",
+          "commit": "29d730a"
+        }
+      ]
+    },
+    {
+      "version": "v1.20.1",
+      "date": "2025-07-19",
+      "dependencies": [
+        {
+          "description": "Merge pull request #296 from grokify/dependabot/go_modules/github.com/grokify/sogo-0.11.7",
+          "issue": "296",
+          "commit": "e450ae2"
+        },
+        {
+          "description": "Merge pull request #295 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.63.0",
+          "issue": "295",
+          "commit": "c05c629"
+        },
+        {
+          "description": "Merge pull request #294 from grokify/dependabot/go_modules/sigs.k8s.io/yaml-1.5.0",
+          "issue": "294",
+          "commit": "4bc824f"
+        },
+        {
+          "description": "Merge pull request #293 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.70.10",
+          "issue": "293",
+          "commit": "5002ca4"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/grokify/sogo from 0.11.6 to 0.11.7",
+          "commit": "bd90208"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.62.0 to 1.63.0",
+          "commit": "e284522"
+        },
+        {
+          "description": "bump sigs.k8s.io/yaml from 1.4.0 to 1.5.0",
+          "commit": "8999c5a"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.70.9 to 0.70.10",
+          "commit": "a5c4cd7"
+        }
+      ],
+      "internal": [
+        {
+          "description": "`go mod`: update",
+          "commit": "1244b7a"
+        }
+      ]
+    },
+    {
+      "version": "v1.20.0",
+      "date": "2025-06-23",
+      "added": [
+        {
+          "description": "`cmd/oas2meta`: add `main.go`",
+          "commit": "648c256"
+        },
+        {
+          "description": "`spectrum`: add `EndpointString()`",
+          "commit": "04e2ba4"
+        },
+        {
+          "description": "`openapi2`: add `SpecMore{}`, `NewSpecMetaFilepath()`, `NewSpecMetaSetFilepaths()`",
+          "commit": "ec83a8f"
+        },
+        {
+          "description": "`spectrum`: add `SpecMeta{}`",
+          "commit": "615a66e"
+        }
+      ],
+      "changed": [
+        {
+          "description": "`cmd`: move from root",
+          "commit": "272bb7d"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #291 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.24.11",
+          "issue": "291",
+          "commit": "ca08e8f"
+        },
+        {
+          "description": "Merge pull request #290 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.70.3",
+          "issue": "290",
+          "commit": "93538d0"
+        },
+        {
+          "description": "Merge pull request #289 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.24.10",
+          "issue": "289",
+          "commit": "2b4e767"
+        },
+        {
+          "description": "Merge pull request #288 from grokify/dependabot/go_modules/github.com/grokify/sogo-0.11.5",
+          "issue": "288",
+          "commit": "16bb05b"
+        },
+        {
+          "description": "Merge pull request #287 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.70.0",
+          "issue": "287",
+          "commit": "195a3d6"
+        },
+        {
+          "description": "Merge pull request #286 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.24.8",
+          "issue": "286",
+          "commit": "468b597"
+        },
+        {
+          "description": "Merge pull request #285 from grokify/dependabot/go_modules/github.com/grokify/sogo-0.11.1",
+          "issue": "285",
+          "commit": "b3a6881"
+        },
+        {
+          "description": "Merge pull request #282 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.24.7",
+          "issue": "282",
+          "commit": "557b628"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.24.10 to 2.24.11",
+          "commit": "d32c8e0"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.70.0 to 0.70.3",
+          "commit": "ceee7d4"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.24.8 to 2.24.10",
+          "commit": "668270a"
+        },
+        {
+          "description": "bump github.com/grokify/sogo from 0.11.1 to 0.11.5",
+          "commit": "04844b6"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.69.3 to 0.70.0",
+          "commit": "347bb25"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.24.7 to 2.24.8",
+          "commit": "c6b273d"
+        },
+        {
+          "description": "bump github.com/grokify/sogo from 0.10.14 to 0.11.1",
+          "commit": "1b830b3"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.24.6 to 2.24.7",
+          "commit": "d27bc7a"
+        }
+      ],
+      "internal": [
+        {
+          "description": "`golangci-lint`: fix various",
+          "commit": "c613ac3"
+        },
+        {
+          "description": "`go mod`: update",
+          "commit": "38de908"
+        },
+        {
+          "description": "`go mod`: update",
+          "commit": "8c031aa"
+        },
+        {
+          "description": "`go mod`: update",
+          "commit": "c836d8e"
+        }
+      ]
+    },
+    {
+      "version": "v1.19.8",
+      "date": "2025-05-11",
+      "dependencies": [
+        {
+          "description": "Merge pull request #281 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.24.4",
+          "issue": "281",
+          "commit": "c49b2d7"
+        },
+        {
+          "description": "Merge pull request #279 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.62.0",
+          "issue": "279",
+          "commit": "cff06fb"
+        },
+        {
+          "description": "Merge pull request #278 from grokify/dependabot/github_actions/golangci/golangci-lint-action-8.0.0",
+          "issue": "278",
+          "commit": "ff3fb03"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.24.1 to 2.24.4",
+          "commit": "9fa803b"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.61.0 to 1.62.0",
+          "commit": "64fef0f"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 7.0.0 to 8.0.0",
+          "commit": "e8580e3"
+        }
+      ],
+      "internal": [
+        {
+          "description": "`golangci-lint`: fix various",
+          "commit": "15b0685"
+        },
+        {
+          "description": "`go mod`: update",
+          "commit": "934dbf0"
+        }
+      ]
+    },
+    {
+      "version": "v1.19.7",
+      "date": "2025-05-03",
+      "internal": [
+        {
+          "description": "`go mod`: update",
+          "commit": "03da677"
+        }
+      ]
+    },
+    {
+      "version": "v1.19.6",
+      "date": "2025-05-03",
+      "dependencies": [
+        {
+          "description": "Merge pull request #277 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.132.0",
+          "issue": "277",
+          "commit": "5571065"
+        },
+        {
+          "description": "Merge pull request #276 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.68.13",
+          "issue": "276",
+          "commit": "3bce33f"
+        },
+        {
+          "description": "Merge pull request #273 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.61.0",
+          "issue": "273",
+          "commit": "06c7a2d"
+        },
+        {
+          "description": "Merge pull request #275 from grokify/dependabot/go_modules/github.com/grokify/sogo-0.10.9",
+          "issue": "275",
+          "commit": "8b924e8"
+        },
+        {
+          "description": "Merge pull request #269 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.68.7",
+          "issue": "269",
+          "commit": "3b8db09"
+        },
+        {
+          "description": "Merge pull request #268 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.60.0",
+          "issue": "268",
+          "commit": "0be9325"
+        },
+        {
+          "description": "Merge pull request #267 from grokify/dependabot/github_actions/golangci/golangci-lint-action-7.0.0",
+          "issue": "267",
+          "commit": "0e8de3c"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/grokify/mogo from 0.68.7 to 0.68.13",
+          "commit": "db27013"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.131.0 to 0.132.0",
+          "commit": "0b03c39"
+        },
+        {
+          "description": "bump github.com/grokify/sogo from 0.10.7 to 0.10.9",
+          "commit": "e330a54"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.60.0 to 1.61.0",
+          "commit": "851fba5"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.68.6 to 0.68.7",
+          "commit": "e221801"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.59.0 to 1.60.0",
+          "commit": "5b6f474"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 6.5.2 to 7.0.0",
+          "commit": "3d681f6"
+        }
+      ],
+      "internal": [
+        {
+          "description": "`go mod`: update",
+          "commit": "a8b0d21"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "2662fa3"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "bf0c5e7"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "5186fa0"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "023580e"
+        },
+        {
+          "description": "`golangci-lint`: fix various",
+          "commit": "9823545"
+        },
+        {
+          "description": "`golangci-lint`: update to version 2",
+          "commit": "d8d6bd6"
+        }
+      ]
+    },
+    {
+      "version": "v1.19.5",
+      "date": "2025-03-23",
+      "internal": [
+        {
+          "description": "go mod: update",
+          "commit": "ef99ecf"
+        }
+      ]
+    },
+    {
+      "version": "v1.19.4",
+      "date": "2025-03-22",
+      "changed": [
+        {
+          "description": "`openapi3`: update `validateMore()` to handle missing info object",
+          "commit": "e2ce029"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #266 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.131.0",
+          "issue": "266",
+          "commit": "388b180"
+        },
+        {
+          "description": "Merge pull request #265 from grokify/dependabot/github_actions/golangci/golangci-lint-action-6.5.2",
+          "issue": "265",
+          "commit": "eebd546"
+        },
+        {
+          "description": "Merge pull request #263 from grokify/dependabot/github_actions/golangci/golangci-lint-action-6.5.1",
+          "issue": "263",
+          "commit": "63bba0f"
+        },
+        {
+          "description": "Merge pull request #262 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.22.3",
+          "issue": "262",
+          "commit": "427506b"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "`README.md`: update GitHub actions badge urls",
+          "commit": "c13e53a"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.129.0 to 0.131.0",
+          "commit": "7fa0e2c"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 6.5.1 to 6.5.2",
+          "commit": "7593440"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 6.5.0 to 6.5.1",
+          "commit": "8ab8c1c"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.22.2 to 2.22.3",
+          "commit": "c807aea"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "`workflows`: update name",
+          "commit": "06d44ba"
+        }
+      ],
+      "internal": [
+        {
+          "description": "go mod: update",
+          "commit": "9f0a735"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "01527d2"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "53cec73"
+        }
+      ]
+    },
+    {
+      "version": "v1.19.3",
+      "date": "2025-02-23",
+      "dependencies": [
+        {
+          "description": "Merge pull request #257 from grokify/dependabot/github_actions/golangci/golangci-lint-action-6.5.0",
+          "issue": "257",
+          "commit": "99b14ba"
+        },
+        {
+          "description": "Merge pull request #256 from grokify/dependabot/github_actions/golangci/golangci-lint-action-6.4.1",
+          "issue": "256",
+          "commit": "ae0f38b"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump golangci/golangci-lint-action from 6.4.1 to 6.5.0",
+          "commit": "dc76bc0"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 6.3.0 to 6.4.1",
+          "commit": "22bc1e2"
+        }
+      ],
+      "internal": [
+        {
+          "description": "`golangci-lint`: update `.golangci.yaml`",
+          "commit": "351428e"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "c4f40df"
+        },
+        {
+          "description": "go test: update go versions",
+          "commit": "e665ad6"
+        }
+      ]
+    },
+    {
+      "version": "v1.19.2",
+      "date": "2025-02-09",
+      "changed": [
+        {
+          "description": "`openapi3`: simplify code",
+          "commit": "348cdfd"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #253 from grokify/dependabot/github_actions/golangci/golangci-lint-action-6.3.0",
+          "issue": "253",
+          "commit": "9fbb79f"
+        },
+        {
+          "description": "Merge pull request #252 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.67.8",
+          "issue": "252",
+          "commit": "f24a809"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "`README.md`: add `golangci-lint` shield",
+          "commit": "bab3654"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump golangci/golangci-lint-action from 6.2.0 to 6.3.0",
+          "commit": "c34fc51"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.67.7 to 0.67.8",
+          "commit": "fd357ac"
+        }
+      ],
+      "internal": [
+        {
+          "description": "go mod: update",
+          "commit": "7cdfa11"
+        },
+        {
+          "description": "`openapi2`: update style",
+          "commit": "da291dd"
+        }
+      ]
+    },
+    {
+      "version": "v1.19.1",
+      "date": "2025-02-01",
+      "changed": [
+        {
+          "description": "`openapi3`: update `TypesRefIs()`, `TypesRefString()`",
+          "commit": "acacc66"
+        }
+      ],
+      "internal": [
+        {
+          "description": "fix various",
+          "commit": "fd95b36"
+        },
+        {
+          "description": "update years",
+          "commit": "f13a22b"
+        }
+      ]
+    },
+    {
+      "version": "v1.19.0",
+      "date": "2025-02-01",
+      "added": [
+        {
+          "description": "`openapi3`: add `NewTypesRef()`, `TypesRefIs()`, `TypesRefString()`",
+          "commit": "711eba5"
+        }
+      ],
+      "changed": [
+        {
+          "description": "`ext/taggroups`: add explicit `XTagGroupsPropertyNameRedocly`",
+          "commit": "1b61261"
+        }
+      ],
+      "internal": [
+        {
+          "description": "fix #149: update for `github.com/getkin/kin-openapi@v0.129.0`",
+          "issue": "149",
+          "commit": "d8d952a"
+        }
+      ]
+    },
+    {
+      "version": "v1.18.12",
+      "date": "2025-02-01",
+      "dependencies": [
+        {
+          "description": "Merge pull request #248 from grokify/dependabot/go_modules/github.com/grokify/sogo-0.10.0",
+          "issue": "248",
+          "commit": "b7bd21c"
+        },
+        {
+          "description": "Merge pull request #246 from grokify/dependabot/github_actions/golangci/golangci-lint-action-6.2.0",
+          "issue": "246",
+          "commit": "7c2ec63"
+        },
+        {
+          "description": "Merge pull request #244 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.21.12",
+          "issue": "244",
+          "commit": "f22ac58"
+        },
+        {
+          "description": "Merge pull request #238 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.21.9",
+          "issue": "238",
+          "commit": "8d1d496"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/grokify/sogo from 0.8.17 to 0.10.0",
+          "commit": "7019010"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 6.1.1 to 6.2.0",
+          "commit": "797a8cd"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.21.9 to 2.21.12",
+          "commit": "ec2e5cd"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.21.6 to 2.21.9",
+          "commit": "c4664fc"
+        }
+      ],
+      "internal": [
+        {
+          "description": "go mod: update",
+          "commit": "ce794a4"
+        }
+      ]
+    },
+    {
+      "version": "v1.18.11",
+      "date": "2024-12-26",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "b01535f"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "192d82e"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #233 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.66.5",
+          "issue": "233",
+          "commit": "04f502a"
+        },
+        {
+          "description": "Merge pull request #227 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.21.2",
+          "issue": "227",
+          "commit": "49572f8"
+        },
+        {
+          "description": "Merge pull request #226 from grokify/dependabot/go_modules/golang.org/x/crypto-0.31.0",
+          "issue": "226",
+          "commit": "d47f1e8"
+        },
+        {
+          "description": "Merge pull request #225 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.58.0",
+          "issue": "225",
+          "commit": "c7c825a"
+        },
+        {
+          "description": "Merge pull request #222 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.21.1",
+          "issue": "222",
+          "commit": "5cd7d8f"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/grokify/mogo from 0.66.2 to 0.66.5",
+          "commit": "074ed36"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.21.1 to 2.21.2",
+          "commit": "0b1a6ef"
+        },
+        {
+          "description": "bump golang.org/x/crypto from 0.30.0 to 0.31.0",
+          "commit": "882c807"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.57.0 to 1.58.0",
+          "commit": "60d232e"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.21.0 to 2.21.1",
+          "commit": "a507412"
+        }
+      ],
+      "internal": [
+        {
+          "description": "go mod: update",
+          "commit": "56c3457"
+        }
+      ]
+    },
+    {
+      "version": "v1.18.10",
+      "date": "2024-11-22",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "5d82ad4"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "2aa1a20"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "259627a"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #216 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.21.0",
+          "issue": "216",
+          "commit": "ddf31f9"
+        },
+        {
+          "description": "Merge pull request #213 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.20.4",
+          "issue": "213",
+          "commit": "8a0b794"
+        },
+        {
+          "description": "Merge pull request #211 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.57.0",
+          "issue": "211",
+          "commit": "99d21b7"
+        },
+        {
+          "description": "Merge pull request #207 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.20.3",
+          "issue": "207",
+          "commit": "5cb2490"
+        },
+        {
+          "description": "Merge pull request #209 from grokify/dependabot/github_actions/actions/checkout-4.2.2",
+          "issue": "209",
+          "commit": "b339725"
+        },
+        {
+          "description": "Merge pull request #204 from grokify/dependabot/go_modules/github.com/grokify/sogo-0.8.11",
+          "issue": "204",
+          "commit": "cd3720b"
+        },
+        {
+          "description": "Merge pull request #205 from grokify/dependabot/github_actions/actions/checkout-4.2.1",
+          "issue": "205",
+          "commit": "5012a7c"
+        },
+        {
+          "description": "Merge pull request #203 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.20.2",
+          "issue": "203",
+          "commit": "553d274"
+        },
+        {
+          "description": "Merge pull request #200 from grokify/dependabot/github_actions/golangci/golangci-lint-action-6.1.1",
+          "issue": "200",
+          "commit": "6918e73"
+        },
+        {
+          "description": "Merge pull request #198 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.56.0",
+          "issue": "198",
+          "commit": "8898ae2"
+        },
+        {
+          "description": "Merge pull request #199 from grokify/dependabot/github_actions/actions/checkout-4.2.0",
+          "issue": "199",
+          "commit": "a1347cc"
+        },
+        {
+          "description": "Merge pull request #197 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.20.1",
+          "issue": "197",
+          "commit": "861f8a8"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.20.5 to 2.21.0",
+          "commit": "8b3e063"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.20.3 to 2.20.4",
+          "commit": "9eb8b46"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.56.0 to 1.57.0",
+          "commit": "144be09"
+        },
+        {
+          "description": "bump actions/checkout from 4.2.1 to 4.2.2",
+          "commit": "5090ebc"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.20.2 to 2.20.3",
+          "commit": "9bc98de"
+        },
+        {
+          "description": "bump github.com/grokify/sogo from 0.8.10 to 0.8.11",
+          "commit": "fba2c4b"
+        },
+        {
+          "description": "bump actions/checkout from 4.2.0 to 4.2.1",
+          "commit": "b46ff09"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.20.1 to 2.20.2",
+          "commit": "630928d"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 6.1.0 to 6.1.1",
+          "commit": "8daa358"
+        },
+        {
+          "description": "bump actions/checkout from 4.1.7 to 4.2.0",
+          "commit": "ea26fa6"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.55.0 to 1.56.0",
+          "commit": "b2d63d5"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.20.0 to 2.20.1",
+          "commit": "17c5abc"
+        }
+      ]
+    },
+    {
+      "version": "v1.18.9",
+      "date": "2024-09-02",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "678a23b"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #195 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.64.9",
+          "issue": "195",
+          "commit": "4786c50"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/grokify/mogo from 0.64.8 to 0.64.9",
+          "commit": "da66cfb"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "go test: update go versions",
+          "commit": "2c2eb86"
+        }
+      ]
+    },
+    {
+      "version": "v1.18.8",
+      "date": "2024-08-18",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "297fdde"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "4dc302a"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #194 from grokify/dependabot/go_modules/github.com/grokify/sogo-0.8.8",
+          "issue": "194",
+          "commit": "27f6017"
+        },
+        {
+          "description": "Merge pull request #192 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.19.6",
+          "issue": "192",
+          "commit": "8eca365"
+        },
+        {
+          "description": "Merge pull request #191 from grokify/dependabot/github_actions/golangci/golangci-lint-action-6.1.0",
+          "issue": "191",
+          "commit": "05ddbf8"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/grokify/sogo from 0.8.7 to 0.8.8",
+          "commit": "29cea62"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.19.5 to 2.19.6",
+          "commit": "80ee303"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 6.0.1 to 6.1.0",
+          "commit": "a1d695c"
+        }
+      ]
+    },
+    {
+      "version": "v1.18.7",
+      "date": "2024-07-15",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "9880feb"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "90bef1d"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #188 from grokify/dependabot/go_modules/github.com/valyala/quicktemplate-1.8.0",
+          "issue": "188",
+          "commit": "9450642"
+        },
+        {
+          "description": "Merge pull request #187 from grokify/dependabot/go_modules/golang.org/x/image-0.18.0",
+          "issue": "187",
+          "commit": "8d5c6d0"
+        },
+        {
+          "description": "Merge pull request #186 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.55.0",
+          "issue": "186",
+          "commit": "a34c740"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/valyala/quicktemplate from 1.7.0 to 1.8.0",
+          "commit": "b43eaa5"
+        },
+        {
+          "description": "bump golang.org/x/image from 0.17.0 to 0.18.0",
+          "commit": "da2a9ad"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.54.0 to 1.55.0",
+          "commit": "baecde6"
+        }
+      ]
+    },
+    {
+      "version": "v1.18.6",
+      "date": "2024-06-16",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "9ac70e0"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "79f7121"
+        },
+        {
+          "description": "`cmd/oas3validate`: print more info",
+          "commit": "a1c5003"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #183 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.64.4",
+          "issue": "183",
+          "commit": "d56528c"
+        },
+        {
+          "description": "Merge pull request #182 from grokify/dependabot/go_modules/github.com/grokify/sogo-0.8.5",
+          "issue": "182",
+          "commit": "49593c6"
+        },
+        {
+          "description": "Merge pull request #185 from grokify/dependabot/github_actions/actions/checkout-4.1.7",
+          "issue": "185",
+          "commit": "0af30af"
+        },
+        {
+          "description": "Merge pull request #180 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.19.2",
+          "issue": "180",
+          "commit": "89334cb"
+        },
+        {
+          "description": "Merge pull request #177 from grokify/dependabot/go_modules/github.com/grokify/sogo-0.8.4",
+          "issue": "177",
+          "commit": "5a4558d"
+        },
+        {
+          "description": "Merge pull request #173 from grokify/dependabot/go_modules/github.com/rs/zerolog-1.33.0",
+          "issue": "173",
+          "commit": "9b4be59"
+        },
+        {
+          "description": "Merge pull request #172 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.54.0",
+          "issue": "172",
+          "commit": "b19fa01"
+        },
+        {
+          "description": "Merge pull request #174 from grokify/dependabot/go_modules/github.com/grokify/sogo-0.8.3",
+          "issue": "174",
+          "commit": "2cdb640"
+        },
+        {
+          "description": "Merge pull request #170 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.53.0",
+          "issue": "170",
+          "commit": "e5d3ee8"
+        },
+        {
+          "description": "Merge pull request #171 from grokify/dependabot/github_actions/actions/checkout-4.1.6",
+          "issue": "171",
+          "commit": "fc58f96"
+        },
+        {
+          "description": "Merge pull request #166 from grokify/dependabot/github_actions/golangci/golangci-lint-action-6.0.1",
+          "issue": "166",
+          "commit": "616aa6d"
+        },
+        {
+          "description": "Merge pull request #165 from grokify/dependabot/github_actions/actions/checkout-4.1.5",
+          "issue": "165",
+          "commit": "2259c0b"
+        },
+        {
+          "description": "Merge pull request #161 from grokify/dependabot/go_modules/github.com/grokify/sogo-0.8.1",
+          "issue": "161",
+          "commit": "066f3ec"
+        },
+        {
+          "description": "Merge pull request #162 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.18.6",
+          "issue": "162",
+          "commit": "4cd6b92"
+        },
+        {
+          "description": "Merge pull request #160 from grokify/dependabot/github_actions/golangci/golangci-lint-action-5.1.0",
+          "issue": "160",
+          "commit": "1d2a58b"
+        },
+        {
+          "description": "Merge pull request #159 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.63.10",
+          "issue": "159",
+          "commit": "7dfb180"
+        },
+        {
+          "description": "Merge pull request #158 from grokify/dependabot/github_actions/golangci/golangci-lint-action-5.0.0",
+          "issue": "158",
+          "commit": "90dda5a"
+        },
+        {
+          "description": "Merge pull request #157 from grokify/dependabot/github_actions/actions/checkout-4.1.4",
+          "issue": "157",
+          "commit": "078726a"
+        },
+        {
+          "description": "Merge pull request #156 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.63.9",
+          "issue": "156",
+          "commit": "8093d4c"
+        },
+        {
+          "description": "Merge pull request #155 from grokify/dependabot/github_actions/actions/checkout-4.1.3",
+          "issue": "155",
+          "commit": "6a45192"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/grokify/mogo from 0.64.1 to 0.64.4",
+          "commit": "4918ea4"
+        },
+        {
+          "description": "bump github.com/grokify/sogo from 0.8.4 to 0.8.5",
+          "commit": "da256d6"
+        },
+        {
+          "description": "bump actions/checkout from 4.1.6 to 4.1.7",
+          "commit": "a4b38a6"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.18.7 to 2.19.2",
+          "commit": "658373b"
+        },
+        {
+          "description": "bump github.com/grokify/sogo from 0.8.3 to 0.8.4",
+          "commit": "78661e6"
+        },
+        {
+          "description": "bump github.com/rs/zerolog from 1.32.0 to 1.33.0",
+          "commit": "5928a95"
+        },
+        {
+          "description": "bump github.com/grokify/sogo from 0.8.2 to 0.8.3",
+          "commit": "6be4f70"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.53.0 to 1.54.0",
+          "commit": "ca001f5"
+        },
+        {
+          "description": "bump actions/checkout from 4.1.5 to 4.1.6",
+          "commit": "203cfc1"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.52.0 to 1.53.0",
+          "commit": "a44823a"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 5.1.0 to 6.0.1",
+          "commit": "502c051"
+        },
+        {
+          "description": "bump actions/checkout from 4.1.4 to 4.1.5",
+          "commit": "84b6810"
+        },
+        {
+          "description": "bump github.com/grokify/sogo from 0.8.0 to 0.8.1",
+          "commit": "e3fe77f"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.18.5 to 2.18.6",
+          "commit": "fc5e273"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 5.0.0 to 5.1.0",
+          "commit": "5c1cc2c"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.63.9 to 0.63.10",
+          "commit": "3eded88"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 4.0.0 to 5.0.0",
+          "commit": "35b5cf0"
+        },
+        {
+          "description": "bump actions/checkout from 4.1.3 to 4.1.4",
+          "commit": "9505cab"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.63.8 to 0.63.9",
+          "commit": "c77052f"
+        },
+        {
+          "description": "bump actions/checkout from 4.1.2 to 4.1.3",
+          "commit": "17d1041"
+        }
+      ]
+    },
+    {
+      "version": "v1.18.5",
+      "date": "2024-04-15",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "6b7f484"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #154 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.18.5",
+          "issue": "154",
+          "commit": "b759b96"
+        },
+        {
+          "description": "Merge pull request #151 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.63.7",
+          "issue": "151",
+          "commit": "4175146"
+        },
+        {
+          "description": "Merge pull request #148 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.63.5",
+          "issue": "148",
+          "commit": "e555415"
+        },
+        {
+          "description": "Merge pull request #146 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.63.3",
+          "issue": "146",
+          "commit": "6a5bf9a"
+        },
+        {
+          "description": "Merge pull request #145 from grokify/dependabot/github_actions/actions/checkout-4.1.2",
+          "issue": "145",
+          "commit": "119da91"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.18.2 to 2.18.5",
+          "commit": "8261e73"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.63.5 to 0.63.7",
+          "commit": "225f0bd"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.63.3 to 0.63.5",
+          "commit": "4525dab"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.63.2 to 0.63.3",
+          "commit": "e512fc5"
+        },
+        {
+          "description": "bump actions/checkout from 4.1.1 to 4.1.2",
+          "commit": "6d6e4e2"
+        }
+      ]
+    },
+    {
+      "version": "v1.18.4",
+      "date": "2024-03-11",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "ff90ba9"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #144 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.52.0",
+          "issue": "144",
+          "commit": "ad48854"
+        },
+        {
+          "description": "Merge pull request #143 from grokify/dependabot/github_actions/golangci/golangci-lint-action-4.0.0",
+          "issue": "143",
+          "commit": "b24e515"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.51.0 to 1.52.0",
+          "commit": "852442a"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 3.7.0 to 4.0.0",
+          "commit": "5e536d0"
+        }
+      ]
+    },
+    {
+      "version": "v1.18.3",
+      "date": "2024-02-05",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "acd2f2f"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "5cef040"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #139 from grokify/dependabot/go_modules/github.com/grokify/xgo-0.7.5",
+          "issue": "139",
+          "commit": "6f15837"
+        },
+        {
+          "description": "Merge pull request #137 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.123.0",
+          "issue": "137",
+          "commit": "fb26814"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/grokify/xgo from 0.7.4 to 0.7.5",
+          "commit": "3917c63"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.122.0 to 0.123.0",
+          "commit": "da92208"
+        }
+      ]
+    },
+    {
+      "version": "v1.18.2",
+      "date": "2024-01-20",
+      "changed": [
+        {
+          "description": "update years",
+          "commit": "bc07cc8"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "a834609"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "cc3b5b3"
+        },
+        {
+          "description": "go mod update",
+          "commit": "5d68d6d"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "74d3b02"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #133 from grokify/dependabot/go_modules/golang.org/x/crypto-0.17.0",
+          "issue": "133",
+          "commit": "35fe57c"
+        },
+        {
+          "description": "Merge pull request #132 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.62.5",
+          "issue": "132",
+          "commit": "514e0e3"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump golang.org/x/crypto from 0.16.0 to 0.17.0",
+          "commit": "e6c9f07"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.62.3 to 0.62.5",
+          "commit": "ba58f16"
+        }
+      ]
+    },
+    {
+      "version": "v1.18.1",
+      "date": "2023-12-11",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "c9ac97e"
+        }
+      ]
+    },
+    {
+      "version": "v1.18.0",
+      "date": "2023-12-11",
+      "added": [
+        {
+          "description": "`openapi3`: add `PathItemMore{}`",
+          "commit": "de2bbc7"
+        }
+      ],
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "3769065"
+        }
+      ],
+      "fixed": [
+        {
+          "description": "#131: update for changes in `github.com/getkin/kin-openapi` v0.122.0",
+          "issue": "131",
+          "commit": "830e3a6"
+        }
+      ]
+    },
+    {
+      "version": "v1.17.2",
+      "date": "2023-12-10",
+      "dependencies": [
+        {
+          "description": "Merge pull request #130 from grokify/dependabot/github_actions/actions/setup-go-5",
+          "issue": "130",
+          "commit": "23943af"
+        },
+        {
+          "description": "Merge pull request #127 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.61.1",
+          "issue": "127",
+          "commit": "371f9dc"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump actions/setup-go from 4 to 5",
+          "commit": "f6a56d7"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.61.0 to 0.61.1",
+          "commit": "107e9b2"
+        }
+      ]
+    },
+    {
+      "version": "v1.17.1",
+      "date": "2023-11-25",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "c681379"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "40410a5"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #126 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.51.0",
+          "issue": "126",
+          "commit": "6fc78df"
+        },
+        {
+          "description": "Merge pull request #124 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.15.1",
+          "issue": "124",
+          "commit": "593c4ad"
+        },
+        {
+          "description": "Merge pull request #123 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.60.0",
+          "issue": "123",
+          "commit": "4a10b6a"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.50.0 to 1.51.0",
+          "commit": "47e83c9"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.14.1 to 2.15.1",
+          "commit": "7ea26d1"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.59.0 to 0.60.0",
+          "commit": "41a0421"
+        }
+      ]
+    },
+    {
+      "version": "v1.17.0",
+      "date": "2023-10-28",
+      "added": [
+        {
+          "description": "`openapi3`: add `OperationMetas{}`, `OperationMetas.Spec()`, `OperationMeta.Operation()`, etc.",
+          "commit": "6c9e169"
+        },
+        {
+          "description": "`postman2`: add `ReadFile()`",
+          "commit": "4f5fe5e"
+        }
+      ],
+      "changed": [
+        {
+          "description": "golangci: update via `gosimple`",
+          "commit": "77ddf07"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "8bae023"
+        },
+        {
+          "description": "`openapi3`: add OpenAPI info.title as table name",
+          "commit": "ee77c82"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #122 from grokify/dependabot/go_modules/sigs.k8s.io/yaml-1.4.0",
+          "issue": "122",
+          "commit": "93b1f4f"
+        },
+        {
+          "description": "Merge pull request #121 from grokify/dependabot/github_actions/actions/checkout-4.1.1",
+          "issue": "121",
+          "commit": "cf09f2d"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump sigs.k8s.io/yaml from 1.3.0 to 1.4.0",
+          "commit": "648d0db"
+        },
+        {
+          "description": "bump actions/checkout from 4.1.0 to 4.1.1",
+          "commit": "90cfb50"
+        }
+      ]
+    },
+    {
+      "version": "v1.16.12",
+      "date": "2023-10-15",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "11d016b"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "7e9b6f0"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #118 from grokify/dependabot/go_modules/golang.org/x/net-0.17.0",
+          "issue": "118",
+          "commit": "25f285a"
+        },
+        {
+          "description": "Merge pull request #117 from grokify/dependabot/go_modules/github.com/rs/zerolog-1.31.0",
+          "issue": "117",
+          "commit": "6688e05"
+        },
+        {
+          "description": "Merge pull request #116 from grokify/dependabot/github_actions/actions/checkout-4.1.0",
+          "issue": "116",
+          "commit": "27e0b92"
+        },
+        {
+          "description": "Merge pull request #115 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.56.0",
+          "issue": "115",
+          "commit": "2f4c228"
+        },
+        {
+          "description": "Merge pull request #114 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.50.0",
+          "issue": "114",
+          "commit": "c472bd0"
+        },
+        {
+          "description": "Merge pull request #111 from grokify/dependabot/github_actions/actions/checkout-4.0.0",
+          "issue": "111",
+          "commit": "b5dd5f7"
+        },
+        {
+          "description": "Merge pull request #110 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.12.0",
+          "issue": "110",
+          "commit": "270c2ac"
+        },
+        {
+          "description": "Merge pull request #107 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.49.0",
+          "issue": "107",
+          "commit": "3def32a"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump golang.org/x/net from 0.15.0 to 0.17.0",
+          "commit": "822412b"
+        },
+        {
+          "description": "bump github.com/rs/zerolog from 1.30.0 to 1.31.0",
+          "commit": "2c1f2e1"
+        },
+        {
+          "description": "bump actions/checkout from 4.0.0 to 4.1.0",
+          "commit": "148d568"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.55.0 to 0.56.0",
+          "commit": "3491a4a"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.49.0 to 1.50.0",
+          "commit": "fb6bcd1"
+        },
+        {
+          "description": "bump actions/checkout from 3.6.0 to 4.0.0",
+          "commit": "d251cc7"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.11.1 to 2.12.0",
+          "commit": "96aefb0"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.48.0 to 1.49.0",
+          "commit": "693cf20"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "go test: bump min version to Go `1.20.x`",
+          "commit": "bf2e2cb"
+        }
+      ]
+    },
+    {
+      "version": "v1.16.11",
+      "date": "2023-08-27",
+      "changed": [
+        {
+          "description": "golangci: resolve `unnecessary conversion (unconvert)`",
+          "commit": "b9e3381"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "7039ff7"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #106 from grokify/dependabot/github_actions/actions/checkout-3.6.0",
+          "issue": "106",
+          "commit": "5d01402"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump actions/checkout from 3.5.3 to 3.6.0",
+          "commit": "9d687e0"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "go test: update gh action name and shield URLs",
+          "commit": "feb67ad"
+        }
+      ],
+      "internal": [
+        {
+          "description": "go mod: update replace definitions",
+          "commit": "2bbb609"
+        }
+      ]
+    },
+    {
+      "version": "v1.16.10",
+      "date": "2023-08-20",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "3bf796c"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "29efeff"
+        },
+        {
+          "description": "golangci: update gh action",
+          "commit": "168ac2d"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #105 from grokify/dependabot/github_actions/golangci/golangci-lint-action-3.7.0",
+          "issue": "105",
+          "commit": "145404e"
+        },
+        {
+          "description": "Merge pull request #104 from grokify/dependabot/go_modules/github.com/rs/zerolog-1.30.0",
+          "issue": "104",
+          "commit": "a24ebba"
+        },
+        {
+          "description": "Merge pull request #103 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.52.0",
+          "issue": "103",
+          "commit": "eeab490"
+        },
+        {
+          "description": "Merge pull request #102 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.48.0",
+          "issue": "102",
+          "commit": "8c0f8ec"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump golangci/golangci-lint-action from 3.6.0 to 3.7.0",
+          "commit": "799a68a"
+        },
+        {
+          "description": "bump github.com/rs/zerolog from 1.29.1 to 1.30.0",
+          "commit": "df9cfd9"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.50.0 to 0.52.0",
+          "commit": "b09c5d8"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.47.0 to 1.48.0",
+          "commit": "134427f"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "go build: add Go `1.21.x`",
+          "commit": "dde0cf3"
+        }
+      ]
+    },
+    {
+      "version": "v1.16.9",
+      "date": "2023-06-13",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "3947fa9"
+        },
+        {
+          "description": "golangci: disable remove `//noinspection ALL`",
+          "commit": "5ca8362"
+        },
+        {
+          "description": "golangci: fix various",
+          "commit": "4e7fced"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #101 from grokify/dependabot/github_actions/golangci/golangci-lint-action-3.6.0",
+          "issue": "101",
+          "commit": "1f94e25"
+        },
+        {
+          "description": "Merge pull request #100 from grokify/dependabot/github_actions/actions/checkout-3.5.3",
+          "issue": "100",
+          "commit": "4592371"
+        },
+        {
+          "description": "Merge pull request #99 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.118.0",
+          "issue": "99",
+          "commit": "82a114c"
+        },
+        {
+          "description": "Merge pull request #98 from grokify/dependabot/github_actions/golangci/golangci-lint-action-3.5.0",
+          "issue": "98",
+          "commit": "b772fb4"
+        },
+        {
+          "description": "Merge pull request #97 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.117.0",
+          "issue": "97",
+          "commit": "72ea663"
+        },
+        {
+          "description": "Merge pull request #96 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.47.0",
+          "issue": "96",
+          "commit": "c5d6b7a"
+        },
+        {
+          "description": "Merge pull request #95 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.46.0",
+          "issue": "95",
+          "commit": "1db8fb7"
+        },
+        {
+          "description": "Merge pull request #94 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.116.0",
+          "issue": "94",
+          "commit": "612120c"
+        },
+        {
+          "description": "Merge pull request #93 from grokify/dependabot/github_actions/actions/checkout-3.5.2",
+          "issue": "93",
+          "commit": "4f7eccd"
+        },
+        {
+          "description": "Merge pull request #92 from grokify/dependabot/go_modules/github.com/rs/zerolog-1.29.1",
+          "issue": "92",
+          "commit": "34cb82e"
+        },
+        {
+          "description": "Merge pull request #91 from grokify/dependabot/github_actions/actions/checkout-3.5.2",
+          "issue": "91",
+          "commit": "1b55731"
+        },
+        {
+          "description": "Merge pull request #90 from grokify/dependabot/github_actions/actions/checkout-3.5.1",
+          "issue": "90",
+          "commit": "1de4dde"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump golangci/golangci-lint-action from 3.5.0 to 3.6.0",
+          "commit": "b7aebab"
+        },
+        {
+          "description": "bump actions/checkout from 3.5.2 to 3.5.3",
+          "commit": "d53692b"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.117.0 to 0.118.0",
+          "commit": "bd919fc"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 3.4.0 to 3.5.0",
+          "commit": "8952d09"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.116.0 to 0.117.0",
+          "commit": "b41bfa1"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.46.0 to 1.47.0",
+          "commit": "cfdba78"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.45.0 to 1.46.0",
+          "commit": "b93108d"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.115.0 to 0.116.0",
+          "commit": "a4271b6"
+        },
+        {
+          "description": "bump actions/checkout from 3.5.0 to 3.5.2",
+          "commit": "198f12d"
+        },
+        {
+          "description": "bump github.com/rs/zerolog from 1.29.0 to 1.29.1",
+          "commit": "019b5b8"
+        },
+        {
+          "description": "bump actions/checkout from 3.5.1 to 3.5.2",
+          "commit": "e479fb4"
+        },
+        {
+          "description": "bump actions/checkout from 3.5.0 to 3.5.1",
+          "commit": "38f158f"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "lint: add 3m timeout",
+          "commit": "d94a13f"
+        },
+        {
+          "description": "cleanup config",
+          "commit": "f3077c4"
+        }
+      ]
+    },
+    {
+      "version": "v1.16.8",
+      "date": "2023-03-28",
+      "changed": [
+        {
+          "description": "golangci: disable due to `typecheck` false positives: golangci/golangci-lint#2912",
+          "issue": "2912",
+          "commit": "897341f"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "743e617"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #86 from grokify/dependabot/github_actions/actions/setup-go-4",
+          "issue": "86",
+          "commit": "2ebdc25"
+        },
+        {
+          "description": "Merge pull request #89 from grokify/dependabot/github_actions/actions/checkout-3.5.0",
+          "issue": "89",
+          "commit": "36f6454"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump actions/checkout from 3.3.0 to 3.5.0",
+          "commit": "c454c56"
+        },
+        {
+          "description": "bump actions/setup-go from 3 to 4",
+          "commit": "9c183f0"
+        }
+      ]
+    },
+    {
+      "version": "v1.16.7",
+      "date": "2023-02-26",
+      "changed": [
+        {
+          "description": "`openapi3/openapi3html`: update support for generic external doc URLs",
+          "commit": "69ebe87"
+        },
+        {
+          "description": "`openapi3edit`: move code to `OperationEdit.SetExternalDocs()`",
+          "commit": "96903e8"
+        },
+        {
+          "description": "`openapi3edit`: update for `SpecMore.TagsMap()` param `TagsOpts`",
+          "commit": "2b1663c"
+        },
+        {
+          "description": "go mod: update for breaking changes in `github.com/getkin/kin-openapi`",
+          "commit": "6e92792"
+        }
+      ]
+    },
+    {
+      "version": "v1.16.6",
+      "date": "2023-02-20",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "757cff8"
+        },
+        {
+          "description": "update years",
+          "commit": "5ca9293"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "gh actions: add go `v1.20.x`",
+          "commit": "be7f2d9"
+        }
+      ]
+    },
+    {
+      "version": "v1.16.5",
+      "date": "2023-01-28",
+      "changed": [
+        {
+          "description": "go mod: revert `github.com/getkin/kin-openapi` to `v0.112.0`",
+          "commit": "116cedf"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "90d9636"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #76 from grokify/dependabot/github_actions/golangci/golangci-lint-action-3.4.0",
+          "issue": "76",
+          "commit": "8c578a9"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump golangci/golangci-lint-action from 3.3.1 to 3.4.0",
+          "commit": "cd8565e"
+        }
+      ]
+    },
+    {
+      "version": "v1.16.4",
+      "date": "2023-01-14",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "52773c5"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #74 from grokify/dependabot/github_actions/actions/checkout-3.3.0",
+          "issue": "74",
+          "commit": "41e7606"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump actions/checkout from 3.2.0 to 3.3.0",
+          "commit": "f6fe6e4"
+        }
+      ]
+    },
+    {
+      "version": "v1.16.3",
+      "date": "2022-12-26",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "395414e"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #72 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.112.0",
+          "issue": "72",
+          "commit": "f939d8f"
+        },
+        {
+          "description": "Merge pull request #71 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.111.0",
+          "issue": "71",
+          "commit": "7de3e49"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.111.0 to 0.112.0",
+          "commit": "87552a8"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.110.0 to 0.111.0",
+          "commit": "7735c47"
+        }
+      ]
+    },
+    {
+      "version": "v1.16.2",
+      "date": "2022-12-16",
+      "added": [
+        {
+          "description": "`openapi3`: add `SpecMore.RequestBodyRef()`, `SpecMore.RequestBodyRefMediaTypes()`; enhnace `OperationMore.RequestMediaTypes()`, `OperationMore.ResponseMediaTypes()`",
+          "commit": "83a180c"
+        }
+      ],
+      "changed": [
+        {
+          "description": "`openapi3`: enhance error reporting for `OperationMore.RequestMediaTypes()`",
+          "commit": "3b3a46a"
+        }
+      ]
+    },
+    {
+      "version": "v1.16.1",
+      "date": "2022-12-15",
+      "changed": [
+        {
+          "description": "Merge branch 'master' of https://github.com/grokify/spectrum",
+          "commit": "f489e8e"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "f72721e"
+        },
+        {
+          "description": "`openapi3edit`: use anonymous function",
+          "commit": "2cdf962"
+        },
+        {
+          "description": "`openapi3edit`: update function names for consistency",
+          "commit": "388eeea"
+        },
+        {
+          "description": "`openapi3edit`: update function names for consistency",
+          "commit": "8b24e15"
+        }
+      ]
+    },
+    {
+      "version": "v1.16.0",
+      "date": "2022-12-14",
+      "added": [
+        {
+          "description": "`openapi3edit`: add `SpecEdit.OperationsFlattenRequestBodySchemas()`",
+          "commit": "ca6481e"
+        },
+        {
+          "description": "`openapi3edit`; add `NewSpecEdit()`",
+          "commit": "30bde8a"
+        },
+        {
+          "description": "`openapi3edit`: add `SpecEdit.SchemaKeysModify()`",
+          "commit": "6645a58"
+        },
+        {
+          "description": "`openapi3edit`: add `SpecEdit.ParamPathNamesModify()`",
+          "commit": "8e96709"
+        },
+        {
+          "description": "`openapi3`: add `ParameterNames{}`, `SpecMore.ParameterPathNames{}`, `ParsePathParametersParens()`",
+          "commit": "5864a48"
+        },
+        {
+          "description": "`openapi3`: add `OperationMoresForPath()`",
+          "commit": "b96f22f"
+        },
+        {
+          "description": "`openapi3`: add `SpecMore.Validate()`, `SpecMore.ValidateMore()`",
+          "commit": "5a0506c"
+        },
+        {
+          "description": "`ext/taggroups`: update `XTagGroupsPropertyName` to Redocly format and add `XTagGroupsPropertyNameKebab`",
+          "commit": "b9c5fdf"
+        }
+      ],
+      "changed": [
+        {
+          "description": "golangci: fix various",
+          "commit": "a448d4f"
+        },
+        {
+          "description": "golangci: fix misspellings",
+          "commit": "38f820b"
+        },
+        {
+          "description": "`openapi3edit`: add operation support for `SpecEdit.SchemaRefsModify()`",
+          "commit": "ae271fc"
+        },
+        {
+          "description": "`openapi3edit`: move functions under `SpecEdit{}`",
+          "commit": "bcac6dd"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "92b9a10"
+        },
+        {
+          "description": "`openapi3edit`: move functions to `SpecEdit{}`",
+          "commit": "c56da6d"
+        },
+        {
+          "description": "`openapi3`: move `IntersectionData{}`, `SpecMetadata{}` from `openapi3edit`",
+          "commit": "87f4bfe"
+        },
+        {
+          "description": "`raml08openapi3`: update to use `openapi3.OperationMores{}`",
+          "commit": "140d4a4"
+        },
+        {
+          "description": "`openapi3`: move path code from `openapi3edit`",
+          "commit": "b874833"
+        },
+        {
+          "description": "`openapi3`: update internal code to use `OperationMores{}`",
+          "commit": "1ea94ee"
+        },
+        {
+          "description": "`ext/taggroups`: remove old `openapi3` file",
+          "commit": "ce96d54"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "acc51fe"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "f06ee0c"
+        },
+        {
+          "description": "`cmd/oas3lint`: use `osutil.Filenames()` from `mogo`",
+          "commit": "ba097ca"
+        },
+        {
+          "description": "`openapi3`, `openapi3edit`: add function descriptions",
+          "commit": "b6fc509"
+        },
+        {
+          "description": "goreportcard: fix various",
+          "commit": "2a37946"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #70 from grokify/dependabot/github_actions/actions/checkout-3.2.0",
+          "issue": "70",
+          "commit": "b68089a"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump actions/checkout from 3.1.0 to 3.2.0",
+          "commit": "4cec7a8"
+        }
+      ],
+      "internal": [
+        {
+          "description": "`openapi3`: move constants",
+          "commit": "af970b3"
+        }
+      ]
+    },
+    {
+      "version": "v1.15.0",
+      "date": "2022-12-02",
+      "added": [
+        {
+          "description": "`ext/taxonomy`: add `Category{}`, `Categories{}`, `Taxonomy{}`",
+          "commit": "a54781e"
+        }
+      ],
+      "changed": [
+        {
+          "description": "`openapi3`: standardize OAS3 extension support; move embedded `x-tagGroups` functionality to `ext/taggroups`",
+          "commit": "c7dff89"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "cfaf70f"
+        }
+      ]
+    },
+    {
+      "version": "v1.14.0",
+      "date": "2022-12-01",
+      "added": [
+        {
+          "description": "`openapi3edit`: add `SpecEdit{}` and begin migrating funcs`",
+          "commit": "5d7c8c2"
+        },
+        {
+          "description": "`openapi3`: add `SpecMore.TagsValidate()`",
+          "commit": "9591a08"
+        },
+        {
+          "description": "`openapi3/ontology`: add `Ontology{}`, `TagOnology{}`, `TagOnologyData{}`",
+          "commit": "c21590b"
+        },
+        {
+          "description": "`openapi3`: add `SpecMore.OperationMetasMap()`; enhance `Ontology{}`",
+          "commit": "e5e8880"
+        },
+        {
+          "description": "`openapi3`: add `ContentToSchemaRefMap()`",
+          "commit": "0cc5740"
+        },
+        {
+          "description": "`openapi3`: add `OperationMore.Meta()`, `OperationMore.RequestBodySchemaRef()`",
+          "commit": "c715d21"
+        },
+        {
+          "description": "`openapi3`: add `Ontology{}`, `SpecMore.Ontology()`, `SpecMore.ParameterNames()`",
+          "commit": "4651137"
+        },
+        {
+          "description": "`openapi3lint`: add `NewPolicyWithConfig()`",
+          "commit": "c1e16f1"
+        },
+        {
+          "description": "`openapi3lint`: add `Policy.ValidateSpecFiles()` from `cmd/oas3lint`",
+          "commit": "81b29bd"
+        },
+        {
+          "description": "`openapi3`: add `PathMethodSet{}`, `ParsePathMethod()`",
+          "commit": "d1c7652"
+        },
+        {
+          "description": "`openapi3`: add `SpecMore.MarshalYAML()`",
+          "commit": "bb6af88"
+        },
+        {
+          "description": "`openapi3`: add `SpecMore.WriteFileYAML()`",
+          "commit": "54f9fa3"
+        },
+        {
+          "description": "`openapi3.SpecMore`: add `SchemasCopyJSONPointer()`, `SchemasCopyOperation()`, and `SchemasCopySchemaRef()`; enhance `SpecMore.ExportByTag()`",
+          "commit": "2c6b328"
+        },
+        {
+          "description": "`openapi3`: add `JSONPointer{}`; update JSONPointer support",
+          "commit": "d37eae5"
+        },
+        {
+          "description": "`openapi`: initial implementation of `SpecMore.ExportByTags()`",
+          "commit": "3c7fa23"
+        },
+        {
+          "description": "`openapi3`: add var `ErrSpecNotSet` for `SpecMore`",
+          "commit": "b6139d5"
+        },
+        {
+          "description": "`openapi3`: add `OperationMore`, `OperationMore.SchemaRefs()`; refactor Operation functions",
+          "commit": "795be7e"
+        }
+      ],
+      "changed": [
+        {
+          "description": "go mod: upgrade to `gopkg.in/yaml.v3` from `gopkg.in/yaml.v2`",
+          "commit": "398f4eb"
+        },
+        {
+          "description": "`openapi3`: add `Servers` field to `SpecMore.ExportByTag()`",
+          "commit": "f00df43"
+        },
+        {
+          "description": "`openapi3`: add more field tags to `OperationMeta{}`",
+          "commit": "b940bbe"
+        },
+        {
+          "description": "`openapi3`: prefer `ReadFile()` over `ReadAndValidateFile()` and privatize latter",
+          "commit": "6f858b5"
+        },
+        {
+          "description": "`openapi3`: namespace `pathmethod.go` to `pathmethod` package in `mogo`",
+          "commit": "b75624b"
+        },
+        {
+          "description": "`openapi3`: add error wrapping to `SpecMore{}` functions for better traceability.",
+          "commit": "56c9870"
+        },
+        {
+          "description": "`openapi3`: update comment for `TestParseJSONPointer()`",
+          "commit": "4f403eb"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "9ea6de1"
+        },
+        {
+          "description": "`openapi3`: add `OperationMeta{}` support for `OperationMeta.RequestBodySchemaRef` and `OperationMeta.PathMethod()`",
+          "commit": "eaf667e"
+        },
+        {
+          "description": "`openapi3`: make JSON pointer usage more generic",
+          "commit": "5867271"
+        },
+        {
+          "description": "`openapi3`: add test for `TestJSONPointers()`",
+          "commit": "ff15e71"
+        },
+        {
+          "description": "`openapi3`: enhance and add tests for `ParseJSONPointer()`, `JSONPointer.IsTopParameter()`, `JSONPointer.IsTopSchema()`",
+          "commit": "745d1c1"
+        },
+        {
+          "description": "golangci: add import alias",
+          "commit": "040653e"
+        },
+        {
+          "description": "`openapi3lint`: add desc for `NewPolicyWithConfig()`",
+          "commit": "4b74d22"
+        },
+        {
+          "description": "`openapi3lint`: add desc for `PolicyViolationsSets{}`",
+          "commit": "c00b0bb"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "573e6f6"
+        },
+        {
+          "description": "`openapi3edit`: create `OperationEdit.AddSecurityRequirement()` from `SecuritySchemeAddOperation()`; add `NewOperationEdit()`",
+          "commit": "661bad0"
+        },
+        {
+          "description": "golangci: fix various",
+          "commit": "a2d3857"
+        },
+        {
+          "description": "`openapi3edit`: remove debug code",
+          "commit": "521453f"
+        },
+        {
+          "description": "`openapi3edit`: add error checking to `RemoveOperationsSecurity()`",
+          "commit": "d56525f"
+        },
+        {
+          "description": "`openapi3edit`: add op filter to `RemoveOperationsSecurity()`",
+          "commit": "f0e4a38"
+        },
+        {
+          "description": "`openapi3`: add `SpecMore.Operations()` from `openapi3edit.QueryOperationsByTags()`",
+          "commit": "77b64f1"
+        },
+        {
+          "description": "`openapi3`: create `openapi3.OperationMoreSet.SummariesMap()` from `openapi3edit.OperationEditSet.SummariesMap()`",
+          "commit": "bcc2c29"
+        },
+        {
+          "description": "`openapi3`: consolidate `OperationSetRequestBodySchemaRef()` and `OperationSetResponseBodySchemaRef()` to `openapi3edit.OperationEdit{}`",
+          "commit": "483870e"
+        },
+        {
+          "description": "`openapi3edit`: extract stuct `OperationEdit{}` to file `operation_edit.go`",
+          "commit": "ca1a2d6"
+        },
+        {
+          "description": "Merge branch 'master' of https://github.com/grokify/spectrum",
+          "commit": "dbbf8b2"
+        },
+        {
+          "description": "`openapi3`/`openapi3edit`: migrate functionality from `openapi3edit.OperationEdit{}` to `openapi3.OperationMore{}`",
+          "commit": "972511a"
+        },
+        {
+          "description": "`openapi3`/`openapi3edit`: migrate functionality fron `openapi3edit.OperationEdit{}` to `openapi3.OperationMore{}`",
+          "commit": "035425b"
+        },
+        {
+          "description": "`openapi3`: move various functions to `if/else` statements",
+          "commit": "160274e"
+        },
+        {
+          "description": "`openapi3`: `OperationMore.ExtensionPropStringOrEmpty()` moved from `GetOperationExtensionPropStringOrEmpty()`",
+          "commit": "b9e8ece"
+        },
+        {
+          "description": "`openapi3`: `SpecMore.ExportByTag()` to include `Info` and `OpenAPI` fields",
+          "commit": "5dc80b8"
+        },
+        {
+          "description": "`openapi3`: enable `OperationMore.JSONPointers()` to capture more",
+          "commit": "3797e64"
+        },
+        {
+          "description": "`openapi3`: rename `SpecMore.SchemaRefSet()` from `SpecMore.SetSchemaRef()` to improve docs via sorting",
+          "commit": "89091fe"
+        },
+        {
+          "description": "`openapi3`: move `Copy()` to `SpecMore.Clone()` to improve usability",
+          "commit": "ed3e4dc"
+        },
+        {
+          "description": "`openapi3`: simoplify internal var names",
+          "commit": "56f843c"
+        },
+        {
+          "description": "`openapi3`: reduce function calls in `SpecMore.OperationMetas()`",
+          "commit": "670318f"
+        },
+        {
+          "description": "`openapi3`: add `inclTags` filter to `OperationToMeta()` and `SpecMore.OperationMetas()`",
+          "commit": "1398e2b"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "6d1b660"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "yaml: update to `sigs.k8s.io/yaml` from `github.com/ghodss/yaml`",
+          "commit": "3fdc16d"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "`README.md`: augment descriptions",
+          "commit": "3778d40"
+        },
+        {
+          "description": "shields: update link",
+          "commit": "c319f78"
+        }
+      ],
+      "internal": [
+        {
+          "description": "`openapi3edit`: use explicit path call within `SpecEdit.ExtensionSet()`",
+          "commit": "817ad0f"
+        },
+        {
+          "description": "`openapi3/ontology`: update code style",
+          "commit": "764920a"
+        },
+        {
+          "description": "`openapi3`: merge comment lines",
+          "commit": "a210698"
+        }
+      ]
+    },
+    {
+      "version": "v1.13.1",
+      "date": "2022-11-13",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "90ff6ec"
+        },
+        {
+          "description": "`raml08/raml08openapi3`: update `msaPaths()`",
+          "commit": "98a2abc"
+        },
+        {
+          "description": "golangci: fix various",
+          "commit": "1d5631b"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "994d6eb"
+        },
+        {
+          "description": "`raml08/raml08openapi3: use parsed HTTP method",
+          "commit": "c44b14e"
+        },
+        {
+          "description": "`raml08/raml08openapi3`: wrap properties with `TrimSpace()`",
+          "commit": "0680b08"
+        },
+        {
+          "description": "golangci: update `stylecheck` to go `v1.18`",
+          "commit": "fb2bf3f"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "d251e76"
+        },
+        {
+          "description": "golangci: restore `golangci-lint` version",
+          "commit": "6d866dc"
+        },
+        {
+          "description": "golangci: update version",
+          "commit": "de0ab0e"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #67 from grokify/dependabot/github_actions/golangci/golangci-lint-action-3.3.1",
+          "issue": "67",
+          "commit": "f0df756"
+        },
+        {
+          "description": "Merge pull request #65 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.8.3",
+          "issue": "65",
+          "commit": "26d5564"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "`raml08`: update comments",
+          "commit": "533be6a"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump golangci/golangci-lint-action from 3.3.0 to 3.3.1",
+          "commit": "190a189"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.8.2 to 2.8.3",
+          "commit": "85fef2f"
+        }
+      ]
+    },
+    {
+      "version": "v1.13.0",
+      "date": "2022-10-20",
+      "added": [
+        {
+          "description": "`openapi3edit`: add `SpecAddSchemaDir()`, `SpecModifySchemaRefs()`, `SchemaRefModifyRefs()`, `SpecSchemaSetAdditionalPropertiesTrue()`",
+          "commit": "6df47c0"
+        },
+        {
+          "description": "`openapi3edit`: add `SpecSchemasFlatten()`, `SpecSchemasFlattenSchemaRef()`, `SpecSchemaRefsFlatten()`",
+          "commit": "9196a2f"
+        },
+        {
+          "description": "`openapi3`: add `ReadSchemaFile()`",
+          "commit": "6109af6"
+        },
+        {
+          "description": "`openapi3edit`: add `SpecOperationsOperationIDSummaryReplace()`",
+          "commit": "f0cc311"
+        },
+        {
+          "description": "`openapi3`: add `SpecMore.OperationIDsCounts()`, `SpecMore.OperationIDsLocations()`, `SpecMore.OperationsDescriptionInfo()`",
+          "commit": "fb8d22d"
+        },
+        {
+          "description": "`openapi3`: add \"in\" constants for `header`, `query`, `cookie`",
+          "commit": "f6c94b9"
+        },
+        {
+          "description": "openapi3edit: add `SpecOperationsSecurityReplace()`",
+          "commit": "6484f3f"
+        },
+        {
+          "description": "openapi3: add `PathMethod()`",
+          "commit": "de13d35"
+        },
+        {
+          "description": "openapi3edit: add `OperationMore.PathMethod()`, `OperationMoreSet.SummariesMap()`",
+          "commit": "2ed1d4d"
+        },
+        {
+          "description": "raml08: add `raml08openapi3.ReadFileOperations()`",
+          "commit": "9065af4"
+        },
+        {
+          "description": "openapi3: add `SpecMore.OperationByPathMethod()`, `SpecMore.SpecTagStats()`, `SpecTagStats{}`",
+          "commit": "afabe3d"
+        },
+        {
+          "description": "openapi3edit: add `SpecTagsModifyMore()`, `NewTagsSimple()`",
+          "commit": "8247951"
+        },
+        {
+          "description": "openapi3edit: add `OperationMore.AddToSpec()`",
+          "commit": "6a300a9"
+        }
+      ],
+      "changed": [
+        {
+          "description": "`openapi3edit`: cleanup to use `SpecMore.OperationIDsCounts()`",
+          "commit": "cc34225"
+        },
+        {
+          "description": "`openapi3edit`: cleanup to use `SpecMore.OperationIDsCounts()`",
+          "commit": "2b60267"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "7a17227"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "6232fac"
+        },
+        {
+          "description": "raml08: reduce complexity of function",
+          "commit": "90cc333"
+        },
+        {
+          "description": "raml08: reduce complexity of function",
+          "commit": "72e4c66"
+        },
+        {
+          "description": "openapi3lint: `RuleSchemaObjectPropsExist` to handle object and additional properties of schemas",
+          "commit": "e3cc6e7"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "7c87fb6"
+        },
+        {
+          "description": ".gitignore: add `.DS_Store`",
+          "commit": "4084491"
+        }
+      ]
+    },
+    {
+      "version": "v1.12.6",
+      "date": "2022-10-17",
+      "changed": [
+        {
+          "description": "golangci: merge lines to check if error still appears",
+          "commit": "19b1026"
+        },
+        {
+          "description": "golangci: add import aliases",
+          "commit": "ff02915"
+        },
+        {
+          "description": "golangci: add import aliases",
+          "commit": "13f1ab5"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "61101f5"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "fa3d36e"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #59 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.105.0",
+          "issue": "59",
+          "commit": "b71cf98"
+        },
+        {
+          "description": "Merge pull request #57 from grokify/dependabot/github_actions/actions/checkout-3.1.0",
+          "issue": "57",
+          "commit": "e31636b"
+        },
+        {
+          "description": "Merge pull request #58 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.104.0",
+          "issue": "58",
+          "commit": "cea585d"
+        },
+        {
+          "description": "Merge pull request #56 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.103.0",
+          "issue": "56",
+          "commit": "ede64e6"
+        },
+        {
+          "description": "Merge pull request #55 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.102.0",
+          "issue": "55",
+          "commit": "ba02878"
+        },
+        {
+          "description": "Merge pull request #53 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.8.1",
+          "issue": "53",
+          "commit": "fa6b2c9"
+        },
+        {
+          "description": "Merge pull request #52 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.40.0",
+          "issue": "52",
+          "commit": "4332367"
+        },
+        {
+          "description": "Merge pull request #51 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.100.0",
+          "issue": "51",
+          "commit": "ee7a3e5"
+        },
+        {
+          "description": "Merge pull request #50 from grokify/dependabot/go_modules/github.com/rs/zerolog-1.28.0",
+          "issue": "50",
+          "commit": "6c368d4"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.104.0 to 0.105.0",
+          "commit": "b2d9be1"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.103.0 to 0.104.0",
+          "commit": "b084e5b"
+        },
+        {
+          "description": "bump actions/checkout from 2 to 3.1.0",
+          "commit": "d1b6f51"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.102.0 to 0.103.0",
+          "commit": "d2acb94"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.100.0 to 0.102.0",
+          "commit": "9e2cb4b"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.8.0 to 2.8.1",
+          "commit": "bfc7920"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.39.0 to 1.40.0",
+          "commit": "d5aa757"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.98.0 to 0.100.0",
+          "commit": "a10851a"
+        },
+        {
+          "description": "bump github.com/rs/zerolog from 1.27.0 to 1.28.0",
+          "commit": "11655cd"
+        }
+      ]
+    },
+    {
+      "version": "v1.12.5",
+      "date": "2022-08-22",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "3c04901"
+        },
+        {
+          "description": "openapi3: update to use `openapi3` constants directly",
+          "commit": "73c54ae"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #46 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.98.0",
+          "issue": "46",
+          "commit": "433a772"
+        },
+        {
+          "description": "Merge pull request #45 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.38.0",
+          "issue": "45",
+          "commit": "f1503ed"
+        },
+        {
+          "description": "Merge pull request #44 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.7.4",
+          "issue": "44",
+          "commit": "3fc57ef"
+        },
+        {
+          "description": "Merge pull request #43 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.97.0",
+          "issue": "43",
+          "commit": "035a294"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.97.0 to 0.98.0",
+          "commit": "73e4127"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.37.0 to 1.38.0",
+          "commit": "237c0f3"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.7.3 to 2.7.4",
+          "commit": "c020e50"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.96.0 to 0.97.0",
+          "commit": "5316405"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "gh actions: update go versions",
+          "commit": "c48df72"
+        }
+      ],
+      "internal": [
+        {
+          "description": "update acronym capitalization",
+          "commit": "bde160e"
+        }
+      ]
+    },
+    {
+      "version": "v1.12.4",
+      "date": "2022-06-10",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "f34a830"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #42 from grokify/dependabot/go_modules/github.com/rs/zerolog-1.27.0",
+          "issue": "42",
+          "commit": "af7a702"
+        },
+        {
+          "description": "Merge pull request #41 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.96.0",
+          "issue": "41",
+          "commit": "d92d008"
+        },
+        {
+          "description": "Merge pull request #39 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.7.3",
+          "issue": "39",
+          "commit": "13ca59a"
+        },
+        {
+          "description": "Merge pull request #40 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.39.6",
+          "issue": "40",
+          "commit": "fe9326c"
+        },
+        {
+          "description": "Merge pull request #38 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.39.4",
+          "issue": "38",
+          "commit": "39cc7b1"
+        },
+        {
+          "description": "Merge pull request #37 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.37.0",
+          "issue": "37",
+          "commit": "5d3fe22"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/rs/zerolog from 1.26.1 to 1.27.0",
+          "commit": "729c1ac"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.94.0 to 0.96.0",
+          "commit": "2c7313e"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.7.2 to 2.7.3",
+          "commit": "a5144d0"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.39.4 to 0.39.6",
+          "commit": "8424735"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.39.3 to 0.39.4",
+          "commit": "c649796"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.36.0 to 1.37.0",
+          "commit": "8ed0aaa"
+        }
+      ]
+    },
+    {
+      "version": "v1.12.3",
+      "date": "2022-05-15",
+      "changed": [
+        {
+          "description": "openapi3: update `SpecMore.OperationIDs()`",
+          "commit": "273c5e6"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #36 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.39.3",
+          "issue": "36",
+          "commit": "c79bbb8"
+        },
+        {
+          "description": "Merge pull request #35 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.7.2",
+          "issue": "35",
+          "commit": "f98e300"
+        },
+        {
+          "description": "Merge pull request #34 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.39.1",
+          "issue": "34",
+          "commit": "cfca0c6"
+        },
+        {
+          "description": "Merge pull request #33 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.36.0",
+          "issue": "33",
+          "commit": "fb53451"
+        },
+        {
+          "description": "Merge pull request #31 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.6.2",
+          "issue": "31",
+          "commit": "8566dd3"
+        },
+        {
+          "description": "Merge pull request #32 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.38.7",
+          "issue": "32",
+          "commit": "78e0345"
+        },
+        {
+          "description": "Merge pull request #30 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.38.4",
+          "issue": "30",
+          "commit": "ffa5107"
+        },
+        {
+          "description": "Merge pull request #25 from grokify/dependabot/github_actions/golangci/golangci-lint-action-3",
+          "issue": "25",
+          "commit": "194b6d0"
+        },
+        {
+          "description": "Merge pull request #29 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.38.1",
+          "issue": "29",
+          "commit": "603e710"
+        },
+        {
+          "description": "Merge pull request #28 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.5.1",
+          "issue": "28",
+          "commit": "2c65e1b"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/grokify/mogo from 0.39.1 to 0.39.3",
+          "commit": "b2b5a11"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.6.2 to 2.7.2",
+          "commit": "e570416"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.38.7 to 0.39.1",
+          "commit": "410196c"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.35.0 to 1.36.0",
+          "commit": "3ace8b7"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.5.1 to 2.6.2",
+          "commit": "491482c"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.38.4 to 0.38.7",
+          "commit": "40d8bb9"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.38.1 to 0.38.4",
+          "commit": "b6b0346"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.37.18 to 0.38.1",
+          "commit": "9ca8612"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.4.1 to 2.5.1",
+          "commit": "873c6e1"
+        },
+        {
+          "description": "bump golangci/golangci-lint-action from 2 to 3",
+          "commit": "62865b9"
+        }
+      ]
+    },
+    {
+      "version": "v1.12.2",
+      "date": "2022-04-12",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "36cf2d5"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Merge pull request #27 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.37.18",
+          "issue": "27",
+          "commit": "44c293f"
+        },
+        {
+          "description": "Merge pull request #26 from grokify/dependabot/github_actions/actions/setup-go-3",
+          "issue": "26",
+          "commit": "1a417c8"
+        },
+        {
+          "description": "Merge pull request #23 from grokify/dependabot/go_modules/github.com/grokify/gocharts/v2-2.4.0",
+          "issue": "23",
+          "commit": "d3e2e57"
+        },
+        {
+          "description": "Merge pull request #24 from grokify/dependabot/go_modules/github.com/valyala/fasthttp-1.35.0",
+          "issue": "24",
+          "commit": "4a62a79"
+        },
+        {
+          "description": "Merge pull request #22 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.37.17",
+          "issue": "22",
+          "commit": "5d5e551"
+        },
+        {
+          "description": "Merge pull request #21 from grokify/dependabot/go_modules/github.com/grokify/mogo-0.37.16",
+          "issue": "21",
+          "commit": "fbc86ff"
+        },
+        {
+          "description": "Merge pull request #20 from grokify/dependabot/go_modules/github.com/getkin/kin-openapi-0.94.0",
+          "issue": "20",
+          "commit": "a78ab15"
+        }
+      ],
+      "build": [
+        {
+          "description": "bump github.com/grokify/mogo from 0.37.17 to 0.37.18",
+          "commit": "7ac1a2a"
+        },
+        {
+          "description": "bump actions/setup-go from 2 to 3",
+          "commit": "09f83c9"
+        },
+        {
+          "description": "bump github.com/grokify/gocharts/v2 from 2.2.0 to 2.4.0",
+          "commit": "dc9251f"
+        },
+        {
+          "description": "bump github.com/valyala/fasthttp from 1.34.0 to 1.35.0",
+          "commit": "065e6f0"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.37.16 to 0.37.17",
+          "commit": "10a083b"
+        },
+        {
+          "description": "bump github.com/grokify/mogo from 0.37.15 to 0.37.16",
+          "commit": "dc1a904"
+        },
+        {
+          "description": "bump github.com/getkin/kin-openapi from 0.93.0 to 0.94.0",
+          "commit": "588550e"
+        }
+      ]
+    },
+    {
+      "version": "v1.12.1",
+      "date": "2022-03-29",
+      "changed": [
+        {
+          "description": "golangci: remove `golangci-lint.yml` in favor of `lint.yaml`",
+          "commit": "564d477"
+        },
+        {
+          "description": "init",
+          "commit": "7393012"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "9b1488f"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "57aeaab"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "gh actions: add go v1.18",
+          "commit": "c627cff"
+        }
+      ]
+    },
+    {
+      "version": "v1.12.0",
+      "date": "2022-03-12",
+      "changed": [
+        {
+          "description": "golangci: update exclude",
+          "commit": "9070eef"
+        },
+        {
+          "description": "golangci: adjust rules",
+          "commit": "fb422a8"
+        },
+        {
+          "description": "golangci: disable for `unparam.path`",
+          "commit": "a6eb7d5"
+        },
+        {
+          "description": "golangci: fix",
+          "commit": "b6c41e4"
+        },
+        {
+          "description": "golangci: disable `stylecheck.ST1003`, like Google Go SDK",
+          "commit": "be5ae7a"
+        },
+        {
+          "description": "golangci: fix",
+          "commit": "51f2d85"
+        },
+        {
+          "description": "golangci: fix",
+          "commit": "145d7ba"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "62f0dfc"
+        },
+        {
+          "description": "golangci: fix",
+          "commit": "2b42312"
+        },
+        {
+          "description": "golangci: fix",
+          "commit": "67c513d"
+        },
+        {
+          "description": "golangci: fix",
+          "commit": "92db491"
+        },
+        {
+          "description": "golangci: fix",
+          "commit": "c1b3a2b"
+        },
+        {
+          "description": "golangci: fix",
+          "commit": "428d3ec"
+        },
+        {
+          "description": "golangci: fix",
+          "commit": "dba904a"
+        },
+        {
+          "description": "golangci: fix",
+          "commit": "39533b4"
+        },
+        {
+          "description": "golangci: fix",
+          "commit": "39dc770"
+        },
+        {
+          "description": "golangci: fix",
+          "commit": "cec68e7"
+        },
+        {
+          "description": "golangci: fix",
+          "commit": "876f603"
+        },
+        {
+          "description": "golangci: fix",
+          "commit": "61aef77"
+        },
+        {
+          "description": "golangci: init",
+          "commit": "45ea56f"
+        },
+        {
+          "description": "gomod: update",
+          "commit": "cf688f4"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "gh actions: rename `test`",
+          "commit": "3bb59fe"
+        }
+      ]
+    },
+    {
+      "version": "v1.11.8",
+      "date": "2022-03-02",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "d2b956e"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "gh actions: disable golangci-lint",
+          "commit": "9ce78d6"
+        },
+        {
+          "description": "gh actions: disable golangci-lint",
+          "commit": "90988b9"
+        }
+      ],
+      "internal": [
+        {
+          "description": "openapi3: update `SpecMore.HasComponentSchema()`",
+          "commit": "43ecd71"
+        }
+      ]
+    },
+    {
+      "version": "v1.11.7",
+      "date": "2022-02-20",
+      "changed": [
+        {
+          "description": "go mod: update to reduce dependencies",
+          "commit": "2c5aa00"
+        }
+      ]
+    },
+    {
+      "version": "v1.11.6",
+      "date": "2022-02-10",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "1cc0d90"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "b8414bb"
+        },
+        {
+          "description": "update years",
+          "commit": "d831ba8"
+        }
+      ]
+    },
+    {
+      "version": "v1.11.5",
+      "date": "2022-01-12",
+      "changed": [
+        {
+          "description": "go mod: remove indirect dependency `github.com/blend/go-sdk`",
+          "commit": "6056d86"
+        }
+      ]
+    },
+    {
+      "version": "v1.11.4",
+      "date": "2022-01-11",
+      "changed": [
+        {
+          "description": "go mod: remove direct dependency `github.com/pkg/errors`",
+          "commit": "2ec7d74"
+        }
+      ]
+    },
+    {
+      "version": "v1.11.3",
+      "date": "2022-01-11",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "00c0a30"
+        }
+      ]
+    },
+    {
+      "version": "v1.11.2",
+      "date": "2022-01-11",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "76ee3f3"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "b8d5867"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "f19a5d7"
+        }
+      ]
+    },
+    {
+      "version": "v1.11.1",
+      "date": "2021-12-13",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "1b57618"
+        }
+      ]
+    },
+    {
+      "version": "v1.11.0",
+      "date": "2021-12-12",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "fca25e1"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "129cb64"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "92a8b6d"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "20b7256"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "0a0032d"
+        },
+        {
+          "description": "shields: add lines of code",
+          "commit": "fa53f7e"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "8757889"
+        }
+      ],
+      "fixed": [
+        {
+          "description": "rename file: fix spelling",
+          "commit": "1021252"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "gh actions: update Go versions",
+          "commit": "10bec1a"
+        }
+      ]
+    },
+    {
+      "version": "v1.10.3",
+      "date": "2021-08-16",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "689bb89"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "golangci-lint: update to Go 1.16",
+          "commit": "c5c19af"
+        },
+        {
+          "description": "golangci-lint: add",
+          "commit": "62451ca"
+        }
+      ]
+    },
+    {
+      "version": "v1.10.2",
+      "date": "2021-07-25",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "be5758e"
+        }
+      ]
+    },
+    {
+      "version": "v1.10.1",
+      "date": "2021-07-19",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "375a0a9"
+        }
+      ]
+    },
+    {
+      "version": "v1.10.0",
+      "date": "2021-07-14",
+      "added": [
+        {
+          "description": "openapi3: add `SpecMore.WriteFileXLSXOperationStatusCodes()`",
+          "commit": "1d0a45c"
+        }
+      ],
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "b639dc3"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "91c7489"
+        },
+        {
+          "description": "openapi3: remove old code",
+          "commit": "a6d8087"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "cc5d893"
+        },
+        {
+          "description": ".gitignore: update: ignore temp Excel files",
+          "commit": "8c8371f"
+        }
+      ]
+    },
+    {
+      "version": "v1.9.2",
+      "date": "2021-07-12",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "2999001"
+        }
+      ]
+    },
+    {
+      "version": "v1.9.1",
+      "date": "2021-07-04",
+      "added": [
+        {
+          "description": "openapi3: add Operation getkin/kin-openapi/openapi3 alias",
+          "commit": "d684716"
+        }
+      ],
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "9354f1c"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "fix: typo",
+          "commit": "9984254"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "gh actions: update go versions",
+          "commit": "86b807b"
+        }
+      ]
+    },
+    {
+      "version": "v1.9.0",
+      "date": "2021-06-28",
+      "changed": [
+        {
+          "description": "getkin/kin-openapi: update to v0.65.0, post v0.61.0",
+          "commit": "a4be5b6"
+        },
+        {
+          "description": "openapi3lint1: remove prototype version",
+          "commit": "ddd6890"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "openapi3lint: update",
+          "commit": "7550529"
+        },
+        {
+          "description": "openapi3lint: update",
+          "commit": "a744567"
+        }
+      ]
+    },
+    {
+      "version": "v1.8.3",
+      "date": "2021-06-27",
+      "changed": [
+        {
+          "description": "openapi3: update param name",
+          "commit": "abf9611"
+        },
+        {
+          "description": "openapi3lint: add `ruleopxpropertystringexist` linting of spec and pathItem level x-props",
+          "commit": "afa1b32"
+        }
+      ]
+    },
+    {
+      "version": "v1.8.2",
+      "date": "2021-06-27",
+      "changed": [
+        {
+          "description": "openapi3lint: update `RuleOperationXPropertyStringExist` to support spec and pathInfo level items",
+          "commit": "cb52f84"
+        },
+        {
+          "description": "openapi3lint: remove constant from `ruleopxpropertystringexist`",
+          "commit": "c0d29b5"
+        }
+      ]
+    },
+    {
+      "version": "v1.8.1",
+      "date": "2021-06-27",
+      "added": [
+        {
+          "description": "openapi3lint: add `RuleOperationXPropertyStringExist`",
+          "commit": "bb95a06"
+        }
+      ],
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "91dc332"
+        },
+        {
+          "description": "openapi3lint: remove unneeded code",
+          "commit": "29a72ba"
+        }
+      ]
+    },
+    {
+      "version": "v1.8.0",
+      "date": "2021-06-21",
+      "added": [
+        {
+          "description": "openapi3lint: add `PolicyViolationsSets.CountsByRule()`",
+          "commit": "ca4203e"
+        }
+      ],
+      "changed": [
+        {
+          "description": "openapi3lint: remove `Policy.rules`",
+          "commit": "087a1b4"
+        },
+        {
+          "description": "openapi3lint: split files",
+          "commit": "70e0a98"
+        },
+        {
+          "description": "openapi3lint: `rule_collection.go`",
+          "commit": "c606bc5"
+        },
+        {
+          "description": "openapi3lint: remove `Rule.Severity()` from interface",
+          "commit": "3cd99cd"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "gh actions: add `workflow_dispatch`",
+          "commit": "65f9810"
+        }
+      ],
+      "internal": [
+        {
+          "description": "openapi3lint: gofmt -s",
+          "commit": "cf40bde"
+        }
+      ]
+    },
+    {
+      "version": "v1.7.3",
+      "date": "2021-06-20",
+      "added": [
+        {
+          "description": "openapi3lint: add spec extensions lint support",
+          "commit": "a45fcde"
+        },
+        {
+          "description": "openapi3lint: add `RuleCollection`",
+          "commit": "077e51e"
+        }
+      ],
+      "changed": [
+        {
+          "description": "cmd/oas3lint: update for `RuleCollection`",
+          "commit": "82be70a"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "1f5fd4d"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "streamline",
+          "commit": "4b1982b"
+        },
+        {
+          "description": "update",
+          "commit": "1291368"
+        },
+        {
+          "description": "update",
+          "commit": "6d95593"
+        }
+      ],
+      "internal": [
+        {
+          "description": "openapi3: use constant",
+          "commit": "3814112"
+        }
+      ]
+    },
+    {
+      "version": "v1.7.2",
+      "date": "2021-06-15",
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "f1dc493"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "126007d"
+        },
+        {
+          "description": "gocharts: update to v1.6.0",
+          "commit": "649f25c"
+        }
+      ]
+    },
+    {
+      "version": "v1.7.1",
+      "date": "2021-06-10",
+      "added": [
+        {
+          "description": "Merge pull request #14 from DaKingKong/MissingLowerCaseConvert",
+          "issue": "14",
+          "commit": "0735b1e"
+        },
+        {
+          "description": "added missing lower case convert",
+          "commit": "8227f76"
+        }
+      ],
+      "changed": [
+        {
+          "description": "goreportcard: resolve ineffassign",
+          "commit": "725b47c"
+        },
+        {
+          "description": "openapi3html: rename file to test `goreportcard` linter",
+          "commit": "7047bb5"
+        },
+        {
+          "description": "cmd/oas3int: add diagnostics",
+          "commit": "c049dd1"
+        },
+        {
+          "description": "openapi3lint: update standard rule processing",
+          "commit": "a10ac98"
+        },
+        {
+          "description": "oepnapi3edit: update `OperationMore.HasParameter()`",
+          "commit": "9bd037c"
+        }
+      ]
+    },
+    {
+      "version": "v1.7.0",
+      "date": "2021-06-04",
+      "added": [
+        {
+          "description": "openapi3lint: add standard rules",
+          "commit": "b954102"
+        },
+        {
+          "description": "openapi3lint: add rules `RulenameSchemaWithoutReference`, `RulenameSchemaReferenceWithoutSchema`",
+          "commit": "59dc42a"
+        },
+        {
+          "description": "openapi3: add `SpecMore.SchemaNamesStatus()`, `SpecMore.SchemaPointers()`",
+          "commit": "4c6e8f5"
+        }
+      ],
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "2cc2bbc"
+        },
+        {
+          "description": "openapi3lint: update rule names",
+          "commit": "6d52ea7"
+        },
+        {
+          "description": "examples/openapi3table: add file cli option",
+          "commit": "1d43e14"
+        },
+        {
+          "description": "openapi3lint: simplify policy rules code",
+          "commit": "4b24eff"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "00a921d"
+        },
+        {
+          "description": "openapi3lint.Rule: update `Rule.ProcessSpec()` response interface",
+          "commit": "a07a7d7"
+        }
+      ],
+      "fixed": [
+        {
+          "description": "examples: remove 3rd party product name",
+          "commit": "81ac629"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "openapi3lint: update rules list",
+          "commit": "c39bb7c"
+        },
+        {
+          "description": "openapi3lint: update",
+          "commit": "3918181"
+        },
+        {
+          "description": "update indentation",
+          "commit": "242fb48"
+        },
+        {
+          "description": "openapi3lint: add standard rules to README.md",
+          "commit": "3c58ace"
+        },
+        {
+          "description": "openapi3lint: add standard rules to README.md",
+          "commit": "b9fdf51"
+        },
+        {
+          "description": "copyedit",
+          "commit": "65f9ea8"
+        },
+        {
+          "description": "update license link",
+          "commit": "c7ee1ae"
+        }
+      ]
+    },
+    {
+      "version": "v1.6.0",
+      "date": "2021-05-15",
+      "added": [
+        {
+          "description": "openapi3: add format extensions",
+          "commit": "b2727f0"
+        }
+      ],
+      "changed": [
+        {
+          "description": "change to new name `spectrum`",
+          "commit": "de6a592"
+        },
+        {
+          "description": "change to new name `spectrum`",
+          "commit": "910236b"
+        },
+        {
+          "description": "openapi3edit: fix typo",
+          "commit": "b3f7fbc"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "openapi3edit: add godoc shield",
+          "commit": "112b296"
+        }
+      ]
+    },
+    {
+      "version": "v1.5.4",
+      "date": "2021-05-12",
+      "changed": [
+        {
+          "description": "openapi3edit: update `SpecSetOperation()`",
+          "commit": "754478f"
+        }
+      ]
+    },
+    {
+      "version": "v1.5.3",
+      "date": "2021-05-12",
+      "changed": [
+        {
+          "description": "openapi3edit: update `OperationMore.Path`",
+          "commit": "478a61b"
+        },
+        {
+          "description": "openapi3edit: combine `OperationMore` and `OperationEditor`",
+          "commit": "9a450a3"
+        }
+      ]
+    },
+    {
+      "version": "v1.5.2",
+      "date": "2021-05-11",
+      "changed": [
+        {
+          "description": "openapi3edit: update `operationAddResponseBodySchemaRef()`",
+          "commit": "745fb1e"
+        }
+      ]
+    },
+    {
+      "version": "v1.5.1",
+      "date": "2021-05-11",
+      "changed": [
+        {
+          "description": "openapi3edit: `operationAddRequestBodySchemaRef` add default `RequestBody{}`",
+          "commit": "82ed4a5"
+        },
+        {
+          "description": "openapi3: update `SchemaPointerExpand()`",
+          "commit": "8aff21f"
+        }
+      ]
+    },
+    {
+      "version": "v1.5.0",
+      "date": "2021-05-11",
+      "added": [
+        {
+          "description": "cmd/oas3lint: add severity flag",
+          "commit": "1a4a90c"
+        }
+      ],
+      "changed": [
+        {
+          "description": "openapi3edit: refactor to `OperatorEditor`",
+          "commit": "9157b19"
+        },
+        {
+          "description": "openapi3: use implicit type",
+          "commit": "ef12203"
+        },
+        {
+          "description": "openapi3: param names for understanding",
+          "commit": "55e1a0e"
+        },
+        {
+          "description": "openapi3: constants",
+          "commit": "7e3011a"
+        },
+        {
+          "description": "openapi3edit: remove dupe function",
+          "commit": "6c58ae5"
+        },
+        {
+          "description": "openapi3: update code for `ioutilmore.ReadDirMore()`",
+          "commit": "bea98a8"
+        },
+        {
+          "description": "openapi3lint: clean up code",
+          "commit": "c66f654"
+        }
+      ],
+      "fixed": [
+        {
+          "description": "mkdocs: typos",
+          "commit": "dc4f418"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "mkdocs: update oas3lint cli",
+          "commit": "5b90638"
+        },
+        {
+          "description": "openapi3int: update custom rules",
+          "commit": "f210cd7"
+        },
+        {
+          "description": "mkdocs: fix repo link",
+          "commit": "50a9c86"
+        },
+        {
+          "description": "mkdocs: update `mkdocs.yml`",
+          "commit": "73b905e"
+        },
+        {
+          "description": "openapi3lint: add mkdocs docs",
+          "commit": "a6b4519"
+        }
+      ]
+    },
+    {
+      "version": "v1.4.1",
+      "date": "2021-05-09",
+      "added": [
+        {
+          "description": "major refactor: openapi3lint: make extensible; add severity handling",
+          "commit": "bb6eb40"
+        },
+        {
+          "description": "openapi3lint: add lint counts",
+          "commit": "e4268b2"
+        },
+        {
+          "description": "openapi3lint: add `PolicyViolationsSetsByFile{}`",
+          "commit": "b948ecd"
+        },
+        {
+          "description": "openapi3lint: add `RuleDatatypeIntFormatIsInt32OrInt64`",
+          "commit": "6729125"
+        }
+      ],
+      "changed": [
+        {
+          "description": "openapi3lint/openapi3lint1: move old `openapi3lint` to `openapi3lint/openapi3lint1`",
+          "commit": "802ef32"
+        },
+        {
+          "description": "openapi3lint: remove unneeded code",
+          "commit": "c8dbb54"
+        },
+        {
+          "description": "openapi3/openapi3_constants.go: achieve consistency",
+          "commit": "dc57c11"
+        },
+        {
+          "description": "openapi3edit: move from openapi3/modify",
+          "commit": "c88c9a9"
+        },
+        {
+          "description": "openapi3lint: move to top level folder",
+          "commit": "c19167e"
+        },
+        {
+          "description": "openapi3lint: `check_` filenames",
+          "commit": "301043a"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "README.md: update",
+          "commit": "4221ea7"
+        }
+      ]
+    },
+    {
+      "version": "v1.4.0",
+      "date": "2021-05-03",
+      "added": [
+        {
+          "description": "swaggmaan cmd: add XSLX output option",
+          "commit": "570f193"
+        },
+        {
+          "description": "openapi3: add `ReadURL()`",
+          "commit": "22abf3f"
+        },
+        {
+          "description": "openapi/stylechecker: add",
+          "commit": "f9f2ee0"
+        },
+        {
+          "description": "openapi3: add OperationSecurityScopes(), SecurityRequirementsToRaw()",
+          "commit": "e882942"
+        }
+      ],
+      "changed": [
+        {
+          "description": "use github.com/golang-standards/project-layout",
+          "commit": "3823928"
+        },
+        {
+          "description": "apps/oas3validate: update",
+          "commit": "2ae1df1"
+        },
+        {
+          "description": "apps/oas3validate: support reading spec from URL",
+          "commit": "4f6da0f"
+        },
+        {
+          "description": "update",
+          "commit": "8de420a"
+        },
+        {
+          "description": "examples/openapi3table: updaet for `PageParams.AddSpec()",
+          "commit": "afa6625"
+        },
+        {
+          "description": "openapi3: `SpecMore.WriteFileXLSX()` add `filterFunc`",
+          "commit": "7724e53"
+        },
+        {
+          "description": "openapi3: update `NewMergeOptionsSkip()`",
+          "commit": "05e215d"
+        },
+        {
+          "description": "dep: update for simple go v0.0.18",
+          "commit": "966389c"
+        },
+        {
+          "description": "openapi3: add OperationsTable.filterFunc for operations; openapi3lint: rename rules",
+          "commit": "9792fbf"
+        },
+        {
+          "description": "openapi3lint: organize code to policy.go and rules.go files",
+          "commit": "96f2865"
+        },
+        {
+          "description": "openapi3lint: Severity from Status",
+          "commit": "6d4b26c"
+        },
+        {
+          "description": "openapi3/openapi3lint: rename from openapi3/styleguide",
+          "commit": "d258342"
+        },
+        {
+          "description": "openapi3/styleguide: rename RuleSet to Policy",
+          "commit": "fa18e32"
+        },
+        {
+          "description": "openapi3/styleguide: rename from stylechecker",
+          "commit": "1e3f013"
+        },
+        {
+          "description": "remove commented out code",
+          "commit": "263ff45"
+        },
+        {
+          "description": "add error context",
+          "commit": "221fe1b"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "9c10ad7"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "17f7b30"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "0dc5077"
+        },
+        {
+          "description": "openapi3: updaate OpTableColumnsDefault()",
+          "commit": "4258017"
+        }
+      ],
+      "fixed": [
+        {
+          "description": "openapi3: add operationFilterFunc",
+          "commit": "d766425"
+        },
+        {
+          "description": "examples/oas3validate: update for dep change",
+          "commit": "65885ee"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "README.md: update",
+          "commit": "6f7413b"
+        },
+        {
+          "description": "README.md: update",
+          "commit": "81e5b9e"
+        },
+        {
+          "description": "README.md: update indent",
+          "commit": "ca50f71"
+        },
+        {
+          "description": "update",
+          "commit": "fc7023b"
+        },
+        {
+          "description": "openapi3: update missing descriptions",
+          "commit": "d82c6b4"
+        },
+        {
+          "description": "update",
+          "commit": "af43b57"
+        }
+      ],
+      "internal": [
+        {
+          "description": "openapi3lint: update internal reference",
+          "commit": "9fa9f59"
+        }
+      ]
+    },
+    {
+      "version": "v1.3.0",
+      "date": "2021-03-16",
+      "added": [
+        {
+          "description": "openapi3/modify: add SpecAddOperationMetas()",
+          "commit": "5ec4b84"
+        },
+        {
+          "description": "apps/oas3validate: add write XLSX",
+          "commit": "37a062a"
+        },
+        {
+          "description": "apps/oas3validate: list endpoint counts by tag",
+          "commit": "cccd0ac"
+        },
+        {
+          "description": "openapi3.SpecMore: add OperationCountsByTag()",
+          "commit": "f71ede7"
+        },
+        {
+          "description": "openapi3: add apiregistry server",
+          "commit": "b2be652"
+        },
+        {
+          "description": "openapi3: add openapi3.Parse()",
+          "commit": "a264af4"
+        },
+        {
+          "description": "openapi3/modify: add OperationAddExternalDocs()",
+          "commit": "bab8558"
+        },
+        {
+          "description": "openapi3postman2: add operation description to Postman collection",
+          "commit": "9b471bd"
+        },
+        {
+          "description": "openapi3: add SpecMore.WriteFileCSV()",
+          "commit": "513e740"
+        },
+        {
+          "description": "openapi3/modify: add SpecOperationIdsFromSummaries()",
+          "commit": "076977d"
+        }
+      ],
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "f1acd31"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "b0bb3f3"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "9bb18f0"
+        },
+        {
+          "description": "update",
+          "commit": "117ae25"
+        },
+        {
+          "description": "openapi3: move to gocharts/data/table/ColumnSet from simplego/text/TextSet",
+          "commit": "4ab1714"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "3f147b4"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "da5db14"
+        },
+        {
+          "description": "postman2: update Item.Description to struct from string",
+          "commit": "67868b5"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "overview: update",
+          "commit": "92957cf"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "gh actions: add Go 1.16.x; remove Go 1.14.x, 1.13.x",
+          "commit": "1309d16"
+        }
+      ],
+      "internal": [
+        {
+          "description": "openapi3/modify: move code",
+          "commit": "165ee68"
+        }
+      ]
+    },
+    {
+      "version": "v1.2.1",
+      "date": "2021-02-15",
+      "added": [
+        {
+          "description": "postman2: add default schema URL",
+          "commit": "4289561"
+        }
+      ],
+      "changed": [
+        {
+          "description": "cli: update parameter short names",
+          "commit": "68a799d"
+        },
+        {
+          "description": "openapi3: rename subfolders",
+          "commit": "f4a84a5"
+        }
+      ]
+    },
+    {
+      "version": "v1.2.0",
+      "date": "2021-02-15",
+      "added": [
+        {
+          "description": "swaggman: add cli",
+          "commit": "82a3073"
+        }
+      ],
+      "changed": [
+        {
+          "description": "example: ringcentral-engage-digital",
+          "commit": "fefb5c8"
+        },
+        {
+          "description": "cli: update",
+          "commit": "d4146e6"
+        },
+        {
+          "description": "swaggman.go from main.go",
+          "commit": "3cbdff5"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "f6a4532"
+        },
+        {
+          "description": "apps, examples: update package names",
+          "commit": "2faea2c"
+        },
+        {
+          "description": "openapi3: rename",
+          "commit": "4d8e127"
+        },
+        {
+          "description": "openapi2: rename from swagger2",
+          "commit": "49ba013"
+        },
+        {
+          "description": "openapi3: rename openapi3postman2 from topostman2",
+          "commit": "238650f"
+        },
+        {
+          "description": "openapi2: rename openapi2 from swagger2",
+          "commit": "7d47d8a"
+        }
+      ],
+      "fixed": [
+        {
+          "description": "cli: cli formatting",
+          "commit": "57b5371"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "add install section",
+          "commit": "cbbf87d"
+        }
+      ]
+    },
+    {
+      "version": "v1.1.5",
+      "date": "2021-02-13",
+      "added": [
+        {
+          "description": "openapi3: add CopySchemaStandard()",
+          "commit": "b5fb9a3"
+        },
+        {
+          "description": "openapi3/topostman2: add Configuration.RequestBodyFunc, update Configuration.PostmanServerURLBasePath usage",
+          "commit": "922b396"
+        }
+      ],
+      "changed": [
+        {
+          "description": "go mod: update",
+          "commit": "2284ff0"
+        },
+        {
+          "description": "dep: update",
+          "commit": "b0a3d65"
+        },
+        {
+          "description": "openapi3/topostman2: extract Configuration to file",
+          "commit": "9f21f30"
+        },
+        {
+          "description": "postman2: update filenames",
+          "commit": "c7c81aa"
+        },
+        {
+          "description": "postman2: update filenames",
+          "commit": "051967b"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "gh actions: rename",
+          "commit": "0ac910f"
+        }
+      ]
+    },
+    {
+      "version": "v1.1.4",
+      "date": "2021-01-19",
+      "added": [
+        {
+          "description": "openapi3/modify: add SpecSetSchemaPropertiesOptional()",
+          "commit": "b2d3ca4"
+        },
+        {
+          "description": "openapi3/modify: add SpecSetDeprecatedImplicit()",
+          "commit": "0409be8"
+        },
+        {
+          "description": "openapi3: add SchemaPathExpand()",
+          "commit": "bc80e3d"
+        },
+        {
+          "description": "openapi3: add OperationSetRequestBodySchemaRef(), OperationSetResponseBodySchemaRef()",
+          "commit": "7b345d8"
+        },
+        {
+          "description": "openapi3: add SetOperation(), SchemaRef(), SetSchemaRef(), MarshalJSON(), PrintJSON()",
+          "commit": "c964e1d"
+        },
+        {
+          "description": "openapi3: add NewSpec()",
+          "commit": "8f97cad"
+        }
+      ],
+      "changed": [
+        {
+          "description": "openapi3/modify: enhance SpecSetDeprecatedImplicit()",
+          "commit": "2080cee"
+        },
+        {
+          "description": "openapi3.NewSpec(): add API Title and Version info",
+          "commit": "632370e"
+        },
+        {
+          "description": "openapi3: SpecMore.SetOperation()",
+          "commit": "2e52f26"
+        },
+        {
+          "description": "update",
+          "commit": "b463b5a"
+        },
+        {
+          "description": "go mod: update",
+          "commit": "a15e4cd"
+        },
+        {
+          "description": "openapi3: rename `GetOperationExtensionPropStringOrEmpty`",
+          "commit": "3504d54"
+        },
+        {
+          "description": "update",
+          "commit": "2159da1"
+        },
+        {
+          "description": "remove github.com/sirupsen/logrus",
+          "commit": "0beecfc"
+        },
+        {
+          "description": "openapi3/modify: update set deprecated",
+          "commit": "d23e472"
+        }
+      ]
+    },
+    {
+      "version": "v1.1.3",
+      "date": "2021-01-09",
+      "added": [
+        {
+          "description": "openapi3: add operation functions",
+          "commit": "ba352fc"
+        }
+      ]
+    },
+    {
+      "version": "v1.1.2",
+      "date": "2021-01-09",
+      "changed": [
+        {
+          "description": "go mod: rev github.com/getkin/kin-openapi",
+          "commit": "7458bc1"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "shields: update",
+          "commit": "7644bd8"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "travis: remove .travis.yml",
+          "commit": "f02530c"
+        }
+      ]
+    },
+    {
+      "version": "v1.1.1",
+      "date": "2020-12-29"
+    },
+    {
+      "version": "v0.0.1",
+      "date": "2020-12-29",
+      "security": [
+        {
+          "description": "add openapi3/modify add spec and operation API key security",
+          "commit": "a4d0b9e"
+        }
+      ],
+      "added": [
+        {
+          "description": "openapi3: add OperationParametersDescriptionStatusCounts(), SchemaPropertiesDescriptionStatusCounts()",
+          "commit": "c41ee4a"
+        },
+        {
+          "description": "openapi3: support desc counts with desc and with/without descs",
+          "commit": "5d7017b"
+        },
+        {
+          "description": "docs: add `mkdocs.yml` and missing descs docs",
+          "commit": "95c23a9"
+        },
+        {
+          "description": "openapi3/SpecMore: check for misssing descriptions",
+          "commit": "bc63262"
+        },
+        {
+          "description": "openapi3: add SpecOperationsFixResponseReferences()",
+          "commit": "e2892e9"
+        },
+        {
+          "description": "openapi3: add OpTableColumnsRingCentral()",
+          "commit": "caa87fb"
+        },
+        {
+          "description": "openapi3/tohtml: add PageParams.WriteFile()",
+          "commit": "e918fa4"
+        },
+        {
+          "description": "openapi3/modify: add NullToEmpty() and NullToEmptyPaths()",
+          "commit": "4f53241"
+        },
+        {
+          "description": "openapi3: add SpecMore.SchemaNames(); add SpecMore.SchemaNameExists()",
+          "commit": "9b34180"
+        },
+        {
+          "description": "openapi3: add \"Swaggman UI\" HTML viewer",
+          "commit": "323eabc"
+        },
+        {
+          "description": "openapi3: add GetExtensionPropAsStringOrEmpty(); add GetExtensionPropAsString()",
+          "commit": "b505c89"
+        },
+        {
+          "description": "openapi3: add SpecMore.SchemaCount()",
+          "commit": "1c3f302"
+        },
+        {
+          "description": "add openapi3.MergeParameters(), MergeResponses(), MergeOptions.CollisionCheckResult",
+          "commit": "4943a5f"
+        },
+        {
+          "description": "openapi3 support reading non-validated YAML specs",
+          "commit": "228725b"
+        },
+        {
+          "description": "(1) support openapi3.MergeOpts.FileRx (2) return merge file count",
+          "commit": "3a2a694"
+        },
+        {
+          "description": "add swagger2openapi",
+          "commit": "acdb99b"
+        },
+        {
+          "description": "add openapi3.NewMergeOptionsSkip()",
+          "commit": "2b64a0a"
+        },
+        {
+          "description": "add Go modules; remove Gopkg.toml",
+          "commit": "25d9c04"
+        },
+        {
+          "description": "add navigation experiment",
+          "commit": "8d7310c"
+        },
+        {
+          "description": "add openapi3/modify/MoveRequestBodies()",
+          "commit": "77e371b"
+        },
+        {
+          "description": "add comments",
+          "commit": "85c21f8"
+        },
+        {
+          "description": "add openapi3.ValidateFixOperationPathParameters()",
+          "commit": "52003b9"
+        },
+        {
+          "description": "add ValidateResponseTypes fix=true",
+          "commit": "f2466d9"
+        },
+        {
+          "description": "add openapi3.ValidateResponseTypes()",
+          "commit": "26c4290"
+        },
+        {
+          "description": "add TagGroup support for openapi3ToPostman2",
+          "commit": "de609ca"
+        },
+        {
+          "description": "add openapi3.Copy()",
+          "commit": "224aad3"
+        },
+        {
+          "description": "add openapi3.modify TagsOperationFunc; update OperationIdsRenameFunc",
+          "commit": "433c78b"
+        },
+        {
+          "description": "add WIP extension name finder",
+          "commit": "555d71d"
+        },
+        {
+          "description": "add TagGroups to SpecMore",
+          "commit": "a72ee81"
+        },
+        {
+          "description": "add constant",
+          "commit": "03d823a"
+        },
+        {
+          "description": "add OAS3 x-tag-groups",
+          "commit": "c56dc63"
+        },
+        {
+          "description": "add comment",
+          "commit": "530db7c"
+        },
+        {
+          "description": "add openapi3.SpecMore.OperationsCount",
+          "commit": "5c284d5"
+        },
+        {
+          "description": "add Go 1.11",
+          "commit": "17afff9"
+        },
+        {
+          "description": "add openapi3/validate",
+          "commit": "4c928b7"
+        },
+        {
+          "description": "add openapi3/modify add bearer token auth",
+          "commit": "56aef7e"
+        },
+        {
+          "description": "add collision checking for openapi3.MergePaths()",
+          "commit": "0b4e9d9"
+        },
+        {
+          "description": "add modify.SpecTagsCondense()",
+          "commit": "f406b2a"
+        },
+        {
+          "description": "add spec delete",
+          "commit": "047484f"
+        },
+        {
+          "description": "add spec delete",
+          "commit": "43b799d"
+        },
+        {
+          "description": "add openapi3/modify inspect functions",
+          "commit": "3f90c54"
+        },
+        {
+          "description": "add modify.SpecTagsOrder() and modify.TagsOrder()",
+          "commit": "c075de4"
+        },
+        {
+          "description": "add OpenAPI inspect and modify code",
+          "commit": "b640d2a"
+        },
+        {
+          "description": "add OperationID",
+          "commit": "853ce4e"
+        },
+        {
+          "description": "add openapi3.SpecMeta openapi3.SpecMore",
+          "commit": "fc686e9"
+        },
+        {
+          "description": "add apps/openapi2to3",
+          "commit": "5f7ddb9"
+        },
+        {
+          "description": "add more swagger2 utils",
+          "commit": "ed722e3"
+        },
+        {
+          "description": "add swagger2.ConvertSwaggmanOAS2ToKinOAS2()",
+          "commit": "b9b9438"
+        },
+        {
+          "description": "add OAS3validate",
+          "commit": "7eb99d9"
+        },
+        {
+          "description": "add openapi3.RECOMMENDATIONS.md",
+          "commit": "ab82a09"
+        },
+        {
+          "description": "add swagger2 Head and Options methods",
+          "commit": "72df3c3"
+        },
+        {
+          "description": "add apps/openapi2csv",
+          "commit": "281eb11"
+        },
+        {
+          "description": "add openapi3/swagger2 WriteFileDirMerge()",
+          "commit": "dbff896"
+        },
+        {
+          "description": "Merge pull request #9 from andrewcretin/PR",
+          "issue": "9",
+          "commit": "7f9e409"
+        },
+        {
+          "description": "- added additional packages to toml",
+          "commit": "0c85c26"
+        },
+        {
+          "description": "- added Gopkg.toml to explicitly define dependencies",
+          "commit": "ae516eb"
+        },
+        {
+          "description": "add comments",
+          "commit": "fbb3cfd"
+        },
+        {
+          "description": "add openapi3/fromspring",
+          "commit": "0c4ac13"
+        },
+        {
+          "description": "add <array.string.csv> subtype",
+          "commit": "0c65d7e"
+        },
+        {
+          "description": "add array subtype",
+          "commit": "425fc77"
+        },
+        {
+          "description": "add OpenAPI 3.0 query parameter support",
+          "commit": "3e1aaee"
+        },
+        {
+          "description": "add Go 1.13 to Travis CI support",
+          "commit": "4f66200"
+        },
+        {
+          "description": "add openapi3.Merge()",
+          "commit": "0c64f97"
+        },
+        {
+          "description": "add swagger2.Parameter.Items and swagger2.Parameter.CollectionFormat",
+          "commit": "33bacf3"
+        },
+        {
+          "description": "add swagger2.MergeTags()",
+          "commit": "e840391"
+        },
+        {
+          "description": "add swagger2.Merge()",
+          "commit": "e4de4da"
+        },
+        {
+          "description": "add initial full body request example",
+          "commit": "27bcce5"
+        },
+        {
+          "description": "add Swagger 2.0 count endpoints by tag",
+          "commit": "1e983b5"
+        },
+        {
+          "description": "add swagger2.CountEndpointsByTag(), swagger2.WriteEndpointCountCSV()",
+          "commit": "9d368fa"
+        },
+        {
+          "description": "add Tag and ExternalDocs",
+          "commit": "6caf8ec"
+        },
+        {
+          "description": "add swagger2.Endpoint.IsEmpty() and swagger2.EndpointCount()",
+          "commit": "77028d0"
+        },
+        {
+          "description": "add swagger2.CopyEndpointsByTag",
+          "commit": "7919e0b"
+        },
+        {
+          "description": "add .travis.yml",
+          "commit": "5f2c064"
+        },
+        {
+          "description": "add AWS API Gateway OpenAPI v2 properties",
+          "commit": "f11439c"
+        },
+        {
+          "description": "add AWS API Gateway Swagger spec info",
+          "commit": "5fac5c3"
+        },
+        {
+          "description": "add Swagger definitions",
+          "commit": "e7974d4"
+        },
+        {
+          "description": "add comments",
+          "commit": "b8c3a76"
+        },
+        {
+          "description": "add shield for GoReport, GoDoc, and license",
+          "commit": "03ffb78"
+        },
+        {
+          "description": "add simple Postman 2.0 base spec support",
+          "commit": "1b124e8"
+        }
+      ],
+      "changed": [
+        {
+          "description": "update for `simplego`",
+          "commit": "1a0e667"
+        },
+        {
+          "description": "openapi3.MergeParameters: support CollisionCheckOverwrite",
+          "commit": "298fabd"
+        },
+        {
+          "description": "openapi3.SpecMore: add Stats()",
+          "commit": "6ae23eb"
+        },
+        {
+          "description": "docs: update missing descriptions",
+          "commit": "de8ba97"
+        },
+        {
+          "description": "openapi3: missing desc support",
+          "commit": "13a6161"
+        },
+        {
+          "description": "update go.mod",
+          "commit": "046a893"
+        },
+        {
+          "description": "openapi3: more standalone methods to SpecMore",
+          "commit": "3fc1f99"
+        },
+        {
+          "description": "openapi3: more standalone methods to SpecMore",
+          "commit": "0ad3394"
+        },
+        {
+          "description": "openapi3: remove MergeDirectoryMore()",
+          "commit": "0d0eaf5"
+        },
+        {
+          "description": "update go modules",
+          "commit": "0100de2"
+        },
+        {
+          "description": "openapi3: simplify openapi3.MergeFiles()",
+          "commit": "778db89"
+        },
+        {
+          "description": "opeenapi3/SpecMore: remove SpecMore.OperationsTableOld()",
+          "commit": "4575b68"
+        },
+        {
+          "description": "openapi3/modify: remove `SpecTags()`",
+          "commit": "e452cea"
+        },
+        {
+          "description": "openapi3: move modiify.SpecTags() to openapi3.SpecMore.TagsMap()",
+          "commit": "c674ead"
+        },
+        {
+          "description": "openapi3/modify: update SpecOperationsFixResponseReferences()",
+          "commit": "7bf1176"
+        },
+        {
+          "description": "openapi3/merge.go: remove eol code",
+          "commit": "c004cbd"
+        },
+        {
+          "description": "openapi3: MergeDirectory: add ability to disable validation",
+          "commit": "750f3bb"
+        },
+        {
+          "description": "go mod: update to go 1.15",
+          "commit": "2508f52"
+        },
+        {
+          "description": "update Go mod",
+          "commit": "c389c0a"
+        },
+        {
+          "description": "swagger2/toopenapi3: update for errorsutil",
+          "commit": "30ee509"
+        },
+        {
+          "description": "CHANGELOG.md: remove as it is no longer used",
+          "commit": "c2d46b4"
+        },
+        {
+          "description": "gocharts: update for v1.2.0",
+          "commit": "921632b"
+        },
+        {
+          "description": "update go.mod",
+          "commit": "4def27b"
+        },
+        {
+          "description": "update go.mod, go.sum",
+          "commit": "5625964"
+        },
+        {
+          "description": "update go.mod, go.sum",
+          "commit": "06f01bc"
+        },
+        {
+          "description": "enhance (breaking): openapi3: update function names",
+          "commit": "c88ad90"
+        },
+        {
+          "description": "update go.mod, go.sum",
+          "commit": "efa1695"
+        },
+        {
+          "description": "openapi3: GetExtensionPropAsStringOrEmpty()",
+          "commit": "a4adba5"
+        },
+        {
+          "description": "update go.mod, go.sum",
+          "commit": "67e1e1e"
+        },
+        {
+          "description": "apps/openapi2csv: update",
+          "commit": "b22b5a2"
+        },
+        {
+          "description": "update go.mod, go.sum",
+          "commit": "ba5fd81"
+        },
+        {
+          "description": "update go.mod, go.sum",
+          "commit": "9abd2b6"
+        },
+        {
+          "description": "fix: update package path",
+          "commit": "aa295d5"
+        },
+        {
+          "description": "openapi3: add SpecMore.WriteFileXLSX()",
+          "commit": "3bad260"
+        },
+        {
+          "description": "update function call",
+          "commit": "08b7ff7"
+        },
+        {
+          "description": "swagger2/csv: breaking: change path",
+          "commit": "01da15d"
+        },
+        {
+          "description": "Merge branch 'master' of https://github.com/grokify/swaggman",
+          "commit": "4d5d3e8"
+        },
+        {
+          "description": "Update example spec links.",
+          "commit": "0b76e9a"
+        },
+        {
+          "description": "openapi3.SpecMore.WriteFileJSON() take raw prefix/indent",
+          "commit": "99febf6"
+        },
+        {
+          "description": "rename file",
+          "commit": "d34c94d"
+        },
+        {
+          "description": "refactor / move code",
+          "commit": "eab3366"
+        },
+        {
+          "description": "update openapi3.SpecMore.OperationsTable()",
+          "commit": "a6aee18"
+        },
+        {
+          "description": "update TagGroup support",
+          "commit": "ebe46a0"
+        },
+        {
+          "description": "support empty postman base path",
+          "commit": "b9332e6"
+        },
+        {
+          "description": "change Postman Collection params to optional in JSON",
+          "commit": "84b8787"
+        },
+        {
+          "description": "move to item pointers",
+          "commit": "127dcc3"
+        },
+        {
+          "description": "refactor",
+          "commit": "5c01b41"
+        },
+        {
+          "description": "cleanup orphan code",
+          "commit": "4ce4659"
+        },
+        {
+          "description": "streamline openapi3.VisitOperations()",
+          "commit": "9312525"
+        },
+        {
+          "description": "update openapi3.VisitOperations()",
+          "commit": "311f402"
+        },
+        {
+          "description": "update SpecMore.OperationsTable()",
+          "commit": "1301f8b"
+        },
+        {
+          "description": "update function name",
+          "commit": "5a22416"
+        },
+        {
+          "description": "bugfix",
+          "commit": "8883f69"
+        },
+        {
+          "description": "update openapi3.ReadAndValidateFile()",
+          "commit": "ca82942"
+        },
+        {
+          "description": "update examples",
+          "commit": "013b9a9"
+        },
+        {
+          "description": "openapi3/modify/tags skip non-existent explicit tags",
+          "commit": "9c41782"
+        },
+        {
+          "description": "update openapi3.MergeSchemas()",
+          "commit": "ec62d2b"
+        },
+        {
+          "description": "check for MergeSchemas() collisions",
+          "commit": "3838a4b"
+        },
+        {
+          "description": "enhance openapi3.MergePaths",
+          "commit": "fec2458"
+        },
+        {
+          "description": "use urlutil.Join()",
+          "commit": "82dc7d5"
+        },
+        {
+          "description": "gofmt",
+          "commit": "d0c4b6c"
+        },
+        {
+          "description": "organize code",
+          "commit": "fea3bda"
+        },
+        {
+          "description": "enhance SpecMore",
+          "commit": "8daf605"
+        },
+        {
+          "description": "update for dependency",
+          "commit": "80df5a7"
+        },
+        {
+          "description": "update for dependencies",
+          "commit": "04001bf"
+        },
+        {
+          "description": "housekeeping",
+          "commit": "7e57901"
+        },
+        {
+          "description": "update recommendations",
+          "commit": "f495d15"
+        },
+        {
+          "description": "update recommendations",
+          "commit": "ad8c2e4"
+        },
+        {
+          "description": "move OpenAPI3 spec recommendations",
+          "commit": "0a4f8da"
+        },
+        {
+          "description": "Sort openapi3.MergeFiles()",
+          "commit": "bacce5c"
+        },
+        {
+          "description": "update error message",
+          "commit": "5055f03"
+        },
+        {
+          "description": "update for Java date",
+          "commit": "58ea8bc"
+        },
+        {
+          "description": "update fromspring",
+          "commit": "4e98808"
+        },
+        {
+          "description": "support custom types for OpenAPI 3.0 Spring parser",
+          "commit": "3a050bd"
+        },
+        {
+          "description": "update error messages",
+          "commit": "4de3104"
+        },
+        {
+          "description": "simplify code",
+          "commit": "045180e"
+        },
+        {
+          "description": "- swapped back grokify/swaggman in place of andrewcretin/swaggman for PR",
+          "commit": "16d3358"
+        },
+        {
+          "description": "- renamed grokify to andrewcretin for dep paths",
+          "commit": "cd30e22"
+        },
+        {
+          "description": "- updated gitignore",
+          "commit": "7cce8b6"
+        },
+        {
+          "description": "update read dependencies",
+          "commit": "1991eeb"
+        },
+        {
+          "description": "and simple MergeFiles() wrapper",
+          "commit": "3b50663"
+        },
+        {
+          "description": "simplify code",
+          "commit": "d605609"
+        },
+        {
+          "description": "improve merge file support",
+          "commit": "dce8bf1"
+        },
+        {
+          "description": "update Spring integer parsing",
+          "commit": "39b66e9"
+        },
+        {
+          "description": "update variable name",
+          "commit": "202c494"
+        },
+        {
+          "description": "update spring parser test",
+          "commit": "27222af"
+        },
+        {
+          "description": "convert to generic Postman.Item vs. Folder/API Item",
+          "commit": "2f0da6b"
+        },
+        {
+          "description": "update style",
+          "commit": "49b50a3"
+        },
+        {
+          "description": "initial OpenAPI 3.0 support",
+          "commit": "c99bdf0"
+        },
+        {
+          "description": "Merge branch 'master' of https://github.com/grokify/swaggman",
+          "commit": "ccfd09d"
+        },
+        {
+          "description": "update CI Go versions",
+          "commit": "730c038"
+        },
+        {
+          "description": "Merge pull request #5 from dsKarthick/patch-1",
+          "issue": "5",
+          "commit": "a4979a0"
+        },
+        {
+          "description": "rename files",
+          "commit": "2cc8f4d"
+        },
+        {
+          "description": "update RingCentral example",
+          "commit": "ba96133"
+        },
+        {
+          "description": "update Go versions",
+          "commit": "1810321"
+        },
+        {
+          "description": "Support  Collections level pre-request scripts",
+          "commit": "aeb976b"
+        },
+        {
+          "description": "move example to `openapi2postman` CLI app",
+          "commit": "c4f58a0"
+        },
+        {
+          "description": "update LICENSE",
+          "commit": "e1e0777"
+        },
+        {
+          "description": "streamline swagger2 spec for JSON conversion",
+          "commit": "088f445"
+        },
+        {
+          "description": "update swagger2.copy",
+          "commit": "a4607e4"
+        },
+        {
+          "description": "update Go versions",
+          "commit": "54fef76"
+        },
+        {
+          "description": "update for go-aha",
+          "commit": "143c59e"
+        },
+        {
+          "description": "simplify code with gofmt -s",
+          "commit": "a688201"
+        },
+        {
+          "description": "clean up style",
+          "commit": "5c084a6"
+        },
+        {
+          "description": "simplify sorting",
+          "commit": "033466f"
+        },
+        {
+          "description": "canonical postman collections + refactor",
+          "commit": "40e1b03"
+        },
+        {
+          "description": "Merge pull request #2 from matiasinsaurralde/lint",
+          "issue": "2",
+          "commit": "5bf987f"
+        },
+        {
+          "description": "Merge pull request #1 from matiasinsaurralde/master",
+          "issue": "1",
+          "commit": "8908bf7"
+        },
+        {
+          "description": "swagger2: lint",
+          "commit": "55dcae7"
+        },
+        {
+          "description": "postman2: lint",
+          "commit": "9d2108a"
+        },
+        {
+          "description": "convert_swagger2_to_postman2: lint",
+          "commit": "6ae4478"
+        },
+        {
+          "description": "convert_swagger2_to_postman2: simplify some code",
+          "commit": "f5734d2"
+        },
+        {
+          "description": "update default value to `interface{}` type",
+          "commit": "46fb420"
+        },
+        {
+          "description": "rename project",
+          "commit": "ca66e5d"
+        },
+        {
+          "description": "update example",
+          "commit": "fd43738"
+        },
+        {
+          "description": "refactor",
+          "commit": "24e437c"
+        },
+        {
+          "description": "refactor",
+          "commit": "65bb37a"
+        },
+        {
+          "description": "cleanup",
+          "commit": "b41c4bc"
+        },
+        {
+          "description": "cleanup",
+          "commit": "a10658f"
+        },
+        {
+          "description": "simplify code",
+          "commit": "28b0e85"
+        },
+        {
+          "description": "refactor custom header support",
+          "commit": "ea65bc6"
+        },
+        {
+          "description": "cleanup code",
+          "commit": "6ded989"
+        },
+        {
+          "description": "reorg directories",
+          "commit": "233e71a"
+        },
+        {
+          "description": "initial commit",
+          "commit": "9692ace"
+        }
+      ],
+      "removed": [
+        {
+          "description": "enhance/refactor (breaking): openapi3: update SpecMore.OperationsTable() to accept custom column inputs; remove tohtml.ToTable():",
+          "commit": "6572db3"
+        },
+        {
+          "description": "remove navigation experiment",
+          "commit": "c2577c3"
+        },
+        {
+          "description": "remove openapi3.PathItemDeleteOperationID()",
+          "commit": "4cce7ae"
+        },
+        {
+          "description": "remove magic",
+          "commit": "9c7c3fe"
+        },
+        {
+          "description": "remove ineffassign",
+          "commit": "cc26550"
+        },
+        {
+          "description": "remove ineffassign",
+          "commit": "47a1a61"
+        },
+        {
+          "description": "remove Go 1.8 due to strings.Builder requirement in execelize",
+          "commit": "eac6b69"
+        },
+        {
+          "description": "remove unneeded code",
+          "commit": "b993061"
+        },
+        {
+          "description": "remove incomplete test",
+          "commit": "d944860"
+        },
+        {
+          "description": "remove unneeded code",
+          "commit": "4e81b71"
+        }
+      ],
+      "fixed": [
+        {
+          "description": "openapi3.MergeSchemas: fix collision handling",
+          "commit": "4ea2918"
+        },
+        {
+          "description": "openapi3: fix missing description lists",
+          "commit": "cff2282"
+        },
+        {
+          "description": "openapi3/tohtml: use global replace for ` ` to `-` replace",
+          "commit": "f1a088a"
+        },
+        {
+          "description": "openapi3: ineffassign",
+          "commit": "64c3c4b"
+        },
+        {
+          "description": "bugfix for struct to pointer",
+          "commit": "1b00570"
+        },
+        {
+          "description": "fix SpecDeleteOperations()",
+          "commit": "40bce8c"
+        },
+        {
+          "description": "fix taggroups exists",
+          "commit": "3a0a38b"
+        },
+        {
+          "description": "fix JSON output",
+          "commit": "a9c0f29"
+        },
+        {
+          "description": "fix ineffassign",
+          "commit": "11c47ab"
+        },
+        {
+          "description": "fix bugs",
+          "commit": "8de6840"
+        },
+        {
+          "description": "fix docs formatting",
+          "commit": "06eed4d"
+        },
+        {
+          "description": "fix docs formatting",
+          "commit": "675ad59"
+        },
+        {
+          "description": "fix spec tag location",
+          "commit": "983bb29"
+        },
+        {
+          "description": "fix bug",
+          "commit": "76cca2b"
+        },
+        {
+          "description": "fix PATCH path",
+          "commit": "1f1ec3f"
+        },
+        {
+          "description": "Merge pull request #3 from Ashtonian/patch-1",
+          "issue": "3",
+          "commit": "46e8d6d"
+        },
+        {
+          "description": "fixing consumes vs produces header issue",
+          "commit": "22e7ce6"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "update dependencies",
+          "commit": "2f62eda"
+        },
+        {
+          "description": "update dependencies",
+          "commit": "d509052"
+        },
+        {
+          "description": "update dependency loading",
+          "commit": "228b235"
+        },
+        {
+          "description": "update dependency use",
+          "commit": "8b33bc9"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "shields: update links",
+          "commit": "9325b14"
+        },
+        {
+          "description": "update docs",
+          "commit": "dd5d131"
+        },
+        {
+          "description": "update docs",
+          "commit": "2f83505"
+        },
+        {
+          "description": "update docs",
+          "commit": "22e6823"
+        },
+        {
+          "description": "update docs",
+          "commit": "797dfc4"
+        },
+        {
+          "description": "update README.md",
+          "commit": "023acb1"
+        },
+        {
+          "description": "update docs",
+          "commit": "f6bc8dc"
+        },
+        {
+          "description": "update docs",
+          "commit": "ad1b766"
+        },
+        {
+          "description": "update docs",
+          "commit": "b2979ae"
+        },
+        {
+          "description": "update docs",
+          "commit": "17df309"
+        },
+        {
+          "description": "update docs",
+          "commit": "1e8be22"
+        },
+        {
+          "description": "update docs",
+          "commit": "67e60ef"
+        },
+        {
+          "description": "update README",
+          "commit": "ec741c1"
+        },
+        {
+          "description": "update docs",
+          "commit": "6d7ab2f"
+        },
+        {
+          "description": "update docs",
+          "commit": "64e003a"
+        },
+        {
+          "description": "update docs",
+          "commit": "2f1309e"
+        },
+        {
+          "description": "update docs",
+          "commit": "6868bfb"
+        },
+        {
+          "description": "update docs",
+          "commit": "8c7ac63"
+        },
+        {
+          "description": "update docs",
+          "commit": "5817165"
+        },
+        {
+          "description": "update docs",
+          "commit": "58f7ac8"
+        },
+        {
+          "description": "update docs",
+          "commit": "46d5221"
+        },
+        {
+          "description": "update docs",
+          "commit": "471e968"
+        },
+        {
+          "description": "update docs",
+          "commit": "554359c"
+        },
+        {
+          "description": "update docs",
+          "commit": "57a426d"
+        },
+        {
+          "description": "update docs",
+          "commit": "923e44f"
+        },
+        {
+          "description": "update docs",
+          "commit": "1a9dbde"
+        },
+        {
+          "description": "update docs",
+          "commit": "b58d639"
+        },
+        {
+          "description": "update docs",
+          "commit": "9444477"
+        },
+        {
+          "description": "update docs",
+          "commit": "e1123cb"
+        },
+        {
+          "description": "update docs",
+          "commit": "8e12f67"
+        },
+        {
+          "description": "update docs",
+          "commit": "e471f95"
+        },
+        {
+          "description": "update docs",
+          "commit": "f3052cf"
+        },
+        {
+          "description": "update docs",
+          "commit": "5137187"
+        },
+        {
+          "description": "update docs",
+          "commit": "93f4b07"
+        },
+        {
+          "description": "update docs",
+          "commit": "7eb99e6"
+        },
+        {
+          "description": "update docs",
+          "commit": "bc8588c"
+        }
+      ],
+      "infrastructure": [
+        {
+          "description": "Travis CI: remove",
+          "commit": "3eb6dee"
+        },
+        {
+          "description": "add GH actions",
+          "commit": "f4fda8e"
+        },
+        {
+          "description": "update Go versions",
+          "commit": "e62a130"
+        },
+        {
+          "description": "travis: add Go 1.15",
+          "commit": "b1f9800"
+        }
+      ],
+      "internal": [
+        {
+          "description": "openapi3: update spec_more.go",
+          "commit": "5e308af"
+        },
+        {
+          "description": "update dependency spacing",
+          "commit": "5e6a460"
+        }
+      ]
+    }
+  ],
+  "maintainers": [
+    "grokify",
+    "johncwang@gmail.com"
+  ]
+}
