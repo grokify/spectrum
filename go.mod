@@ -12,7 +12,7 @@ require (
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/qdm12/reprint v0.0.0-20200326205758-722754a53494
 	github.com/rs/zerolog v1.35.1
-	github.com/valyala/fasthttp v1.74.0
+	github.com/valyala/fasthttp v1.75.0
 	github.com/valyala/quicktemplate v1.8.0
 	golang.org/x/exp v0.0.0-20260908205506-85c1c2202aba
 	gopkg.in/yaml.v3 v3.0.1
@@ -33,12 +33,12 @@ require (
 	github.com/grokify/base36 v1.0.5 // indirect
 	github.com/huandu/xstrings v1.6.1 // indirect
 	github.com/iancoleman/strcase v0.3.0 // indirect
-	github.com/klauspost/compress v1.20.0 // indirect
+	github.com/klauspost/compress v1.20.1 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/mattn/go-colorable v0.1.15 // indirect
 	github.com/mattn/go-isatty v0.0.24 // indirect
 	github.com/mattn/go-runewidth v0.0.28 // indirect
-	github.com/molecule-man/go-brrr v1.0.1 // indirect
+	github.com/molecule-man/go-brrr v1.1.1 // indirect
 	github.com/oasdiff/yaml v0.1.1 // indirect
 	github.com/oasdiff/yaml3 v0.0.14 // indirect
 	github.com/olekukonko/cat v0.0.0-20250911104152-50322a0618f6 // indirect
