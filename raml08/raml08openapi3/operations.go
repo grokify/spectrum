@@ -43,7 +43,8 @@ const (
 var (
 	ErrOperationMoreSetMissing  = errors.New("required parameter operationSetMore is empty")
 	ErrRAMLDescriptionNotString = errors.New("format for RAML description is not string")
-	ErrRAMLDispNameNotString    = errors.New("format for RAML description is not string")
+	ErrRAMLDispNameNotString    = errors.New("format for RAML displayName is not string")
+	ErrRAMLMethodNotObject      = errors.New("format for RAML method is not object")
 )
 
 // msaPaths is a recursive function. Use "" for the basePath for RAML root. The structure of RAML
@@ -109,7 +110,13 @@ func operationMoresFromPathItem(opPath string, opPathItem map[string]any) ([]ope
 			Path:      opPath,
 			Method:    string(methodCanonical),
 			Operation: &oas3.Operation{Tags: slices.Clone(tags)}}
-		opMSA := valAny.(map[string]any)
+		opMSA := map[string]any{} // a method with no properties, as in a bare `get:`, is null.
+		if valAny != nil {
+			var ok bool
+			if opMSA, ok = valAny.(map[string]any); !ok {
+				return oms, fmt.Errorf("%w: path [%s] method [%s]", ErrRAMLMethodNotObject, opPath, k)
+			}
+		}
 		if descAny, ok := opMSA[RAMLKeyDescription]; ok {
 			if descStr, ok := descAny.(string); ok {
 				om.Operation.Description = strings.TrimSpace(descStr)
