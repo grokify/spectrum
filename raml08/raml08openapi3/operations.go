@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"slices"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
@@ -14,8 +15,8 @@ import (
 )
 
 // ReadFileOperations reads a RAML v0.8 file and returns a set of `openapi3edit.OperationMore` structs.
-// The properties `path`, `method`, `summary`, `description` are populated. OpenAPI `summary` is populated
-// by the `displayName` property. Currently, this reads a JSON formatted file into a map[string]interface.
+// The properties `path`, `method`, `summary`, `description` and `tags` are populated. OpenAPI `summary`
+// is populated by the method's `displayName` property, and `tags` by its resource's `displayName`. Currently, this reads a JSON formatted file into a map[string]interface.
 // This is useful after converting a RAML v0.8 spec using https://github.com/daviemakz/oas-raml-converter-cli.
 func ReadFileOperations(filename string) (*openapi3.OperationMores, error) {
 	bytes, err := os.ReadFile(filename)
@@ -42,7 +43,8 @@ const (
 var (
 	ErrOperationMoreSetMissing  = errors.New("required parameter operationSetMore is empty")
 	ErrRAMLDescriptionNotString = errors.New("format for RAML description is not string")
-	ErrRAMLDispNameNotString    = errors.New("format for RAML description is not string")
+	ErrRAMLDispNameNotString    = errors.New("format for RAML displayName is not string")
+	ErrRAMLMethodNotObject      = errors.New("format for RAML method is not object")
 )
 
 // msaPaths is a recursive function. Use "" for the basePath for RAML root. The structure of RAML
@@ -87,6 +89,17 @@ func msaPaths(basePath string, msa map[string]any, oms *openapi3.OperationMores)
 
 func operationMoresFromPathItem(opPath string, opPathItem map[string]any) ([]openapi3.OperationMore, error) {
 	oms := []openapi3.OperationMore{}
+	// the resource's `displayName` names the group its operations belong to, so it becomes their tag.
+	var tags []string
+	if resNameAny, ok := opPathItem[RAMLKeyDisplayName]; ok {
+		resNameStr, ok := resNameAny.(string)
+		if !ok {
+			return oms, ErrRAMLDispNameNotString
+		}
+		if resName := strings.TrimSpace(resNameStr); resName != "" {
+			tags = []string{resName}
+		}
+	}
 	for k, valAny := range opPathItem {
 		// check if current `opPathItem`` property is an HTTP method, and add operations if so.
 		methodCanonical, err := httputilmore.ParseHTTPMethod(k)
@@ -96,8 +109,14 @@ func operationMoresFromPathItem(opPath string, opPathItem map[string]any) ([]ope
 		om := openapi3.OperationMore{
 			Path:      opPath,
 			Method:    string(methodCanonical),
-			Operation: &oas3.Operation{}}
-		opMSA := valAny.(map[string]any)
+			Operation: &oas3.Operation{Tags: slices.Clone(tags)}}
+		opMSA := map[string]any{} // a method with no properties, as in a bare `get:`, is null.
+		if valAny != nil {
+			var ok bool
+			if opMSA, ok = valAny.(map[string]any); !ok {
+				return oms, fmt.Errorf("%w: path [%s] method [%s]", ErrRAMLMethodNotObject, opPath, k)
+			}
+		}
 		if descAny, ok := opMSA[RAMLKeyDescription]; ok {
 			if descStr, ok := descAny.(string); ok {
 				om.Operation.Description = strings.TrimSpace(descStr)

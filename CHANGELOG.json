@@ -28,12 +28,36 @@
         {
           "description": "`cmd/oas3filter` CLI to write one audience's spec as JSON or YAML",
           "commit": "4ffbdce"
+        },
+        {
+          "description": "`raml08openapi3.ReadFileOperations` tags each operation with its RAML resource's `displayName`",
+          "commit": "b5d5625"
+        },
+        {
+          "description": "`raml08openapi3.NewSpec` builds an OpenAPI 3 spec from RAML operations with a given API title and version, rejecting duplicate and unset operations",
+          "commit": "fb08375"
+        }
+      ],
+      "fixed": [
+        {
+          "description": "`raml08openapi3.ReadFileOperations` panicked on a method that is not an object; it now returns `ErrRAMLMethodNotObject`, and reads a null method as one with no properties",
+          "commit": "35aad5f"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "`openapi3` uses the standard library `slices` package instead of `golang.org/x/exp/slices`, which is now an indirect dependency",
+          "commit": "ce735a9"
         }
       ],
       "tests": [
         {
           "description": "Audience filtering, component pruning, unresolved references and deterministic output",
           "commit": "7570e16"
+        },
+        {
+          "description": "RAML 0.8 operations, tags, malformed values and spec building",
+          "commit": "34ca717"
         }
       ],
       "documentation": [
