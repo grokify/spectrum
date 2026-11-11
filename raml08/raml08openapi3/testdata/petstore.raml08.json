@@ -1,0 +1,28 @@
+{
+  "title": "Pet Store",
+  "version": "v1",
+  "baseUri": "https://api.example.com/{version}",
+  "/pets": {
+    "displayName": "Pets",
+    "get": {
+      "displayName": "List pets",
+      "description": "Returns all pets."
+    },
+    "post": {
+      "displayName": "Create pet"
+    },
+    "/{petId}": {
+      "displayName": "Pet",
+      "get": {
+        "displayName": "Get pet",
+        "description": "  Returns one pet.  "
+      },
+      "delete": null
+    }
+  },
+  "/stores": {
+    "get": {
+      "displayName": "List stores"
+    }
+  }
+}
