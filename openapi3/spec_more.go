@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -18,7 +19,6 @@ import (
 	"github.com/grokify/mogo/net/http/pathmethod"
 	"github.com/grokify/mogo/net/urlutil"
 	"github.com/grokify/mogo/type/stringsutil"
-	"golang.org/x/exp/slices"
 	"sigs.k8s.io/yaml"
 )
 

@@ -1,13 +1,13 @@
 package openapi3
 
 import (
+	"slices"
 	"strings"
 
 	oas3 "github.com/getkin/kin-openapi/openapi3"
 	"github.com/grokify/mogo/net/http/pathmethod"
 	"github.com/grokify/mogo/text/stringcase"
 	"github.com/grokify/mogo/type/stringsutil"
-	"golang.org/x/exp/slices"
 )
 
 // OperationToMeta converts a path, method and operation to an `*OperationMeta`.

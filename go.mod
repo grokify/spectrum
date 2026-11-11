@@ -14,7 +14,6 @@ require (
 	github.com/rs/zerolog v1.35.1
 	github.com/valyala/fasthttp v1.78.0
 	github.com/valyala/quicktemplate v1.8.0
-	golang.org/x/exp v0.0.0-20261109185158-a52e3aef5920
 	gopkg.in/yaml.v3 v3.0.1
 	sigs.k8s.io/yaml v1.6.0
 )
@@ -54,6 +53,7 @@ require (
 	go.yaml.in/yaml/v2 v2.4.5 // indirect
 	go.yaml.in/yaml/v4 v4.0.0 // indirect
 	golang.org/x/crypto v0.58.0 // indirect
+	golang.org/x/exp v0.0.0-20261109185158-a52e3aef5920 // indirect
 	golang.org/x/image v0.48.0 // indirect
 	golang.org/x/net v0.62.0 // indirect
 	golang.org/x/sys v0.50.0 // indirect
