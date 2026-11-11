@@ -45,6 +45,7 @@ The following article provides an overview of OpenAPI spec to Postman conversion
   1. Support for OpenAPI 3 files, including serialization, deserialization, and validation.
   1. Merging of multiple specs
   1. Splitting specs by tag
+  1. [Filtering specs by audience](docs/guide/filter.md) (`x-audience`: internal, partner, public; or `x-internal`) with unused components pruned
   1. Output of spec to tabular format to HTML (API Registry), CSV, XLSX. HTML API Registry has a bonus feature that makes each line clickable. Click any line here: http://ringcentral.github.io/api-registry/
   1. Programmatic API to modify OpenAPI specs using rules
   1. [Programmatic ability to "fix" spec, e.g. change response Content Type to match output (needed for Engage Voice)](docs/openapi3_fix.md)

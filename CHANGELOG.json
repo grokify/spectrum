@@ -6,6 +6,43 @@
   "commitConvention": "conventional",
   "releases": [
     {
+      "version": "v1.22.0",
+      "date": "2026-11-11",
+      "highlights": [
+        {
+          "description": "Audience filtering: mark operations `x-audience: internal`, `partner` or `public` (or `x-internal: true`) and write a spec for each audience, with unmarked operations internal by default"
+        },
+        {
+          "description": "`SpecMore.ExportByFilter` copies kept operations with every component they reach and nothing else, checked for unresolved references"
+        }
+      ],
+      "added": [
+        {
+          "description": "`SpecMore.ExportByFilter` and `OperationFilterFunc` to export the operations a filter keeps, in paths and webhooks, with the components, security schemes and tags they use, following references through `allOf`, `oneOf`, `anyOf`, `items`, `additionalProperties` and every component kind",
+          "commit": "5e38014"
+        },
+        {
+          "description": "`Audience`, `ParseAudience`, `ExtensionAudience` and `AudienceFilter` to filter by `x-audience` (internal, partner, public; a string or a list) and `x-internal`, with path-level marks and a default for unmarked operations",
+          "commit": "9bfa76d"
+        },
+        {
+          "description": "`cmd/oas3filter` CLI to write one audience's spec as JSON or YAML",
+          "commit": "4ffbdce"
+        }
+      ],
+      "tests": [
+        {
+          "description": "Audience filtering, component pruning, unresolved references and deterministic output",
+          "commit": "7570e16"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "Filtering by audience guide, CLI reference entry and v1.22.0 release notes"
+        }
+      ]
+    },
+    {
       "version": "v1.21.0",
       "date": "2026-08-23",
       "commit": "043bb5a",

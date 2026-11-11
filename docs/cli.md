@@ -9,6 +9,19 @@ go install github.com/grokify/spectrum/cmd/<name>@latest
 Most tools use flags (via `go-flags`); pass `--help` to any command for the
 authoritative list.
 
+## oas3filter
+
+Write the part of an OpenAPI 3 spec one audience may see, as marked by
+`x-audience` (`internal`, `partner` or `public`) or `x-internal: true`, with
+only the components, security schemes and tags it uses. _(Added in v1.22.0.)_
+
+```bash
+oas3filter -i openapi.json -o openapi-public.json -a public
+```
+
+Unmarked operations are internal unless `--default` says otherwise; see
+[Filtering specs by audience](guide/filter.md).
+
 ## oas3diff
 
 Diff two OpenAPI 3 specs (JSON or YAML) across endpoints, operation IDs, and

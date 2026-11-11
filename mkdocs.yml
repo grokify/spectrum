@@ -19,6 +19,7 @@ nav:
         - Inspecting Specs: guide/inspect.md
         - Comparing Specs: guide/compare.md
         - Merging Specs: guide/merge.md
+        - Filtering by Audience: guide/filter.md
         - Converting Specs: guide/convert.md
         - Fixing Specs: openapi3_fix.md
         - Recommendations: recommendations_openapi3.md
@@ -28,4 +29,5 @@ nav:
         - Custom Rules: openapi3lint/custom_rules.md
     - CLI Reference: cli.md
     - Releases:
+        - v1.22.0: releases/v1.22.0.md
         - v1.21.0: releases/v1.21.0.md
