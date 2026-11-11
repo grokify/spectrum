@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Filtering by Audience - Spectrum</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Filtering by Audience";
+        var mkdocs_page_input_path = "guide/filter.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Spectrum
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../getting-started/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../inspect/">Inspecting Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../compare/">Comparing Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../merge/">Merging Specs</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Filtering by Audience</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#marking-operations">Marking operations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exporting">Exporting</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#from-the-command-line">From the command line</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../convert/">Converting Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../openapi3_fix/">Fixing Specs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../recommendations_openapi3/">Recommendations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../openapi3/inspect/missing_descriptions/">Missing Descriptions</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Linting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../openapi3lint/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../openapi3lint/custom_rules/">Custom Rules</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../cli/">CLI Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Releases</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../releases/v1.22.0/">v1.22.0</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../releases/v1.21.0/">v1.21.0</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Spectrum</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">User Guide</li>
+      <li class="breadcrumb-item active">Filtering by Audience</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/grokify/spectrum/tree/main/docs/guide/filter.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="filtering-specs-by-audience">Filtering Specs by Audience<a class="headerlink" href="#filtering-specs-by-audience" title="Permanent link">&para;</a></h1>
+<p>One spec can describe an API for several audiences: what everyone may call,
+what selected partners may call, and what only the API's own team uses.
+Spectrum writes the spec for one audience from it, keeping only the
+operations that audience may see and only the components, security schemes
+and tags those operations use. <em>(Added in <a href="../../releases/v1.22.0/">v1.22.0</a>.)</em></p>
+<p>Filtering removes operations from the file itself. Marking them hidden for a
+documentation tool is not enough on its own, since anyone can download the
+spec the tool reads.</p>
+<h2 id="marking-operations">Marking operations<a class="headerlink" href="#marking-operations" title="Permanent link">&para;</a></h2>
+<p>Mark an operation, or a whole path, with <code>x-audience</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">paths</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">/v1/orders</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">get</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">x-audience</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">public</span>
+<span class="w">  </span><span class="nt">/v1/orders/bulk-sync</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">post</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">x-audience</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">partner</span>
+<span class="w">  </span><span class="nt">/v1/admin/reconcile</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">post</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">x-audience</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">internal</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Audience</th>
+<th>Who sees it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>internal</code></td>
+<td>The API's own team</td>
+</tr>
+<tr>
+<td><code>partner</code></td>
+<td>Selected customers, and the API's own team</td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td>Everyone</td>
+</tr>
+</tbody>
+</table>
+<p>Each audience includes the narrower ones, so a public operation is in the
+partner and internal specs too. <code>x-audience</code> may also be a list, such as
+<code>[partner, public]</code>, in which case the widest audience listed applies.</p>
+<p><code>x-internal: true</code>, as Redocly, Scalar and Stoplight read it, marks an
+operation as internal. When an operation has both marks, <code>x-internal: true</code>
+wins, so conflicting marks never widen who sees something.</p>
+<p>An operation's own mark comes first, then its path item's, then a default.
+Use <code>internal</code> as the default so an operation nobody marked is never
+published by mistake. For a spec that marks only what is internal with
+<code>x-internal</code>, use <code>public</code> as the default.</p>
+<h2 id="exporting">Exporting<a class="headerlink" href="#exporting" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="nx">keep</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">openapi3</span><span class="p">.</span><span class="nx">AudienceFilter</span><span class="p">(</span><span class="nx">openapi3</span><span class="p">.</span><span class="nx">AudiencePublic</span><span class="p">,</span><span class="w"> </span><span class="nx">openapi3</span><span class="p">.</span><span class="nx">AudienceInternal</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">sm</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">openapi3</span><span class="p">.</span><span class="nx">SpecMore</span><span class="p">{</span><span class="nx">Spec</span><span class="p">:</span><span class="w"> </span><span class="nx">spec</span><span class="p">}</span>
+<span class="nx">public</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">sm</span><span class="p">.</span><span class="nx">ExportByFilter</span><span class="p">(</span><span class="nx">keep</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">openapi3</span><span class="p">.</span><span class="nx">FilterOptions</span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Drop the marks once they have done their job.</span>
+<span class="w">    </span><span class="nx">RemoveExtensions</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="nx">openapi3</span><span class="p">.</span><span class="nx">XAudience</span><span class="p">,</span><span class="w"> </span><span class="nx">openapi3</span><span class="p">.</span><span class="nx">XInternal</span><span class="p">},</span>
+<span class="p">})</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><code>ExportByFilter</code>:</p>
+<ul>
+<li>keeps the operations the filter accepts, in paths and webhooks, and drops
+  path items left with none</li>
+<li>copies every component the kept operations reach, following references
+  through <code>allOf</code>, <code>oneOf</code>, <code>anyOf</code>, <code>items</code>, <code>additionalProperties</code>, shared
+  responses, request bodies, parameters, headers, examples, links and
+  callbacks</li>
+<li>keeps only the security schemes the document and the kept operations
+  require, and only the tags they use, in the source's order</li>
+<li>leaves the source spec unchanged</li>
+<li>reloads the result and fails on any reference that points nowhere</li>
+</ul>
+<p>The output is the same every time for the same input, so it can be checked
+in and diffed.</p>
+<p><code>ExportByFilter</code> takes any <code>OperationFilterFunc</code>, so the same pruning works
+for filters by tag, path prefix or another extension.</p>
+<h2 id="from-the-command-line">From the command line<a class="headerlink" href="#from-the-command-line" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code>oas3filter<span class="w"> </span>-i<span class="w"> </span>openapi.json<span class="w"> </span>-o<span class="w"> </span>openapi-public.json<span class="w"> </span>-a<span class="w"> </span>public
+oas3filter<span class="w"> </span>-i<span class="w"> </span>openapi.json<span class="w"> </span>-o<span class="w"> </span>openapi-partner.yaml<span class="w"> </span>-a<span class="w"> </span>partner
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-i</code>, <code>--input</code></td>
+<td>Input spec, JSON or YAML</td>
+</tr>
+<tr>
+<td><code>-o</code>, <code>--output</code></td>
+<td>Output spec; YAML when it ends in <code>.yaml</code> or <code>.yml</code>, else JSON</td>
+</tr>
+<tr>
+<td><code>-a</code>, <code>--audience</code></td>
+<td><code>internal</code>, <code>partner</code> or <code>public</code></td>
+</tr>
+<tr>
+<td><code>--default</code></td>
+<td>Audience of unmarked operations. Default <code>internal</code></td>
+</tr>
+<tr>
+<td><code>--keep-extensions</code></td>
+<td>Keep <code>x-audience</code> and <code>x-internal</code> in the output</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../merge/" class="btn btn-neutral float-left" title="Merging Specs"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../convert/" class="btn btn-neutral float-right" title="Converting Specs">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/grokify/spectrum" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../merge/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../convert/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

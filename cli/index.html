@@ -55,6 +55,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../guide/merge/">Merging Specs</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/filter/">Filtering by Audience</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../guide/convert/">Converting Specs</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../openapi3_fix/">Fixing Specs</a>
@@ -74,6 +76,8 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">CLI Reference</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#oas3filter">oas3filter</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#oas3diff">oas3diff</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#oas2meta">oas2meta</a>
@@ -93,6 +97,8 @@
               </ul>
               <p class="caption"><span class="caption-text">Releases</span></p>
               <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../releases/v1.22.0/">v1.22.0</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../releases/v1.21.0/">v1.21.0</a>
                   </li>
               </ul>
@@ -127,6 +133,15 @@
 
 <p>Most tools use flags (via <code>go-flags</code>); pass <code>--help</code> to any command for the
 authoritative list.</p>
+<h2 id="oas3filter">oas3filter<a class="headerlink" href="#oas3filter" title="Permanent link">&para;</a></h2>
+<p>Write the part of an OpenAPI 3 spec one audience may see, as marked by
+<code>x-audience</code> (<code>internal</code>, <code>partner</code> or <code>public</code>) or <code>x-internal: true</code>, with
+only the components, security schemes and tags it uses. <em>(Added in v1.22.0.)</em></p>
+<div class="codehilite"><pre><span></span><code>oas3filter<span class="w"> </span>-i<span class="w"> </span>openapi.json<span class="w"> </span>-o<span class="w"> </span>openapi-public.json<span class="w"> </span>-a<span class="w"> </span>public
+</code></pre></div>
+
+<p>Unmarked operations are internal unless <code>--default</code> says otherwise; see
+<a href="../guide/filter/">Filtering specs by audience</a>.</p>
 <h2 id="oas3diff">oas3diff<a class="headerlink" href="#oas3diff" title="Permanent link">&para;</a></h2>
 <p>Diff two OpenAPI 3 specs (JSON or YAML) across endpoints, operation IDs, and
 schema names. <em>(Added in v1.21.0.)</em></p>
@@ -199,7 +214,7 @@ base Postman file.</p>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../openapi3lint/custom_rules/" class="btn btn-neutral float-left" title="Custom Rules"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../releases/v1.21.0/" class="btn btn-neutral float-right" title="v1.21.0">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../releases/v1.22.0/" class="btn btn-neutral float-right" title="v1.22.0">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -229,7 +244,7 @@ base Postman file.</p>
       <span><a href="../openapi3lint/custom_rules/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../releases/v1.21.0/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../releases/v1.22.0/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
