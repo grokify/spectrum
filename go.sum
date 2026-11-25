@@ -110,8 +110,8 @@ github.com/tj/assert v0.0.3/go.mod h1:Ne6X72Q+TB1AteidzQncjw9PabbMp4PBMZ1k+vd1Pv
 github.com/urfave/cli/v2 v2.1.1/go.mod h1:SE9GqnLQmjVa0iPEY0f1w3ygNIYcIJ0OKPMoW2caLfQ=
 github.com/valyala/bytebufferpool v1.0.0 h1:GqA5TC/0021Y/b9FG4Oi9Mr3q7XYx6KllzawFIhcdPw=
 github.com/valyala/bytebufferpool v1.0.0/go.mod h1:6bBcMArwyJ5K/AmCkWv1jt77kVWyCJ6HpOuEn7z0Csc=
-github.com/valyala/fasthttp v1.79.0 h1:32ur91W4kWG+1s6x3oDlP8/KNmjlZZlUzSSC4p9LSWE=
-github.com/valyala/fasthttp v1.79.0/go.mod h1:NQN+PlgP93+JRPnCiApN5XwnI24oMQf8kuzrxtsTy9A=
+github.com/valyala/fasthttp v1.80.0 h1:10pVr/QLFGbSX8ikDS0i+wOi2AGY2Sy0TACVpoiG+7U=
+github.com/valyala/fasthttp v1.80.0/go.mod h1:oulvtxx5dQeORu6sKWaJItcnWXRqiGmrTFQ4gmZjLFM=
 github.com/valyala/quicktemplate v1.8.0 h1:zU0tjbIqTRgKQzFY1L42zq0qR3eh4WoQQdIdqCysW5k=
 github.com/valyala/quicktemplate v1.8.0/go.mod h1:qIqW8/igXt8fdrUln5kOSb+KWMaJ4Y8QUsfd1k6L2jM=
 github.com/xuri/efp v0.0.3-0.20260924042702-217b81952dec h1:sZZokRLgr8nyrzkDDCQcvEYBsTrZr6eqXa/R9qALoQA=
